@@ -353,9 +353,15 @@ test("회귀 검증에 실패하면 사실 데이터를 커밋하지 않는다",
     workflow,
     /steps\.verify\.outcome[^\n]*!=[^\n]*success[\s\S]{0,400}git checkout --/,
   );
-  // 배포는 검증 통과 + 공개 사실 변경이 함께 있을 때만 태운다.
+  // 배포는 검증 통과가 전제이고, 그 위에서 공개 사실이 바뀐 날이거나 수동으로
+  // 재배포를 지시한 실행일 때만 돈다.
   assert.match(
     workflow,
-    /if:\s*steps\.commit\.outputs\.factsChanged == 'true' && steps\.verify\.outcome == 'success'/,
+    /steps\.verify\.outcome == 'success' &&\s*\(steps\.commit\.outputs\.factsChanged == 'true' \|\| inputs\.deploy\)/,
   );
+  // 배포 자격증명이 없는 복제·포크에서는 데이터만 갱신하고 배포를 건너뛴다.
+  assert.match(workflow, /if \[ -z "\$CLOUDFLARE_API_TOKEN" \]/);
+  assert.match(workflow, /npx wrangler deploy/);
+  // 배포 토큰도 이름으로만 참조하고 로그로 내보내지 않는다.
+  assert.doesNotMatch(workflow, /CLOUDFLARE_API_TOKEN\s*:\s*["'][^$]/);
 });

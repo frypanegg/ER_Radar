@@ -11,6 +11,10 @@ on:
         description: "같은 KST 날짜에 이미 수집했어도 다시 실행"
         type: boolean
         default: false
+      deploy:
+        description: "사실 변경이 없어도 현재 코드·데이터를 다시 배포"
+        type: boolean
+        default: false
 
 concurrency:
   group: daily-bargaining-update
@@ -120,18 +124,28 @@ jobs:
           git pull --rebase --autostash origin main
           git push
 
-      # 배포 원격은 자격증명이 있을 때만 동작한다. SITES_DEPLOY_REMOTE 시크릿에
-      # 인증 정보가 포함된 푸시 URL을 넣어 두면 이 단계가 실제 배포를 수행한다.
+      # 배포는 Cloudflare Workers(워커 이름 er-radar)로 나간다. 자격증명이 없는
+      # 복제·포크에서도 데이터 갱신은 계속되도록 토큰이 없으면 경고만 남기고 넘어간다.
       - name: 배포
-        if: steps.commit.outputs.factsChanged == 'true' && steps.verify.outcome == 'success'
+        if: >-
+          steps.verify.outcome == 'success' &&
+          (steps.commit.outputs.factsChanged == 'true' || inputs.deploy)
         env:
-          SITES_DEPLOY_REMOTE: ${{ secrets.SITES_DEPLOY_REMOTE }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          if [ -z "$SITES_DEPLOY_REMOTE" ]; then
-            echo "::warning::SITES_DEPLOY_REMOTE 시크릿이 없어 배포를 건너뜁니다. 데이터는 저장소에만 갱신되었습니다."
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::warning::CLOUDFLARE_API_TOKEN 시크릿이 없어 배포를 건너뜁니다. 데이터는 저장소에만 갱신되었습니다."
             exit 0
           fi
-          git push "$SITES_DEPLOY_REMOTE" HEAD:main
+
+          # 화면이 읽는 사실 데이터는 빌드 시점에 번들로 들어간다. 회귀 검증 단계의
+          # npm test가 빌드를 포함하므로 여기서는 반영 후 산출물이 실제로 있는지만 확인한다.
+          if [ ! -f dist/server/wrangler.json ]; then
+            npm run build
+          fi
+
+          npx wrangler deploy
 
       - name: 수집 요약
         if: always()
