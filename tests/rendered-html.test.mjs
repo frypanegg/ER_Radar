@@ -48,9 +48,9 @@ test("server-renders the collective-bargaining framework dashboard", async () =>
   );
 
   const html = await response.text();
-  assert.match(html, /<title>노사교섭 레이더 \| 원청 직접고용 교섭 현황<\/title>/);
+  assert.match(html, /<title>노사교섭 레이더 \| 원청 노조 교섭 현황<\/title>/);
   assert.match(html, /교섭현황 대시보드/);
-  assert.match(html, /원청 직접고용/);
+  assert.match(html, /원청 노조/);
   assert.match(html, /교섭 단계별 조회/);
   assert.match(html, /교섭 경과/);
   assert.match(html, /2026년 현재/);
@@ -77,13 +77,13 @@ test("keeps scope and source guards in the production-facing implementation", as
   ]);
 
   assert.match(page, /"use client"/);
-  assert.match(page, /원청 직접고용 확정 법인 검색/);
+  assert.match(page, /원청 노조 확정 법인 검색/);
   assert.match(page, /교섭 단계별 조회/);
   assert.match(page, /하청·사내협력사·용역·파견/);
   assert.match(page, /추적 기업 추가/);
   assert.match(page, /\/api\/company-requests/);
   assert.doesNotMatch(page, /SkeletonPreview/);
-  assert.match(layout, /노사교섭 레이더 \| 원청 직접고용 교섭 현황/);
+  assert.match(layout, /노사교섭 레이더 \| 원청 노조 교섭 현황/);
   assert.match(layout, /index: false/);
   assert.match(layout, /noimageindex: true/);
   assert.doesNotMatch(layout, /openGraph/);

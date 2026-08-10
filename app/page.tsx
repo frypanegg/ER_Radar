@@ -136,7 +136,7 @@ function stageOverlay(stage: string): { label: string; tone: BadgeTone; group: s
   if (stage === "S6") return [{ label: "찬반·인준 확인", tone: "green", group: "합의·인준" }];
   if (stage === "S5") return [{ label: "잠정합의 확인", tone: "green", group: "합의·인준" }];
   if (stage === "S4") return [{ label: "교착·조정 확인", tone: "orange", group: "조정·쟁의" }];
-  return [{ label: "원청 직접고용 근거 보강", tone: "orange", group: "근거 품질" }];
+  return [{ label: "원청 노조 근거 보강", tone: "orange", group: "근거 품질" }];
 }
 
 function getBargainingCases(year: number): CaseExample[] {
@@ -149,49 +149,49 @@ function getBargainingCases(year: number): CaseExample[] {
       return {
         id: `${company.id}-${year}-unverified`,
         name: company.legalName,
-        subtitle: `${year}년 원청 직접고용 교섭 근거 미확인`,
+        subtitle: "원청 노조 교섭 근거 미확인",
         agreementType: "UNKNOWN",
         agreementLabel: agreementLabels.UNKNOWN,
         yearType: `${year}년 · 미확인`,
         stage: "U",
-        reason: `${year}년의 법인·직접고용 노조·교섭단위를 함께 식별하는 원문을 아직 확보하지 못했습니다. 미착수나 타결로 추정하지 않습니다.`,
+        reason: `${year}년 법인·원청 노조·교섭단위를 함께 식별하는 원문 미확보`,
         lastConfirmed: "—",
         verifiedAt: "—",
         freshness: "근거 보강 대기",
         confidence: 0,
         sourceTier: "C",
-        scope: "원청 직접고용 교섭 근거 미확인 · 공개 단계 갱신 금지",
+        scope: "원청 노조 교섭 근거 미확인 · 공개 단계 갱신 금지",
         majorityUnion: "확인중",
         unionMembers: "공개 근거 미확인",
         electionIssue: "공개 근거 미확인",
-        issueSummary: "직접고용 범위와 해당 연도 교섭 기록을 한 원문에서 함께 확인한 뒤에만 쟁점으로 표시합니다.",
-        breakdownReason: "결렬 여부를 추정하지 않습니다.",
-        voteChangeSummary: "찬반투표·최종안·기존 대비 변경을 확인한 원문이 없습니다.",
+        issueSummary: "원청 노조 범위와 해당 연도 교섭 기록을 한 원문에서 함께 확인한 뒤에만 쟁점 표시",
+        breakdownReason: "결렬 여부 추정 금지",
+        voteChangeSummary: "찬반투표·최종안·기존 대비 변경을 확인한 원문 없음",
         overlays: [{ label: "공개 근거 미확인", tone: "gray", group: "근거 품질" }],
-        evidence: [{ date: "—", title: "공개 가능한 원청 직접고용 사실 없음", source: "검증 보류", tier: "C" }],
+        evidence: [{ date: "—", title: "공개 가능한 원청 노조 사실 없음", source: "검증 보류", tier: "C" }],
         sourceAnnotations: [],
         flowEvents: [],
-        next: "법인명, 직접고용 적용범위, 교섭사실과 원문 URL이 함께 확인될 때까지 상태를 바꾸지 않습니다.",
+        next: "법인명·원청 노조 적용범위·교섭 사실·원문 URL 동시 확인 전까지 상태 변경 없음",
       };
     }
 
     const sourceAnnotations = [
       { event: record.title, sourceUrl: record.sourceUrl, note: `${record.sourceName} · ${formatDate(record.eventDate)} · ${record.annotation}` },
       ...(record.scopeEvidenceUrl && record.scopeEvidenceUrl !== record.sourceUrl
-        ? [{ event: "직접고용 범위 증빙", sourceUrl: record.scopeEvidenceUrl, note: record.directEmploymentEvidence }]
+        ? [{ event: "원청 노조 범위 증빙", sourceUrl: record.scopeEvidenceUrl, note: record.directEmploymentEvidence }]
         : []),
     ];
     const evidence = [
       { date: record.eventDate.slice(5).replace("-", "."), title: record.title, source: record.sourceName, tier: record.sourceTier },
       ...(record.scopeEvidenceUrl && record.scopeEvidenceUrl !== record.sourceUrl
-        ? [{ date: "범위", title: "원청 직접고용 범위 증빙", source: "교섭 범위 검토", tier: "A" as const }]
+        ? [{ date: "범위", title: "원청 노조 범위 증빙", source: "교섭 범위 검토", tier: "A" as const }]
         : []),
     ];
 
     return {
       id: record.id,
       name: record.companyLegalName,
-      subtitle: `${year}년 ${agreementLabels[record.agreementType]} · ${record.unionName}`,
+      subtitle: record.unionName,
       agreementType: record.agreementType,
       agreementLabel: agreementLabels[record.agreementType],
       yearType: `${year}년 ${agreementLabels[record.agreementType]}`,
@@ -202,16 +202,16 @@ function getBargainingCases(year: number): CaseExample[] {
       freshness: record.bargainingYear === currentYear ? `${currentAsOf} 기준 현재 현황` : "과거 사실 초기 데이터",
       confidence: record.confidence,
       sourceTier: record.sourceTier,
-      scope: `원청 법인 직접고용 · ${record.unionName}`,
+      scope: `원청 노조 · ${record.unionName}`,
       round: record.stage === "S7" ? "조인·체결 확인" : record.stage === "S6" ? "찬반·인준 확인" : "원문 교섭 확인",
       majorityUnion: "확인중",
       unionMembers: "공개 근거 미확인",
       electionIssue: "공개 근거 미확인",
       issueSummary: `${record.bargainingYear === currentYear ? "현재 확인 요약" : "과거 기록 요약"}: ${record.factSummary}`,
-      breakdownReason: `${record.bargainingYear === currentYear ? "현재 확인한 기사" : "이 초기 기록"}에는 확인된 결렬 사유가 없습니다. 원문에 명시된 경우에만 별도 쟁점으로 갱신합니다.`,
+      breakdownReason: `${record.bargainingYear === currentYear ? "현재 확인한 기사" : "이 초기 기록"}에 확인된 결렬 사유 없음 · 원문 명시 시에만 별도 쟁점 갱신`,
       voteChangeSummary: record.stage === "S6" || record.stage === "S7"
         ? `원문 확인: ${record.factSummary}`
-        : "찬반투표·최종안의 기존 대비 변경은 확인된 원문이 있을 때만 표시합니다.",
+        : "찬반투표·최종안의 기존 대비 변경 · 확인된 원문 있을 때만 표시",
       overlays: stageOverlay(record.stage),
       evidence,
       sourceAnnotations,
@@ -224,7 +224,7 @@ function getBargainingCases(year: number): CaseExample[] {
             summary: record.factSummary,
             sourceUrl: record.sourceUrl,
           }],
-      next: "다음 일일 수집에서는 원문 추가 확인, 조합원 수·대표성, 쟁점·최종안 변경을 분리 검증합니다.",
+      next: "다음 일일 수집 · 원문 추가 확인, 조합원 수·대표성, 쟁점·최종안 변경 분리 검증",
     };
   });
 }
@@ -239,32 +239,32 @@ const filters: { id: AgreementFilter; label: string }[] = [
 ];
 
 const pipeline = [
-  { icon: Search, title: "뉴스 후보 수집", text: "법인명·임단협·교섭·잠정합의 등 5개 의도로 후보를 모읍니다." },
-  { icon: Database, title: "사실 단위 정규화", text: "URL·제목·발행일을 묶고, 예정과 발생을 구분합니다." },
-  { icon: ShieldCheck, title: "근거 등급 판정", text: "출처·명시성·교차 확인으로 신뢰도를 계산합니다." },
-  { icon: Activity, title: "상태 안전 반영", text: "검증된 이벤트만 주 단계와 병렬 배지를 갱신합니다." },
+  { icon: Search, title: "뉴스 후보 수집", text: "법인명·임단협·교섭·잠정합의 등 5개 의도로 후보 수집" },
+  { icon: Database, title: "사실 단위 정규화", text: "URL·제목·발행일 결합 · 예정과 발생 구분" },
+  { icon: ShieldCheck, title: "근거 등급 판정", text: "출처·명시성·교차 확인으로 신뢰도 산출" },
+  { icon: Activity, title: "상태 안전 반영", text: "검증된 이벤트만 주 단계·병렬 배지 갱신" },
 ];
 
 const guardrails = [
   {
     label: "찬반투표 가결",
-    meaning: "파업 개시가 아닙니다",
-    description: "투표 결과, 예고, 실제 쟁의행위는 별도의 이벤트로 남깁니다.",
+    meaning: "파업 개시 아님",
+    description: "투표 결과·예고·실제 쟁의행위 각각 별도 이벤트로 기록",
   },
   {
     label: "잠정합의",
-    meaning: "최종 체결이 아닙니다",
-    description: "인준·서명·발효를 통과해야 최종 체결 단계로 표시합니다.",
+    meaning: "최종 체결 아님",
+    description: "인준·서명·발효 확인 후에만 최종 체결 단계 표시",
   },
   {
     label: "새 기사 없음",
-    meaning: "미착수가 아닙니다",
-    description: "기존 확정 상태는 유지하고, 신선도 배지로만 경과를 알립니다.",
+    meaning: "미착수 아님",
+    description: "기존 확정 상태 유지 · 신선도 배지로만 경과 표시",
   },
   {
     label: "하청·용역·파견 노조 사례",
     meaning: "원청 노조 현황에서 제외",
-    description: "직접고용이 확인되지 않은 원청 상대 교섭은 이 보드에 합산하지 않고 별도 검토함으로 분리합니다.",
+    description: "원청 노조로 확인되지 않은 원청 상대 교섭 · 보드 합산 제외 · 별도 검토함 분리",
   },
 ];
 
@@ -355,13 +355,13 @@ export default function Home() {
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) {
-        setCompanyRequestMessage(result.error ?? "요청을 접수하지 못했습니다. 입력값을 확인해 주세요.");
+        setCompanyRequestMessage(result.error ?? "요청 접수 실패 · 입력값 확인 필요");
         return;
       }
-      setCompanyRequestMessage(result.message ?? "추적 기업 추가 요청을 접수했습니다.");
+      setCompanyRequestMessage(result.message ?? "추적 기업 추가 요청 접수 완료");
       setCompanyRequest((current) => ({ ...current, companyLegalName: "", industry: "", websiteUrl: "", rationale: "", adminCode: "" }));
     } catch {
-      setCompanyRequestMessage("네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+      setCompanyRequestMessage("네트워크 오류 발생 · 잠시 후 재시도");
     } finally {
       setIsSubmittingCompanyRequest(false);
     }
@@ -371,7 +371,7 @@ export default function Home() {
     <main className="site-shell">
       <section className="top-band" aria-label="서비스 안내">
         <div className="container top-band-inner">
-          <p><Sparkles size={14} aria-hidden="true" /> {currentAsOf} 기준 현황 · 원청 법인 직접고용 노조 교섭만 다룹니다</p>
+          <p><Sparkles size={14} aria-hidden="true" /> {currentAsOf} 기준 현황 · 원청 노조 교섭만 수록</p>
           <p><Clock3 size={14} aria-hidden="true" /> 수집 설계 기준: 매일 06:30 KST · 법인별 1회</p>
         </div>
       </section>
@@ -396,12 +396,11 @@ export default function Home() {
       <section className="hero compact-hero" id="overview">
         <div className="container hero-grid compact-hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow"><span className="pulse-dot" /> 초기 추적 12개사 · 2021–2026 교섭 기록</div>
-            <h1>대한민국 주요 제조업의<br />단체 교섭 현황을 모니터링 합니다.</h1>
+            <h1>대한민국 주요 제조업의 단체 교섭 현황을 모니터링 합니다.</h1>
             <p className="hero-description">
-              원청 노동조합의 임금협상과 단체교섭 <strong>주 단계</strong>와 교섭·조정·쟁의·타결의 <strong>상태</strong>를 함께 읽는 대시보드
+              원청 노조의 임금협상과 단체교섭 <strong>주 단계</strong>와 교섭·조정·쟁의·타결의 <strong>상태</strong>를 함께 읽는 대시보드
             </p>
-            <p className="hero-footnote"><CircleAlert size={15} /> 교섭 단계는 완료율이 아니라, 기사 원문으로 확인된 현재 좌표입니다.</p>
+            <p className="hero-footnote"><CircleAlert size={15} /> 교섭 단계 · 완료율 아닌 기사 원문으로 확인한 현재 좌표</p>
           </div>
         </div>
       </section>
@@ -412,7 +411,7 @@ export default function Home() {
             <div>
               <p className="section-kicker">교섭현황 · 검증 데이터</p>
               <h2>교섭현황 대시보드</h2>
-              <p><strong>원청 직접고용이 확인된 노조</strong>만, 법인 × 교섭연도 × 협약유형 × 교섭단위 × 적용범위의 교섭 기록으로 봅니다. 미확인 연도는 미착수·타결로 추정하지 않습니다.</p>
+              <p><strong>원청 노조</strong>만 · 법인 × 교섭연도 × 협약유형 × 교섭단위 × 적용범위 단위의 교섭 기록</p>
             </div>
             <div className="dashboard-actions">
               <div className="data-health" aria-label="데이터 상태 설명">
@@ -427,7 +426,7 @@ export default function Home() {
 
           <div className="scope-guard" role="note">
             <ShieldCheck size={17} aria-hidden="true" />
-            <p><strong>포함:</strong> 원청 법인에 직접 고용된 노조의 교섭 기록. <strong>제외:</strong> 하청·사내협력사·용역·파견 노조의 원청 상대 교섭은 원청 노조 현황에 합산·표시하지 않으며, 별도 검토 대상으로 분리합니다.</p>
+            <p><strong>포함:</strong> 원청 노조의 교섭 기록 · <strong>제외:</strong> 하청·사내협력사·용역·파견 노조의 원청 상대 교섭 → 원청 노조 현황 합산·표시 제외, 별도 검토 대상 분리</p>
           </div>
 
           <div className="year-filter-bar" aria-label="연도별 교섭현황 조회">
@@ -476,13 +475,13 @@ export default function Home() {
             </div>
             <label className="company-search">
               <Search size={16} aria-hidden="true" />
-              <span className="sr-only">원청 직접고용 확정 법인 검색</span>
+              <span className="sr-only">원청 노조 확정 법인 검색</span>
               <input
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 type="search"
-                placeholder="직접고용 확정 법인 검색"
-                aria-label="원청 직접고용 확정 법인 검색"
+                placeholder="원청 노조 확정 법인 검색"
+                aria-label="원청 노조 확정 법인 검색"
               />
             </label>
           </div>
@@ -523,8 +522,8 @@ export default function Home() {
               {visibleCases.length === 0 && (
                 <div className="empty-result" role="status">
                   <Search size={20} aria-hidden="true" />
-                  <strong>직접고용이 확인된 교섭 기록을 찾지 못했습니다.</strong>
-                  <span>원청 직접고용이 확인된 교섭 기록만 검색 결과로 보여줍니다.</span>
+                  <strong>조건에 맞는 원청 노조 교섭 기록 없음</strong>
+                  <span>원청 노조로 확인된 교섭 기록만 검색 결과 노출</span>
                   <button type="button" onClick={() => { setSearchTerm(""); setStageFocus("ALL"); }}>검색·단계 필터 초기화</button>
                 </div>
               )}
@@ -540,7 +539,7 @@ export default function Home() {
                     aria-pressed={isActive}
                   >
                     <span className="case-card-top">
-                      <span className="case-type">{item.yearType} · {item.agreementLabel}</span>
+                      <span className="case-type">{item.yearType}</span>
                       <StagePill stage={item.stage} />
                     </span>
                     <span className="case-card-title-row">
@@ -554,7 +553,7 @@ export default function Home() {
                       ))}
                     </span>
                     <span className="case-facts">
-                      <span title="교섭창구 참여노조 조합원 기준입니다. 대표교섭노조 여부나 직접고용 전체 대비 가입률과 다릅니다.">참여노조 과반 <b className={`majority-${item.majorityUnion === "O" ? "yes" : item.majorityUnion === "X" ? "no" : "pending"}`}>{item.majorityUnion}</b></span>
+                      <span title="교섭창구 참여노조 조합원 기준 · 대표교섭노조 여부, 원청 노조 전체 대비 가입률과 구분">참여노조 과반 <b className={`majority-${item.majorityUnion === "O" ? "yes" : item.majorityUnion === "X" ? "no" : "pending"}`}>{item.majorityUnion}</b></span>
                       <span>조합원 {item.unionMembers}</span>
                     </span>
                     <span className="election-snippet">선거: {item.electionIssue}</span>
@@ -593,7 +592,7 @@ export default function Home() {
               <section className="bargaining-flow" aria-label="교섭 경과">
                 <div className="subsection-title"><span>교섭 경과</span><small>기사 원문에서 확인된 발생·확인 순서</small></div>
                 {selectedCase.flowEvents.length === 0 ? (
-                  <p className="flow-empty">해당 연도 교섭 경과를 보여 줄 정도의 원청 직접고용 근거가 아직 확보되지 않았습니다.</p>
+                  <p className="flow-empty">해당 연도 교섭 경과 표시에 필요한 원청 노조 근거 미확보</p>
                 ) : (
                   <ol className="flow-list">
                     {selectedCase.flowEvents.map((flow, index) => (
@@ -610,7 +609,7 @@ export default function Home() {
                   </ol>
                 )}
                 {selectedCase.flowEvents.length === 1 && selectedYear !== currentYear && (
-                  <p className="flow-coverage-note">초기 데이터에서 검증된 핵심 경과입니다. 앞선 과정은 원문 근거를 추가 확보하면 순서대로 이어서 표시합니다.</p>
+                  <p className="flow-coverage-note">초기 데이터에서 검증한 핵심 경과 · 앞선 과정은 원문 근거 추가 확보 시 순서대로 연결 표시</p>
                 )}
               </section>
 
@@ -622,11 +621,11 @@ export default function Home() {
 
               <div className="identity-facts" aria-label="교섭 기본 정보">
                 <div><span>올해 협상유형</span><strong>{selectedCase.yearType}</strong></div>
-                <div title="교섭창구 참여노조 조합원 기준입니다. 대표교섭노조 여부나 직접고용 전체 대비 가입률과 다릅니다."><span>참여노조 과반</span><strong className={`majority-${selectedCase.majorityUnion === "O" ? "yes" : selectedCase.majorityUnion === "X" ? "no" : "pending"}`}>{selectedCase.majorityUnion}</strong></div>
+                <div title="교섭창구 참여노조 조합원 기준 · 대표교섭노조 여부, 원청 노조 전체 대비 가입률과 구분"><span>참여노조 과반</span><strong className={`majority-${selectedCase.majorityUnion === "O" ? "yes" : selectedCase.majorityUnion === "X" ? "no" : "pending"}`}>{selectedCase.majorityUnion}</strong></div>
                 <div><span>조합원 수</span><strong>{selectedCase.unionMembers}</strong></div>
                 <div><span>노조 선거 이슈</span><strong>{selectedCase.electionIssue}</strong></div>
               </div>
-              <p className="majority-definition">※ 참여노조 과반은 <strong>교섭창구 참여노조 조합원 기준</strong>입니다. 대표교섭노조 여부와 직접고용 전체 대비 가입률은 별도 필드로 기록하며 서로 대체하지 않습니다.</p>
+              <p className="majority-definition">※ 참여노조 과반 = <strong>교섭창구 참여노조 조합원 기준</strong> · 대표교섭노조 여부와 원청 노조 전체 대비 가입률은 별도 필드 기록 · 상호 대체 불가</p>
 
               <div className="overlay-area">
                 <div className="subsection-title"><span>병렬 상태</span><small>주 단계와 독립적으로 함께 표시</small></div>
@@ -675,7 +674,7 @@ export default function Home() {
 
               <section className="source-annotations" aria-label="원문 URL 주석">
                 <div className="subsection-title"><span>원문 URL 주석</span><small>검증에 사용한 실제 원문</small></div>
-                {selectedCase.sourceAnnotations.length === 0 && <p className="source-annotation-empty">공개 가능한 원문과 직접고용 범위 근거를 추가 확인 중입니다.</p>}
+                {selectedCase.sourceAnnotations.length === 0 && <p className="source-annotation-empty">공개 가능한 원문·원청 노조 범위 근거 추가 확인 중</p>}
                 {selectedCase.sourceAnnotations.map((annotation) => (
                   <div className="source-annotation" key={annotation.sourceUrl}>
                     <strong>{annotation.event}</strong>
@@ -694,11 +693,11 @@ export default function Home() {
           <div className="section-heading framework-heading">
             <div>
               <p className="section-kicker">상태 모델</p>
-              <h2>단계는 정렬 좌표이고,<br />진행률이 아닙니다.</h2>
+              <h2>단계는 정렬 좌표,<br />진행률 아님</h2>
             </div>
             <div className="framework-note">
               <span className="note-symbol">≠</span>
-              <p><strong>예외 경로를 허용합니다.</strong> 조정 후 재교섭, 잠정합의 부결 후 교착, 인준 뒤 서명 대기는 모두 서로 다른 상태입니다.</p>
+              <p><strong>예외 경로 허용</strong> · 조정 후 재교섭, 잠정합의 부결 후 교착, 인준 뒤 서명 대기 = 각각 다른 상태</p>
             </div>
           </div>
 
@@ -741,7 +740,7 @@ export default function Home() {
             </ol>
             <div className="stage-caption">
               <Activity size={16} />
-              <p>현재 단계는 <strong>가장 최근의 고신뢰 발생 이벤트</strong>를 기준으로 선택합니다. 예정된 일정은 주 단계를 확정하지 않습니다.</p>
+              <p>현재 단계 기준 = <strong>가장 최근의 고신뢰 발생 이벤트</strong> · 예정 일정은 주 단계 미확정</p>
             </div>
           </div>
 
@@ -765,9 +764,9 @@ export default function Home() {
         <div className="container collection-layout">
           <div className="collection-copy">
             <p className="section-kicker">일일 수집 설계</p>
-            <h2>매일 한 번,<br /><em>사실부터</em> 쌓습니다.</h2>
+            <h2>매일 한 번,<br /><em>사실부터</em> 축적</h2>
             <p>
-              법인별 수집은 하루 1회로 제한합니다. 먼저 원청 법인 <strong>직접고용 노조 교섭인지 검증</strong>하고, 기사 원문을 복제하는 대신 제목·링크·발행 정보와 짧은 사실 요약을 보존해 상태 변경의 근거를 추적합니다.
+              법인별 수집 하루 1회 제한 · 1단계 <strong>원청 노조 교섭 여부 검증</strong> · 기사 원문 복제 대신 제목·링크·발행 정보와 짧은 사실 요약 보존으로 상태 변경 근거 추적
             </p>
             <div className="collection-timing">
               <CalendarDays size={20} aria-hidden="true" />
@@ -797,7 +796,7 @@ export default function Home() {
               <p className="section-kicker">해석 안전장치</p>
               <h2>상태를 과장하지 않는 규칙</h2>
             </div>
-            <p>예정·주장·발생·정정은 같은 신호가 아닙니다.</p>
+            <p>예정·주장·발생·정정 = 서로 다른 신호</p>
           </div>
           <div className="guardrail-grid">
             {guardrails.map((item) => (
@@ -815,7 +814,7 @@ export default function Home() {
       <section className="principle-banner">
         <div className="container principle-inner">
           <div className="principle-icon"><UsersRound size={23} aria-hidden="true" /></div>
-          <p><strong>원청 직접고용 검증 게이트를 먼저 통과한 노조 교섭만 표시</strong>합니다. 하청·사내협력사·용역·파견 노조의 원청 상대 교섭은 원청 노조 현황에 합산하지 않습니다.</p>
+          <p><strong>원청 노조 검증 게이트 통과 교섭만 표시</strong> · 하청·사내협력사·용역·파견 노조의 원청 상대 교섭은 원청 노조 현황 합산 제외</p>
           <a href="#board">교섭현황으로 돌아가기 <ArrowRight size={15} /></a>
         </div>
       </section>
@@ -830,7 +829,7 @@ export default function Home() {
               </div>
               <button className="dialog-close" type="button" aria-label="추적 기업 추가 창 닫기" onClick={() => setIsAddCompanyOpen(false)}><X size={18} /></button>
             </div>
-            <p className="company-request-intro">법인 실명과 참고 근거를 보내면, 원청 직접고용 노조 범위 검토를 통과한 뒤에만 추적 목록에 반영합니다.</p>
+            <p className="company-request-intro">법인 실명·참고 근거 제출 → 원청 노조 범위 검토 통과 후에만 추적 목록 반영</p>
             <form className="company-request-form" onSubmit={submitCompanyRequest}>
               <label>
                 <span>법인 실명 <b>필수</b></span>
@@ -846,13 +845,13 @@ export default function Home() {
               </label>
               <label>
                 <span>추가 사유</span>
-                <textarea maxLength={800} value={companyRequest.rationale} onChange={(event) => setCompanyRequest((current) => ({ ...current, rationale: event.target.value }))} placeholder="산업 영향, 직접고용 노조 교섭 노출도 등" rows={3} />
+                <textarea maxLength={800} value={companyRequest.rationale} onChange={(event) => setCompanyRequest((current) => ({ ...current, rationale: event.target.value }))} placeholder="산업 영향, 원청 노조 교섭 노출도 등" rows={3} />
               </label>
               <label>
                 <span>운영 관리 코드 <b>필수</b></span>
                 <input type="password" required value={companyRequest.adminCode} onChange={(event) => setCompanyRequest((current) => ({ ...current, adminCode: event.target.value }))} autoComplete="off" placeholder="서버에만 보관되는 코드" />
               </label>
-              <p className="company-request-security">관리 코드 원문은 저장하지 않으며, 요청은 검토 대기 상태로만 접수됩니다.</p>
+              <p className="company-request-security">관리 코드 원문 미저장 · 요청은 검토 대기 상태로만 접수</p>
               {companyRequestMessage && <p className="company-request-message" role="status">{companyRequestMessage}</p>}
               <div className="company-request-actions">
                 <button className="dialog-cancel" type="button" onClick={() => setIsAddCompanyOpen(false)}>취소</button>

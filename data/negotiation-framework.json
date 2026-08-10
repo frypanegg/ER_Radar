@@ -127,7 +127,7 @@
         "rank": 0,
         "label": "올해 현황 미확인",
         "short_label": "미확인",
-        "description": "올해 교섭현황을 뒷받침하는 충분한 신뢰 근거가 아직 없다. 미착수로 추정하지 않는다.",
+        "description": "올해 교섭현황을 뒷받침하는 신뢰 근거 미확보 · 미착수 추정 금지",
         "is_terminal": false
       },
       {
@@ -135,7 +135,7 @@
         "rank": 10,
         "label": "미착수·기존협약 확인",
         "short_label": "미착수 확인",
-        "description": "기존 협약은 유효하나 올해 교섭이 시작되지 않았다는 명시 근거가 있다.",
+        "description": "기존 협약 유효 · 올해 교섭 미개시의 명시 근거 확인",
         "is_terminal": false
       },
       {
@@ -143,7 +143,7 @@
         "rank": 20,
         "label": "요구안 준비·확정",
         "short_label": "요구안",
-        "description": "요구안·제시안의 작성, 의결, 전달 또는 일정 준비가 중심이다.",
+        "description": "요구안·제시안의 작성·의결·전달 또는 일정 준비 중심",
         "is_terminal": false
       },
       {
@@ -151,7 +151,7 @@
         "rank": 30,
         "label": "대표·교섭단위 정비",
         "short_label": "대표·단위",
-        "description": "교섭요구, 창구 단일화, 대표노조 또는 교섭단위가 주된 쟁점이다.",
+        "description": "교섭요구·창구 단일화·대표노조·교섭단위가 주된 쟁점",
         "is_terminal": false
       },
       {
@@ -159,7 +159,7 @@
         "rank": 40,
         "label": "본교섭 진행",
         "short_label": "교섭",
-        "description": "상견례, 본교섭, 실무협의, 수정안 교환 또는 교섭 차수가 확인된다.",
+        "description": "상견례·본교섭·실무협의·수정안 교환 또는 교섭 차수 확인",
         "is_terminal": false
       },
       {
@@ -167,7 +167,7 @@
         "rank": 50,
         "label": "교착·조정 경로",
         "short_label": "교착·조정",
-        "description": "교착·결렬 또는 노동위원회 조정이 현재 핵심 경로다.",
+        "description": "교착·결렬 또는 노동위원회 조정이 현재 핵심 경로",
         "is_terminal": false
       },
       {
@@ -175,7 +175,7 @@
         "rank": 60,
         "label": "잠정합의",
         "short_label": "잠정합의",
-        "description": "잠정·가합의 또는 부분합의가 확인되었으나 최종 체결 전이다.",
+        "description": "잠정·가합의 또는 부분합의 확인 · 최종 체결 전",
         "is_terminal": false
       },
       {
@@ -183,7 +183,7 @@
         "rank": 70,
         "label": "인준·서명 대기",
         "short_label": "인준",
-        "description": "조합원 찬반투표, 인준 결과 또는 조인 전 절차가 진행 중이다.",
+        "description": "조합원 찬반투표·인준 결과 또는 조인 전 절차 진행 중",
         "is_terminal": false
       },
       {
@@ -191,7 +191,7 @@
         "rank": 80,
         "label": "최종 체결·발효",
         "short_label": "체결",
-        "description": "협약의 서명·조인 또는 효력 발생이 확인되었다.",
+        "description": "협약의 서명·조인 또는 효력 발생 확인",
         "is_terminal": false
       },
       {
@@ -199,7 +199,7 @@
         "rank": 90,
         "label": "이행·사후관리",
         "short_label": "이행",
-        "description": "소급지급, 공동위원회, 후속협의 등 이행이 중심이다.",
+        "description": "소급지급·공동위원회·후속협의 등 이행 중심",
         "is_terminal": false
       }
     ],

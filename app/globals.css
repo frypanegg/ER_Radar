@@ -2853,17 +2853,25 @@ a:focus-visible {
 }
 
 .compact-hero .hero-copy {
-  max-width: 920px;
+  max-width: 100%;
 }
 
 .compact-hero .eyebrow {
   margin-bottom: 10px;
 }
 
+/* 대표 문장은 데스크톱·태블릿에서 줄바꿈 없이 한 줄로 유지한다. */
 .compact-hero h1 {
   font-size: clamp(31px, 3.6vw, 48px);
   line-height: 1.23;
   letter-spacing: -0.06em;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .compact-hero h1 {
+    white-space: normal;
+  }
 }
 
 .compact-hero .hero-description {

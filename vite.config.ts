@@ -11,7 +11,9 @@ const { d1, r2 } = hostingConfig;
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 
+// Worker 이름이 배포 URL의 서브도메인이 된다: er-radar.<계정>.workers.dev
 const localBindingConfig = {
+  name: "er-radar",
   main: "./worker/index.ts",
   compatibility_flags: ["nodejs_compat"],
   d1_databases: d1

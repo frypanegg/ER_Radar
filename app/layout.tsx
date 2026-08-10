@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "노사교섭 레이더 | 원청 직접고용 교섭 현황",
-  description: "한국 주요 기업 원청 직접고용 노조의 임금·단체교섭 사실 데이터 현황",
+  title: "노사교섭 레이더 | 원청 노조 교섭 현황",
+  description: "한국 주요 기업 원청 노조의 임금·단체교섭 사실 데이터 현황",
   robots: {
     index: false,
     follow: false,
