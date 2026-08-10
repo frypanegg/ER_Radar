@@ -45,8 +45,41 @@ node scripts/collect-news.mjs
 
 자격증명이 모두 있으면 NAVER API HUB 뉴스 검색을 우선 사용한다. 자격증명이 없으면
 Google News RSS를 후보 탐색용으로 사용하며, `auto` 모드에서 개별 NAVER 요청이 실패한 경우에도
-해당 검색어만 RSS로 재시도한다. RSS만으로 발견된 후보는 원문 URL과 출처를 별도 확인하기 전에는
-교섭사건의 상태·쟁점·노출도 집계에 반영하지 않는다.
+해당 검색어만 RSS로 재시도한다. **현재 운영 기준 수집원은 Google News RSS다.**
+
+RSS만으로 발견된 후보는 원문 URL 확인 전까지 교섭사건의 상태·쟁점·노출도 집계에
+반영하지 않는다. 그 확인을 자동화한 것이 다음 절의 원문 URL 되돌리기다.
+
+## 원문 URL 되돌리기와 검증
+
+`scripts/resolve-google-news.mjs`는 RSS가 주는 `news.google.com/rss/articles/CBMi…`
+링크를 발행사 원문 주소로 되돌린다. 이 링크는 HTTP 리다이렉트가 아니라 페이지 내부
+스크립트로 최종 주소를 만들기 때문에 다음 두 단계를 거친다. 헤드리스 브라우저는
+쓰지 않고 `fetch`만 사용한다.
+
+1. 기사 페이지에서 `data-n-a-id`·`data-n-a-ts`·`data-n-a-sg` 서명 값을 읽는다.
+2. 같은 서명으로 `batchexecute` RPC를 호출해 발행사 URL을 받는다.
+
+되돌린 URL은 세 가지를 통과해야 원문 근거로 인정한다.
+
+| 검사 | 통과 조건 | 실패 시 상태 |
+| --- | --- | --- |
+| 서명 추출 | 세 값이 모두 있음 | `SIGNATURE_NOT_FOUND` |
+| 주소 추출 | 구글이 아닌 http(s) 주소가 나옴 | `RESOLUTION_FAILED` |
+| 도달 가능성 | 원문 응답이 2xx·3xx | `RESOLVED_UNREACHABLE` |
+| 제목 일치 | RSS 제목 토큰의 40% 이상이 원문 페이지 제목에 있음 | `RESOLVED_TITLE_MISMATCH` |
+
+`RESOLVED_AND_REACHABLE`인 후보만 `originalUrl`이 채워지고
+`requiresSourceVerification = false`가 되어 상태 집계 후보로 올라간다. 나머지는 검증
+결과를 감사용으로 남기되 공개 상태를 바꾸지 않는다.
+
+제목 일치 검사는 장식용이 아니다. 응답의 URL은 JSON 문자열 안의 JSON 문자열이라
+역슬래시가 겹쳐 들어오는데(`?idxno\\u003d85080`), 이를 제대로 풀지 않으면 쿼리스트링이
+잘린 주소가 만들어진다. 잘린 주소는 대개 발행사의 다른 기사로 연결되며, 제목 일치
+검사가 이를 걸러낸다. 회귀 사례는 `tests/daily-automation.test.mjs`에 있다.
+
+되돌리기는 네트워크 비용이 크므로 원청 노조 공개 후보로 분류된 기사에만 적용하고,
+1회 실행당 기본 60건으로 제한한다(`--max-resolve`). `--no-resolve`로 끌 수 있다.
 
 ```bash
 # RSS만 사용
@@ -76,6 +109,11 @@ CRON_TZ=Asia/Seoul
 UTC만 지원하는 스케줄러에서는 `30 21 * * *`로 설정한다. 이는 KST 기준 다음 날
 06:30이며, 한국은 일광절약시간을 적용하지 않는다.
 
+**실제 운영 스케줄러는 `.github/workflows/daily-bargaining-update.yml`이다.**
+`schedule: cron: "30 21 * * *"`로 등록되어 있고, 수집 → 원문 확인 → 사실 반영 →
+회귀 검증 → 커밋 → 배포를 한 작업에서 처리한다. `workflow_dispatch`로 수동 실행할
+수 있으며 `force` 입력을 켜면 같은 KST 날짜라도 다시 수집한다.
+
 수집기는 결과의 `batch.kstDate`를 확인한다. 같은 KST 날짜에 이미 실행한 배치가
 있으면 네트워크 요청 없이 종료하므로 잘못된 중복 실행도 하루 한 번으로 제한된다.
 장애 복구나 분류 규칙 검증을 위해 의도적으로 다시 실행할 때만 `--force`를 쓴다.
@@ -92,15 +130,17 @@ UTC만 지원하는 스케줄러에서는 `30 21 * * *`로 설정한다. 이는 
 5. 대괄호형 말머리와 공백·문장부호를 정규화한 제목으로 2차 중복 제거한다.
 6. 범위 검토 서브에이전트가 먼저 원청 직접고용 노조 여부를 판정·격리한다.
 7. 포함된 후보에 한해 회사, 교섭단위, 협상 단계, 예외 상태를 분류한다.
-8. 최신성 점수와 검토 필요 여부를 계산해 JSON을 교체한다.
+8. 공개 후보로 남은 기사만 원문 URL을 되돌리고 도달 가능성·제목 일치를 확인한다.
+9. 확인 결과를 반영해 다시 분류하고, 최신성 점수와 검토 필요 여부를 계산해 JSON을 교체한다.
 
 `eligibleForStatusAggregation: true`인 기사만 후속 교섭사건 집계기가 상태를 바꿀 수 있다.
-원청 직접고용 범위를 통과했더라도 원문 URL이 없거나 RSS 단독 후보이면
-`requiresSourceVerification: true`로 남아, 사람이 원문·출처를 확인할 때까지 단계·쟁점·노출도에
-반영하지 않는다.
+원청 직접고용 범위를 통과했더라도 원문 URL 확인에 실패하면 `requiresSourceVerification: true`로
+남아 단계·쟁점·노출도에 반영하지 않는다.
 
-RSS와 API의 설명 필드는 분류에도 사용하지 않으며 결과에 저장하지 않는다. 검색
-결과의 URL을 따라가 원문 페이지를 내려받지도 않는다.
+RSS와 API의 설명 필드는 분류에도 사용하지 않으며 결과에 저장하지 않는다.
+원문 페이지는 **URL이 실재하는지와 제목이 일치하는지 확인하는 용도로만** 내려받고,
+본문·요약문은 파싱하지도 저장하지도 않는다. 결과에 남는 것은 제목, 매체, 발행 일시,
+원문 URL, 그리고 이 프로젝트가 계산한 분류뿐이다.
 
 ## 원청 직접고용 노조 범위 제한과 검토 서브에이전트
 
@@ -434,3 +474,41 @@ node scripts/collect-news.mjs --dry-run --source google --max-per-query 3
 검색어·별칭을 바꿀 때는 오탐과 누락을 함께 확인한다. 특히 `포스코`처럼 그룹과
 사업회사가 같은 이름을 공유하거나, `대우조선해양`처럼 과거 사명이 기사에 남아
 있는 회사는 수동 검토 표본을 정기적으로 살펴야 한다.
+
+## 공개 사실 시드 자동 반영
+
+`scripts/apply-daily-update.mjs`는 수집 결과 가운데 아래 조건을 모두 만족하는
+기사만 `data/current-2026-fact-seed.json`에 반영한다.
+
+- `scopeClassification = PRIMARY_DIRECT_UNION`이고 `includeInPrimaryDashboard = true`
+- `eligibleForStatusAggregation = true`이고 원문 URL 확인 완료
+- 기사에 매칭된 법인이 하나
+- 주 단계가 `U`가 아니고 `retainMainState`가 아님
+- 기존 기록보다 발생일이 늦음
+
+반영 범위는 **사건 정보로 한정한다.** 단계, 발생일, 제목, 원문 URL, 매체, 신뢰도,
+교섭 경과 항목만 갱신하고 노조명·직접고용 범위 근거·범위 증빙 URL·법인명은 기존
+값을 유지한다. 이 값들은 기사 제목으로 추정할 수 없기 때문이다. 추적 목록에 없는
+법인은 반영하지 않으며, 새 법인 추가는 사람의 범위 검토를 거친다.
+
+자동 반영된 기록은 `factualStatus = "AUTO_COLLECTED_TITLE_BASIS"`로 표시해 사람이
+검증한 `VERIFIED_SOURCE` 기록과 구분한다. 사람이 검증한 `S7`·`S8` 체결 기록은 같은
+등급의 근거 없이 하위 단계로 되돌아가지 않는다.
+
+모든 실행 결과는 `data/daily-update-audit.json`에 최근 60회까지 남는다. 반영된 항목은
+법인·이전 단계·다음 단계·원문 URL까지, 보류된 항목은 사유 코드별 건수로 기록한다.
+
+```bash
+# 반영 계획만 확인
+node scripts/apply-daily-update.mjs --dry-run
+
+# 격리된 입력으로 시험
+node scripts/apply-daily-update.mjs --candidates /tmp/c.json --seed /tmp/s.json --audit /tmp/a.json
+```
+
+### 자동화가 보수적으로 동작하는 이유
+
+제목만으로 단계를 올릴 수 없는 신호가 많다. 파업 찬반투표 가결, 파업권 확보,
+부분파업 보도는 그 자체로 교섭 결렬(`S4`)을 만들지 않으며 기존 상태를 유지한다.
+실제로 2026-08-10 실행에서는 158건 중 원문 확인까지 통과한 23건이 있었으나 공개
+단계를 바꾼 건은 0건이었다. 이는 규칙이 의도대로 동작한 결과이지 수집 실패가 아니다.

@@ -12,6 +12,10 @@ import {
 } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  RESOLUTION_STATUS,
+  resolveGoogleNewsUrl,
+} from "./resolve-google-news.mjs";
 
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
 const SCRIPT_DIRECTORY = dirname(SCRIPT_PATH);
@@ -85,6 +89,8 @@ const HELP_TEXT = `
   --source <auto|naver|google>  수집원 선택 (기본값: auto)
   --year <YYYY>                대상 협상 연도 (기본값: 현재 KST 연도)
   --max-per-query <N>          쿼리별 최대 기사 수
+  --no-resolve                 Google 링크의 원문 URL 되돌리기 생략
+  --max-resolve <N>            원문 URL 되돌리기 최대 건수 (기본값: 60)
   --config <path>              소스 설정 JSON 경로
   --output <path>              결과 JSON 경로
   --force                      같은 KST 날짜의 배치를 강제 재실행
@@ -108,6 +114,8 @@ function parseArguments(argv) {
     dryRun: false,
     verbose: false,
     help: false,
+    resolveOriginalUrls: true,
+    maxResolutions: null,
   };
 
   const readValue = (index, flag) => {
@@ -139,6 +147,13 @@ function parseArguments(argv) {
         break;
       case "--output":
         options.outputPath = resolve(process.cwd(), readValue(index, argument));
+        index += 1;
+        break;
+      case "--no-resolve":
+        options.resolveOriginalUrls = false;
+        break;
+      case "--max-resolve":
+        options.maxResolutions = Number.parseInt(readValue(index, argument), 10);
         index += 1;
         break;
       case "--force":
@@ -1615,8 +1630,14 @@ function classifyArticle(
     multipleCompanies ||
     frameworkNeedsReview ||
     annotations.needsReview;
+  // 원문 URL 근거는 두 경로 중 하나로만 확보한다. NAVER 검색 API가 직접 준 원문
+  // 링크이거나, Google News RSS 링크를 발행사 주소로 되돌린 뒤 그 페이지가 살아
+  // 있고 제목까지 일치하는 것을 확인한 경우다. 둘 다 아니면 공개 상태를 바꾸지 않는다.
+  const resolvedByGoogle =
+    record.sourceVerification?.status === RESOLUTION_STATUS.verified;
   const requiresSourceVerification =
-    !record.collectionSources.includes("naver") || !record.originalUrl;
+    !record.originalUrl ||
+    (!record.collectionSources.includes("naver") && !resolvedByGoogle);
   const eligibleForStatusAggregation =
     includeInPrimaryDashboard && !requiresSourceVerification && !needsReview;
   const companyConfidence = Math.min(
@@ -1645,6 +1666,9 @@ function classifyArticle(
     publishedAt: record.publishedAt,
     url: record.url,
     originalUrl: record.originalUrl,
+    ...(record.sourceVerification
+      ? { sourceVerification: record.sourceVerification }
+      : {}),
     classification: {
       stage: stageClassification.stage,
       ...(stageClassification.suggestedStage
@@ -1705,6 +1729,63 @@ function createCollectionStats() {
     discardedOutsideTargetYear: 0,
     discardedIrrelevant: 0,
   };
+}
+
+/**
+ * 공개 후보로 분류된 기사에 한해 Google News 링크를 발행사 원문 URL로 되돌린다.
+ * 성공한 건만 record.originalUrl과 record.sourceVerification을 채우므로, 실패한
+ * 후보는 재분류 없이 기존의 `requiresSourceVerification = true` 상태로 남는다.
+ */
+async function resolveOriginalUrls(preliminary, config, options) {
+  const stats = {
+    attempted: 0,
+    verified: 0,
+    failed: 0,
+    skipped: 0,
+    byStatus: {},
+  };
+  if (options.resolveOriginalUrls === false) {
+    stats.skipped = preliminary.length;
+    return stats;
+  }
+
+  const pending = preliminary.filter(
+    ({ record, classification }) =>
+      classification.classification.includeInPrimaryDashboard &&
+      !record.originalUrl &&
+      typeof record.url === "string",
+  );
+  const limit = options.maxResolutions ?? config.collectionPolicy.maxUrlResolutions ?? 60;
+
+  for (const entry of pending.slice(0, limit)) {
+    stats.attempted += 1;
+    const verification = await resolveGoogleNewsUrl(entry.record.url, entry.record.title, {
+      canonicalize: canonicalizeUrl,
+      inferMedia,
+    });
+    stats.byStatus[verification.status] =
+      (stats.byStatus[verification.status] ?? 0) + 1;
+
+    if (verification.status === RESOLUTION_STATUS.verified) {
+      entry.record.originalUrl = verification.originalUrl;
+      entry.record.sourceVerification = verification;
+      stats.verified += 1;
+    } else {
+      // 되돌리기에 실패해도 감사 기록은 남긴다. 다만 originalUrl은 비워 두어
+      // 상태 집계 후보로 올라가지 않게 한다.
+      entry.record.sourceVerification = verification;
+      stats.failed += 1;
+    }
+    if (options.verbose) {
+      console.log(
+        `[원문 확인] ${verification.status} ${verification.originalUrl ?? entry.record.url}`,
+      );
+    }
+    await delay(config.collectionPolicy.requestDelayMs);
+  }
+
+  stats.skipped = Math.max(pending.length - stats.attempted, 0);
+  return stats;
 }
 
 async function collectCandidates(config, options, year, now) {
@@ -1814,8 +1895,19 @@ async function collectCandidates(config, options, year, now) {
     urlDeduplicated,
     (record) => normalizedTitleKey(record.title),
   );
-  const articles = titleDeduplicated
-    .map((record) => classifyArticle(record, config, now, year))
+  // 원문 URL 되돌리기는 네트워크 비용이 크므로, 먼저 분류해서 공개 후보로 남은
+  // 기사에만 적용한다. 감사 격리 대상은 공개 상태를 바꾸지 않으므로 되돌리지 않는다.
+  const preliminary = titleDeduplicated.map((record) => ({
+    record,
+    classification: classifyArticle(record, config, now, year),
+  }));
+  const resolutionStats = await resolveOriginalUrls(preliminary, config, options);
+  const articles = preliminary
+    .map(({ record, classification }) =>
+      record.sourceVerification
+        ? classifyArticle(record, config, now, year)
+        : classification,
+    )
     .sort((left, right) => Date.parse(right.publishedAt) - Date.parse(left.publishedAt));
   const scopeCounts = Object.fromEntries(
     config.scopePolicy.classifications.map((scope) => [scope, 0]),
@@ -1841,6 +1933,10 @@ async function collectCandidates(config, options, year, now) {
       removedByTitleDeduplication:
         urlDeduplicated.length - titleDeduplicated.length,
       finalCandidates: articles.length,
+      urlResolution: resolutionStats,
+      statusAggregationCandidates: articles.filter(
+        (article) => article.classification.eligibleForStatusAggregation,
+      ).length,
       primaryDashboardCandidates: articles.filter(
         (article) => article.classification.includeInPrimaryDashboard,
       ).length,

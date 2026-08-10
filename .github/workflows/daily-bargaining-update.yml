@@ -1,0 +1,92 @@
+name: 일일 교섭현황 수집·반영
+
+# 한국 표준시 06:30 = UTC 21:30 (전날). 법인별 1회 수집 원칙은 수집기 내부의
+# 같은 KST 날짜 중복 실행 방지 잠금으로 함께 지킨다.
+on:
+  schedule:
+    - cron: "30 21 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "같은 KST 날짜에 이미 수집했어도 다시 실행"
+        type: boolean
+        default: false
+
+concurrency:
+  group: daily-bargaining-update
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      # NAVER 자격증명이 없으면 수집기가 알아서 Google News RSS로 동작한다.
+      # 시크릿이 등록돼 있으면 그때부터 NAVER를 우선 사용한다.
+      - name: 뉴스 후보 수집
+        env:
+          NAVER_API_HUB_CLIENT_ID: ${{ secrets.NAVER_API_HUB_CLIENT_ID }}
+          NAVER_API_HUB_CLIENT_SECRET: ${{ secrets.NAVER_API_HUB_CLIENT_SECRET }}
+        run: |
+          node scripts/collect-news.mjs \
+            --source auto \
+            --max-per-query 10 \
+            ${{ inputs.force && '--force' || '' }}
+
+      - name: 검증된 사실만 공개 시드에 반영
+        run: node scripts/apply-daily-update.mjs
+
+      # 반영 결과가 원칙을 깨뜨렸는지 배포 전에 확인한다. 실패하면 커밋하지 않는다.
+      - name: 회귀 검증
+        run: npm test
+
+      - name: 변경 사항 커밋
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/news-candidates.json data/current-2026-fact-seed.json data/daily-update-audit.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "반영할 변경이 없습니다."
+          else
+            git commit -m "Update bargaining status from $(TZ=Asia/Seoul date +%Y-%m-%d) collection"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 배포 원격은 자격증명이 있을 때만 동작한다. SITES_DEPLOY_REMOTE 시크릿에
+      # 인증 정보가 포함된 푸시 URL을 넣어 두면 이 단계가 실제 배포를 수행한다.
+      - name: 배포
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          SITES_DEPLOY_REMOTE: ${{ secrets.SITES_DEPLOY_REMOTE }}
+        run: |
+          if [ -z "$SITES_DEPLOY_REMOTE" ]; then
+            echo "::warning::SITES_DEPLOY_REMOTE 시크릿이 없어 배포를 건너뜁니다. 데이터는 저장소에만 갱신되었습니다."
+            exit 0
+          fi
+          git push "$SITES_DEPLOY_REMOTE" HEAD:main
+
+      - name: 수집 요약
+        if: always()
+        run: |
+          node -e "
+            const batch = require('./public/data/news-candidates.json').batch;
+            const audit = require('./data/daily-update-audit.json').runs[0] ?? {};
+            console.log('배치:', batch.status, batch.kstDate, '| 주 수집원:', batch.primarySource);
+            console.log('원문 확인:', JSON.stringify(batch.stats.urlResolution));
+            console.log('반영:', audit.appliedCount ?? 0, '보류:', audit.skippedCount ?? 0);
+          " >> "$GITHUB_STEP_SUMMARY"

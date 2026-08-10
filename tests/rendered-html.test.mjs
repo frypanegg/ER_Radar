@@ -106,7 +106,9 @@ test("keeps scope and source guards in the production-facing implementation", as
   assert.ok(seed.records.every((record) => record.includeInPrimaryDashboard === true));
   assert.ok(seed.records.every((record) => /^https?:\/\//.test(record.sourceUrl)));
   assert.ok(seed.records.every((record) => !record.sourceUrl.includes("example.invalid")));
-  assert.equal(current.asOf, "2026-08-10");
+  // 일일 자동 반영이 기준일을 앞으로 밀기 때문에 고정 날짜 대신 형식과 하한을 본다.
+  assert.match(current.asOf, /^\d{4}-\d{2}-\d{2}$/);
+  assert.ok(current.asOf >= "2026-08-10");
   assert.equal(current.records.length, 12);
   assert.ok(current.records.every((record) => record.bargainingYear === 2026));
   assert.ok(current.records.every((record) => record.scopeClassification === "PRIMARY_DIRECT_UNION"));

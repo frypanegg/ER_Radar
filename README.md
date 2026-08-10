@@ -19,6 +19,9 @@
 - `data/current-2026-fact-seed.json` — 2026년 기준 현황. 최신 기사와 직접고용 범위 근거가 함께 확인된 교섭 기록만 포함
 - `scripts/build-historical-seed.mjs` — 조사 결과를 공개 가능한 초기 사실 데이터로 병합·검증
 - `scripts/collect-news.mjs` — KST 매일 06:30 기준 뉴스 후보 수집·범위 분류기
+- `scripts/resolve-google-news.mjs` — Google News RSS 링크를 발행사 원문 URL로 되돌리고 도달·제목 검증
+- `scripts/apply-daily-update.mjs` — 검증 통과 후보만 공개 시드에 반영하고 감사 로그 기록
+- `.github/workflows/daily-bargaining-update.yml` — KST 06:30 일일 자동화(수집·검증·반영·배포)
 - `docs/data-pipeline.md` — 수집 운영과 안전 장치
 - `docs/supabase-setup.md` — Supabase 테이블·RLS·환경 변수·초기 적재 운영 기준
 - `docs/공유-접근과-검색비노출-정책.md` — 공유 URL 열람과 검색 비노출 정책
@@ -31,7 +34,15 @@ npm run dev
 npm test
 ```
 
-뉴스 수집은 NAVER API HUB 자격증명이 있을 때 `NAVER_API_HUB_CLIENT_ID`, `NAVER_API_HUB_CLIENT_SECRET`을 설정한 뒤 실행합니다. 자세한 형식과 RSS 보조 탐색의 제한은 `docs/data-pipeline.md`를 참조하세요.
+뉴스 수집은 자격증명 없이 Google News RSS로 동작합니다. `NAVER_API_HUB_CLIENT_ID`, `NAVER_API_HUB_CLIENT_SECRET`이 설정되어 있으면 NAVER API HUB를 우선 사용합니다. 원문 URL 되돌리기와 검증 규칙은 `docs/data-pipeline.md`를 참조하세요.
+
+```bash
+# 수집 → 검증까지
+npm run collect
+
+# 검증 통과 후보를 공개 시드에 반영
+npm run apply-update -- --dry-run
+```
 
 초기 과거 데이터는 다음 명령으로 병합합니다.
 
