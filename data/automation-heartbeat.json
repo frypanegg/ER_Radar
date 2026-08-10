@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "note": "스케줄 워크플로 자동 비활성화를 막기 위한 실행 흔적",
-  "lastRunAt": "2026-08-10T13:55:09.626Z",
+  "lastRunAt": "2026-08-10T14:56:42.823Z",
   "lastRunKstDate": "2026-08-10",
-  "lastRunId": "31395306458",
+  "lastRunId": "31400856245",
   "lastRunTrigger": "workflow_dispatch",
   "lastRunOutcome": "success",
   "collectOutcome": "success",
