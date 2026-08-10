@@ -1,0 +1,1020 @@
+{
+  "schema_version": "1.0.0",
+  "title": "한국 임금·단체교섭 상태 프레임워크",
+  "effective_date": "2026-08-10",
+  "locale": "ko-KR",
+  "display_model": {
+    "kind": "primary_stage_and_parallel_overlays",
+    "linear_progress_is_displayed": false,
+    "ordering_rank_is_for": [
+      "table sorting",
+      "analytics"
+    ],
+    "principle": "각 교섭사건은 하나의 주 단계와 복수의 병렬 상태를 가질 수 있다."
+  },
+  "case_identity": {
+    "required_fields": [
+      "company_legal_entity_id",
+      "direct_employer_id",
+      "bargaining_year",
+      "agreement_type",
+      "bargaining_unit_id",
+      "covered_worker_scope_id",
+      "covered_worker_relation",
+      "scope_classification",
+      "include_in_primary_dashboard"
+    ],
+    "recommended_fields": [
+      "representative_union_id",
+      "bargaining_level",
+      "scope_evidence_url",
+      "scope_verified_at"
+    ],
+    "canonical_format": "company_legal_entity_id:direct_employer_id:bargaining_year:agreement_type:bargaining_unit_id:covered_worker_scope_id",
+    "primary_dashboard_gate": {
+      "required_scope_classification": "PRIMARY_DIRECT_UNION",
+      "required_covered_worker_relation": "DIRECT",
+      "direct_employer_must_equal_company_legal_entity": true,
+      "on_failure": "QUARANTINE_WITHOUT_STATUS_UPDATE"
+    }
+  },
+  "enums": {
+    "agreement_type": [
+      {
+        "code": "WAGE",
+        "label": "임금협상"
+      },
+      {
+        "code": "CBA",
+        "label": "단체협약"
+      },
+      {
+        "code": "INTEGRATED",
+        "label": "통합 임단협"
+      },
+      {
+        "code": "SUPPLEMENTAL",
+        "label": "특별·보충협약"
+      },
+      {
+        "code": "WORKS_COUNCIL",
+        "label": "노사협의회",
+        "is_collective_bargaining": false
+      }
+    ],
+    "bargaining_level": [
+      "ENTERPRISE",
+      "WORKPLACE",
+      "GROUP",
+      "REGIONAL",
+      "INDUSTRY",
+      "MULTI_EMPLOYER",
+      "OTHER"
+    ],
+    "counterparty_relation": [
+      "DIRECT_EMPLOYER",
+      "CONTRACT_EXTERNAL_EMPLOYER",
+      "MULTI_PARTY"
+    ],
+    "covered_worker_relation": [
+      "DIRECT",
+      "SUBCONTRACTED",
+      "DISPATCHED",
+      "SERVICE",
+      "MIXED",
+      "UNKNOWN"
+    ],
+    "scope_classification": [
+      "PRIMARY_DIRECT_UNION",
+      "SUBCONTRACTOR_UNION_EXCLUDED",
+      "AFFILIATE_UNION_EXCLUDED",
+      "MIXED_NEEDS_SPLIT",
+      "UNKNOWN_REVIEW"
+    ],
+    "majority_union_status": [
+      "YES",
+      "NO",
+      "UNKNOWN",
+      "NOT_APPLICABLE"
+    ],
+    "majority_measure_scope": [
+      "CHANNEL_UNIFICATION_PARTICIPATING_UNION_MEMBERS"
+    ],
+    "customary_cycle_pattern": [
+      "ANNUAL_WAGE",
+      "ANNUAL_INTEGRATED",
+      "ALTERNATING_WAGE_AND_CBA",
+      "IRREGULAR",
+      "UNKNOWN"
+    ],
+    "union_governance_event_type": [
+      "ELECTION_ANNOUNCED",
+      "CANDIDATE_REGISTRATION",
+      "VOTING",
+      "RESULT_DECLARED",
+      "LEADERSHIP_CHANGE",
+      "TERM_CHANGE",
+      "OTHER"
+    ],
+    "company_coverage_tier": [
+      "CORE",
+      "EXPANDED",
+      "WATCH"
+    ],
+    "primary_stage": [
+      {
+        "code": "U",
+        "rank": 0,
+        "label": "올해 현황 미확인",
+        "short_label": "미확인",
+        "description": "올해 교섭사건을 뒷받침하는 충분한 신뢰 근거가 아직 없다. 미착수로 추정하지 않는다.",
+        "is_terminal": false
+      },
+      {
+        "code": "S0",
+        "rank": 10,
+        "label": "미착수·기존협약 확인",
+        "short_label": "미착수 확인",
+        "description": "기존 협약은 유효하나 올해 교섭이 시작되지 않았다는 명시 근거가 있다.",
+        "is_terminal": false
+      },
+      {
+        "code": "S1",
+        "rank": 20,
+        "label": "요구안 준비·확정",
+        "short_label": "요구안",
+        "description": "요구안·제시안의 작성, 의결, 전달 또는 일정 준비가 중심이다.",
+        "is_terminal": false
+      },
+      {
+        "code": "S2",
+        "rank": 30,
+        "label": "대표·교섭단위 정비",
+        "short_label": "대표·단위",
+        "description": "교섭요구, 창구 단일화, 대표노조 또는 교섭단위가 주된 쟁점이다.",
+        "is_terminal": false
+      },
+      {
+        "code": "S3",
+        "rank": 40,
+        "label": "본교섭 진행",
+        "short_label": "교섭",
+        "description": "상견례, 본교섭, 실무협의, 수정안 교환 또는 교섭 차수가 확인된다.",
+        "is_terminal": false
+      },
+      {
+        "code": "S4",
+        "rank": 50,
+        "label": "교착·조정 경로",
+        "short_label": "교착·조정",
+        "description": "교착·결렬 또는 노동위원회 조정이 현재 핵심 경로다.",
+        "is_terminal": false
+      },
+      {
+        "code": "S5",
+        "rank": 60,
+        "label": "잠정합의",
+        "short_label": "잠정합의",
+        "description": "잠정·가합의 또는 부분합의가 확인되었으나 최종 체결 전이다.",
+        "is_terminal": false
+      },
+      {
+        "code": "S6",
+        "rank": 70,
+        "label": "인준·서명 대기",
+        "short_label": "인준",
+        "description": "조합원 찬반투표, 인준 결과 또는 조인 전 절차가 진행 중이다.",
+        "is_terminal": false
+      },
+      {
+        "code": "S7",
+        "rank": 80,
+        "label": "최종 체결·발효",
+        "short_label": "체결",
+        "description": "협약의 서명·조인 또는 효력 발생이 확인되었다.",
+        "is_terminal": false
+      },
+      {
+        "code": "S8",
+        "rank": 90,
+        "label": "이행·사후관리",
+        "short_label": "이행",
+        "description": "소급지급, 공동위원회, 후속협의 등 이행이 중심이다.",
+        "is_terminal": false
+      }
+    ],
+    "representation_state": [
+      "SINGLE_UNION",
+      "MULTI_UNION",
+      "CHANNEL_UNIFICATION_PENDING",
+      "REPRESENTATIVE_CONFIRMED",
+      "AUTONOMOUS_BARGAINING",
+      "UNIT_SPLIT_OR_MERGE_PENDING",
+      "FAIR_REPRESENTATION_ISSUE"
+    ],
+    "dispute_state": [
+      "NONE",
+      "IMPASSE_REPORTED",
+      "MEDIATION_REQUESTED",
+      "MEDIATION_ACTIVE",
+      "MEDIATION_SETTLED",
+      "MEDIATION_UNRESOLVED",
+      "ADMINISTRATIVE_GUIDANCE",
+      "ARBITRATION_ACTIVE",
+      "ARBITRATION_AWARD",
+      "STRIKE_VOTE_SCHEDULED",
+      "STRIKE_VOTE_PASSED",
+      "ACTION_PREREQUISITES_REPORTED",
+      "STRIKE_ANNOUNCED",
+      "STRIKE_ACTIVE",
+      "STRIKE_SUSPENDED_OR_RETURNED",
+      "LOCKOUT_REPORTED"
+    ],
+    "agreement_state": [
+      "NONE",
+      "PARTIAL_AGREEMENT",
+      "TENTATIVE_AGREEMENT",
+      "RATIFICATION_SCHEDULED",
+      "RATIFICATION_IN_PROGRESS",
+      "RATIFIED",
+      "RATIFICATION_REJECTED",
+      "SIGNED",
+      "EFFECTIVE",
+      "REPORTED",
+      "IMPLEMENTATION_FOLLOW_UP"
+    ],
+    "agreement_lifecycle_state": [
+      "ACTIVE",
+      "EXPIRING",
+      "THREE_MONTH_CONTINUATION",
+      "AUTO_EXTENSION",
+      "EXPIRED"
+    ],
+    "legal_issue": [
+      "GOOD_FAITH_BARGAINING",
+      "UNIT_DETERMINATION",
+      "FAIR_REPRESENTATION",
+      "SUBSTANTIVE_CONTROL",
+      "UNFAIR_LABOR_PRACTICE",
+      "AGREEMENT_INTERPRETATION"
+    ],
+    "commission_case_type": [
+      "NOTICE_CORRECTION",
+      "PARTICIPATING_UNION_CORRECTION",
+      "MAJORITY_OBJECTION",
+      "JOINT_DELEGATION",
+      "UNIT_SPLIT_OR_INTEGRATION",
+      "FAIR_REPRESENTATION",
+      "UNFAIR_LABOR_PRACTICE",
+      "MEDIATION",
+      "ARBITRATION",
+      "ESSENTIAL_MAINTENANCE",
+      "COLLECTIVE_AGREEMENT_INTERPRETATION",
+      "UNKNOWN"
+    ],
+    "issue_category": [
+      "WAGE_BASE",
+      "WAGE_INCREASE",
+      "VARIABLE_PAY_PERFORMANCE",
+      "ALLOWANCE",
+      "WORKTIME_SHIFT",
+      "EMPLOYMENT_SECURITY",
+      "SAFETY",
+      "WELFARE",
+      "WORK_RULES",
+      "UNION_RIGHTS",
+      "SUBCONTRACTING",
+      "OTHER"
+    ],
+    "event_state": [
+      "PLANNED",
+      "OCCURRED",
+      "CANCELLED",
+      "CORRECTED",
+      "DISPUTED"
+    ],
+    "fact_status": [
+      "FACT",
+      "PARTY_CLAIM",
+      "INFERENCE"
+    ],
+    "source_tier": [
+      {
+        "code": "S",
+        "label": "1차 공적·협약 근거",
+        "examples": [
+          "정부·노동위원회 결정문",
+          "서명된 협약 원문"
+        ]
+      },
+      {
+        "code": "A",
+        "label": "당사자 공식 근거",
+        "examples": [
+          "회사 공식 공지",
+          "노조 공식 공지",
+          "공식 투표 결과"
+        ]
+      },
+      {
+        "code": "B",
+        "label": "교차 확인된 언론 근거",
+        "examples": [
+          "구체적 사실을 보도한 책임 있는 언론",
+          "독립 출처 교차 확인"
+        ]
+      },
+      {
+        "code": "C",
+        "label": "검토 후보",
+        "examples": [
+          "단일 기사",
+          "전망",
+          "익명 인용",
+          "재인용"
+        ]
+      }
+    ]
+  },
+  "display_definitions": {
+    "channel_majority_union_badge": {
+      "label": "교섭창구 과반 노조",
+      "legal_meaning": "동일 사업·사업장과 교섭단위의 교섭창구 단일화 절차에 참여한 모든 노조 조합원 중 과반을 조직한 노조인지 여부",
+      "allowed_values": [
+        "YES",
+        "NO",
+        "UNKNOWN",
+        "NOT_APPLICABLE"
+      ],
+      "must_not_be_inferred_from": [
+        "union_member_count alone",
+        "representative_union_status",
+        "direct_employee_union_membership_rate"
+      ],
+      "display_rule": "Show O or X only with a numerator, denominator, verified_at, and basis URL; otherwise show 확인중."
+    },
+    "primary_union_scope": {
+      "label": "원청 직접고용 노조 기준",
+      "rule": "Only cases where the selected legal entity is the direct employer and covered workers are direct employees may be displayed."
+    }
+  },
+  "display_filters": {
+    "company_lookup": {
+      "search_fields": [
+        "company_name",
+        "company_legal_entity_name",
+        "company_aliases",
+        "covered_site_names",
+        "union_names"
+      ],
+      "scope_gate_required": true
+    },
+    "stage_lookup": {
+      "filter_field": "primary_stage",
+      "ordered_codes": [
+        "U",
+        "S0",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "include_parallel_filters": [
+        "representation_state",
+        "dispute_state",
+        "agreement_state",
+        "legal_issue"
+      ]
+    }
+  },
+  "event_catalog": [
+    {
+      "type": "prior_agreement_confirmed",
+      "default_stage": "S0",
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "demand_drafting",
+      "default_stage": "S1",
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "demand_confirmed",
+      "default_stage": "S1",
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "demand_delivered",
+      "default_stage": "S1",
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "bargaining_request_posted",
+      "default_stage": "S2",
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "representative_union_confirmed",
+      "default_stage": "S2",
+      "overlay_updates": {
+        "representation_state": "REPRESENTATIVE_CONFIRMED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "channel_unification_started",
+      "default_stage": "S2",
+      "overlay_updates": {
+        "representation_state": "CHANNEL_UNIFICATION_PENDING"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "unit_determination_filed",
+      "default_stage": "S2",
+      "overlay_updates": {
+        "representation_state": "UNIT_SPLIT_OR_MERGE_PENDING",
+        "legal_issue": "UNIT_DETERMINATION"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "first_bargaining_held",
+      "default_stage": "S3",
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "bargaining_round_held",
+      "default_stage": "S3",
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "offer_exchanged",
+      "default_stage": "S3",
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "impasse_reported",
+      "default_stage": "S4",
+      "overlay_updates": {
+        "dispute_state": "IMPASSE_REPORTED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "impasse_reason_confirmed",
+      "default_stage": "S4",
+      "requires_event_state": "OCCURRED",
+      "required_evidence_fields": [
+        "issue_categories",
+        "impasse_reason_summary",
+        "source_url"
+      ]
+    },
+    {
+      "type": "mediation_filed",
+      "default_stage": "S4",
+      "overlay_updates": {
+        "dispute_state": "MEDIATION_REQUESTED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "mediation_started",
+      "default_stage": "S4",
+      "overlay_updates": {
+        "dispute_state": "MEDIATION_ACTIVE"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "mediation_settled",
+      "default_stage": "S7",
+      "overlay_updates": {
+        "dispute_state": "MEDIATION_SETTLED",
+        "agreement_state": "EFFECTIVE"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "mediation_unresolved",
+      "default_stage": "S4",
+      "overlay_updates": {
+        "dispute_state": "MEDIATION_UNRESOLVED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "administrative_guidance_issued",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "dispute_state": "ADMINISTRATIVE_GUIDANCE"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "arbitration_started",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "dispute_state": "ARBITRATION_ACTIVE"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "arbitration_award_issued",
+      "default_stage": "S7",
+      "overlay_updates": {
+        "dispute_state": "ARBITRATION_AWARD",
+        "agreement_state": "EFFECTIVE"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "bargaining_resumed",
+      "default_stage": "S3",
+      "overlay_updates": {
+        "dispute_state": "STRIKE_SUSPENDED_OR_RETURNED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "strike_vote_scheduled",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "dispute_state": "STRIKE_VOTE_SCHEDULED"
+      },
+      "requires_event_state": "PLANNED"
+    },
+    {
+      "type": "strike_vote_result",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "dispute_state": "STRIKE_VOTE_PASSED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "strike_action_announced",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "dispute_state": "STRIKE_ANNOUNCED"
+      },
+      "requires_event_state": "PLANNED"
+    },
+    {
+      "type": "strike_action_started",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "dispute_state": "STRIKE_ACTIVE"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "strike_action_suspended",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "dispute_state": "STRIKE_SUSPENDED_OR_RETURNED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "lockout_reported",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "dispute_state": "LOCKOUT_REPORTED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "partial_agreement_reached",
+      "default_stage": "S5",
+      "overlay_updates": {
+        "agreement_state": "PARTIAL_AGREEMENT"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "tentative_agreement_reached",
+      "default_stage": "S5",
+      "overlay_updates": {
+        "agreement_state": "TENTATIVE_AGREEMENT"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "ratification_proposal_published",
+      "default_stage": "S6",
+      "requires_event_state": "OCCURRED",
+      "required_evidence_fields": [
+        "comparison_baseline",
+        "proposal_change_items",
+        "source_url"
+      ]
+    },
+    {
+      "type": "ratification_scheduled",
+      "default_stage": "S6",
+      "overlay_updates": {
+        "agreement_state": "RATIFICATION_SCHEDULED"
+      },
+      "requires_event_state": "PLANNED"
+    },
+    {
+      "type": "ratification_started",
+      "default_stage": "S6",
+      "overlay_updates": {
+        "agreement_state": "RATIFICATION_IN_PROGRESS"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "ratification_passed",
+      "default_stage": "S6",
+      "overlay_updates": {
+        "agreement_state": "RATIFIED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "ratification_rejected",
+      "default_stage": "REQUIRES_REOPEN_EVIDENCE",
+      "overlay_updates": {
+        "agreement_state": "RATIFICATION_REJECTED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "agreement_signed",
+      "default_stage": "S7",
+      "overlay_updates": {
+        "agreement_state": "SIGNED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "agreement_effective",
+      "default_stage": "S7",
+      "overlay_updates": {
+        "agreement_state": "EFFECTIVE"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "agreement_reported",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "agreement_state": "REPORTED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "agreement_expiring",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "agreement_lifecycle_state": "EXPIRING"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "agreement_three_month_continuation",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "agreement_lifecycle_state": "THREE_MONTH_CONTINUATION"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "agreement_auto_extension",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "agreement_lifecycle_state": "AUTO_EXTENSION"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "agreement_expired",
+      "default_stage": "RETAIN",
+      "overlay_updates": {
+        "agreement_lifecycle_state": "EXPIRED"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "union_governance_event",
+      "default_stage": "RETAIN",
+      "requires_event_state": "OCCURRED",
+      "required_evidence_fields": [
+        "union_governance_event_type",
+        "union_id",
+        "source_url"
+      ]
+    },
+    {
+      "type": "implementation_payment",
+      "default_stage": "S8",
+      "overlay_updates": {
+        "agreement_state": "IMPLEMENTATION_FOLLOW_UP"
+      },
+      "requires_event_state": "OCCURRED"
+    },
+    {
+      "type": "follow_up_consultation",
+      "default_stage": "S8",
+      "overlay_updates": {
+        "agreement_state": "IMPLEMENTATION_FOLLOW_UP"
+      },
+      "requires_event_state": "OCCURRED"
+    }
+  ],
+  "transition_policy": {
+    "scheduled_events_do_not_confirm_occurrence": true,
+    "no_news_does_not_reset_status": true,
+    "rejected_ratification_requires_later_reopen_evidence": true,
+    "scope_gate_before_classification": "Only PRIMARY_DIRECT_UNION cases with DIRECT covered workers and matching direct employer may create a dashboard event or change a dashboard status.",
+    "primary_stage_selection": "Select the latest, highest-confidence occurred event that is not superseded; then apply explicit transition rules.",
+    "allowed_transitions": [
+      "U->S0",
+      "U->S1",
+      "U->S2",
+      "U->S3",
+      "S0->S1",
+      "S1->S2",
+      "S1->S3",
+      "S2->S3",
+      "S3->S4",
+      "S4->S3",
+      "S3->S5",
+      "S4->S5",
+      "S5->S6",
+      "S5->S7",
+      "S6->S7",
+      "S6->S3",
+      "S6->S4",
+      "S7->S8",
+      "S8->S1"
+    ],
+    "requires_manual_review_when": [
+      "the employer legal entity is ambiguous",
+      "the union represents subcontracted, dispatched, service, affiliate, or mixed workers",
+      "the direct-employment relationship is unknown",
+      "the union or covered worker scope is ambiguous",
+      "a source conflicts with a higher-tier source",
+      "a headline says settlement without evidence of tentative agreement, ratification, or signing",
+      "a principal-contractor employer relationship is inferred instead of stated",
+      "an event claims a legal conclusion without an authoritative source"
+    ]
+  },
+  "confidence_policy": {
+    "auto_transition_threshold": 0.82,
+    "review_threshold": 0.65,
+    "below_review_threshold": "store_as_candidate_without_state_change",
+    "independent_source_confirmation_required_for_tier_b": true,
+    "confidence_inputs": [
+      "source_tier",
+      "actor_proximity",
+      "explicitness_of_event",
+      "cross_source_agreement",
+      "entity_and_scope_match",
+      "recency",
+      "correction_or_retraction_signal"
+    ]
+  },
+  "field_groups": {
+    "company_registry": [
+      "company_legal_entity_id",
+      "company_name",
+      "business_group",
+      "industry",
+      "company_coverage_tier",
+      "selection_score",
+      "selection_score_components",
+      "size_score",
+      "industry_system_impact_score",
+      "bargaining_impact_score",
+      "media_exposure_score",
+      "media_exposure_window_start",
+      "media_exposure_window_end",
+      "media_exposure_unique_article_groups",
+      "selection_verified_at"
+    ],
+    "case": [
+      "case_id",
+      "company_legal_entity_id",
+      "business_group",
+      "bargaining_year",
+      "agreement_type",
+      "bargaining_level",
+      "bargaining_unit_id",
+      "bargaining_unit_scope",
+      "covered_worker_scope_id",
+      "covered_sites",
+      "covered_worker_relation",
+      "scope_classification",
+      "include_in_primary_dashboard",
+      "scope_evidence_url",
+      "scope_verified_at"
+    ],
+    "cycle": [
+      "current_year_bargaining_type",
+      "customary_cycle_pattern",
+      "cycle_pattern_evidence_url",
+      "cycle_pattern_verified_at"
+    ],
+    "parties": [
+      "direct_employer_id",
+      "union_names",
+      "union_count",
+      "representative_union_id",
+      "federation",
+      "channel_unification_status",
+      "substantive_control_status",
+      "controlled_issue_scope"
+    ],
+    "union_profile": [
+      "union_id",
+      "union_name",
+      "union_member_count",
+      "union_member_count_as_of",
+      "covered_direct_employee_count",
+      "channel_majority_union_status",
+      "channel_majority_measure_scope",
+      "channel_majority_numerator",
+      "channel_majority_denominator",
+      "channel_majority_basis_url",
+      "channel_majority_verified_at",
+      "representative_union_status",
+      "direct_employee_union_membership_rate",
+      "union_election_status",
+      "latest_union_governance_event_id"
+    ],
+    "negotiation": [
+      "demand_confirmed_at",
+      "demand_delivered_at",
+      "union_base_pay_demand",
+      "employer_base_pay_offer",
+      "current_gap",
+      "first_bargaining_at",
+      "round_count",
+      "last_round_at",
+      "next_round_at",
+      "issue_categories",
+      "unresolved_issues"
+    ],
+    "issue_analysis": [
+      "issue_id",
+      "issue_category",
+      "issue_summary",
+      "union_position_summary",
+      "employer_position_summary",
+      "issue_status",
+      "impasse_reason_summary",
+      "last_evidence_event_id",
+      "last_evidence_url"
+    ],
+    "dispute": [
+      "breakdown_at",
+      "mediation_filed_at",
+      "labor_commission",
+      "mediation_case_number",
+      "commission_case_type",
+      "commission_decision_at",
+      "commission_served_at",
+      "mediation_outcome",
+      "strike_vote_at",
+      "eligible_voters",
+      "votes_cast",
+      "yes_votes",
+      "turnout_rate",
+      "yes_rate_of_eligible",
+      "yes_rate_of_votes_cast",
+      "voting_method_verified",
+      "strike_announced_at",
+      "strike_started_at",
+      "strike_type",
+      "lockout_status"
+    ],
+    "agreement": [
+      "tentative_agreement_at",
+      "ratification_scope",
+      "eligible_voters",
+      "ratification_turnout",
+      "ratification_yes_rate",
+      "signed_at",
+      "effective_at",
+      "reported_at",
+      "agreement_term",
+      "agreement_lifecycle_state",
+      "retroactive_from",
+      "base_pay_fixed_increase",
+      "base_pay_percent_increase",
+      "performance_bonus_amount",
+      "performance_bonus_formula",
+      "performance_metric",
+      "one_off_or_recurring",
+      "allowance_changes",
+      "comparison_baseline",
+      "comparison_baseline_reference",
+      "proposal_change_items"
+    ],
+    "article_annotation": [
+      "annotation_id",
+      "event_id",
+      "source_url",
+      "source_title",
+      "publisher",
+      "published_at",
+      "event_date",
+      "source_tier",
+      "fact_summary",
+      "relevance_note",
+      "scope_classification",
+      "include_in_primary_dashboard"
+    ],
+    "evidence": [
+      "event_id",
+      "event_type",
+      "event_state",
+      "event_date",
+      "published_at",
+      "observed_at",
+      "scheduled_for",
+      "source_url",
+      "source_type",
+      "source_tier",
+      "actor",
+      "fact_status",
+      "confidence",
+      "needs_review",
+      "supersedes_event_id",
+      "classifier_version"
+    ]
+  },
+  "daily_collection": {
+    "timezone": "Asia/Seoul",
+    "schedule": "30 6 * * *",
+    "frequency_per_company_per_day": 1,
+    "query_intents": [
+      "임단협",
+      "임금협상",
+      "단체교섭",
+      "잠정합의",
+      "쟁의행위 또는 파업"
+    ],
+    "data_minimization": [
+      "store headline",
+      "store canonical URL",
+      "store publication metadata",
+      "store a short original fact summary",
+      "do not persist article body unless rights and purpose are separately approved"
+    ],
+    "dedupe_keys": [
+      "canonical_url",
+      "normalized_title+publisher+publication_date",
+      "article_group_id"
+    ],
+    "idempotency_rules": [
+      "write events before advancing the watermark",
+      "retain prior confirmed state on a failed run",
+      "mark a cancelled or corrected future event explicitly",
+      "never infer a new stage from an absence of candidates",
+      "quarantine subcontractor, dispatched, service, affiliate, mixed, and unknown-scope candidates before stage calculation",
+      "exclude quarantined candidates from company media-exposure metrics"
+    ]
+  },
+  "legal_basis": [
+    {
+      "topic": "교섭권한·성실교섭",
+      "law": "노동조합 및 노동관계조정법 제29조·제30조",
+      "url": "https://www.law.go.kr/LSW/lsInfoP.do?lsiSeq=273667"
+    },
+    {
+      "topic": "복수노조·교섭단위",
+      "law": "노동조합 및 노동관계조정법 제29조의2·제29조의3",
+      "url": "https://www.law.go.kr/lsLinkCommonInfo.do?lsJoLnkSeq=1011509057"
+    },
+    {
+      "topic": "협약 서면·유효기간",
+      "law": "노동조합 및 노동관계조정법 제31조·제32조",
+      "url": "https://www.law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1011519577"
+    },
+    {
+      "topic": "쟁의행위·조정",
+      "law": "노동조합 및 노동관계조정법 제41조·제45조·제53조·제54조",
+      "url": "https://www.law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&lsJoLnkSeq=1021081129"
+    },
+    {
+      "topic": "원·하청 사용자성 및 경영상 결정 관련 적용 안내",
+      "law": "노동조합 및 노동관계조정법 제2조 및 고용노동부 2026년 지침",
+      "url": "https://www.moel.go.kr/news/notice/noticeView.do?bbs_seq=20260201291"
+    },
+    {
+      "topic": "노사협의회 구별",
+      "law": "근로자참여 및 협력증진에 관한 법률",
+      "url": "https://www.law.go.kr/LSW/lsInfoP.do?lsiSeq=243063"
+    }
+  ]
+}

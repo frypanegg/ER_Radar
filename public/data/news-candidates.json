@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": null,
+  "batch": {
+    "status": "not_collected",
+    "frequency": "daily",
+    "timezone": "Asia/Seoul",
+    "recommendedRunTime": "06:30",
+    "cron": "30 6 * * *",
+    "kstDate": null,
+    "targetYear": null,
+    "requestedSourceMode": "auto",
+    "primarySource": null,
+    "stats": {
+      "totalQueries": 0,
+      "successfulQueries": 0,
+      "failedQueries": 0,
+      "finalCandidates": 0,
+      "primaryDashboardCandidates": 0,
+      "excludedAuditCandidates": 0,
+      "scopeCounts": {
+        "PRIMARY_DIRECT_UNION": 0,
+        "SUBCONTRACTOR_UNION_EXCLUDED": 0,
+        "AFFILIATE_UNION_EXCLUDED": 0,
+        "UNKNOWN_REVIEW": 0,
+        "MIXED_NEEDS_SPLIT": 0
+      },
+      "excludedCompanyMatches": 0,
+      "companyScopeCounts": {
+        "PRIMARY_DIRECT_UNION": 0,
+        "SUBCONTRACTOR_UNION_EXCLUDED": 0,
+        "AFFILIATE_UNION_EXCLUDED": 0,
+        "UNKNOWN_REVIEW": 0,
+        "MIXED_NEEDS_SPLIT": 0
+      }
+    }
+  },
+  "taxonomy": {
+    "stages": [
+      { "code": "preparation", "label": "준비", "order": 10 },
+      { "code": "bargaining", "label": "교섭", "order": 20 },
+      { "code": "breakdown_mediation", "label": "결렬·조정", "order": 30 },
+      { "code": "industrial_action", "label": "쟁의", "order": 40 },
+      { "code": "tentative_agreement", "label": "잠정합의", "order": 50 },
+      { "code": "final_agreement", "label": "최종타결", "order": 60 },
+      { "code": "manual_review", "label": "수동검토", "order": 0 }
+    ],
+    "normalProgression": [
+      "preparation",
+      "bargaining",
+      "breakdown_mediation",
+      "industrial_action",
+      "tentative_agreement",
+      "final_agreement"
+    ],
+    "stateKey": ["companyId", "bargainingUnitId"],
+    "dateAloneDoesNotImplyProgression": true,
+    "statusFramework": {
+      "states": [
+        { "code": "U", "name": "unverified", "label": "올해 현황 미확인" },
+        { "code": "S0", "name": "not_started", "label": "미착수·기존협약 확인" },
+        { "code": "S1", "name": "preparing", "label": "요구안 준비·확정" },
+        { "code": "S2", "name": "representation", "label": "대표·교섭단위 정비" },
+        { "code": "S3", "name": "bargaining", "label": "본교섭 진행" },
+        { "code": "S4", "name": "impasse_mediation", "label": "교착·조정 경로" },
+        { "code": "S5", "name": "tentative", "label": "잠정합의" },
+        { "code": "S6", "name": "ratification", "label": "인준·서명 대기" },
+        { "code": "S7", "name": "signed_effective", "label": "최종 체결·발효" },
+        { "code": "S8", "name": "implementation", "label": "이행·사후관리" }
+      ],
+      "eventStates": [
+        "planned",
+        "occurred",
+        "cancelled",
+        "corrected",
+        "disputed"
+      ],
+      "frameworkEventStateCodes": {
+        "planned": "PLANNED",
+        "occurred": "OCCURRED",
+        "cancelled": "CANCELLED",
+        "corrected": "CORRECTED",
+        "disputed": "DISPUTED"
+      },
+      "s4RequiresExplicitImpasseOrMediation": true,
+      "industrialActionRetainsMainStateWithoutS4Evidence": true
+    }
+  },
+  "scopePolicy": {
+    "primaryScope": "selected_legal_entity_directly_employed_union_only",
+    "classifications": [
+      "PRIMARY_DIRECT_UNION",
+      "SUBCONTRACTOR_UNION_EXCLUDED",
+      "AFFILIATE_UNION_EXCLUDED",
+      "UNKNOWN_REVIEW",
+      "MIXED_NEEDS_SPLIT"
+    ],
+    "statusCandidateRule": "PRIMARY_DIRECT_UNION만 주 상태·쟁점·미디어 노출 집계 후보 생성"
+  },
+  "scopeReviewAgent": {
+    "id": "primary-union-scope-review",
+    "ruleVersion": "1.0.0",
+    "executionOrder": "before_stage_classification",
+    "publicScope": "selected_legal_entity_direct_employee_union_only"
+  },
+  "metadataSchemas": {
+    "companySelection": {
+      "fields": ["scale", "industryImpact", "mediaExposure", "majorityUnion"],
+      "majorityUnionValues": ["O", "X", "UNKNOWN"],
+      "majorityUnionDefinition": "노조법 제29조의2 제4항상 교섭창구 단일화 참여노조 전체 조합원 수를 분모로 한 과반 여부",
+      "separateFields": ["representativeBargainingUnion", "directEmploymentUnionizationRate"]
+    },
+    "unionProfile": {
+      "fields": ["memberCount", "electionIssues", "verifiedAt"]
+    },
+    "agreementType": {
+      "values": ["WAGE", "CBA", "INTEGRATED"]
+    }
+  },
+  "companyCoverage": [
+    {
+      "companyId": "samsung-electronics",
+      "companyName": "삼성전자",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "lg-electronics",
+      "companyName": "LG전자",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyName": "현대자동차",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "kia",
+      "companyName": "기아",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "sk-hynix",
+      "companyName": "SK하이닉스",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "posco",
+      "companyName": "포스코",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyName": "현대제철",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyName": "HD현대중공업",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyName": "한화오션",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "gm-korea",
+      "companyName": "한국GM",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyName": "현대모비스",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed_t1_direct_employee_only",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyName": "두산에너빌리티",
+      "frequency": "daily",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "MEDIUM", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed_t2_direct_employee_only",
+        "needsReview": true
+      },
+      "candidateCount": 0,
+      "excludedAuditCount": 0,
+      "needsReviewCount": 0,
+      "latestPublishedAt": null
+    }
+  ],
+  "articles": []
+}

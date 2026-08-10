@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "title": "원청 직접고용 노조 교섭 대시보드 초기 법인군",
+  "scope": {
+    "employmentScope": "direct_employee_only",
+    "inclusionRule": "선정 법인이 직접사용자이고, 해당 노조의 적용 근로자가 그 법인의 직접고용 근로자로 확인된 사건만 공개 대시보드에 포함한다.",
+    "exclusionRule": [
+      "하청",
+      "사내협력사",
+      "용역",
+      "파견",
+      "계열사 별도 법인",
+      "원청·하청 혼합으로 자동 분리할 수 없는 기사"
+    ]
+  },
+  "selectionRubric": [
+    {
+      "code": "S",
+      "label": "규모·산업 파급력",
+      "weight": 30,
+      "measurement": [
+        "법인 별도재무제표 매출",
+        "국내 직접고용 인원",
+        "국내 생산거점 수",
+        "산업 공급망·전략성"
+      ]
+    },
+    {
+      "code": "R",
+      "label": "대표성 데이터 준비도",
+      "weight": 20,
+      "measurement": [
+        "직접고용 범위 증빙",
+        "교섭단위·참여노조·대표경로 증빙",
+        "출처 권위와 기준일 신선도"
+      ],
+      "note": "과반 노조 여부 자체는 가점이 아니라 검증 품질 지표다."
+    },
+    {
+      "code": "N",
+      "label": "최근 24개월 교섭 노출도",
+      "weight": 25,
+      "window": {
+        "start": "2024-08-10",
+        "end": "2026-08-10"
+      },
+      "measurement": "기사 수가 아니라 법인×교섭연도×단계의 중복 제거 이벤트 수. 하청·간접고용·범위 미확인 사건은 제외한다."
+    },
+    {
+      "code": "C",
+      "label": "직접고용 교섭구조 복잡성",
+      "weight": 25,
+      "measurement": [
+        "복수 직접고용 노조·대표구조",
+        "복수 사업장·직군 교섭단위",
+        "임금 외 쟁점의 폭",
+        "법인 경계 변화"
+      ]
+    }
+  ],
+  "tierRules": {
+    "T1": "70점 이상, 직접고용 범위 확인, 최근 24개월 중복 제거 이벤트 14개 이상",
+    "T2": "55~69점, 직접고용 범위 확인, 최근 24개월 중복 제거 이벤트 8개 이상",
+    "T3": "전략성은 높지만 대표성 또는 직접고용 교섭 근거가 아직 충분하지 않은 관찰군"
+  },
+  "majorityUnionBadge": {
+    "label": "교섭창구 과반 노조",
+    "definition": "동일 사업·사업장 및 교섭단위에서 교섭창구 단일화 절차에 참여한 모든 노조 조합원 중 과반을 조직한 노조인지 여부",
+    "allowedValues": [
+      "YES",
+      "NO",
+      "UNKNOWN",
+      "NOT_APPLICABLE"
+    ],
+    "mustShowWith": [
+      "참여 노조 범위",
+      "분자",
+      "분모",
+      "기준일",
+      "확인일",
+      "근거 URL"
+    ],
+    "mustNotInferFrom": [
+      "대표교섭노조 여부",
+      "조합원 수만 있는 경우",
+      "직접고용 근로자 대비 노조가입률"
+    ]
+  },
+  "initialPublicTracking": [
+    {
+      "id": "hyundai-motor",
+      "legalName": "현대자동차 주식회사",
+      "tier": "T1",
+      "industry": "자동차",
+      "selectionRationale": [
+        "산업 파급력",
+        "직접고용 교섭의 공개 사건열",
+        "임금·고용안정·신기술 도입 쟁점"
+      ]
+    },
+    {
+      "id": "kia",
+      "legalName": "기아 주식회사",
+      "tier": "T1",
+      "industry": "자동차",
+      "selectionRationale": [
+        "산업 파급력",
+        "직접고용 교섭의 공개 사건열",
+        "자동차 교섭 비교군"
+      ]
+    },
+    {
+      "id": "samsung-electronics",
+      "legalName": "삼성전자 주식회사",
+      "tier": "T1",
+      "industry": "반도체·전자",
+      "selectionRationale": [
+        "대규모 고용·산업 영향",
+        "복수노조·성과급·인준 구조"
+      ]
+    },
+    {
+      "id": "hd-hyundai-heavy-industries",
+      "legalName": "HD현대중공업 주식회사",
+      "tier": "T1",
+      "industry": "조선",
+      "selectionRationale": [
+        "요구안·쟁의·잠정합의·찬반투표의 단계 사례",
+        "조선업 교섭 파급력"
+      ]
+    },
+    {
+      "id": "posco",
+      "legalName": "주식회사 포스코",
+      "tier": "T1",
+      "industry": "철강",
+      "selectionRationale": [
+        "공급망 중심성",
+        "철강업 직접고용 교섭 비교군"
+      ]
+    },
+    {
+      "id": "sk-hynix",
+      "legalName": "SK하이닉스 주식회사",
+      "tier": "T1",
+      "industry": "반도체",
+      "selectionRationale": [
+        "직군·노조별 교섭 구조",
+        "반도체 산업 영향"
+      ]
+    },
+    {
+      "id": "hyundai-mobis",
+      "legalName": "현대모비스 주식회사",
+      "tier": "T1",
+      "industry": "자동차부품",
+      "selectionRationale": [
+        "복수 직접고용 노조",
+        "교섭 구조 공개 자료"
+      ]
+    },
+    {
+      "id": "hanwha-ocean",
+      "legalName": "한화오션 주식회사",
+      "tier": "T2",
+      "industry": "조선",
+      "selectionRationale": [
+        "임금교섭·조합원 찬반투표 사건열",
+        "조선업 비교군"
+      ]
+    },
+    {
+      "id": "hyundai-steel",
+      "legalName": "현대제철 주식회사",
+      "tier": "T2",
+      "industry": "철강",
+      "selectionRationale": [
+        "철강업 교섭 비교군",
+        "쟁의 절차 관측 가능성"
+      ]
+    },
+    {
+      "id": "gm-korea",
+      "legalName": "한국지엠 주식회사",
+      "tier": "T2",
+      "industry": "자동차",
+      "selectionRationale": [
+        "교섭·잠정합의·인준의 완결 사건열",
+        "완성차 비교군"
+      ]
+    },
+    {
+      "id": "lg-electronics",
+      "legalName": "LG전자 주식회사",
+      "tier": "T2",
+      "industry": "전자",
+      "selectionRationale": [
+        "임금·복리후생 협상 비교군",
+        "전자산업 교섭 다양성"
+      ]
+    },
+    {
+      "id": "doosan-enerbility",
+      "legalName": "두산에너빌리티 주식회사",
+      "tier": "T2",
+      "industry": "에너지·기계",
+      "selectionRationale": [
+        "교섭·노동위원회 조정 사건열",
+        "에너지·기계 산업 영향"
+      ]
+    }
+  ],
+  "verificationQueue": [
+    {
+      "id": "lg-energy-solution",
+      "legalName": "LG에너지솔루션 주식회사",
+      "tier": "T3",
+      "reason": "전략성은 높지만 직접고용 교섭단위·대표성 근거를 보강한 뒤 공개 단계 표시에 편입한다."
+    },
+    {
+      "id": "samsung-sdi",
+      "legalName": "삼성SDI 주식회사",
+      "tier": "T3",
+      "reason": "전략성은 높지만 직접고용 교섭단위·대표성 근거를 보강한 뒤 공개 단계 표시에 편입한다."
+    },
+    {
+      "id": "hanwha-aerospace",
+      "legalName": "한화에어로스페이스 주식회사",
+      "tier": "T3",
+      "reason": "전략성은 높지만 직접고용 교섭단위·대표성 근거를 보강한 뒤 공개 단계 표시에 편입한다."
+    }
+  ]
+}

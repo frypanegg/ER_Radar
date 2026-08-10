@@ -1,0 +1,1117 @@
+{
+  "schemaVersion": 1,
+  "metadataSchemas": {
+    "companySelection": {
+      "fields": [
+        "scale",
+        "industryImpact",
+        "mediaExposure",
+        "majorityUnion"
+      ],
+      "ratingValues": ["HIGH", "MEDIUM", "LOW", "UNVERIFIED"],
+      "majorityUnionValues": ["O", "X", "UNKNOWN"],
+      "majorityUnionDefinition": "노조법 제29조의2 제4항상 교섭창구 단일화 참여노조 전체 조합원 수를 분모로 한 과반 여부",
+      "separateFields": [
+        "representativeBargainingUnion",
+        "directEmploymentUnionizationRate"
+      ],
+      "verificationRule": "분자·분모·산정기준·근거일·근거URL 중 하나라도 없으면 status=UNKNOWN이며 대표교섭노조 여부나 전체 직접고용 대비 가입률과 혼용 금지"
+    },
+    "unionProfile": {
+      "fields": ["memberCount", "electionIssues", "verifiedAt"],
+      "defaults": {
+        "memberCount": null,
+        "electionIssues": [],
+        "verifiedAt": null,
+        "needsReview": true
+      }
+    },
+    "agreementType": {
+      "values": ["WAGE", "CBA", "INTEGRATED"],
+      "scope": "current_bargaining_year"
+    }
+  },
+  "collectionPolicy": {
+    "frequency": "daily",
+    "timezone": "Asia/Seoul",
+    "recommendedRunTime": "06:30",
+    "cron": "30 6 * * *",
+    "targetWindow": "calendar_year",
+    "maxItemsPerQuery": 30,
+    "requestDelayMs": 300,
+    "requestTimeoutMs": 15000,
+    "maxRetries": 3,
+    "freshnessHalfLifeDays": 30,
+    "freshnessReviewDays": 120
+  },
+  "scopePolicy": {
+    "primaryScope": "selected_legal_entity_directly_employed_union_only",
+    "classifications": [
+      "PRIMARY_DIRECT_UNION",
+      "SUBCONTRACTOR_UNION_EXCLUDED",
+      "AFFILIATE_UNION_EXCLUDED",
+      "UNKNOWN_REVIEW",
+      "MIXED_NEEDS_SPLIT"
+    ],
+    "subcontractorSignals": [
+      "협력사",
+      "협력업체",
+      "하청",
+      "사내하청",
+      "사내협력사",
+      "용역",
+      "파견",
+      "수급업체",
+      "subcontractor"
+    ],
+    "affiliateSignals": [
+      "계열사\\s*노조",
+      "자회사\\s*노조",
+      "관계사\\s*노조"
+    ],
+    "mixedRule": "직접고용 노조 신호와 제외 신호가 함께 있으면 자동 분리하지 않고 MIXED_NEEDS_SPLIT",
+    "unknownRule": "법인명 또는 검색어 문맥만 있고 직접고용 노조 관계가 확인되지 않으면 UNKNOWN_REVIEW",
+    "statusCandidateRule": "PRIMARY_DIRECT_UNION만 주 상태·쟁점·미디어 노출 집계 후보 생성"
+  },
+  "scopeReviewAgent": {
+    "id": "primary-union-scope-review",
+    "ruleVersion": "1.0.0",
+    "executionOrder": "before_stage_classification",
+    "skill": "primary-union-scope-review",
+    "publicScope": "selected_legal_entity_direct_employee_union_only",
+    "quarantineClassifications": [
+      "SUBCONTRACTOR_UNION_EXCLUDED",
+      "AFFILIATE_UNION_EXCLUDED",
+      "MIXED_NEEDS_SPLIT",
+      "UNKNOWN_REVIEW"
+    ],
+    "onAmbiguous": "human_review_without_public_state_change",
+    "legalUpdateProtocol": "Update ruleVersion, legal basis, decision signals, and regression cases together; do not relax public direct-employment scope without product-owner approval."
+  },
+  "sources": {
+    "naver": {
+      "endpoint": "https://naverapihub.apigw.ntruss.com/search/v1/news",
+      "authentication": "api-hub",
+      "sort": "date",
+      "clientIdEnvironmentVariables": [
+        "NAVER_API_HUB_CLIENT_ID",
+        "NAVER_CLIENT_ID",
+        "NAVER_API_CLIENT_ID"
+      ],
+      "clientSecretEnvironmentVariables": [
+        "NAVER_API_HUB_CLIENT_SECRET",
+        "NAVER_CLIENT_SECRET",
+        "NAVER_API_CLIENT_SECRET"
+      ]
+    },
+    "googleNews": {
+      "endpoint": "https://news.google.com/rss/search",
+      "language": "ko",
+      "country": "KR",
+      "edition": "KR:ko"
+    }
+  },
+  "relevanceSignals": [
+    "임금\\s*(?:협상|교섭|인상|협약)",
+    "임단협",
+    "단체\\s*(?:협약|교섭)",
+    "노사\\s*(?:협상|교섭|합의)",
+    "노조.{0,12}(?:교섭|협상|파업|쟁의|합의|요구안)",
+    "노동조합.{0,12}(?:교섭|협상|파업|쟁의|합의|요구안)",
+    "교섭\\s*(?:결렬|재개|중단)",
+    "잠정\\s*합의",
+    "쟁의행위",
+    "쟁의권",
+    "파업",
+    "노동위원회.{0,10}조정",
+    "교섭창구\\s*단일화|교섭대표노조|교섭단위.{0,8}(?:분리|통합|결정)",
+    "(?:합의사항|협약|임금\\s*인상분).{0,10}(?:이행|시행|적용|반영)",
+    "(?:소급분|인상분).{0,8}(?:지급|반영)",
+    "(?:일부|부분).{0,6}합의",
+    "(?:협약|단체협약).{0,10}(?:만료|자동\\s*연장|효력\\s*지속)"
+  ],
+  "taxonomy": {
+    "stages": [
+      {
+        "code": "preparation",
+        "label": "준비",
+        "order": 10,
+        "signals": [
+          "(?:노사|노조).{0,12}(?:요구안|요구사항).{0,8}(?:확정|마련|제시|전달)",
+          "임단협.{0,8}(?:요구안|출정식|준비)",
+          "교섭.{0,8}(?:상견례|앞두고)",
+          "(?:임금|단체)\\s*교섭.{0,8}준비"
+        ]
+      },
+      {
+        "code": "bargaining",
+        "label": "교섭",
+        "order": 20,
+        "signals": [
+          "(?:임금|단체|임단)\\s*(?:협상|교섭)",
+          "(?:노사|노조|사측).{0,10}(?:교섭|협상)",
+          "본교섭|실무교섭|보충교섭|재교섭|재협상|교섭\\s*재개|협상\\s*재개",
+          "단체협약\\s*(?:교섭|갱신)",
+          "교섭.{0,8}(?:진행|개시|시작)"
+        ]
+      },
+      {
+        "code": "breakdown_mediation",
+        "label": "결렬·조정",
+        "order": 30,
+        "signals": [
+          "(?:교섭|협상).{0,6}(?:결렬|중단)",
+          "(?:결렬|중단).{0,6}(?:교섭|협상)",
+          "(?:지노위|중노위|노동위원회).{0,12}(?:조정|중재)",
+          "(?:조정|중재)\\s*(?:신청|회의|절차|중지|종료)",
+          "노동쟁의\\s*조정"
+        ]
+      },
+      {
+        "code": "industrial_action",
+        "label": "쟁의",
+        "order": 40,
+        "signals": [
+          "쟁의행위\\s*찬반투표.{0,8}(?:가결|찬성)",
+          "쟁의권\\s*(?:확보|획득)",
+          "(?:부분|전면|총|경고)?\\s*파업\\s*(?:돌입|진행|강행|재개|개시)",
+          "파업\\s*중",
+          "준법투쟁|태업|잔업\\s*거부|특근\\s*거부",
+          "쟁의행위\\s*(?:돌입|개시|재개)",
+          "(?:노조|노동조합).{0,12}파업"
+        ]
+      },
+      {
+        "code": "tentative_agreement",
+        "label": "잠정합의",
+        "order": 50,
+        "signals": [
+          "잠정\\s*합의(?:안)?",
+          "(?:일부|부분).{0,6}합의",
+          "(?:임금|단체|임단)\\s*(?:협상|교섭).{0,10}합의안\\s*도출",
+          "노사.{0,10}잠정안"
+        ]
+      },
+      {
+        "code": "final_agreement",
+        "label": "최종타결",
+        "order": 60,
+        "signals": [
+          "(?:임금|단체|임단)\\s*(?:협상|교섭).{0,12}(?:최종\\s*)?타결",
+          "임단협.{0,12}(?:조인|체결|가결)",
+          "잠정\\s*합의안?.{0,12}(?:가결|통과)",
+          "(?:단체협약|임금협약).{0,8}(?:조인|체결)",
+          "노사.{0,10}(?:최종\\s*합의|협상\\s*타결)"
+        ]
+      },
+      {
+        "code": "manual_review",
+        "label": "수동검토",
+        "order": 0,
+        "signals": []
+      }
+    ],
+    "exceptionEvents": [
+      {
+        "eventType": "rejected_then_action_resumed",
+        "patterns": [
+          "(?=.*잠정\\s*합의안?.{0,14}(?:부결|거부|무산))(?=.*(?:파업|쟁의행위).{0,8}재개)",
+          "(?=.*(?:부결|거부|무산).{0,14}잠정\\s*합의안?)(?=.*(?:파업|쟁의행위).{0,8}재개)"
+        ],
+        "stage": "industrial_action",
+        "transitionHint": "rollback_then_advance",
+        "needsReview": true
+      },
+      {
+        "eventType": "tentative_rejected",
+        "patterns": [
+          "잠정\\s*합의안?.{0,14}(?:부결|거부|무산|폐기)",
+          "(?:부결|거부|무산|폐기).{0,14}잠정\\s*합의안?",
+          "(?:임단협|합의안|협약안).{0,10}(?:조합원\\s*)?(?:투표.{0,5})?부결"
+        ],
+        "stage": "bargaining",
+        "transitionHint": "rollback_to_bargaining",
+        "needsReview": true
+      },
+      {
+        "eventType": "renewed_bargaining_broken",
+        "patterns": [
+          "(?:재교섭|재협상|교섭\\s*재개|협상\\s*재개).{0,10}(?:결렬|중단)",
+          "(?:결렬|중단).{0,10}(?:재교섭|재협상)"
+        ],
+        "stage": "breakdown_mediation",
+        "transitionHint": "rollback_then_breakdown",
+        "needsReview": false
+      },
+      {
+        "eventType": "bargaining_resumed",
+        "patterns": [
+          "재교섭|재협상|교섭\\s*재개|협상\\s*재개"
+        ],
+        "stage": "bargaining",
+        "transitionHint": "resume_or_rollback",
+        "needsReview": false,
+        "respectGuards": true
+      },
+      {
+        "eventType": "agreement_failed",
+        "patterns": [
+          "(?:타결|합의).{0,8}(?:실패|불발|무산|파기)",
+          "(?:실패|불발|무산|파기).{0,8}(?:타결|합의)"
+        ],
+        "stage": "breakdown_mediation",
+        "transitionHint": "stay_or_rollback",
+        "needsReview": true
+      },
+      {
+        "eventType": "industrial_action_withdrawn",
+        "patterns": [
+          "(?:파업|쟁의행위).{0,8}(?:철회|중단|유보|종료|취소)"
+        ],
+        "stage": "manual_review",
+        "transitionHint": "retain_main_state",
+        "needsReview": true
+      }
+    ],
+    "guards": {
+      "future": [
+        {
+          "stageCodes": ["bargaining"],
+          "fallbackStage": "preparation",
+          "patterns": [
+            "(?:교섭|협상).{0,8}(?:예정|계획|방침|앞두고|열기로)",
+            "(?:예정|계획|방침).{0,8}(?:교섭|협상)"
+          ]
+        },
+        {
+          "stageCodes": ["breakdown_mediation"],
+          "fallbackStage": "bargaining",
+          "patterns": [
+            "(?:조정\\s*신청|교섭\\s*결렬).{0,8}(?:예정|예고|계획|방침|검토)",
+            "(?:예정|예고|계획|방침|검토).{0,8}(?:조정\\s*신청|교섭\\s*결렬)"
+          ]
+        },
+        {
+          "stageCodes": ["industrial_action"],
+          "fallbackStage": "manual_review",
+          "patterns": [
+            "(?:파업|쟁의행위|준법투쟁).{0,10}(?:예정|예고|계획|방침|검토|찬반투표를?\\s*앞두고)",
+            "(?:예정|예고|계획|방침|검토).{0,10}(?:파업|쟁의행위|준법투쟁)",
+            "쟁의행위\\s*찬반투표.{0,8}(?:예정|열기로|앞두고)"
+          ]
+        },
+        {
+          "stageCodes": ["tentative_agreement"],
+          "fallbackStage": "bargaining",
+          "patterns": [
+            "잠정\\s*합의(?:할|를?\\s*추진|를?\\s*목표).{0,6}(?:예정|계획|방침)?"
+          ]
+        },
+        {
+          "stageCodes": ["final_agreement"],
+          "fallbackStage": "tentative_agreement",
+          "patterns": [
+            "(?:타결|최종\\s*합의).{0,8}(?:예정|전망|기대|목표|계획)",
+            "(?:예정|전망|기대|목표|계획).{0,8}(?:타결|최종\\s*합의)"
+          ]
+        }
+      ],
+      "negation": [
+        {
+          "stageCodes": ["bargaining"],
+          "fallbackStage": "manual_review",
+          "patterns": [
+            "(?:교섭|협상).{0,7}(?:안\\s*해|않|거부|부인)"
+          ]
+        },
+        {
+          "stageCodes": ["breakdown_mediation"],
+          "fallbackStage": "bargaining",
+          "patterns": [
+            "(?:결렬|조정\\s*신청).{0,7}(?:아니|않|부인)"
+          ]
+        },
+        {
+          "stageCodes": ["industrial_action"],
+          "fallbackStage": "manual_review",
+          "patterns": [
+            "(?:파업|쟁의행위).{0,9}(?:안\\s*해|않|없|철회|유보|중단|취소|부인)",
+            "(?:철회|유보|중단|취소).{0,8}(?:파업|쟁의행위)"
+          ]
+        },
+        {
+          "stageCodes": ["tentative_agreement"],
+          "fallbackStage": "bargaining",
+          "patterns": [
+            "잠정\\s*합의안?.{0,9}(?:아니|부인|무산|부결|거부|폐기)"
+          ]
+        },
+        {
+          "stageCodes": ["final_agreement"],
+          "fallbackStage": "breakdown_mediation",
+          "patterns": [
+            "(?:타결|최종\\s*합의).{0,9}(?:아니|못|실패|불발|무산|부인)"
+          ]
+        }
+      ]
+    },
+    "transitionPolicy": {
+      "normalProgression": [
+        "preparation",
+        "bargaining",
+        "breakdown_mediation",
+        "industrial_action",
+        "tentative_agreement",
+        "final_agreement"
+      ],
+      "stateKey": ["companyId", "bargainingUnitId"],
+      "neverInferMonotonicProgressFromDateAlone": true,
+      "manualReviewOnUnknownUnitWhenMultipleUnits": true
+    },
+    "statusFramework": {
+      "states": [
+        { "code": "U", "name": "unverified", "label": "올해 현황 미확인" },
+        { "code": "S0", "name": "not_started", "label": "미착수·기존협약 확인" },
+        { "code": "S1", "name": "preparing", "label": "요구안 준비·확정" },
+        { "code": "S2", "name": "representation", "label": "대표·교섭단위 정비" },
+        { "code": "S3", "name": "bargaining", "label": "본교섭 진행" },
+        { "code": "S4", "name": "impasse_mediation", "label": "교착·조정 경로" },
+        { "code": "S5", "name": "tentative", "label": "잠정합의" },
+        { "code": "S6", "name": "ratification", "label": "인준·서명 대기" },
+        { "code": "S7", "name": "signed_effective", "label": "최종 체결·발효" },
+        { "code": "S8", "name": "implementation", "label": "이행·사후관리" }
+      ],
+      "eventStates": [
+        "planned",
+        "occurred",
+        "cancelled",
+        "corrected",
+        "disputed"
+      ],
+      "frameworkEventStateCodes": {
+        "planned": "PLANNED",
+        "occurred": "OCCURRED",
+        "cancelled": "CANCELLED",
+        "corrected": "CORRECTED",
+        "disputed": "DISPUTED"
+      },
+      "defaultStageMap": {
+        "preparation": "S1",
+        "bargaining": "S3",
+        "breakdown_mediation": "S4",
+        "industrial_action": "U",
+        "tentative_agreement": "S5",
+        "final_agreement": "S7",
+        "manual_review": "U"
+      },
+      "explicitStateSignals": [
+        {
+          "code": "S8",
+          "patterns": [
+            "(?:합의사항|협약|임금\\s*인상분).{0,10}(?:이행|시행|적용|반영)",
+            "(?:소급분|인상분).{0,8}(?:지급|반영)"
+          ]
+        },
+        {
+          "code": "S7",
+          "patterns": [
+            "(?:단체협약|임금협약|임단협).{0,10}(?:서명|조인|체결|발효|효력\\s*발생)"
+          ]
+        },
+        {
+          "code": "S6",
+          "patterns": [
+            "잠정\\s*합의안?.{0,14}(?:찬반투표|가결|통과|인준)",
+            "(?:조합원\\s*)?찬반투표.{0,12}(?:잠정\\s*합의안?|임단협)"
+          ]
+        },
+        {
+          "code": "S2",
+          "patterns": [
+            "교섭창구\\s*단일화|교섭대표노조|대표교섭노조",
+            "교섭단위.{0,8}(?:분리|통합|결정)",
+            "(?:복수노조|대표노조).{0,10}(?:선정|확정|결정)"
+          ]
+        }
+      ],
+      "eventStatePatterns": {
+        "planned": [
+          "(?:찬반투표|파업|쟁의행위|교섭|조정\\s*신청|타결).{0,10}(?:예정|예고|계획|방침|검토|전망|앞두고|열기로)",
+          "(?:예정|예고|계획|방침|검토|전망).{0,10}(?:찬반투표|파업|쟁의행위|교섭|조정\\s*신청|타결)"
+        ],
+        "cancelled": [
+          "(?:파업|쟁의행위|찬반투표|조정\\s*신청).{0,8}(?:계획|예정|예고).{0,6}(?:철회|취소|유보)",
+          "(?:계획|예정|예고).{0,8}(?:철회|취소|유보).{0,8}(?:파업|쟁의행위|찬반투표|조정\\s*신청)"
+        ],
+        "corrected": [
+          "(?:정정|바로잡습니다|오보)"
+        ],
+        "disputed": [
+          "(?:사실이\\s*아니|부인|반박|진실공방|엇갈린\\s*주장|논란)"
+        ]
+      },
+      "parallelStates": {
+        "dispute": [
+          {
+            "code": "STRIKE_SUSPENDED_OR_RETURNED",
+            "label": "파업 유보·복귀",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:파업|쟁의행위).{0,12}(?:철회|유보|중단|종료|현장\\s*복귀|업무\\s*복귀|복귀)",
+              "(?:철회|유보|중단|종료|복귀).{0,10}(?:파업|쟁의행위)"
+            ]
+          },
+          {
+            "code": "STRIKE_ACTIVE",
+            "label": "파업 중",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:부분|전면|총|경고)?\\s*파업\\s*(?:돌입|진행|강행|재개|개시|중)",
+              "준법투쟁|태업|잔업\\s*거부|특근\\s*거부|쟁의행위\\s*(?:돌입|개시|재개)"
+            ]
+          },
+          {
+            "code": "STRIKE_ANNOUNCED",
+            "label": "파업 예고",
+            "eventState": "planned",
+            "patterns": [
+              "(?:파업|쟁의행위).{0,10}(?:예고|선언|계획|방침|돌입\\s*예정)",
+              "(?:파업|쟁의행위)\\s*카드"
+            ]
+          },
+          {
+            "code": "STRIKE_VOTE_PASSED",
+            "label": "쟁의투표 가결",
+            "eventState": "occurred",
+            "patterns": [
+              "쟁의행위\\s*찬반투표.{0,40}(?:가결|찬성)",
+              "파업\\s*찬반투표.{0,40}(?:가결|찬성)",
+              "(?:가결|찬성).{0,30}(?:쟁의행위|파업)\\s*찬반투표"
+            ]
+          },
+          {
+            "code": "STRIKE_VOTE_SCHEDULED",
+            "label": "쟁의투표 예정",
+            "eventState": "planned",
+            "patterns": [
+              "(?:쟁의행위|파업)\\s*찬반투표.{0,10}(?:예정|실시|돌입|앞두고|열기로)",
+              "찬반투표.{0,10}(?:예정|실시|앞두고).{0,10}(?:쟁의행위|파업)"
+            ]
+          },
+          {
+            "code": "MEDIATION_SETTLED",
+            "label": "조정 성립",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:조정|중재).{0,8}(?:성립|합의)"
+            ]
+          },
+          {
+            "code": "MEDIATION_UNRESOLVED",
+            "label": "조정 불성립",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:조정|중재).{0,8}(?:중지|종료|불성립|결렬)"
+            ]
+          },
+          {
+            "code": "ARBITRATION_AWARD",
+            "label": "중재재정",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:중재재정|중재\\s*판정|중재\\s*재정서)"
+            ]
+          },
+          {
+            "code": "ARBITRATION_ACTIVE",
+            "label": "중재 중",
+            "eventState": "occurred",
+            "patterns": [
+              "중재.{0,8}(?:개시|회의|절차|진행|중)"
+            ]
+          },
+          {
+            "code": "ADMINISTRATIVE_GUIDANCE",
+            "label": "행정지도",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:지노위|중노위|노동위원회).{0,12}행정지도|행정지도.{0,12}(?:지노위|중노위|노동위원회)"
+            ]
+          },
+          {
+            "code": "MEDIATION_ACTIVE",
+            "label": "조정 중",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:조정|중재)\\s*(?:회의|절차|기간|중)",
+              "(?:지노위|중노위|노동위원회).{0,10}(?:조정|중재).{0,6}(?:회의|절차|개시|진행|중)"
+            ]
+          },
+          {
+            "code": "MEDIATION_REQUESTED",
+            "label": "조정 신청",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:조정|중재)\\s*(?:신청|신청서\\s*제출)"
+            ]
+          },
+          {
+            "code": "IMPASSE_REPORTED",
+            "label": "교착",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:교섭|협상).{0,8}(?:결렬|교착|난항|중단)",
+              "(?:결렬|교착|난항|중단).{0,8}(?:교섭|협상)"
+            ]
+          }
+        ],
+        "representation": [
+          {
+            "code": "CHANNEL_UNIFICATION_PENDING",
+            "label": "교섭창구 단일화",
+            "eventState": "occurred",
+            "patterns": [
+              "교섭창구\\s*단일화"
+            ]
+          },
+          {
+            "code": "UNIT_SPLIT_OR_MERGE_PENDING",
+            "label": "교섭단위 분리·통합",
+            "eventState": "occurred",
+            "patterns": [
+              "교섭단위.{0,8}(?:분리|통합|결정)"
+            ]
+          },
+          {
+            "code": "REPRESENTATIVE_CONFIRMED",
+            "label": "교섭대표 선정",
+            "eventState": "occurred",
+            "patterns": [
+              "교섭대표노조|대표교섭노조|대표노조.{0,8}(?:선정|확정|결정)"
+            ]
+          },
+          {
+            "code": "FAIR_REPRESENTATION_ISSUE",
+            "label": "대표성 분쟁",
+            "eventState": "disputed",
+            "patterns": [
+              "(?:교섭대표|대표노조|교섭단위).{0,10}(?:분쟁|논란|소송|이의)"
+            ]
+          }
+        ],
+        "agreement": [
+          {
+            "code": "IMPLEMENTATION_FOLLOW_UP",
+            "label": "합의 이행",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:합의사항|협약|임금\\s*인상분).{0,10}(?:이행|시행|적용|반영)",
+              "(?:소급분|인상분).{0,8}(?:지급|반영)"
+            ]
+          },
+          {
+            "code": "EFFECTIVE",
+            "label": "협약 발효",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:단체협약|임금협약|임단협).{0,10}(?:발효|효력\\s*발생)"
+            ]
+          },
+          {
+            "code": "SIGNED",
+            "label": "협약 서명·조인",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:단체협약|임금협약|임단협).{0,10}(?:서명|조인|체결)"
+            ]
+          },
+          {
+            "code": "RATIFIED",
+            "label": "인준 완료",
+            "eventState": "occurred",
+            "patterns": [
+              "잠정\\s*합의안?.{0,12}(?:가결|통과|인준)"
+            ]
+          },
+          {
+            "code": "RATIFICATION_IN_PROGRESS",
+            "label": "인준 투표 중",
+            "eventState": "occurred",
+            "patterns": [
+              "잠정\\s*합의안?.{0,14}찬반투표.{0,8}(?:실시|진행|투표\\s*중)"
+            ]
+          },
+          {
+            "code": "RATIFICATION_SCHEDULED",
+            "label": "인준 예정",
+            "eventState": "planned",
+            "patterns": [
+              "잠정\\s*합의안?.{0,14}찬반투표.{0,8}(?:예정|실시|앞두고|열기로)"
+            ]
+          },
+          {
+            "code": "RATIFICATION_REJECTED",
+            "label": "합의안 부결",
+            "eventState": "occurred",
+            "patterns": [
+              "잠정\\s*합의안?.{0,14}(?:부결|거부|무산|폐기)",
+              "(?:부결|거부|무산|폐기).{0,14}잠정\\s*합의안?"
+            ]
+          },
+          {
+            "code": "REPORTED",
+            "label": "합의 보도·세부 미확인",
+            "eventState": "occurred",
+            "patterns": [
+              "^(?!.*(?:잠정|부분|일부|가결|부결|서명|조인|체결|발효)).*(?:임단협|임금협상|노사협상).{0,10}(?:타결|합의)",
+              "^(?!.*(?:잠정|부분|일부|가결|부결|서명|조인|체결|발효)).*(?:타결|합의).{0,10}(?:임단협|임금협상|노사협상)"
+            ]
+          },
+          {
+            "code": "PARTIAL_AGREEMENT",
+            "label": "부분합의",
+            "eventState": "occurred",
+            "patterns": [
+              "(?:일부|부분).{0,6}합의"
+            ]
+          },
+          {
+            "code": "TENTATIVE_AGREEMENT",
+            "label": "잠정합의",
+            "eventState": "occurred",
+            "patterns": [
+              "잠정\\s*합의(?:안)?"
+            ]
+          }
+        ],
+        "agreementLifecycle": [
+          {
+            "code": "AUTO_EXTENSION",
+            "label": "협약 자동연장",
+            "eventState": "occurred",
+            "patterns": ["(?:협약|단체협약).{0,10}자동\\s*연장"]
+          },
+          {
+            "code": "THREE_MONTH_CONTINUATION",
+            "label": "3개월 효력 지속",
+            "eventState": "occurred",
+            "patterns": ["(?:협약|단체협약).{0,12}3개월.{0,8}(?:효력|지속|연장)"]
+          },
+          {
+            "code": "EXPIRING",
+            "label": "협약 만료 예정",
+            "eventState": "planned",
+            "patterns": ["(?:협약|단체협약).{0,10}(?:만료\\s*예정|만료\\s*임박)"]
+          },
+          {
+            "code": "EXPIRED",
+            "label": "협약 만료",
+            "eventState": "occurred",
+            "patterns": ["(?:협약|단체협약).{0,10}(?:만료|효력\\s*상실)"]
+          },
+          {
+            "code": "ACTIVE",
+            "label": "협약 유효",
+            "eventState": "occurred",
+            "patterns": ["(?:협약|단체협약).{0,10}(?:유효|효력\\s*유지)"]
+          }
+        ]
+      }
+    }
+  },
+  "companies": [
+    {
+      "id": "samsung-electronics",
+      "name": "삼성전자",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": ["삼성전자", "Samsung Electronics"],
+      "bargainingUnits": [
+        {
+          "id": "representative-union",
+          "name": "교섭대표 노동조합",
+          "aliases": ["전국삼성전자노동조합", "전삼노", "교섭대표노조"]
+        },
+        {
+          "id": "works-council",
+          "name": "노사협의회",
+          "aliases": ["삼성전자 노사협의회", "노사협의회"]
+        },
+        {
+          "id": "office-union",
+          "name": "사무직·소수 노동조합",
+          "aliases": ["삼성전자 사무직노조", "동행노조", "구미네트워크노조"]
+        }
+      ],
+      "queries": [
+        "삼성전자 임금협상",
+        "삼성전자 임단협",
+        "삼성전자 노사교섭",
+        "삼성전자 노조 파업",
+        "삼성전자 잠정합의"
+      ]
+    },
+    {
+      "id": "lg-electronics",
+      "name": "LG전자",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": ["LG전자", "엘지전자", "LG Electronics"],
+      "bargainingUnits": [
+        {
+          "id": "production-union",
+          "name": "생산직 노동조합",
+          "aliases": ["LG전자 노동조합", "엘지전자 노동조합", "금속노련 LG전자"]
+        },
+        {
+          "id": "office-union",
+          "name": "사무직 노동조합",
+          "aliases": ["LG전자 사무직노조", "사람중심 사무직노조"]
+        }
+      ],
+      "queries": [
+        "LG전자 임금협상",
+        "LG전자 임단협",
+        "LG전자 노사교섭",
+        "LG전자 노조 파업",
+        "LG전자 잠정합의"
+      ]
+    },
+    {
+      "id": "hyundai-motor",
+      "name": "현대자동차",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": ["현대자동차", "현대차", "Hyundai Motor"],
+      "bargainingUnits": [
+        {
+          "id": "metal-union-branch",
+          "name": "금속노조 현대자동차지부",
+          "aliases": ["금속노조 현대자동차지부", "현대자동차지부", "현대차 노조", "현대차노조"]
+        }
+      ],
+      "queries": [
+        "현대자동차 임금협상",
+        "현대자동차 임단협",
+        "현대차 노사교섭",
+        "현대차 노조 파업",
+        "현대차 잠정합의"
+      ]
+    },
+    {
+      "id": "kia",
+      "name": "기아",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": ["기아", "기아차", "Kia"],
+      "bargainingUnits": [
+        {
+          "id": "metal-union-branch",
+          "name": "금속노조 기아지부",
+          "aliases": ["금속노조 기아지부", "기아지부", "기아 노조", "기아차 노조"]
+        }
+      ],
+      "queries": [
+        "기아 임금협상",
+        "기아 임단협",
+        "기아 노사교섭",
+        "기아 노조 파업",
+        "기아 잠정합의"
+      ]
+    },
+    {
+      "id": "sk-hynix",
+      "name": "SK하이닉스",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": ["SK하이닉스", "에스케이하이닉스", "SK hynix"],
+      "bargainingUnits": [
+        {
+          "id": "production-union",
+          "name": "생산직 노동조합",
+          "aliases": ["SK하이닉스 노동조합", "하이닉스 노동조합", "이천 노조", "청주 노조"]
+        },
+        {
+          "id": "technical-office-union",
+          "name": "기술사무직 노동조합",
+          "aliases": ["SK하이닉스 기술사무직지회", "하이닉스 기술사무직노조", "기술사무직지회"]
+        }
+      ],
+      "queries": [
+        "SK하이닉스 임금협상",
+        "SK하이닉스 임단협",
+        "SK하이닉스 노사교섭",
+        "SK하이닉스 노조 파업",
+        "SK하이닉스 잠정합의"
+      ]
+    },
+    {
+      "id": "posco",
+      "name": "포스코",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": ["포스코", "POSCO", "포항제철"],
+      "bargainingUnits": [
+        {
+          "id": "posco-labor-union",
+          "name": "포스코노동조합",
+          "aliases": ["포스코노동조합", "포스코 노조", "금속노련 포스코"]
+        },
+        {
+          "id": "metal-union-branch",
+          "name": "금속노조 포스코지회",
+          "aliases": ["금속노조 포스코지회", "포스코지회"]
+        }
+      ],
+      "queries": [
+        "포스코 임금협상",
+        "포스코 임단협",
+        "포스코 노사교섭",
+        "포스코 노조 파업",
+        "포스코 잠정합의"
+      ]
+    },
+    {
+      "id": "hyundai-steel",
+      "name": "현대제철",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": ["현대제철", "Hyundai Steel"],
+      "bargainingUnits": [
+        {
+          "id": "metal-union-units",
+          "name": "금속노조 사업장별 지회",
+          "aliases": ["금속노조 현대제철", "현대제철지회", "당진지회", "인천지회", "포항지회", "순천지회"]
+        },
+        {
+          "id": "hyundai-steel-union",
+          "name": "현대제철 노동조합",
+          "aliases": ["현대제철 노동조합", "현대제철 노조"]
+        }
+      ],
+      "queries": [
+        "현대제철 임금협상",
+        "현대제철 임단협",
+        "현대제철 노사교섭",
+        "현대제철 노조 파업",
+        "현대제철 잠정합의"
+      ]
+    },
+    {
+      "id": "hd-hyundai-heavy-industries",
+      "name": "HD현대중공업",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": ["HD현대중공업", "현대중공업", "Hyundai Heavy Industries"],
+      "bargainingUnits": [
+        {
+          "id": "metal-union-branch",
+          "name": "금속노조 현대중공업지부",
+          "aliases": ["금속노조 현대중공업지부", "현대중공업지부", "현중 노조"]
+        },
+        {
+          "id": "office-union",
+          "name": "사무직 노동조합",
+          "aliases": ["HD현대중공업 사무직노조", "현대중공업 사무직노조"]
+        }
+      ],
+      "queries": [
+        "HD현대중공업 임금협상",
+        "현대중공업 임단협",
+        "현대중공업 노사교섭",
+        "현대중공업 노조 파업",
+        "현대중공업 잠정합의"
+      ]
+    },
+    {
+      "id": "hanwha-ocean",
+      "name": "한화오션",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": ["한화오션", "대우조선해양", "Hanwha Ocean"],
+      "bargainingUnits": [
+        {
+          "id": "metal-union-branch",
+          "name": "금속노조 대우조선지회",
+          "aliases": ["금속노조 대우조선지회", "대우조선지회", "한화오션 노조"]
+        },
+        {
+          "id": "office-union",
+          "name": "사무직 노동조합",
+          "aliases": ["한화오션 사무직노조", "대우조선 사무직노조"]
+        }
+      ],
+      "queries": [
+        "한화오션 임금협상",
+        "한화오션 임단협",
+        "한화오션 노사교섭",
+        "한화오션 노조 파업",
+        "한화오션 잠정합의"
+      ]
+    },
+    {
+      "id": "gm-korea",
+      "name": "한국GM",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": ["한국GM", "한국지엠", "GM Korea"],
+      "bargainingUnits": [
+        {
+          "id": "metal-union-branch",
+          "name": "금속노조 한국지엠지부",
+          "aliases": ["금속노조 한국지엠지부", "한국지엠지부", "한국GM 노조", "한국지엠 노조"]
+        },
+        {
+          "id": "office-union",
+          "name": "사무직 노동조합",
+          "aliases": ["한국GM 사무직노조", "한국지엠 사무직노조"]
+        }
+      ],
+      "queries": [
+        "한국GM 임금협상",
+        "한국지엠 임단협",
+        "한국GM 노사교섭",
+        "한국GM 노조 파업",
+        "한국GM 잠정합의"
+      ]
+    },
+    {
+      "id": "hyundai-mobis",
+      "name": "현대모비스",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed_t1_direct_employee_only",
+        "needsReview": true
+      },
+      "aliases": ["현대모비스", "Hyundai Mobis"],
+      "bargainingUnits": [
+        {
+          "id": "hyundai-mobis-direct-union",
+          "name": "현대모비스 직접고용 노동조합",
+          "aliases": ["현대모비스 노동조합"]
+        }
+      ],
+      "queries": [
+        "현대모비스 임금협상",
+        "현대모비스 임단협",
+        "현대모비스 노사교섭",
+        "현대모비스 노동조합 교섭",
+        "현대모비스 잠정합의"
+      ]
+    },
+    {
+      "id": "doosan-enerbility",
+      "name": "두산에너빌리티",
+      "selection": {
+        "scale": { "rating": "HIGH", "verifiedAt": null },
+        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
+        "mediaExposure": { "rating": "MEDIUM", "verifiedAt": null },
+        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
+        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
+        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "basis": "editorial_seed_t2_direct_employee_only",
+        "needsReview": true
+      },
+      "aliases": ["두산에너빌리티", "두산에너빌리티㈜", "Doosan Enerbility"],
+      "bargainingUnits": [
+        {
+          "id": "doosan-enerbility-direct-union",
+          "name": "두산에너빌리티 직접고용 노동조합",
+          "aliases": ["두산에너빌리티 노동조합"]
+        }
+      ],
+      "queries": [
+        "두산에너빌리티 임금협상",
+        "두산에너빌리티 임단협",
+        "두산에너빌리티 노사교섭",
+        "두산에너빌리티 노동조합 교섭",
+        "두산에너빌리티 잠정합의"
+      ]
+    }
+  ]
+}
