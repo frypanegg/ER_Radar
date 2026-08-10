@@ -5,7 +5,6 @@ import {
   Activity,
   ArrowRight,
   CalendarDays,
-  CheckCircle2,
   ChevronRight,
   CircleAlert,
   Clock3,
@@ -22,9 +21,17 @@ import {
 } from "lucide-react";
 import framework from "../data/negotiation-framework.json";
 import historicalSeed from "../data/historical-fact-seed.json";
+import currentSeed from "../data/current-2026-fact-seed.json";
 
 type AgreementFilter = "ALL" | "WAGE" | "INTEGRATED" | "CBA" | "SUPPLEMENTAL" | "UNKNOWN";
 type AgreementType = Exclude<AgreementFilter, "ALL">;
+type BargainingFlowEvent = {
+  date: string;
+  stage: string;
+  label: string;
+  summary: string;
+  sourceUrl?: string;
+};
 type HistoricalRecord = {
   id: string;
   companyId: string;
@@ -47,6 +54,7 @@ type HistoricalRecord = {
   coveredWorkerRelation: "DIRECT";
   includeInPrimaryDashboard: true;
   annotation: string;
+  flowEvents?: BargainingFlowEvent[];
 };
 type TrackingCompany = {
   id: string;
@@ -80,6 +88,7 @@ type CaseExample = {
   overlays: { label: string; tone: BadgeTone; group: string }[];
   evidence: { date: string; title: string; source: string; tier: "S" | "A" | "B" | "C" }[];
   sourceAnnotations: { event: string; sourceUrl: string; note: string }[];
+  flowEvents: BargainingFlowEvent[];
   next: string;
 };
 
@@ -96,11 +105,15 @@ const stageMeta = framework.enums.primary_stage.map((stage) => ({
 const stageByCode = new Map(stageMeta.map((stage) => [stage.code, stage]));
 
 const historicalRecords = historicalSeed.records as HistoricalRecord[];
+const currentRecords = currentSeed.records as HistoricalRecord[];
+const bargainingRecords = [...historicalRecords, ...currentRecords];
 const trackingCompanies = historicalSeed.trackingCompanies as TrackingCompany[];
-const historicalYears = Array.from(
-  new Set(historicalRecords.map((record) => record.bargainingYear)),
+const currentAsOf = currentSeed.asOf ?? "2026-08-10";
+const currentYear = Number(currentAsOf.slice(0, 4));
+const availableYears = Array.from(
+  new Set([...bargainingRecords.map((record) => record.bargainingYear), currentYear]),
 ).sort((left, right) => right - left);
-const defaultHistoricalYear = historicalYears[0] ?? historicalSeed.coveragePeriod.endYear;
+const defaultYear = availableYears[0] ?? historicalSeed.coveragePeriod.endYear;
 
 const agreementLabels: Record<AgreementType, string> = {
   WAGE: "임금협상",
@@ -114,6 +127,10 @@ function formatDate(date: string) {
   return date.replaceAll("-", ".");
 }
 
+function getYearLabel(year: number) {
+  return year === currentYear ? `${year}년 현재` : `${year}년`;
+}
+
 function stageOverlay(stage: string): { label: string; tone: BadgeTone; group: string }[] {
   if (stage === "S7" || stage === "S8") return [{ label: "조인·체결 확인", tone: "green", group: "합의·인준" }];
   if (stage === "S6") return [{ label: "찬반·인준 확인", tone: "green", group: "합의·인준" }];
@@ -122,9 +139,9 @@ function stageOverlay(stage: string): { label: string; tone: BadgeTone; group: s
   return [{ label: "원청 직접고용 근거 보강", tone: "orange", group: "근거 품질" }];
 }
 
-function getHistoricalCases(year: number): CaseExample[] {
+function getBargainingCases(year: number): CaseExample[] {
   return trackingCompanies.map((company) => {
-    const record = historicalRecords
+    const record = bargainingRecords
       .filter((candidate) => candidate.companyId === company.id && candidate.bargainingYear === year)
       .sort((left, right) => right.eventDate.localeCompare(left.eventDate))[0];
 
@@ -132,7 +149,7 @@ function getHistoricalCases(year: number): CaseExample[] {
       return {
         id: `${company.id}-${year}-unverified`,
         name: company.legalName,
-        subtitle: `${year}년 원청 직접고용 교섭 사실 근거 미확인`,
+        subtitle: `${year}년 원청 직접고용 교섭 근거 미확인`,
         agreementType: "UNKNOWN",
         agreementLabel: agreementLabels.UNKNOWN,
         yearType: `${year}년 · 미확인`,
@@ -143,16 +160,17 @@ function getHistoricalCases(year: number): CaseExample[] {
         freshness: "근거 보강 대기",
         confidence: 0,
         sourceTier: "C",
-        scope: "원청 직접고용 사건 미확인 · 공개 단계 갱신 금지",
+        scope: "원청 직접고용 교섭 근거 미확인 · 공개 단계 갱신 금지",
         majorityUnion: "확인중",
         unionMembers: "공개 근거 미확인",
         electionIssue: "공개 근거 미확인",
-        issueSummary: "직접고용 범위와 해당 연도 교섭사건을 한 원문에서 함께 확인한 뒤에만 쟁점으로 표시합니다.",
+        issueSummary: "직접고용 범위와 해당 연도 교섭 기록을 한 원문에서 함께 확인한 뒤에만 쟁점으로 표시합니다.",
         breakdownReason: "결렬 여부를 추정하지 않습니다.",
         voteChangeSummary: "찬반투표·최종안·기존 대비 변경을 확인한 원문이 없습니다.",
         overlays: [{ label: "공개 근거 미확인", tone: "gray", group: "근거 품질" }],
         evidence: [{ date: "—", title: "공개 가능한 원청 직접고용 사실 없음", source: "검증 보류", tier: "C" }],
         sourceAnnotations: [],
+        flowEvents: [],
         next: "법인명, 직접고용 적용범위, 교섭사실과 원문 URL이 함께 확인될 때까지 상태를 바꾸지 않습니다.",
       };
     }
@@ -181,29 +199,38 @@ function getHistoricalCases(year: number): CaseExample[] {
       reason: record.factSummary,
       lastConfirmed: formatDate(record.eventDate),
       verifiedAt: formatDate(record.eventDate),
-      freshness: "과거 사실 초기 데이터",
+      freshness: record.bargainingYear === currentYear ? `${currentAsOf} 기준 현재 현황` : "과거 사실 초기 데이터",
       confidence: record.confidence,
       sourceTier: record.sourceTier,
       scope: `원청 법인 직접고용 · ${record.unionName}`,
-      round: record.stage === "S7" ? "조인·체결 확인" : record.stage === "S6" ? "찬반·인준 확인" : "원문 사건 확인",
+      round: record.stage === "S7" ? "조인·체결 확인" : record.stage === "S6" ? "찬반·인준 확인" : "원문 교섭 확인",
       majorityUnion: "확인중",
       unionMembers: "공개 근거 미확인",
       electionIssue: "공개 근거 미확인",
-      issueSummary: `초기 레코드 사실 요약: ${record.factSummary}`,
-      breakdownReason: "이 초기 레코드에는 확인된 결렬 사유가 없습니다. 원문에 명시된 경우에만 별도 쟁점으로 갱신합니다.",
+      issueSummary: `${record.bargainingYear === currentYear ? "현재 확인 요약" : "과거 기록 요약"}: ${record.factSummary}`,
+      breakdownReason: `${record.bargainingYear === currentYear ? "현재 확인한 기사" : "이 초기 기록"}에는 확인된 결렬 사유가 없습니다. 원문에 명시된 경우에만 별도 쟁점으로 갱신합니다.`,
       voteChangeSummary: record.stage === "S6" || record.stage === "S7"
         ? `원문 확인: ${record.factSummary}`
         : "찬반투표·최종안의 기존 대비 변경은 확인된 원문이 있을 때만 표시합니다.",
       overlays: stageOverlay(record.stage),
       evidence,
       sourceAnnotations,
+      flowEvents: record.flowEvents?.length
+        ? record.flowEvents
+        : [{
+            date: record.eventDate,
+            stage: record.stage,
+            label: "확인된 핵심 경과",
+            summary: record.factSummary,
+            sourceUrl: record.sourceUrl,
+          }],
       next: "다음 일일 수집에서는 원문 추가 확인, 조합원 수·대표성, 쟁점·최종안 변경을 분리 검증합니다.",
     };
   });
 }
 
 const filters: { id: AgreementFilter; label: string }[] = [
-  { id: "ALL", label: "전체 사건" },
+  { id: "ALL", label: "전체 교섭" },
   { id: "WAGE", label: "임금협상" },
   { id: "INTEGRATED", label: "통합 임단협" },
   { id: "CBA", label: "단체협약" },
@@ -259,10 +286,20 @@ function OverlayBadge({ label, tone }: { label: string; tone: BadgeTone }) {
   return <span className={`overlay-badge overlay-${tone}`}>{label}</span>;
 }
 
+function RadarMark({ compact = false }: { compact?: boolean }) {
+  return (
+    <span className={compact ? "radar-mark radar-mark-compact" : "radar-mark"} aria-hidden="true">
+      <span className="radar-sweep" />
+      <span className="radar-beam" />
+      <span className="radar-core" />
+    </span>
+  );
+}
+
 export default function Home() {
   const [activeFilter, setActiveFilter] = useState<AgreementFilter>("ALL");
-  const [selectedYear, setSelectedYear] = useState(defaultHistoricalYear);
-  const [selectedId, setSelectedId] = useState(() => getHistoricalCases(defaultHistoricalYear)[0]?.id ?? "");
+  const [selectedYear, setSelectedYear] = useState(defaultYear);
+  const [selectedId, setSelectedId] = useState(() => getBargainingCases(defaultYear)[0]?.id ?? "");
   const [showAllStages, setShowAllStages] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [stageFocus, setStageFocus] = useState("ALL");
@@ -276,7 +313,7 @@ export default function Home() {
   });
   const [companyRequestMessage, setCompanyRequestMessage] = useState("");
   const [isSubmittingCompanyRequest, setIsSubmittingCompanyRequest] = useState(false);
-  const caseExamples = useMemo(() => getHistoricalCases(selectedYear), [selectedYear]);
+  const caseExamples = useMemo(() => getBargainingCases(selectedYear), [selectedYear]);
 
   const visibleCases = useMemo(
     () => {
@@ -334,7 +371,7 @@ export default function Home() {
     <main className="site-shell">
       <section className="top-band" aria-label="서비스 안내">
         <div className="container top-band-inner">
-          <p><Sparkles size={14} aria-hidden="true" /> 2021–2025 검증 사실 데이터 · 원청 법인 직접고용 노조 교섭만 다룹니다</p>
+          <p><Sparkles size={14} aria-hidden="true" /> {currentAsOf} 기준 현황 · 원청 법인 직접고용 노조 교섭만 다룹니다</p>
           <p><Clock3 size={14} aria-hidden="true" /> 수집 설계 기준: 매일 06:30 KST · 법인별 1회</p>
         </div>
       </section>
@@ -342,11 +379,11 @@ export default function Home() {
       <header className="site-header">
         <div className="container header-inner">
           <a className="brand" href="#overview" aria-label="노사교섭 레이더 처음으로">
-            <span className="brand-mark" aria-hidden="true"><Activity size={21} /></span>
+            <RadarMark />
             <span>노사교섭 <strong>레이더</strong></span>
           </a>
           <nav className="header-nav" aria-label="주요 섹션">
-            <a href="#board">사건 보드</a>
+            <a href="#board">교섭현황</a>
             <a href="#framework">단계 프레임워크</a>
             <a href="#collection">수집 원칙</a>
           </nav>
@@ -356,54 +393,16 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="hero" id="overview">
-        <div className="container hero-grid">
+      <section className="hero compact-hero" id="overview">
+        <div className="container hero-grid compact-hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow"><span className="pulse-dot" /> 초기 추적 12개사 · 2021–2025 사실 데이터</div>
-            <h1>진행률을 버리고,<br /><em>교섭의 맥락</em>을 읽습니다.</h1>
+            <div className="eyebrow"><span className="pulse-dot" /> 초기 추적 12개사 · 2021–2026 교섭 기록</div>
+            <h1>대한민국 주요 제조업의<br />단체 교섭 현황을 모니터링 합니다.</h1>
             <p className="hero-description">
-              원청 법인에 직접 고용된 노동조합의 임금협상과 단체교섭을 하나의 직선으로 보지 않습니다. 각 교섭사건의 <strong>주 단계</strong>와
-              조정·쟁의·대표성·인준의 <strong>병렬 상태</strong>를 함께 읽는 대시보드입니다.
+              원청 노동조합의 임금협상과 단체교섭 <strong>주 단계</strong>와 교섭·조정·쟁의·타결의 <strong>상태</strong>를 함께 읽는 대시보드
             </p>
-            <div className="hero-actions">
-              <a className="button button-primary" href="#board">사실 사건 살펴보기 <ArrowRight size={16} /></a>
-              <a className="button button-secondary" href="#framework">상태 모델 보기</a>
-            </div>
-            <p className="hero-footnote"><CircleAlert size={15} /> 0–100% 협상 진행률은 사용자에게 표시하지 않습니다.</p>
+            <p className="hero-footnote"><CircleAlert size={15} /> 교섭 단계는 완료율이 아니라, 기사 원문으로 확인된 현재 좌표입니다.</p>
           </div>
-
-          <aside className="hero-insight" aria-label="프레임워크 핵심 요약">
-            <div className="insight-topline">
-              <span>관측 모델</span>
-              <span className="version-badge">근거 우선</span>
-            </div>
-            <div className="model-diagram">
-              <div className="model-node primary-node">
-                <span className="node-label">주 단계</span>
-                <strong>현재 무엇이<br />진행 중인가</strong>
-                <small>사건당 하나</small>
-              </div>
-              <div className="model-connector" aria-hidden="true"><span>+</span></div>
-              <div className="model-node overlay-node">
-                <span className="node-label">병렬 상태</span>
-                <strong>함께 확인할<br />절차·쟁점은?</strong>
-                <small>복수 가능</small>
-              </div>
-            </div>
-            <div className="insight-result">
-              <CheckCircle2 size={18} aria-hidden="true" />
-              <p><strong>교착 후 재교섭</strong>, 잠정합의 부결, 복수노조 절차도 왜곡 없이 기록합니다.</p>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <section className="signal-strip" aria-label="프레임워크 핵심 지표">
-        <div className="container signal-grid">
-          <div className="signal-item"><strong>{trackingCompanies.length}</strong><span>개 초기 추적 법인<br />실명 기준</span></div>
-          <div className="signal-item"><strong>{historicalRecords.length}</strong><span>개 검증 사실 사건<br />2021–2025</span></div>
-          <div className="signal-item"><strong>1×</strong><span>법인별 일일 수집<br />KST 06:30</span></div>
-          <div className="signal-item signal-item-emphasis"><strong>≠</strong><span>뉴스 없음은<br />미착수가 아님</span></div>
         </div>
       </section>
 
@@ -411,14 +410,14 @@ export default function Home() {
         <div className="container">
           <div className="section-heading dashboard-heading">
             <div>
-              <p className="section-kicker">사건 보드 · 사실 데이터</p>
-              <h2>교섭사건 보드</h2>
-              <p><strong>원청 직접고용이 확인된 노조</strong>만, 법인 × 교섭연도 × 협약유형 × 교섭단위 × 적용범위의 사건으로 봅니다. 미확인 연도는 미착수·타결로 추정하지 않습니다.</p>
+              <p className="section-kicker">교섭현황 · 검증 데이터</p>
+              <h2>교섭현황 대시보드</h2>
+              <p><strong>원청 직접고용이 확인된 노조</strong>만, 법인 × 교섭연도 × 협약유형 × 교섭단위 × 적용범위의 교섭 기록으로 봅니다. 미확인 연도는 미착수·타결로 추정하지 않습니다.</p>
             </div>
             <div className="dashboard-actions">
               <div className="data-health" aria-label="데이터 상태 설명">
                 <span className="health-light" aria-hidden="true" />
-                <span>검증 사실 {historicalRecords.length}건 · {selectedYear}년 조회</span>
+                <span>{currentAsOf} 기준 · 검증 교섭 기록 {bargainingRecords.length}건 · {getYearLabel(selectedYear)} 조회</span>
               </div>
               <button className="board-add-company" type="button" onClick={() => { setCompanyRequestMessage(""); setIsAddCompanyOpen(true); }}>
                 <Plus size={15} /> 추적 기업 추가
@@ -428,13 +427,13 @@ export default function Home() {
 
           <div className="scope-guard" role="note">
             <ShieldCheck size={17} aria-hidden="true" />
-            <p><strong>포함:</strong> 원청 법인에 직접 고용된 노조의 교섭사건. <strong>제외:</strong> 하청·사내협력사·용역·파견 노조의 원청 상대 교섭은 원청 노조 현황에 합산·표시하지 않으며, 별도 검토 대상으로 분리합니다.</p>
+            <p><strong>포함:</strong> 원청 법인에 직접 고용된 노조의 교섭 기록. <strong>제외:</strong> 하청·사내협력사·용역·파견 노조의 원청 상대 교섭은 원청 노조 현황에 합산·표시하지 않으며, 별도 검토 대상으로 분리합니다.</p>
           </div>
 
-          <div className="year-filter-bar" aria-label="과거 데이터 조회 연도">
-            <div className="year-filter-label"><CalendarDays size={16} /> 조회 연도</div>
+          <div className="year-filter-bar" aria-label="연도별 교섭현황 조회">
+            <div className="year-filter-label"><CalendarDays size={16} /> 연도별 교섭현황</div>
             <div className="year-filter-options" role="tablist" aria-label="교섭 연도 선택">
-              {historicalYears.map((year) => (
+              {availableYears.map((year) => (
                 <button
                   className={selectedYear === year ? "year-filter-chip active" : "year-filter-chip"}
                   key={year}
@@ -443,14 +442,14 @@ export default function Home() {
                   aria-selected={selectedYear === year}
                   onClick={() => {
                     setSelectedYear(year);
-                    setSelectedId(getHistoricalCases(year)[0]?.id ?? "");
+                    setSelectedId(getBargainingCases(year)[0]?.id ?? "");
                   }}
                 >
-                  {year}년
+                  {getYearLabel(year)}
                 </button>
               ))}
             </div>
-            <span className="year-filter-note">원문·직접고용 근거가 함께 확인된 사건만 단계에 반영</span>
+            <span className="year-filter-note">2026년은 최신 기사 기준, 이전 연도는 기록된 교섭 경과를 함께 표시</span>
           </div>
 
           <div className="filter-bar" aria-label="협약 유형 필터">
@@ -520,12 +519,12 @@ export default function Home() {
           </div>
 
           <div className="case-layout">
-            <div className="case-list" role="list" aria-label="검증된 교섭사건 목록">
+            <div className="case-list" role="list" aria-label="검증된 교섭현황 목록">
               {visibleCases.length === 0 && (
                 <div className="empty-result" role="status">
                   <Search size={20} aria-hidden="true" />
-                  <strong>직접고용 확정 사건을 찾지 못했습니다.</strong>
-                  <span>원청 직접고용이 확인된 교섭사건만 검색 결과로 보여줍니다.</span>
+                  <strong>직접고용이 확인된 교섭 기록을 찾지 못했습니다.</strong>
+                  <span>원청 직접고용이 확인된 교섭 기록만 검색 결과로 보여줍니다.</span>
                   <button type="button" onClick={() => { setSearchTerm(""); setStageFocus("ALL"); }}>검색·단계 필터 초기화</button>
                 </div>
               )}
@@ -571,7 +570,7 @@ export default function Home() {
             <article className="case-detail" aria-live="polite">
               <div className="case-detail-header">
                 <div>
-                  <p className="detail-overline">선택한 과거 사실 사건</p>
+                  <p className="detail-overline">{selectedYear === currentYear ? "선택한 현재 교섭현황" : "선택한 과거 교섭 기록"}</p>
                   <h3>{selectedCase.name}</h3>
                   <p>{selectedCase.subtitle}</p>
                 </div>
@@ -585,19 +584,43 @@ export default function Home() {
               <div className="status-spotlight">
                 <div className="spotlight-stage"><StagePill stage={selectedCase.stage} /></div>
                 <div>
-                  <p>현재 주 단계</p>
+                  <p>{selectedYear === currentYear ? "현재 주 단계" : "해당 연도 최종 확인 단계"}</p>
                   <h4>{selectedStage.label}</h4>
                   <span>{selectedCase.reason}</span>
                 </div>
               </div>
 
+              <section className="bargaining-flow" aria-label="교섭 경과">
+                <div className="subsection-title"><span>교섭 경과</span><small>기사 원문에서 확인된 발생·확인 순서</small></div>
+                {selectedCase.flowEvents.length === 0 ? (
+                  <p className="flow-empty">해당 연도 교섭 경과를 보여 줄 정도의 원청 직접고용 근거가 아직 확보되지 않았습니다.</p>
+                ) : (
+                  <ol className="flow-list">
+                    {selectedCase.flowEvents.map((flow, index) => (
+                      <li className="flow-item" key={`${flow.date}-${flow.label}-${index}`}>
+                        <time>{formatDate(flow.date)}</time>
+                        <span className="flow-dot" aria-hidden="true" />
+                        <div>
+                          <div className="flow-title"><StagePill stage={flow.stage} /><strong>{flow.label}</strong></div>
+                          <p>{flow.summary}</p>
+                          {flow.sourceUrl && <a href={flow.sourceUrl} target="_blank" rel="noreferrer">원문 보기</a>}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+                {selectedCase.flowEvents.length === 1 && selectedYear !== currentYear && (
+                  <p className="flow-coverage-note">초기 데이터에서 검증된 핵심 경과입니다. 앞선 과정은 원문 근거를 추가 확보하면 순서대로 이어서 표시합니다.</p>
+                )}
+              </section>
+
               <div className="detail-meta-grid">
-                <div><span>사건 범위</span><strong>{selectedCase.scope}</strong></div>
+                <div><span>교섭 범위</span><strong>{selectedCase.scope}</strong></div>
                 <div><span>마지막 검증</span><strong>{selectedCase.verifiedAt} · {selectedCase.freshness}</strong></div>
-                <div><span>현재 국면</span><strong>{selectedCase.round ?? "사건 확인 대기"}</strong></div>
+                <div><span>현재 국면</span><strong>{selectedCase.round ?? "교섭 확인 대기"}</strong></div>
               </div>
 
-              <div className="identity-facts" aria-label="교섭사건 주요 속성">
+              <div className="identity-facts" aria-label="교섭 기본 정보">
                 <div><span>올해 협상유형</span><strong>{selectedCase.yearType}</strong></div>
                 <div title="교섭창구 참여노조 조합원 기준입니다. 대표교섭노조 여부나 직접고용 전체 대비 가입률과 다릅니다."><span>참여노조 과반</span><strong className={`majority-${selectedCase.majorityUnion === "O" ? "yes" : selectedCase.majorityUnion === "X" ? "no" : "pending"}`}>{selectedCase.majorityUnion}</strong></div>
                 <div><span>조합원 수</span><strong>{selectedCase.unionMembers}</strong></div>
@@ -637,7 +660,7 @@ export default function Home() {
 
               <div className="case-inspection-grid">
                 <section className="inspection-card">
-                  <div className="subsection-title"><span>쟁점 요약</span><small>사건별 분리 기록</small></div>
+                  <div className="subsection-title"><span>쟁점 요약</span><small>교섭 단위별 분리 기록</small></div>
                   <p>{selectedCase.issueSummary}</p>
                 </section>
                 <section className="inspection-card">
@@ -681,13 +704,13 @@ export default function Home() {
 
           <div className="stage-board" aria-label="주 단계 모델">
             <div className="stage-board-intro">
-              <div><span className="small-label">선택 사례의 현재 좌표</span><strong><StagePill stage={selectedCase.stage} /> {selectedStage.label}</strong></div>
+              <div><span className="small-label">선택 교섭현황의 현재 좌표</span><strong><StagePill stage={selectedCase.stage} /> {selectedStage.label}</strong></div>
               <div className="axis-controls">
-                <span className="no-progress-label">단계 축으로 사건 탐색 · 완료율 없음</span>
+                <span className="no-progress-label">단계 축으로 교섭현황 탐색 · 완료율 없음</span>
                 {stageFocus !== "ALL" && <button type="button" onClick={() => setStageFocus("ALL")}>전체 단계 보기</button>}
               </div>
             </div>
-            <ol className="stage-track" aria-label="주 단계로 교섭사건 좁혀 보기">
+            <ol className="stage-track" aria-label="주 단계로 교섭현황 좁혀 보기">
               {stageMeta.map((stage, index) => {
                 const isCurrent = stage.code === selectedCase.stage;
                 const isPast = activeStageIndex > index && stage.code !== "U";
@@ -705,7 +728,7 @@ export default function Home() {
                         if (next) setSelectedId(next.id);
                       }}
                       aria-pressed={isFocused}
-                      aria-label={`${stage.label} 단계로 사건 보기`}
+                      aria-label={`${stage.label} 단계로 교섭현황 보기`}
                     >
                       <span className="stage-dot" aria-hidden="true" />
                       <span className="stage-code">{stage.code}</span>
@@ -744,7 +767,7 @@ export default function Home() {
             <p className="section-kicker">일일 수집 설계</p>
             <h2>매일 한 번,<br /><em>사실부터</em> 쌓습니다.</h2>
             <p>
-              법인별 수집은 하루 1회로 제한합니다. 먼저 원청 법인 <strong>직접고용 노조 사건인지 검증</strong>하고, 기사 원문을 복제하는 대신 제목·링크·발행 정보와 짧은 사실 요약을 보존해 상태 변경의 근거를 추적합니다.
+              법인별 수집은 하루 1회로 제한합니다. 먼저 원청 법인 <strong>직접고용 노조 교섭인지 검증</strong>하고, 기사 원문을 복제하는 대신 제목·링크·발행 정보와 짧은 사실 요약을 보존해 상태 변경의 근거를 추적합니다.
             </p>
             <div className="collection-timing">
               <CalendarDays size={20} aria-hidden="true" />
@@ -792,8 +815,8 @@ export default function Home() {
       <section className="principle-banner">
         <div className="container principle-inner">
           <div className="principle-icon"><UsersRound size={23} aria-hidden="true" /></div>
-          <p><strong>원청 직접고용 검증 게이트를 먼저 통과한 노조 사건만 표시</strong>합니다. 하청·사내협력사·용역·파견 노조의 원청 상대 교섭은 원청 노조 사례에 합산하지 않습니다.</p>
-          <a href="#board">사건 보드로 돌아가기 <ArrowRight size={15} /></a>
+          <p><strong>원청 직접고용 검증 게이트를 먼저 통과한 노조 교섭만 표시</strong>합니다. 하청·사내협력사·용역·파견 노조의 원청 상대 교섭은 원청 노조 현황에 합산하지 않습니다.</p>
+          <a href="#board">교섭현황으로 돌아가기 <ArrowRight size={15} /></a>
         </div>
       </section>
 
@@ -842,8 +865,8 @@ export default function Home() {
 
       <footer className="site-footer">
         <div className="container footer-inner">
-          <div><a className="brand footer-brand" href="#overview"><span className="brand-mark" aria-hidden="true"><Activity size={18} /></span> 노사교섭 <strong>레이더</strong></a><p>한국 대기업 임금·단체교섭 현황을 위한 상태 프레임워크</p></div>
-          <div className="footer-meta"><span>프레임워크 v1.0</span><span>·</span><span>법률·연구 기반 설계</span><span>·</span><span>2021–2025 검증 사실</span></div>
+          <div><a className="brand footer-brand" href="#overview"><RadarMark compact /> 노사교섭 <strong>레이더</strong></a><p>한국 대기업 임금·단체교섭 현황을 위한 상태 프레임워크</p></div>
+          <div className="footer-meta"><span>프레임워크 v1.0</span><span>·</span><span>법률·연구 기반 설계</span><span>·</span><span>{currentAsOf} 기준 현황</span></div>
         </div>
       </footer>
     </main>

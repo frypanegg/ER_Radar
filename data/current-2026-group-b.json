@@ -1,0 +1,248 @@
+{
+  "records": [
+    {
+      "companyId": "posco",
+      "companyLegalName": "주식회사 포스코",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S4",
+      "eventDate": "2026-07-27",
+      "title": "포스코 2026년 임금·단체협약 중노위 조정 신청",
+      "factSummary": "포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
+      "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
+      "directEmployerId": "posco",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
+      "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
+      "sourceUrl": "https://www.etoday.co.kr/news/view/2607990?trc=main_list_news",
+      "sourceName": "이투데이",
+      "sourceTier": "B",
+      "confidence": 0.95,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "2026-08-10 KST 기준, 확인한 원문 중 가장 늦은 직접고용 노조 사건은 7월 27일 중노위 조정 신청이다. 이 조사 스냅샷에서는 이후 잠정합의·인준·조인을 검증하는 원문을 찾지 못했으므로 S4를 유지하며, 조정 종료일 예정만으로 파업·타결을 추정하지 않는다.",
+      "flowEvents": [
+        {
+          "date": "2026-06-16",
+          "stage": "S3",
+          "label": "임금·단체협약 교섭 개시",
+          "summary": "포스코와 대표교섭노조 포스코노동조합이 2026년 임금 및 단체협약 교섭을 시작한 것으로 보도됐다.",
+          "sourceUrl": "https://news.tf.co.kr/read/economy/2346272.htm"
+        },
+        {
+          "date": "2026-07-23",
+          "stage": "S4",
+          "label": "본교섭 결렬 선언",
+          "summary": "포스코 노사는 합의안을 도출하지 못했고, 노조는 교섭 결렬을 선언했다.",
+          "sourceUrl": "https://news.tf.co.kr/read/economy/2346272.htm"
+        },
+        {
+          "date": "2026-07-27",
+          "stage": "S4",
+          "label": "중노위 조정 신청",
+          "summary": "노조가 중앙노동위원회에 노동쟁의 조정을 신청했다.",
+          "sourceUrl": "https://www.etoday.co.kr/news/view/2607990?trc=main_list_news"
+        }
+      ]
+    },
+    {
+      "companyId": "sk-hynix",
+      "companyLegalName": "SK하이닉스 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S3",
+      "eventDate": "2026-07-30",
+      "title": "SK하이닉스 2026년 임금·단체협약 4차 본교섭",
+      "factSummary": "SK하이닉스 노사는 7월 30일 2026년 임금·단체협약 4차 본교섭을 열었다. 초과이익분배금(PS)의 일부 자사주 지급과 적자 시 임금 조정 제안을 두고 이견이 이어졌으며, 기사 기준 합의안은 확인되지 않았다.",
+      "unionName": "SK하이닉스 복수노조(기술사무직·청주노동조합·이천노동조합; 4차 교섭의 개별 참여 노조명은 원문 미제시)",
+      "directEmployerId": "sk-hynix",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "SK하이닉스 발행 공시문서는 회사에 3개 노동조합이 있고 모두 회사와 단체협약을 맺었으며, 두 최대 노조의 조합원이 회사 직원 15,079명이라고 명시한다. 2026년 회사 뉴스룸도 기술사무직지회·청주노동조합·이천노동조합 대표를 SK하이닉스 임원과 함께 식별한다.",
+      "scopeEvidenceUrl": "https://links.sgx.com/FileOpen/SK%20hynix%20Inc._2025%20-%20Final%20Offering%20Circular%20%289.4.25%29.ashx?App=Prospectus&FileID=67332",
+      "sourceUrl": "https://biz.chosun.com/it-science/ict/2026/07/31/T747JP46Z5D7XDUYNFT5LCDNVE/?outputType=amp",
+      "sourceName": "조선비즈",
+      "sourceTier": "B",
+      "confidence": 0.91,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "4차 본교섭 원문은 복수노조 가운데 어느 노조가 해당 회의에 참여했는지 개별 명칭을 적지 않아, 노조명을 복수노조 구조로 보수적으로 표기했다. 원문이 예고한 8월 4일 5차 본교섭의 실제 결과나 잠정합의·인준·조인 원문은 이 조사 스냅샷에서 확인하지 못했으므로 S3를 유지한다.",
+      "flowEvents": [
+        {
+          "date": "2026-06-17",
+          "stage": "S1",
+          "label": "요구안 초안·상견례 예고",
+          "summary": "노조 요구안 초안에 주 4.5일제와 정년 연장 등이 거론됐고, 노사가 이달 상견례를 시작으로 임금·단체협약 협상에 들어갈 예정이라고 보도됐다.",
+          "sourceUrl": "https://mobile.inews24.com/v/mtl/1977402"
+        },
+        {
+          "date": "2026-07-30",
+          "stage": "S3",
+          "label": "4차 본교섭 진행",
+          "summary": "4차 본교섭과 앞선 집중 실무교섭에서 성과급 지급 방식 및 적자 시 임금 조정안의 이견이 해소되지 않았다.",
+          "sourceUrl": "https://biz.chosun.com/it-science/ict/2026/07/31/T747JP46Z5D7XDUYNFT5LCDNVE/?outputType=amp"
+        }
+      ]
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S3",
+      "eventDate": "2026-06-02",
+      "title": "현대모비스 2026년 단체교섭 5차 본교섭",
+      "factSummary": "현대모비스 노사와 모비스위원회는 6월 2일 2026년 단체교섭 5차 본교섭을 진행했다. 고용안정, 외주화, 복지 확대, 성과 배분, 신규채용·근무환경 등이 의제로 다뤄졌고, 회사는 향후 실무교섭에서 협의하겠다는 입장을 보였다.",
+      "unionName": "전국금속노동조합 현대자동차지부 모비스위원회",
+      "directEmployerId": "hyundai-mobis",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "머니투데이는 금속노조 현대자동차지부 모비스위원회를 현대모비스 노조로 식별하고, 그 조합원이 현대모비스 직원이라고 명시한다. 최신 사건 원문도 같은 모비스위원회와 현대모비스 노사의 단체교섭을 구분한다.",
+      "scopeEvidenceUrl": "https://www.mt.co.kr/industry/2023/02/17/2023021717510359336",
+      "sourceUrl": "https://m.megaeconomy.co.kr/news/newsview.php?ncode=1065596825053120",
+      "sourceName": "메가경제",
+      "sourceTier": "B",
+      "confidence": 0.88,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "현대IHL·유니투스 등 자회사 노조 사건은 별도 감사기록으로 분리했다. 2026-08-10 KST까지 이 직접고용 노조 교섭의 6차 이후 결과, 잠정합의·인준·조인 원문은 이 조사 스냅샷에서 확인하지 못했으므로 마지막 검증 단계인 S3만 표기한다.",
+      "flowEvents": [
+        {
+          "date": "2026-06-02",
+          "stage": "S3",
+          "label": "5차 본교섭 진행",
+          "summary": "모비스위원회와 회사가 2026년 단체교섭 5차 본교섭을 열고 고용안정·외주화·복지·성과배분 등을 논의했다.",
+          "sourceUrl": "https://m.megaeconomy.co.kr/news/newsview.php?ncode=1065596825053120"
+        }
+      ]
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S1",
+      "eventDate": "2026-07-24",
+      "title": "한화오션 2026년 본조합 임단협 본교섭 지연",
+      "factSummary": "7월 24일 보도는 한화오션 본조합의 2026년 임금·단체협약 본교섭 자체가 지연됐다고 전했다. 앞선 보도에서 노조는 기본급 정액 인상, 성과급 기준, 정년·임금피크제, 복지 및 채용 확대를 포함한 요구안을 전달한 것으로 확인된다.",
+      "unionName": "전국금속노동조합 경남지부 한화오션지회",
+      "directEmployerId": "hanwha-ocean",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "한화오션지회 공식 규칙 제6조는 지회를 한화오션(주) 노동자 중 생산직·기타직·4급·5급 사원으로 구성한다고 명시하고, 생산직·별정직은 입사와 동시에 조합원이 된다고 규정한다.",
+      "scopeEvidenceUrl": "https://howu.or.kr/38/?bmode=view&idx=160524153",
+      "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202607231339525930271",
+      "sourceName": "대한경제",
+      "sourceTier": "B",
+      "confidence": 0.9,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "최신 기사에서 본조합 임단협의 본교섭 지연과 웰리브·거제통영고성조선하청지회 사건을 명시적으로 분리했다. 본조합은 요구안 확인 뒤 본교섭 개시가 검증되지 않아 S1로 두며, 하청 쟁의권은 주 단계 산정에 사용하지 않는다.",
+      "flowEvents": [
+        {
+          "date": "2026-04-12",
+          "stage": "S1",
+          "label": "요구안 확인·본교섭 예정",
+          "summary": "노조의 2026년도 단체교섭 요구안과 5월 초·중순 본교섭 예정 사실이 보도됐다.",
+          "sourceUrl": "https://api.emetro.co.kr/article/20260412500129"
+        },
+        {
+          "date": "2026-07-24",
+          "stage": "S1",
+          "label": "본조합 본교섭 지연 확인",
+          "summary": "한화오션 본조합 임단협의 본교섭 자체가 지연됐다고 보도됐다.",
+          "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202607231339525930271"
+        }
+      ]
+    }
+  ],
+  "withheldRecords": [],
+  "auditRecords": [
+    {
+      "companyId": "posco",
+      "companyLegalName": "주식회사 포스코",
+      "bargainingYear": 2026,
+      "title": "포스코 조업지원 협력사 직원 직고용 로드맵 문맥 분리",
+      "factSummary": "포스코는 조업지원 협력사 현장직원을 순차적으로 채용하겠다고 발표했다. 원문은 이들을 협력사 직원으로 식별하고 향후 채용 절차를 예고하므로, 이 사건을 포스코노동조합의 직접고용 임단협 사건과 병합하지 않는다.",
+      "unionName": "협력사 현장직원(노조명 원문 미제시)",
+      "directEmployerId": null,
+      "coveredWorkerRelation": "MIXED_OR_UNRESOLVED",
+      "directEmploymentEvidence": "포스코 공식 발표는 대상자를 '협력사 현장 직원'으로 부르며, 입사 희망자를 대상으로 향후 채용 절차를 진행한다고 명시한다.",
+      "scopeEvidenceUrl": "https://newsroom.posco.com/kr/%ED%8F%AC%EC%8A%A4%EC%BD%94-%EC%A1%B0%EC%97%85%EC%A7%80%EC%9B%90-%ED%98%91%EB%A0%A5%EC%82%AC-%EC%A7%81%EC%9B%90-%EC%A7%81%EC%A0%91-%EA%B3%A0%EC%9A%A9%EC%9B%90%C2%B7%ED%95%98/",
+      "sourceUrl": "https://newsroom.posco.com/kr/%ED%8F%AC%EC%8A%A4%EC%BD%94-%EC%A1%B0%EC%97%85%EC%A7%80%EC%9B%90-%ED%98%91%EB%A0%A5%EC%82%AC-%EC%A7%81%EC%9B%90-%EC%A7%81%EC%A0%91-%EA%B3%A0%EC%9A%A9%EC%9B%90%C2%B7%ED%95%98/",
+      "sourceName": "포스코그룹 뉴스룸",
+      "sourceTier": "A",
+      "confidence": 0.97,
+      "scopeClassification": "MIXED_NEEDS_SPLIT",
+      "includeInPrimaryDashboard": false,
+      "annotation": "채용 완료 및 개별 근로계약·노조 교섭 단위가 확인되기 전까지 원청 직접고용 노조 현황에 포함하지 않는 전환·혼합 범위 감사기록이다."
+    },
+    {
+      "companyId": "sk-hynix",
+      "companyLegalName": "SK하이닉스 주식회사",
+      "bargainingYear": 2026,
+      "title": "SK하이닉스 청주사업장 협력업체 노조 원청교섭 요구 문맥 제외",
+      "factSummary": "피앤에스로지스 노조가 SK하이닉스 청주사업장 협력업체 노조로서 원청에 성과급 차별 해소 등을 요구한 사건이다. SK하이닉스 직접고용 노조의 2026년 임단협으로 사용하지 않는다.",
+      "unionName": "피앤에스로지스 노조",
+      "directEmployerId": null,
+      "coveredWorkerRelation": "SUBCONTRACTOR_OR_NON_DIRECT",
+      "directEmploymentEvidence": "연합뉴스 원문은 피앤에스로지스를 'SK하이닉스 청주사업장 협력업체'로, 해당 노조의 요구를 원청 교섭 요구로 명시한다.",
+      "scopeEvidenceUrl": "https://www.yna.co.kr/view/AKR20260516025100530",
+      "sourceUrl": "https://www.yna.co.kr/view/AKR20260516025100530",
+      "sourceName": "연합뉴스",
+      "sourceTier": "B",
+      "confidence": 0.99,
+      "scopeClassification": "SUBCONTRACTOR_UNION_EXCLUDED",
+      "includeInPrimaryDashboard": false,
+      "annotation": "원청 법인명과 성과급 의제가 기사에 있어도 협력업체 고용관계 사건이므로 SK하이닉스 직접고용 노조 현황을 변경하지 않는다."
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "bargainingYear": 2026,
+      "title": "현대IHL·유니투스 자회사 노조의 램프사업 매각 반대 파업 문맥 제외",
+      "factSummary": "현대IHL 노조와 유니투스 4개 지회의 램프사업 매각 반대 파업·원청 교섭 요구 사건이다. 원문은 이들을 현대모비스 자회사 노조로 식별하므로 현대모비스 주식회사 직접고용 노조의 연간 단체교섭과 분리한다.",
+      "unionName": "현대IHL 노조 및 유니투스 4개 지회",
+      "directEmployerId": null,
+      "coveredWorkerRelation": "AFFILIATE",
+      "directEmploymentEvidence": "ZDNet Korea 원문은 현대IHL과 유니투스를 현대모비스 자회사로, 근로조건의 법적 권한과 책임을 각 자회사 대표이사에게 있다고 명시한다.",
+      "scopeEvidenceUrl": "https://zdnet.co.kr/view/?no=20260518111850",
+      "sourceUrl": "https://zdnet.co.kr/view/?no=20260518111850",
+      "sourceName": "ZDNet Korea",
+      "sourceTier": "B",
+      "confidence": 0.98,
+      "scopeClassification": "AFFILIATE_UNION_EXCLUDED",
+      "includeInPrimaryDashboard": false,
+      "annotation": "현대모비스가 원청으로 언급돼도 자회사 법인 노조 사건이므로 본 대시보드의 현대모비스 직접고용 노조 교섭 단계에는 반영하지 않는다."
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "bargainingYear": 2026,
+      "title": "웰리브·거제통영고성조선하청지회 원청교섭·쟁의권 문맥 제외",
+      "factSummary": "웰리브지회와 거제통영고성조선하청지회가 한화오션 원청 사용자성을 둘러싸고 교섭·쟁의 절차에 들어간 사건이다. 한화오션 본조합 임단협과 별개인 하청노조 사건으로 보관한다.",
+      "unionName": "전국금속노동조합 웰리브지회·거제통영고성조선하청지회",
+      "directEmployerId": null,
+      "coveredWorkerRelation": "SUBCONTRACTOR_OR_NON_DIRECT",
+      "directEmploymentEvidence": "대한경제 원문은 한화오션 본조합 임단협과 구별하여 웰리브를 급식 하청업체 지회로, 거제통영고성조선하청지회를 사내 하청 노조 문맥으로 서술한다.",
+      "scopeEvidenceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202607231339525930271",
+      "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202607231339525930271",
+      "sourceName": "대한경제",
+      "sourceTier": "B",
+      "confidence": 0.99,
+      "scopeClassification": "SUBCONTRACTOR_UNION_EXCLUDED",
+      "includeInPrimaryDashboard": false,
+      "annotation": "개정 노조법상 원청교섭 또는 쟁의권 문맥이라도 하청 고용관계 사건을 한화오션 직접고용 노조의 2026년 임단협 단계와 혼합하지 않는다."
+    }
+  ],
+  "metadata": {
+    "title": "2026년 원청 직접고용 노조 교섭 현황 — 그룹 B",
+    "asOfKST": "2026-08-10",
+    "scopeRuleVersion": "1.0.0",
+    "scopeRule": "선정 법인이 직접사용자이고 노조 적용근로자가 그 법인의 직접고용 근로자라는 근거가 함께 있을 때만 공개한다.",
+    "stageRule": "잠정합의·인준·조인 근거가 없으면 타결로 추정하지 않는다. 하청·협력사·자회사·전환 중 범위 사건은 공개 현황에서 제외한다.",
+    "researchMethod": "2026-08-10 KST 기준으로 원문을 직접 확인한 마지막 사실 사건만 기록했다. 후속 결과를 찾지 못한 경우에는 부재를 단정하지 않고 마지막 검증 단계와 주석을 남겼다.",
+    "counts": {
+      "primaryDirectUnionRecords": 4,
+      "withheldRecords": 0,
+      "auditRecords": 4
+    }
+  }
+}

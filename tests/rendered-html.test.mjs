@@ -49,12 +49,15 @@ test("server-renders the collective-bargaining framework dashboard", async () =>
 
   const html = await response.text();
   assert.match(html, /<title>노사교섭 레이더 \| 원청 직접고용 교섭 현황<\/title>/);
-  assert.match(html, /교섭사건 보드/);
+  assert.match(html, /교섭현황 대시보드/);
   assert.match(html, /원청 직접고용/);
   assert.match(html, /교섭 단계별 조회/);
+  assert.match(html, /교섭 경과/);
+  assert.match(html, /2026년 현재/);
+  assert.match(html, /2026-08-10.*기준 현황/);
+  assert.match(html, /radar-mark/);
   assert.match(html, /삼성전자 주식회사/);
   assert.match(html, /HD현대중공업 주식회사/);
-  assert.match(html, /2021–2025 검증 사실 데이터/);
   assert.match(html, /원문 URL 주석/);
   assert.doesNotMatch(html, /제조 법인 [A-E]|example\.invalid|데모 · 실제 현황 아님|프레임워크 시연/);
   assert.match(html, /<meta name="robots" content="noindex, nofollow/);
@@ -63,13 +66,14 @@ test("server-renders the collective-bargaining framework dashboard", async () =>
 });
 
 test("keeps scope and source guards in the production-facing implementation", async () => {
-  const [page, layout, config, framework, pipeline, historicalSeed] = await Promise.all([
+  const [page, layout, config, framework, pipeline, historicalSeed, currentSeed] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../data/source-config.json", import.meta.url), "utf8"),
     readFile(new URL("../data/negotiation-framework.json", import.meta.url), "utf8"),
     readFile(new URL("../scripts/collect-news.mjs", import.meta.url), "utf8"),
     readFile(new URL("../data/historical-fact-seed.json", import.meta.url), "utf8"),
+    readFile(new URL("../data/current-2026-fact-seed.json", import.meta.url), "utf8"),
   ]);
 
   assert.match(page, /"use client"/);
@@ -94,6 +98,7 @@ test("keeps scope and source guards in the production-facing implementation", as
   assert.match(pipeline, /X-NCP-APIGW-API-KEY-ID/);
 
   const seed = JSON.parse(historicalSeed);
+  const current = JSON.parse(currentSeed);
   assert.equal(seed.trackingCompanies.length, 12);
   assert.equal(seed.coverage.length, 12);
   assert.ok(seed.records.length >= 44);
@@ -101,6 +106,14 @@ test("keeps scope and source guards in the production-facing implementation", as
   assert.ok(seed.records.every((record) => record.includeInPrimaryDashboard === true));
   assert.ok(seed.records.every((record) => /^https?:\/\//.test(record.sourceUrl)));
   assert.ok(seed.records.every((record) => !record.sourceUrl.includes("example.invalid")));
+  assert.equal(current.asOf, "2026-08-10");
+  assert.equal(current.records.length, 12);
+  assert.ok(current.records.every((record) => record.bargainingYear === 2026));
+  assert.ok(current.records.every((record) => record.scopeClassification === "PRIMARY_DIRECT_UNION"));
+  assert.ok(current.records.every((record) => record.coveredWorkerRelation === "DIRECT"));
+  assert.ok(current.records.every((record) => record.includeInPrimaryDashboard === true));
+  assert.ok(current.records.every((record) => /^https?:\/\//.test(record.sourceUrl)));
+  assert.ok(current.records.every((record) => record.flowEvents.length > 0));
 
   const robots = await readFile(new URL("../public/robots.txt", import.meta.url), "utf8");
   assert.match(robots, /User-agent: \*/);

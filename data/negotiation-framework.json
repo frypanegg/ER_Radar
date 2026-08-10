@@ -10,7 +10,7 @@
       "table sorting",
       "analytics"
     ],
-    "principle": "각 교섭사건은 하나의 주 단계와 복수의 병렬 상태를 가질 수 있다."
+    "principle": "각 교섭 기록은 하나의 주 단계와 복수의 병렬 상태를 가질 수 있다."
   },
   "case_identity": {
     "required_fields": [
@@ -127,7 +127,7 @@
         "rank": 0,
         "label": "올해 현황 미확인",
         "short_label": "미확인",
-        "description": "올해 교섭사건을 뒷받침하는 충분한 신뢰 근거가 아직 없다. 미착수로 추정하지 않는다.",
+        "description": "올해 교섭현황을 뒷받침하는 충분한 신뢰 근거가 아직 없다. 미착수로 추정하지 않는다.",
         "is_terminal": false
       },
       {

@@ -1,0 +1,256 @@
+{
+  "asOf": "2026-08-10",
+  "locale": "ko-KR",
+  "scopeRuleVersion": "1.1.0",
+  "records": [
+    {
+      "recordId": "hyundai-steel-2026-integrated-signing",
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S7",
+      "eventDate": "2026-08-06",
+      "title": "현대제철 2026년 임금·단체협약 조인",
+      "factSummary": "전국금속노동조합 충남지부 현대제철지회 공식 홈페이지의 사진자료실에는 ‘26.08.06 단체협약(임.단협) 조인식’이, 문서자료실에는 ‘2026년 단체교섭(임금 및 단체협약) 합의서’가 게시됐다. 이에 따라 2026년 현대제철 5지회 공동 교섭은 조인 단계까지 확인된다.",
+      "unionName": "전국금속노동조합 현대제철 5지회(충남·인천·포항·순천·당진하이스코)",
+      "directEmployerId": "hyundai-steel",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "금속노조의 2026년 원청교섭 현황 자료는 현대제철비정규직·내화조업정비 지회를 1차 사내하청 단위로 별도 열거하고, 현대제철에 대해서는 ‘원청소속 금속 조합원 수 7,482명’을 별도 제시한다. 이 레코드는 그 하청 단위가 아닌 현대제철 5지회 공동 임단협·조인식만 기록한다.",
+      "scopeEvidenceUrl": "https://kmwu.kr/bbs/download.php?bo_table=ce_B12&no=0&page=1&sod=desc&sop=and&sst=wr_datetime&wr_id=220368",
+      "sourceUrl": "https://www.hdsmu.com/bbs/board.php?bo_table=board21&wr_id=1797",
+      "sourceName": "전국금속노동조합 충남지부 현대제철지회",
+      "sourceTier": "A",
+      "confidence": 0.88,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "지회 공식 홈페이지의 2026-08-06 조인식 게시물과 2026-08-07 합의서 게시물을 함께 확인했다. 현대제철 비정규직·사내하청의 원청교섭 사례는 auditRecords에만 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-05-08",
+          "stage": "S3",
+          "label": "상견례·본교섭 개시",
+          "summary": "현대제철 노사와 5개 지회 대표가 당진제철소에서 상견례를 열어 2026년 임단협 첫 교섭을 시작했다.",
+          "sourceUrl": "https://news.nate.com/view/20260513n20574?mid=n1101"
+        },
+        {
+          "date": "2026-06-19",
+          "stage": "S4",
+          "label": "교섭 결렬·조정중지",
+          "summary": "7차 교섭에서 합의에 이르지 못한 뒤 중앙노동위원회가 조정중지를 결정했고, 5지회 쟁의행위 찬반투표 결과도 공고됐다.",
+          "sourceUrl": "https://v.daum.net/v/20260619172026516?sicode=01"
+        },
+        {
+          "date": "2026-08-06",
+          "stage": "S7",
+          "label": "임단협 조인식",
+          "summary": "현대제철지회 공식 사진자료실에 ‘26.08.06 단체협약(임.단협) 조인식’이 게시돼 최종 조인을 확인했다.",
+          "sourceUrl": "https://www.hdsmu.com/bbs/board.php?bo_table=board21&wr_id=1797"
+        }
+      ]
+    },
+    {
+      "recordId": "gm-korea-2026-integrated-ratification",
+      "companyId": "gm-korea",
+      "companyLegalName": "한국지엠 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S6",
+      "eventDate": "2026-07-28",
+      "title": "한국지엠 2026년 임금·단체협약 잠정합의안 조합원 가결",
+      "factSummary": "한국지엠 주식회사 노사가 도출한 2026년 임금·단체협약 잠정합의안은 7월 27~28일 조합원 찬반투표에서 총 6,193명 중 3,500명(56.5%) 찬성으로 가결됐다. 보도된 주요 내용은 기본급 9만2천원 인상과 타결 일시금·2025년 경영성과급 등을 합한 1천500만원이다.",
+      "unionName": "전국금속노동조합 한국지엠지부",
+      "directEmployerId": "gm-korea",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "한국지엠지부의 2026년 공식 요구안은 생산 현장에서 일하는 ‘정규직 조합원’을 본 교섭의 조합원으로 서술하고, 간접고용·사내하청 노동자 관련 요구는 별도 요구안으로 구분한다. 가결 원문도 한국지엠 주식회사와 그 조합원의 임단협 투표를 명시한다.",
+      "scopeEvidenceUrl": "https://kmwu.kr/bbs/board.php?bo_table=ce_B12&wr_id=220518",
+      "sourceUrl": "https://www.motoya.co.kr/news/articleView.html?idxno=46979",
+      "sourceName": "모토야",
+      "sourceTier": "B",
+      "confidence": 0.92,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "기사 제목의 ‘교섭 타결’ 표현과 달리, 이 패스에서 확인된 최종 절차는 조합원 가결이다. 조인식·서명 또는 효력발생 원문을 확보하기 전까지 S7로 승격하지 않는다.",
+      "flowEvents": [
+        {
+          "date": "2026-04-28",
+          "stage": "S1",
+          "label": "요구안 확정",
+          "summary": "한국지엠지부 제110차 임시대의원대회가 2026년 임금 및 단체협약 요구안을 확정했다.",
+          "sourceUrl": "https://kmwu.kr/bbs/board.php?bo_table=ce_B12&wr_id=220518"
+        },
+        {
+          "date": "2026-05-27",
+          "stage": "S3",
+          "label": "상견례·본교섭 개시",
+          "summary": "한국지엠 노사가 상견례를 시작으로 2026년 임단협 교섭에 들어갔다.",
+          "sourceUrl": "https://www.motoya.co.kr/news/articleView.html?idxno=46979"
+        },
+        {
+          "date": "2026-07-22",
+          "stage": "S5",
+          "label": "17차 교섭 잠정합의",
+          "summary": "17차 교섭에서 잠정합의안을 도출했다.",
+          "sourceUrl": "https://www.motoya.co.kr/news/articleView.html?idxno=46979"
+        },
+        {
+          "date": "2026-07-28",
+          "stage": "S6",
+          "label": "조합원 찬반투표 가결",
+          "summary": "7월 27~28일 투표에서 잠정합의안이 찬성 56.5%로 최종 가결됐다.",
+          "sourceUrl": "https://www.motoya.co.kr/news/articleView.html?idxno=46979"
+        }
+      ]
+    },
+    {
+      "recordId": "lg-electronics-2026-integrated-effective-agreement",
+      "companyId": "lg-electronics",
+      "companyLegalName": "LG전자 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S7",
+      "eventDate": "2026-04-01",
+      "title": "LG전자 2026년 임금·단체협약 합의 및 임금인상 확정",
+      "factSummary": "LG전자는 노동조합과 임금·단체협약을 거쳐 임금·복리후생 개선 및 정년 후 재고용 제도에 합의했다고 사내 공지했다. 평균 임금인상률은 4%로 확정됐고, 정년 후 재고용은 다음 해부터 사무직과 기능직에 적용하기로 했다.",
+      "unionName": "LG전자 노동조합(연합뉴스 원문 표기)",
+      "directEmployerId": "lg-electronics",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "연합뉴스 원문은 LG전자와 노동조합이 임단협을 통해 LG전자 사무직·기능직 근로자의 정년 후 재고용, 임금 및 복리후생을 합의했다고 명시한다. 합의 대상이 LG전자가 직접 재고용·임금 적용하는 직군으로 특정돼 원청에 교섭을 요구하는 계약외 노동자 사례와 구별된다.",
+      "scopeEvidenceUrl": "https://www.yna.co.kr/view/AKR20260401157900003",
+      "sourceUrl": "https://www.yna.co.kr/view/AKR20260401157900003",
+      "sourceName": "연합뉴스",
+      "sourceTier": "B",
+      "confidence": 0.94,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "LG전자의 사내 공지와 ‘임금 4% 인상 확정’이 원문에 명시돼 S7로 기록했다. 4월 말 별도 사무직 노조의 독립교섭권 이슈는 이 최종 합의 레코드에 병합하지 않았다.",
+      "flowEvents": [
+        {
+          "date": "2026-04-01",
+          "stage": "S7",
+          "label": "임단협 합의·적용 확정",
+          "summary": "LG전자가 노조와의 임단협 합의와 평균 4% 임금인상 확정, 정년 후 재고용 제도 도입을 사내 공지했다.",
+          "sourceUrl": "https://www.yna.co.kr/view/AKR20260401157900003"
+        }
+      ]
+    },
+    {
+      "recordId": "doosan-enerbility-2026-integrated-mediation-path",
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S4",
+      "eventDate": "2026-06-26",
+      "title": "두산에너빌리티 2026년 임단협 11차 교섭 및 노동위원회 조정 경로",
+      "factSummary": "두산에너빌리티 노사는 5월 14일 상견례 뒤 주 2회 교섭을 이어갔고, 6월 25일 창원 사업장에서 제11차 임단협 교섭을 진행했다. 6월 26일 보도는 노조가 경남지방노동위원회 조정 경로에 들어간다고 전했다. 기본급 인상과 성과급 지급 방식 개선이 핵심 요구로 보도됐다.",
+      "unionName": "전국금속노동조합 경남지부 두산에너빌리티지회",
+      "directEmployerId": "doosan-enerbility",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "두산에너빌리티의 2026 통합보고서는 회사의 단체교섭이 2025년 11월 조인식으로 마무리됐고 2026년에는 단체협약 갱신 교섭을 개시한다고 밝힌다. 같은 보고서는 ‘가입 대상 근로자’ 1,568명, 노동조합·노사협의회 가입 인원 1,336명 및 단체협약이 가입 대상 근로자 모두(계약직 포함)에 적용된다고 공시한다. 현재 교섭 기사에 명시된 두산에너빌리티지회는 이 회사의 임단협 상대방으로 식별된다.",
+      "scopeEvidenceUrl": "https://www.doosanenerbility.com/heavy_file/management/data/overview_result/report/2026_report_kr.pdf?v=1",
+      "sourceUrl": "https://biz.newdaily.co.kr/site/data/html/2026/06/26/2026062600082.html",
+      "sourceName": "뉴데일리",
+      "sourceTier": "B",
+      "confidence": 0.84,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "8월 10일 기준 이 조사에서 확보한 최종 공개 사건은 6월 26일의 조정 경로 보도다. 이후 잠정합의·인준·조인 원문은 확보하지 못했으므로 S5 이상으로 추정하지 않는다. 별도 협력업체 노동자 원청교섭 사례는 auditRecords에 격리했다.",
+      "flowEvents": [
+        {
+          "date": "2026-05-14",
+          "stage": "S3",
+          "label": "상견례·요구안 전달",
+          "summary": "두산에너빌리티 노사가 상견례를 열고, 금속노조 경남지부 두산에너빌리티지회가 성과급·AI 노동권·고용보호 등을 담은 요구안을 전달했다.",
+          "sourceUrl": "https://www.viva100.com/article/20260520500710"
+        },
+        {
+          "date": "2026-06-25",
+          "stage": "S4",
+          "label": "11차 교섭·노동위 조정 경로",
+          "summary": "11차 임단협 교섭 뒤 노동위원회 조정 절차가 보도됐다.",
+          "sourceUrl": "https://biz.newdaily.co.kr/site/data/html/2026/06/26/2026062600082.html"
+        }
+      ]
+    }
+  ],
+  "withheld": [],
+  "auditRecords": [
+    {
+      "recordId": "audit-hyundai-steel-2026-subcontractor-unions",
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "CBA",
+      "stage": "S2",
+      "eventDate": "2026-01-26",
+      "title": "현대제철 비정규직·내화조업정비지회의 원청교섭 요구 범위 제외",
+      "factSummary": "금속노조 2026년 자료는 광주전남·충남 현대제철비정규직지회와 현대제철내화조업정비지회를 각각 1차 사내하청 단위로, 업체 수와 조합원 수를 함께 표시한다.",
+      "unionName": "금속노조 현대제철비정규직지회·현대제철내화조업정비지회",
+      "directEmployerId": null,
+      "coveredWorkerRelation": "SUBCONTRACTED",
+      "directEmploymentEvidence": "원문이 각 지회에 대해 ‘1차 사내하청’ 및 업체 수를 명시한다.",
+      "scopeEvidenceUrl": "https://kmwu.kr/bbs/download.php?bo_table=ce_B12&no=0&page=1&sod=desc&sop=and&sst=wr_datetime&wr_id=220368",
+      "sourceUrl": "https://kmwu.kr/bbs/download.php?bo_table=ce_B12&no=0&page=1&sod=desc&sop=and&sst=wr_datetime&wr_id=220368",
+      "sourceName": "전국금속노동조합",
+      "sourceTier": "A",
+      "confidence": 0.99,
+      "scopeClassification": "SUBCONTRACTOR_UNION_EXCLUDED",
+      "includeInPrimaryDashboard": false,
+      "annotation": "현대제철 법인에 원청교섭을 요구하더라도 실제 고용관계가 사내하청이므로 원청 직접고용 노조 현황을 갱신하지 않는다."
+    },
+    {
+      "recordId": "audit-gm-korea-2026-subcontractor-bargaining-demand",
+      "companyId": "gm-korea",
+      "companyLegalName": "한국지엠 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "CBA",
+      "stage": "S2",
+      "eventDate": "2026-05-28",
+      "title": "한국지엠 부평공장 하청 노동자 원청교섭 요구 범위 제외",
+      "factSummary": "금속노조는 더원테크·엘림BMS·비원테크·경륜로지스틱·디지에프오토모티브 등 하청 노동자의 단체교섭을 한국지엠에 요구했다고 밝혔다.",
+      "unionName": "한국지엠부평비정규직지회·GM부품물류지회·부평공단지회 등",
+      "directEmployerId": null,
+      "coveredWorkerRelation": "SUBCONTRACTED",
+      "directEmploymentEvidence": "원문이 해당 노동자를 ‘하청 노동자’, ‘사내하청업체’ 소속으로 명시하고 업체명을 열거한다.",
+      "scopeEvidenceUrl": "https://kmwu.kr/bbs/board.php?bo_table=ce_B12&wr_id=220580",
+      "sourceUrl": "https://kmwu.kr/bbs/board.php?bo_table=ce_B12&wr_id=220580",
+      "sourceName": "전국금속노동조합",
+      "sourceTier": "A",
+      "confidence": 0.99,
+      "scopeClassification": "SUBCONTRACTOR_UNION_EXCLUDED",
+      "includeInPrimaryDashboard": false,
+      "annotation": "한국지엠지부가 공동 기자회견에 참여했더라도, 원문이 특정한 교섭요구 당사자는 하청 노동자이므로 2026년 한국지엠지부 임단협과 결합하지 않는다."
+    },
+    {
+      "recordId": "audit-doosan-enerbility-2026-contractor-union-bargaining-demand",
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "CBA",
+      "stage": "S2",
+      "eventDate": "2026-05-29",
+      "title": "두산에너빌리티 고성천연가스발전소 협력업체 노동자 원청교섭 범위 제외",
+      "factSummary": "한국연합플랜트노동조합은 두산에너빌리티를 상대로 교섭요구 사실 공고를 요구했으나, 원문은 조합원을 고성천연가스발전소 현장 협력업체 소속 근로자로 명시한다.",
+      "unionName": "한국연합플랜트노동조합",
+      "directEmployerId": null,
+      "coveredWorkerRelation": "SUBCONTRACTED",
+      "directEmploymentEvidence": "보도는 해당 노조가 협력업체 소속 근로자를 조합원으로 두고 있으며 두산에너빌리티가 이들을 직접 채용·임금 지급하는 회사가 아니라고 명시한다.",
+      "scopeEvidenceUrl": "https://www.hankyung.com/article/202606010766g",
+      "sourceUrl": "https://www.hankyung.com/article/202606010766g",
+      "sourceName": "한국경제",
+      "sourceTier": "B",
+      "confidence": 0.99,
+      "scopeClassification": "SUBCONTRACTOR_UNION_EXCLUDED",
+      "includeInPrimaryDashboard": false,
+      "annotation": "개정 노조법에 따른 원청 상대 교섭요구 사례이며, 두산에너빌리티 직접고용 노동조합의 2026년 임단협 상태에는 반영하지 않는다."
+    }
+  ],
+  "metadata": {
+    "description": "2026년 8월 10일 KST 기준, 현대제철·한국지엠·LG전자·두산에너빌리티의 원청 법인 직접고용 노조 임금·단체교섭 검증 데이터다.",
+    "includedRecordCount": 4,
+    "withheldRecordCount": 0,
+    "auditRecordCount": 3,
+    "scopePolicy": "선정 법인과 직접 고용관계가 명시된 노조 사건만 records에 포함한다. 하청·사내하청·협력업체 원청교섭은 auditRecords에만 둔다."
+  }
+}
