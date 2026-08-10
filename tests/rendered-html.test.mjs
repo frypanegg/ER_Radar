@@ -65,6 +65,23 @@ test("server-renders the collective-bargaining framework dashboard", async () =>
   assert.doesNotMatch(html, /Your site is taking shape|Building your site|loading skeleton/i);
 });
 
+test("화면이 마지막 수집 시각을 보여준다", async () => {
+  // 수집이 멈춰도 화면이 평소와 똑같으면 사람이 멈춘 걸 알 수 없다.
+  // 2026-08-11 아침에 스케줄이 유실됐을 때 정확히 이 문제가 드러났다.
+  const heartbeat = JSON.parse(
+    await readFile(new URL("data/automation-heartbeat.json", templateRoot), "utf8"),
+  );
+  const html = await (await render()).text();
+
+  assert.match(html, /수집 예정: 매일 06:30 KST/);
+  assert.match(
+    html,
+    new RegExp(heartbeat.lastRunKstDate.replaceAll("-", "\\-")),
+    "마지막 수집 KST 날짜가 화면에 있어야 한다",
+  );
+  assert.match(html, /collection-state/);
+});
+
 test("keeps scope and source guards in the production-facing implementation", async () => {
   const [page, layout, config, framework, pipeline, historicalSeed, currentSeed] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),

@@ -21,7 +21,9 @@
 - `scripts/collect-news.mjs` — KST 매일 06:30 기준 뉴스 후보 수집·범위 분류기
 - `scripts/resolve-google-news.mjs` — Google News RSS 링크를 발행사 원문 URL로 되돌리고 도달·제목 검증
 - `scripts/apply-daily-update.mjs` — 검증 통과 후보만 공개 시드에 반영하고 감사 로그 기록
-- `.github/workflows/daily-bargaining-update.yml` — KST 06:30 일일 자동화(수집·검증·반영·배포)
+- `.github/workflows/daily-bargaining-update.yml` — 일일 자동화(수집·검증·반영·배포). schedule 유실에 대비해 KST 06:34·09:34·14:34 시도
+- `.github/workflows/collection-staleness-alarm.yml` — 수집·배포가 멈추면 실패로 알림
+- `scripts/check-collection-freshness.mjs` — 실행 흔적과 공개 페이지의 신선도 확인
 - `docs/data-pipeline.md` — 수집 운영과 안전 장치
 - `docs/supabase-setup.md` — Supabase 테이블·RLS·환경 변수·초기 적재 운영 기준
 - `docs/공유-접근과-검색비노출-정책.md` — 공유 URL 열람과 검색 비노출 정책

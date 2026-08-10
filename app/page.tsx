@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useMemo, useState, useSyncExternalStore } from "react";
 import {
   Activity,
   ArrowRight,
@@ -22,6 +22,7 @@ import {
 import framework from "../data/negotiation-framework.json";
 import historicalSeed from "../data/historical-fact-seed.json";
 import currentSeed from "../data/current-2026-fact-seed.json";
+import automationHeartbeat from "../data/automation-heartbeat.json";
 
 type AgreementFilter = "ALL" | "WAGE" | "INTEGRATED" | "CBA" | "SUPPLEMENTAL" | "UNKNOWN";
 type AgreementType = Exclude<AgreementFilter, "ALL">;
@@ -125,6 +126,36 @@ const agreementLabels: Record<AgreementType, string> = {
 
 function formatDate(date: string) {
   return date.replaceAll("-", ".");
+}
+
+const lastCollectionKstDate = automationHeartbeat.lastRunKstDate ?? null;
+const lastCollectionOutcome = automationHeartbeat.lastRunOutcome ?? null;
+
+// 보는 시점의 KST 날짜. 서버 렌더·프리렌더 시점의 날짜를 굳혀 두면 캐시된 HTML이
+// "오늘 수집 완료"를 틀리게 말할 수 있으므로, 브라우저 시계로만 판단한다.
+// useSyncExternalStore의 서버 스냅샷을 null로 두어 하이드레이션 불일치를 피한다.
+const emptySubscribe = () => () => {};
+
+function readTodayKstDate() {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul" }).format(new Date());
+}
+
+// 수집이 멈춰도 화면이 그대로면 사람은 멈춘 걸 알 수 없다. 마지막 수집일을 보는
+// 시점의 KST 날짜와 비교해 지연을 드러낸다.
+function describeCollectionLag(lastKstDate: string | null, todayKstDate: string) {
+  if (!lastKstDate) return { tone: "stale" as const, text: "수집 기록 없음" };
+
+  const lagDays = Math.round(
+    (Date.parse(`${todayKstDate}T00:00:00Z`) - Date.parse(`${lastKstDate}T00:00:00Z`)) / 86_400_000,
+  );
+
+  if (Number.isNaN(lagDays)) return { tone: "stale" as const, text: "수집 기록 확인 불가" };
+  if (lastCollectionOutcome && lastCollectionOutcome !== "success") {
+    return { tone: "stale" as const, text: `마지막 수집 실패 (${lastKstDate})` };
+  }
+  if (lagDays <= 0) return { tone: "fresh" as const, text: `오늘 수집 완료 (${lastKstDate} KST)` };
+  if (lagDays === 1) return { tone: "warn" as const, text: `마지막 수집 ${lastKstDate} · 1일 지연` };
+  return { tone: "stale" as const, text: `마지막 수집 ${lastKstDate} · ${lagDays}일 지연` };
 }
 
 function getYearLabel(year: number) {
@@ -313,6 +344,11 @@ export default function Home() {
   });
   const [companyRequestMessage, setCompanyRequestMessage] = useState("");
   const [isSubmittingCompanyRequest, setIsSubmittingCompanyRequest] = useState(false);
+  const todayKstDate = useSyncExternalStore(emptySubscribe, readTodayKstDate, () => null);
+  const collectionLag = useMemo(
+    () => (todayKstDate ? describeCollectionLag(lastCollectionKstDate, todayKstDate) : null),
+    [todayKstDate],
+  );
   const caseExamples = useMemo(() => getBargainingCases(selectedYear), [selectedYear]);
 
   const visibleCases = useMemo(
@@ -372,7 +408,14 @@ export default function Home() {
       <section className="top-band" aria-label="서비스 안내">
         <div className="container top-band-inner">
           <p><Sparkles size={14} aria-hidden="true" /> {currentAsOf} 기준 현황 · 원청 노조 교섭만 수록</p>
-          <p><Clock3 size={14} aria-hidden="true" /> 수집 설계 기준: 매일 06:30 KST · 법인별 1회</p>
+          <p>
+            <Clock3 size={14} aria-hidden="true" /> 수집 예정: 매일 06:30 KST · 법인별 1회
+            {lastCollectionKstDate ? (
+              <span className={`collection-state collection-state-${collectionLag?.tone ?? "idle"}`}>
+                {collectionLag?.text ?? `마지막 수집 ${lastCollectionKstDate} KST`}
+              </span>
+            ) : null}
+          </p>
         </div>
       </section>
 

@@ -73,6 +73,38 @@ a:focus-visible {
   letter-spacing: -0.015em;
 }
 
+/* 마지막 수집 상태. 수집이 멈춘 날 화면이 평소와 똑같이 보이면 안 되므로
+   지연일수에 따라 색을 바꾼다. */
+.collection-state {
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-variant-numeric: tabular-nums;
+}
+
+.collection-state-idle {
+  color: #adbdcf;
+}
+
+.collection-state-fresh {
+  color: #7ee0b1;
+  border-color: #1d5a41;
+  background: #0c2419;
+}
+
+.collection-state-warn {
+  color: #f0cf7a;
+  border-color: #6b5320;
+  background: #241d0c;
+}
+
+.collection-state-stale {
+  color: #f5a3a3;
+  border-color: #6e2a2a;
+  background: #2a0f0f;
+}
+
 .top-band-inner,
 .top-band p,
 .header-inner,

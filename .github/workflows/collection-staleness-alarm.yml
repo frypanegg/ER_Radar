@@ -1,0 +1,36 @@
+name: 수집 지연 감시
+
+# 수집이 멈추면 워크플로 이력이 그냥 비어 있을 뿐 아무 신호가 없다. 그 침묵을
+# 실패로 바꿔 알림이 오게 한다(GitHub은 실패한 워크플로를 저장소 소유자에게 메일로
+# 알린다). 저장소의 실행 흔적과 공개 페이지를 함께 확인해서, 수집이 멈춘 것인지
+# 배포가 끊긴 것인지 구분한다.
+#
+# 한계: 이 감시도 GitHub schedule 이벤트에 의존하므로 같은 유실 위험을 공유한다.
+# 완전히 독립적인 감시는 저장소 밖(Cloudflare Cron 등)에 두어야 한다.
+on:
+  schedule:
+    - cron: "23 4 * * *" # KST 13:23 · 당일 예비 스케줄 세 번이 모두 지난 뒤
+  workflow_dispatch:
+
+concurrency:
+  group: collection-staleness-alarm
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: 실행 흔적·공개 페이지 신선도 확인
+        run: |
+          node scripts/check-collection-freshness.mjs \
+            --live https://er-radar.er-radar.workers.dev/

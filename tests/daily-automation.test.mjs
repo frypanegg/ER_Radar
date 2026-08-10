@@ -318,18 +318,45 @@ test("새 사건이 확인되면 시드와 감사 로그가 함께 갱신된다"
   }
 });
 
-test("일일 자동화 워크플로가 KST 06:30 기준으로 등록되어 있다", async () => {
+test("일일 자동화 워크플로가 KST 06:30 직후로 등록되어 있다", async () => {
   const workflow = await readFile(
     new URL("../.github/workflows/daily-bargaining-update.yml", import.meta.url),
     "utf8",
   );
-  // 21:30 UTC = 06:30 KST(다음 날)
-  assert.match(workflow, /cron:\s*["']30 21 \* \* \*["']/);
+  // 21:34 UTC = 06:34 KST(다음 날). 정시·30분 경계는 스케줄러 부하가 몰려 피한다.
+  assert.match(workflow, /cron:\s*["']34 21 \* \* \*["']/);
   assert.match(workflow, /collect-news\.mjs/);
   assert.match(workflow, /apply-daily-update\.mjs/);
   assert.match(workflow, /npm test/);
   // 비밀값은 이름으로만 참조하고 로그로 내보내지 않는다.
   assert.doesNotMatch(workflow, /NAVER_API_HUB_CLIENT_SECRET\s*:\s*["'][^$]/);
+});
+
+test("schedule 이벤트가 유실돼도 같은 날 예비 실행이 남아 있다", async () => {
+  const workflow = await readFile(
+    new URL("../.github/workflows/daily-bargaining-update.yml", import.meta.url),
+    "utf8",
+  );
+  // GitHub schedule은 보장이 없다. 하루 한 번만 걸면 그 한 번이 유실되면 끝이다.
+  const crons = workflow.match(/cron:\s*["'][^"']+["']/g) ?? [];
+  assert.ok(crons.length >= 2, `예비 스케줄이 필요하다 (현재 ${crons.length}개)`);
+
+  // 예비 실행이 중복 수집·커밋을 만들지 않도록, 오늘 성공했으면 건너뛴다.
+  assert.match(workflow, /needed=false/);
+  assert.match(workflow, /steps\.guard\.outputs\.needed == 'true'/);
+  // force 입력은 판단을 무시하고 다시 수집한다.
+  assert.match(workflow, /inputs\.force[\s\S]{0,200}needed=true/);
+});
+
+test("수집이 멈추면 감시 워크플로가 실패로 드러낸다", async () => {
+  const alarm = await readFile(
+    new URL("../.github/workflows/collection-staleness-alarm.yml", import.meta.url),
+    "utf8",
+  );
+  assert.match(alarm, /schedule/);
+  assert.match(alarm, /check-collection-freshness\.mjs/);
+  // 저장소 흔적만 보지 않고 공개 페이지까지 확인해 배포 중단도 잡는다.
+  assert.match(alarm, /--live\s+https:\/\//);
 });
 
 test("60일 자동 비활성화를 막는 실행 흔적이 항상 커밋된다", async () => {
@@ -353,15 +380,53 @@ test("회귀 검증에 실패하면 사실 데이터를 커밋하지 않는다",
     workflow,
     /steps\.verify\.outcome[^\n]*!=[^\n]*success[\s\S]{0,400}git checkout --/,
   );
-  // 배포는 검증 통과가 전제이고, 그 위에서 공개 사실이 바뀐 날이거나 수동으로
-  // 재배포를 지시한 실행일 때만 돈다.
+  // 배포는 회귀 검증 통과가 전제다.
   assert.match(
     workflow,
-    /steps\.verify\.outcome == 'success' &&\s*\(steps\.commit\.outputs\.factsChanged == 'true' \|\| inputs\.deploy\)/,
+    /steps\.guard\.outputs\.needed == 'true' && steps\.verify\.outcome == 'success'/,
   );
+  // 화면이 마지막 수집 시각을 표시하므로, 흔적을 기록한 뒤 다시 빌드해서 배포한다.
+  assert.match(workflow, /npm run build\s*\n\s*npx wrangler deploy/);
   // 배포 자격증명이 없는 복제·포크에서는 데이터만 갱신하고 배포를 건너뛴다.
   assert.match(workflow, /if \[ -z "\$CLOUDFLARE_API_TOKEN" \]/);
-  assert.match(workflow, /npx wrangler deploy/);
   // 배포 토큰도 이름으로만 참조하고 로그로 내보내지 않는다.
   assert.doesNotMatch(workflow, /CLOUDFLARE_API_TOKEN\s*:\s*["'][^$]/);
+});
+
+test("실행 흔적 신선도 판정이 지연·실패·배포 중단을 구분한다", async () => {
+  const { evaluateFreshness } = await import("../scripts/check-collection-freshness.mjs");
+
+  const fresh = evaluateFreshness({
+    heartbeat: { lastRunKstDate: "2026-08-11", lastRunOutcome: "success" },
+    todayKstDate: "2026-08-11",
+  });
+  assert.equal(fresh.fresh, true);
+  assert.deepEqual(fresh.problems, []);
+
+  // 오늘 실행이 없으면 지연으로 잡는다. 이게 2026-08-11 아침에 놓친 상황이다.
+  const stale = evaluateFreshness({
+    heartbeat: { lastRunKstDate: "2026-08-09", lastRunOutcome: "success" },
+    todayKstDate: "2026-08-11",
+  });
+  assert.equal(stale.fresh, false);
+  assert.match(stale.problems.join(" "), /2일 지연/);
+
+  // 실행은 됐지만 실패한 경우도 신선하지 않다.
+  const failed = evaluateFreshness({
+    heartbeat: { lastRunKstDate: "2026-08-11", lastRunOutcome: "failure" },
+    todayKstDate: "2026-08-11",
+  });
+  assert.equal(failed.fresh, false);
+
+  // 수집은 최신인데 공개 페이지에 그 날짜가 없으면 배포가 끊긴 것으로 구분한다.
+  const notDeployed = evaluateFreshness({
+    heartbeat: { lastRunKstDate: "2026-08-11", lastRunOutcome: "success" },
+    todayKstDate: "2026-08-11",
+    liveHtml: "<html>2026-08-09 기준</html>",
+  });
+  assert.equal(notDeployed.fresh, false);
+  assert.match(notDeployed.problems.join(" "), /배포가 반영되지 않았을 수 있습니다/);
+
+  // 한 번도 실행되지 않은 상태도 실패로 본다.
+  assert.equal(evaluateFreshness({ heartbeat: {}, todayKstDate: "2026-08-11" }).fresh, false);
 });
