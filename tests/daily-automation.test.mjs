@@ -331,3 +331,31 @@ test("일일 자동화 워크플로가 KST 06:30 기준으로 등록되어 있�
   // 비밀값은 이름으로만 참조하고 로그로 내보내지 않는다.
   assert.doesNotMatch(workflow, /NAVER_API_HUB_CLIENT_SECRET\s*:\s*["'][^$]/);
 });
+
+test("60일 자동 비활성화를 막는 실행 흔적이 항상 커밋된다", async () => {
+  const workflow = await readFile(
+    new URL("../.github/workflows/daily-bargaining-update.yml", import.meta.url),
+    "utf8",
+  );
+  // 수집·검증이 실패한 날에도 실행 흔적은 기록되고 커밋된다.
+  assert.match(workflow, /실행 흔적 기록[\s\S]{0,80}if:\s*always\(\)/);
+  assert.match(workflow, /변경 사항 커밋[\s\S]{0,80}if:\s*always\(\)/);
+  assert.match(workflow, /git add data\/automation-heartbeat\.json/);
+});
+
+test("회귀 검증에 실패하면 사실 데이터를 커밋하지 않는다", async () => {
+  const workflow = await readFile(
+    new URL("../.github/workflows/daily-bargaining-update.yml", import.meta.url),
+    "utf8",
+  );
+  // 검증 실패 시 사실 파일을 되돌린 뒤 실행 흔적만 남긴다.
+  assert.match(
+    workflow,
+    /steps\.verify\.outcome[^\n]*!=[^\n]*success[\s\S]{0,400}git checkout --/,
+  );
+  // 배포는 검증 통과 + 공개 사실 변경이 함께 있을 때만 태운다.
+  assert.match(
+    workflow,
+    /if:\s*steps\.commit\.outputs\.factsChanged == 'true' && steps\.verify\.outcome == 'success'/,
+  );
+});

@@ -24,9 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: "22"
           cache: npm
@@ -36,6 +36,7 @@ jobs:
       # NAVER 자격증명이 없으면 수집기가 알아서 Google News RSS로 동작한다.
       # 시크릿이 등록돼 있으면 그때부터 NAVER를 우선 사용한다.
       - name: 뉴스 후보 수집
+        id: collect
         env:
           NAVER_API_HUB_CLIENT_ID: ${{ secrets.NAVER_API_HUB_CLIENT_ID }}
           NAVER_API_HUB_CLIENT_SECRET: ${{ secrets.NAVER_API_HUB_CLIENT_SECRET }}
@@ -46,31 +47,83 @@ jobs:
             ${{ inputs.force && '--force' || '' }}
 
       - name: 검증된 사실만 공개 시드에 반영
+        id: apply
         run: node scripts/apply-daily-update.mjs
 
-      # 반영 결과가 원칙을 깨뜨렸는지 배포 전에 확인한다. 실패하면 커밋하지 않는다.
+      # 반영 결과가 원칙을 깨뜨렸는지 배포 전에 확인한다.
+      # 실패하면 사실 데이터를 커밋하지 않고 되돌린다.
       - name: 회귀 검증
+        id: verify
         run: npm test
+
+      # GitHub는 저장소에 60일간 활동이 없으면 스케줄 워크플로를 자동으로 끈다.
+      # 수집이나 검증이 실패한 날에도 커밋 한 건은 남도록 실행 흔적을 기록한다.
+      - name: 실행 흔적 기록
+        if: always()
+        env:
+          RUN_OUTCOME: ${{ job.status }}
+          COLLECT_OUTCOME: ${{ steps.collect.outcome }}
+          VERIFY_OUTCOME: ${{ steps.verify.outcome }}
+        run: |
+          node -e "
+            const { writeFileSync } = require('node:fs');
+            writeFileSync('data/automation-heartbeat.json', JSON.stringify({
+              schemaVersion: 1,
+              note: '스케줄 워크플로 자동 비활성화를 막기 위한 실행 흔적',
+              lastRunAt: new Date().toISOString(),
+              lastRunKstDate: new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date()),
+              lastRunId: process.env.GITHUB_RUN_ID,
+              lastRunTrigger: process.env.GITHUB_EVENT_NAME,
+              lastRunOutcome: process.env.RUN_OUTCOME,
+              collectOutcome: process.env.COLLECT_OUTCOME,
+              verifyOutcome: process.env.VERIFY_OUTCOME
+            }, null, 2) + '\n');
+          "
 
       - name: 변경 사항 커밋
         id: commit
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/news-candidates.json data/current-2026-fact-seed.json data/daily-update-audit.json
-          if git diff --cached --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "반영할 변경이 없습니다."
+
+          # 회귀 검증을 통과하지 못했으면 사실 데이터는 되돌리고 실행 흔적만 남긴다.
+          if [ "${{ steps.verify.outcome }}" != "success" ]; then
+            echo "::warning::회귀 검증을 통과하지 못해 사실 데이터를 반영하지 않습니다. 실행 흔적만 기록합니다."
+            git checkout -- \
+              public/data/news-candidates.json \
+              data/current-2026-fact-seed.json \
+              data/daily-update-audit.json 2>/dev/null || true
           else
-            git commit -m "Update bargaining status from $(TZ=Asia/Seoul date +%Y-%m-%d) collection"
-            git push
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git add public/data/news-candidates.json \
+                    data/current-2026-fact-seed.json \
+                    data/daily-update-audit.json
           fi
+          git add data/automation-heartbeat.json
+
+          if git diff --cached --quiet; then
+            echo "factsChanged=false" >> "$GITHUB_OUTPUT"
+            echo "커밋할 변경이 없습니다."
+            exit 0
+          fi
+
+          # 공개 사실이 실제로 바뀐 날만 배포를 태운다. 실행 흔적만 바뀐 날은 커밋까지만.
+          if git diff --cached --quiet -- data/current-2026-fact-seed.json; then
+            echo "factsChanged=false" >> "$GITHUB_OUTPUT"
+            git commit -m "Record $(TZ=Asia/Seoul date +%Y-%m-%d) collection run"
+          else
+            echo "factsChanged=true" >> "$GITHUB_OUTPUT"
+            git commit -m "Update bargaining status from $(TZ=Asia/Seoul date +%Y-%m-%d) collection"
+          fi
+
+          # 같은 시각에 사람이 밀어 넣은 커밋이 있으면 그 위로 올려 푸시한다.
+          git pull --rebase --autostash origin main
+          git push
 
       # 배포 원격은 자격증명이 있을 때만 동작한다. SITES_DEPLOY_REMOTE 시크릿에
       # 인증 정보가 포함된 푸시 URL을 넣어 두면 이 단계가 실제 배포를 수행한다.
       - name: 배포
-        if: steps.commit.outputs.changed == 'true'
+        if: steps.commit.outputs.factsChanged == 'true' && steps.verify.outcome == 'success'
         env:
           SITES_DEPLOY_REMOTE: ${{ secrets.SITES_DEPLOY_REMOTE }}
         run: |
