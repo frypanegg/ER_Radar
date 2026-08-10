@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { type FormEvent, useMemo, useState } from "react";
 import {
   Activity,
   ArrowRight,
@@ -13,20 +13,53 @@ import {
   FileCheck2,
   Filter,
   Landmark,
+  Plus,
   Search,
   ShieldCheck,
   Sparkles,
   UsersRound,
+  X,
 } from "lucide-react";
 import framework from "../data/negotiation-framework.json";
+import historicalSeed from "../data/historical-fact-seed.json";
 
-type AgreementFilter = "ALL" | "WAGE" | "INTEGRATED" | "CBA" | "SUPPLEMENTAL";
+type AgreementFilter = "ALL" | "WAGE" | "INTEGRATED" | "CBA" | "SUPPLEMENTAL" | "UNKNOWN";
+type AgreementType = Exclude<AgreementFilter, "ALL">;
+type HistoricalRecord = {
+  id: string;
+  companyId: string;
+  companyLegalName: string;
+  directEmployerId: string;
+  bargainingYear: number;
+  agreementType: Exclude<AgreementType, "UNKNOWN">;
+  stage: string;
+  eventDate: string;
+  title: string;
+  factSummary: string;
+  unionName: string;
+  directEmploymentEvidence: string;
+  scopeEvidenceUrl?: string;
+  sourceUrl: string;
+  sourceName: string;
+  sourceTier: "S" | "A" | "B" | "C";
+  confidence: number;
+  scopeClassification: "PRIMARY_DIRECT_UNION";
+  coveredWorkerRelation: "DIRECT";
+  includeInPrimaryDashboard: true;
+  annotation: string;
+};
+type TrackingCompany = {
+  id: string;
+  legalName: string;
+  tier: string;
+  industry: string;
+};
 
 type CaseExample = {
   id: string;
   name: string;
   subtitle: string;
-  agreementType: Exclude<AgreementFilter, "ALL">;
+  agreementType: AgreementType;
   agreementLabel: string;
   yearType: string;
   stage: string;
@@ -62,192 +95,112 @@ const stageMeta = framework.enums.primary_stage.map((stage) => ({
 
 const stageByCode = new Map(stageMeta.map((stage) => [stage.code, stage]));
 
-const caseExamples: CaseExample[] = [
-  {
-    id: "case-a",
-    name: "제조 법인 A",
-    subtitle: "2026 임금협상 · 생산직 교섭단위",
-    agreementType: "WAGE",
-    agreementLabel: "임금협상",
-    yearType: "2026 임협",
-    stage: "S3",
-    reason: "제6차 본교섭과 수정안 교환이 확인된 시연 사례입니다.",
-    lastConfirmed: "8월 8일",
-    verifiedAt: "2026.08.08",
-    freshness: "2일 전 확인",
-    confidence: 0.89,
-    sourceTier: "A",
-    scope: "직접고용 · 생산직 · 단일 교섭단위",
-    round: "제6차 교섭",
-    majorityUnion: "O",
-    unionMembers: "2,430명 · 시연값",
-    electionIssue: "위원장 선거 이슈 없음",
-    issueSummary: "기본급 정액 인상, 정기승급, 교대제·근로시간을 핵심 의제로 분리해 기록합니다.",
-    breakdownReason: "확인된 결렬 사유 없음 · 본교섭 진행 중",
-    voteChangeSummary: "최종안 미확정 · 전년 협약 대비 변경 분석 대기",
-    overlays: [
-      { label: "대표노조 확인", tone: "blue", group: "대표성" },
-      { label: "근로시간·교대제", tone: "purple", group: "핵심 의제" },
-    ],
-    evidence: [
-      { date: "08.08", title: "제6차 본교섭 개최", source: "당사자 공식 공지", tier: "A" },
-      { date: "08.04", title: "임금 수정안 교환", source: "교차 확인 언론", tier: "B" },
-      { date: "07.22", title: "대표 교섭권자 확인", source: "당사자 공식 공지", tier: "A" },
-    ],
-    sourceAnnotations: [
-      { event: "제6차 본교섭", sourceUrl: "https://source.example.invalid/demo/case-a/2026-08-08", note: "당사자 공식 공지 URL을 저장하는 형식 예시" },
-      { event: "수정안 교환", sourceUrl: "https://source.example.invalid/demo/case-a/2026-08-04", note: "교차 확인 언론의 정규화 URL 예시" },
-    ],
-    next: "다음 교섭 일정 또는 의제별 합의 여부를 확인합니다.",
-  },
-  {
-    id: "case-b",
-    name: "제조 법인 B",
-    subtitle: "2026 통합 임단협 · 사업장 단위",
-    agreementType: "INTEGRATED",
-    agreementLabel: "통합 임단협",
-    yearType: "2026 임단협",
-    stage: "S4",
-    reason: "결렬 보도 뒤 노동위원회 조정 절차가 핵심 경로인 시연 사례입니다.",
-    lastConfirmed: "8월 9일",
-    verifiedAt: "2026.08.09",
-    freshness: "1일 전 확인",
-    confidence: 0.84,
-    sourceTier: "B",
-    scope: "직접고용 · 사업장 단위 · 통합 임단협",
-    round: "조정 진행",
-    majorityUnion: "X",
-    unionMembers: "3,180명 · 시연값",
-    electionIssue: "대의원 보궐선거 공고 확인",
-    issueSummary: "임금 인상안, 성과급 산식, 고용안정 부속합의가 주요 쟁점으로 분류된 예시입니다.",
-    breakdownReason: "제시안 간 격차가 보도됐으나, 세부 결렬 원인은 고신뢰 근거로 추가 확인이 필요합니다.",
-    voteChangeSummary: "쟁의행위 찬반투표 예시이며, 최종안·전년 대비 변경을 뜻하지 않습니다.",
-    overlays: [
-      { label: "조정 진행", tone: "orange", group: "조정·쟁의" },
-      { label: "쟁의행위 투표 가결", tone: "red", group: "조정·쟁의" },
-      { label: "복수노조", tone: "blue", group: "대표성" },
-    ],
-    evidence: [
-      { date: "08.09", title: "노동위원회 조정 개시", source: "공적 절차 공지", tier: "S" },
-      { date: "08.06", title: "쟁의행위 찬반투표 결과", source: "당사자 공식 공지", tier: "A" },
-      { date: "08.03", title: "교섭 결렬 발표", source: "교차 확인 언론", tier: "B" },
-    ],
-    sourceAnnotations: [
-      { event: "조정 개시", sourceUrl: "https://source.example.invalid/demo/case-b/2026-08-09", note: "공적 절차 공지 URL 보관 예시" },
-      { event: "찬반투표 결과", sourceUrl: "https://source.example.invalid/demo/case-b/2026-08-06", note: "투표 결과 공지 URL 보관 예시" },
-    ],
-    next: "조정 종료·재교섭·실제 쟁의행위를 서로 다른 사실로 확인합니다.",
-  },
-  {
-    id: "case-c",
-    name: "제조 법인 C",
-    subtitle: "2026 단체협약 · 사무직 적용 범위",
-    agreementType: "CBA",
-    agreementLabel: "단체협약",
-    yearType: "2026 단협",
-    stage: "S6",
-    reason: "잠정합의 뒤 조합원 인준 절차가 진행 중인 시연 사례입니다.",
-    lastConfirmed: "8월 7일",
-    verifiedAt: "2026.08.08",
-    freshness: "3일 전 확인",
-    confidence: 0.91,
-    sourceTier: "A",
-    scope: "직접고용 · 사무직 · 단체협약",
-    round: "인준 투표 예정",
-    majorityUnion: "O",
-    unionMembers: "1,260명 · 시연값",
-    electionIssue: "선거 이슈 없음",
-    issueSummary: "산업안전, 복지, 노조활동 관련 조항을 임금안과 분리해 사건 의제로 기록합니다.",
-    breakdownReason: "잠정합의 도달 · 결렬 사유 해당 없음",
-    voteChangeSummary: "인준 전 · 기존 단체협약 대비 조항 변경 요약은 원문 대조 후 공개합니다.",
-    overlays: [
-      { label: "잠정합의", tone: "green", group: "합의·인준" },
-      { label: "인준 예정", tone: "green", group: "합의·인준" },
-      { label: "안전·복지", tone: "purple", group: "핵심 의제" },
-    ],
-    evidence: [
-      { date: "08.07", title: "잠정합의안 공개", source: "당사자 공식 공지", tier: "A" },
-      { date: "08.08", title: "조합원 인준 일정 공고", source: "당사자 공식 공지", tier: "A" },
-      { date: "07.31", title: "실무협의 종료", source: "교차 확인 언론", tier: "B" },
-    ],
-    sourceAnnotations: [
-      { event: "잠정합의안", sourceUrl: "https://source.example.invalid/demo/case-c/2026-08-07", note: "잠정합의안 원문 URL 보관 예시" },
-      { event: "인준 일정", sourceUrl: "https://source.example.invalid/demo/case-c/2026-08-08", note: "인준 공고 URL 보관 예시" },
-    ],
-    next: "인준 가결·부결과 서명·발효를 분리해 기록합니다.",
-  },
-  {
-    id: "case-d",
-    name: "제조 법인 D",
-    subtitle: "2026 특별·보충협약 · 직접고용 기술직",
-    agreementType: "SUPPLEMENTAL",
-    agreementLabel: "특별·보충협약",
-    yearType: "2026 특별협약",
-    stage: "S2",
-    reason: "교섭단위 및 교섭 상대방의 적용 범위를 확인 중인 시연 사례입니다.",
-    lastConfirmed: "8월 5일",
-    verifiedAt: "2026.08.05",
-    freshness: "5일 전 확인",
-    confidence: 0.72,
-    sourceTier: "B",
-    scope: "직접고용 확정 · 기술직 · 교섭단위 검토",
-    round: "교섭단위 정비",
-    majorityUnion: "확인중",
-    unionMembers: "조합원 수 교차 확인 중",
-    electionIssue: "집행부 선거 일정과 교섭대표성 영향 검토",
-    issueSummary: "특정 수당과 근무편성 의제를 두고 적용범위·교섭단위를 우선 확인하는 예시입니다.",
-    breakdownReason: "결렬 확인 없음 · 대표·교섭단위 절차가 우선인 상태",
-    voteChangeSummary: "최종안 없음 · 기존 보충협약 비교 대상 확인 중",
-    overlays: [
-      { label: "교섭단위 분리 검토", tone: "blue", group: "대표성" },
-      { label: "공정대표성 검토", tone: "purple", group: "법적 쟁점" },
-      { label: "수동 검토", tone: "orange", group: "근거 품질" },
-    ],
-    evidence: [
-      { date: "08.05", title: "교섭단위 관련 절차 확인", source: "교차 확인 언론", tier: "B" },
-      { date: "07.28", title: "교섭 상대방 주장 제기", source: "당사자 발표", tier: "C" },
-      { date: "07.20", title: "적용 의제 범위 확인 중", source: "당사자 공식 공지", tier: "A" },
-    ],
-    sourceAnnotations: [
-      { event: "교섭단위 절차", sourceUrl: "https://source.example.invalid/demo/case-d/2026-08-05", note: "절차 안내 URL 보관 예시" },
-      { event: "의제 범위", sourceUrl: "https://source.example.invalid/demo/case-d/2026-07-20", note: "당사자 공지 URL 보관 예시" },
-    ],
-    next: "직접고용이 확인된 교섭사건 안에서 교섭단위·대표성을 별도 확인합니다.",
-  },
-  {
-    id: "case-e",
-    name: "제조 법인 E",
-    subtitle: "2026 임금협상 · 올해 사건 확인 대기",
-    agreementType: "WAGE",
-    agreementLabel: "임금협상",
-    yearType: "2026 임협",
-    stage: "U",
-    reason: "올해 교섭사건을 뒷받침하는 충분한 근거가 아직 없는 시연 사례입니다.",
-    lastConfirmed: "—",
-    verifiedAt: "—",
-    freshness: "근거 수집 대기",
-    confidence: 0.44,
-    sourceTier: "C",
-    scope: "사건 범위 미확정 · 상태 변경 없음",
-    majorityUnion: "확인중",
-    unionMembers: "직접고용·조합원 범위 확인 대기",
-    electionIssue: "확인된 선거 이슈 없음",
-    issueSummary: "직접고용 노조의 올해 임협 사건인지 확인할 근거가 아직 충분하지 않습니다.",
-    breakdownReason: "사건 미확인 · 결렬 여부를 추정하지 않음",
-    voteChangeSummary: "최종안 없음 · 비교 가능한 기존안 미확인",
-    overlays: [
-      { label: "올해 현황 미확인", tone: "gray", group: "근거 품질" },
-      { label: "후보 검토함", tone: "orange", group: "근거 품질" },
-    ],
-    evidence: [
-      { date: "—", title: "확정된 올해 사건 없음", source: "후보 수집 대기", tier: "C" },
-    ],
-    sourceAnnotations: [
-      { event: "후보 기사", sourceUrl: "https://source.example.invalid/demo/case-e/candidate", note: "후보 URL은 상태 변경 전 검토함에만 보관하는 예시" },
-    ],
-    next: "기사 부재를 ‘미착수’로 바꾸지 않고, 다음 일일 수집에서 근거를 확인합니다.",
-  },
-];
+const historicalRecords = historicalSeed.records as HistoricalRecord[];
+const trackingCompanies = historicalSeed.trackingCompanies as TrackingCompany[];
+const historicalYears = Array.from(
+  new Set(historicalRecords.map((record) => record.bargainingYear)),
+).sort((left, right) => right - left);
+const defaultHistoricalYear = historicalYears[0] ?? historicalSeed.coveragePeriod.endYear;
+
+const agreementLabels: Record<AgreementType, string> = {
+  WAGE: "임금협상",
+  INTEGRATED: "통합 임단협",
+  CBA: "단체협약",
+  SUPPLEMENTAL: "특별·보충협약",
+  UNKNOWN: "유형 미확인",
+};
+
+function formatDate(date: string) {
+  return date.replaceAll("-", ".");
+}
+
+function stageOverlay(stage: string): { label: string; tone: BadgeTone; group: string }[] {
+  if (stage === "S7" || stage === "S8") return [{ label: "조인·체결 확인", tone: "green", group: "합의·인준" }];
+  if (stage === "S6") return [{ label: "찬반·인준 확인", tone: "green", group: "합의·인준" }];
+  if (stage === "S5") return [{ label: "잠정합의 확인", tone: "green", group: "합의·인준" }];
+  if (stage === "S4") return [{ label: "교착·조정 확인", tone: "orange", group: "조정·쟁의" }];
+  return [{ label: "원청 직접고용 근거 보강", tone: "orange", group: "근거 품질" }];
+}
+
+function getHistoricalCases(year: number): CaseExample[] {
+  return trackingCompanies.map((company) => {
+    const record = historicalRecords
+      .filter((candidate) => candidate.companyId === company.id && candidate.bargainingYear === year)
+      .sort((left, right) => right.eventDate.localeCompare(left.eventDate))[0];
+
+    if (!record) {
+      return {
+        id: `${company.id}-${year}-unverified`,
+        name: company.legalName,
+        subtitle: `${year}년 원청 직접고용 교섭 사실 근거 미확인`,
+        agreementType: "UNKNOWN",
+        agreementLabel: agreementLabels.UNKNOWN,
+        yearType: `${year}년 · 미확인`,
+        stage: "U",
+        reason: `${year}년의 법인·직접고용 노조·교섭단위를 함께 식별하는 원문을 아직 확보하지 못했습니다. 미착수나 타결로 추정하지 않습니다.`,
+        lastConfirmed: "—",
+        verifiedAt: "—",
+        freshness: "근거 보강 대기",
+        confidence: 0,
+        sourceTier: "C",
+        scope: "원청 직접고용 사건 미확인 · 공개 단계 갱신 금지",
+        majorityUnion: "확인중",
+        unionMembers: "공개 근거 미확인",
+        electionIssue: "공개 근거 미확인",
+        issueSummary: "직접고용 범위와 해당 연도 교섭사건을 한 원문에서 함께 확인한 뒤에만 쟁점으로 표시합니다.",
+        breakdownReason: "결렬 여부를 추정하지 않습니다.",
+        voteChangeSummary: "찬반투표·최종안·기존 대비 변경을 확인한 원문이 없습니다.",
+        overlays: [{ label: "공개 근거 미확인", tone: "gray", group: "근거 품질" }],
+        evidence: [{ date: "—", title: "공개 가능한 원청 직접고용 사실 없음", source: "검증 보류", tier: "C" }],
+        sourceAnnotations: [],
+        next: "법인명, 직접고용 적용범위, 교섭사실과 원문 URL이 함께 확인될 때까지 상태를 바꾸지 않습니다.",
+      };
+    }
+
+    const sourceAnnotations = [
+      { event: record.title, sourceUrl: record.sourceUrl, note: `${record.sourceName} · ${formatDate(record.eventDate)} · ${record.annotation}` },
+      ...(record.scopeEvidenceUrl && record.scopeEvidenceUrl !== record.sourceUrl
+        ? [{ event: "직접고용 범위 증빙", sourceUrl: record.scopeEvidenceUrl, note: record.directEmploymentEvidence }]
+        : []),
+    ];
+    const evidence = [
+      { date: record.eventDate.slice(5).replace("-", "."), title: record.title, source: record.sourceName, tier: record.sourceTier },
+      ...(record.scopeEvidenceUrl && record.scopeEvidenceUrl !== record.sourceUrl
+        ? [{ date: "범위", title: "원청 직접고용 범위 증빙", source: "교섭 범위 검토", tier: "A" as const }]
+        : []),
+    ];
+
+    return {
+      id: record.id,
+      name: record.companyLegalName,
+      subtitle: `${year}년 ${agreementLabels[record.agreementType]} · ${record.unionName}`,
+      agreementType: record.agreementType,
+      agreementLabel: agreementLabels[record.agreementType],
+      yearType: `${year}년 ${agreementLabels[record.agreementType]}`,
+      stage: record.stage,
+      reason: record.factSummary,
+      lastConfirmed: formatDate(record.eventDate),
+      verifiedAt: formatDate(record.eventDate),
+      freshness: "과거 사실 초기 데이터",
+      confidence: record.confidence,
+      sourceTier: record.sourceTier,
+      scope: `원청 법인 직접고용 · ${record.unionName}`,
+      round: record.stage === "S7" ? "조인·체결 확인" : record.stage === "S6" ? "찬반·인준 확인" : "원문 사건 확인",
+      majorityUnion: "확인중",
+      unionMembers: "공개 근거 미확인",
+      electionIssue: "공개 근거 미확인",
+      issueSummary: `초기 레코드 사실 요약: ${record.factSummary}`,
+      breakdownReason: "이 초기 레코드에는 확인된 결렬 사유가 없습니다. 원문에 명시된 경우에만 별도 쟁점으로 갱신합니다.",
+      voteChangeSummary: record.stage === "S6" || record.stage === "S7"
+        ? `원문 확인: ${record.factSummary}`
+        : "찬반투표·최종안의 기존 대비 변경은 확인된 원문이 있을 때만 표시합니다.",
+      overlays: stageOverlay(record.stage),
+      evidence,
+      sourceAnnotations,
+      next: "다음 일일 수집에서는 원문 추가 확인, 조합원 수·대표성, 쟁점·최종안 변경을 분리 검증합니다.",
+    };
+  });
+}
 
 const filters: { id: AgreementFilter; label: string }[] = [
   { id: "ALL", label: "전체 사건" },
@@ -255,6 +208,7 @@ const filters: { id: AgreementFilter; label: string }[] = [
   { id: "INTEGRATED", label: "통합 임단협" },
   { id: "CBA", label: "단체협약" },
   { id: "SUPPLEMENTAL", label: "특별·보충" },
+  { id: "UNKNOWN", label: "유형 미확인" },
 ];
 
 const pipeline = [
@@ -307,10 +261,22 @@ function OverlayBadge({ label, tone }: { label: string; tone: BadgeTone }) {
 
 export default function Home() {
   const [activeFilter, setActiveFilter] = useState<AgreementFilter>("ALL");
-  const [selectedId, setSelectedId] = useState(caseExamples[0].id);
+  const [selectedYear, setSelectedYear] = useState(defaultHistoricalYear);
+  const [selectedId, setSelectedId] = useState(() => getHistoricalCases(defaultHistoricalYear)[0]?.id ?? "");
   const [showAllStages, setShowAllStages] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [stageFocus, setStageFocus] = useState("ALL");
+  const [isAddCompanyOpen, setIsAddCompanyOpen] = useState(false);
+  const [companyRequest, setCompanyRequest] = useState({
+    companyLegalName: "",
+    industry: "",
+    websiteUrl: "",
+    rationale: "",
+    adminCode: "",
+  });
+  const [companyRequestMessage, setCompanyRequestMessage] = useState("");
+  const [isSubmittingCompanyRequest, setIsSubmittingCompanyRequest] = useState(false);
+  const caseExamples = useMemo(() => getHistoricalCases(selectedYear), [selectedYear]);
 
   const visibleCases = useMemo(
     () => {
@@ -323,7 +289,7 @@ export default function Home() {
         return matchesAgreement && matchesStage && matchesSearch;
       });
     },
-    [activeFilter, searchTerm, stageFocus],
+    [activeFilter, caseExamples, searchTerm, stageFocus],
   );
 
   const selectedCase =
@@ -332,11 +298,43 @@ export default function Home() {
   const activeStageIndex = stageMeta.findIndex((stage) => stage.code === selectedCase.stage);
   const displayStages = showAllStages ? stageMeta : stageMeta.slice(0, 6);
 
+  async function submitCompanyRequest(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setCompanyRequestMessage("");
+    setIsSubmittingCompanyRequest(true);
+    try {
+      const response = await fetch("/api/company-requests", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-dashboard-admin-code": companyRequest.adminCode,
+        },
+        body: JSON.stringify({
+          companyLegalName: companyRequest.companyLegalName,
+          industry: companyRequest.industry,
+          websiteUrl: companyRequest.websiteUrl,
+          rationale: companyRequest.rationale,
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        setCompanyRequestMessage(result.error ?? "요청을 접수하지 못했습니다. 입력값을 확인해 주세요.");
+        return;
+      }
+      setCompanyRequestMessage(result.message ?? "추적 기업 추가 요청을 접수했습니다.");
+      setCompanyRequest((current) => ({ ...current, companyLegalName: "", industry: "", websiteUrl: "", rationale: "", adminCode: "" }));
+    } catch {
+      setCompanyRequestMessage("네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+    } finally {
+      setIsSubmittingCompanyRequest(false);
+    }
+  }
+
   return (
     <main className="site-shell">
       <section className="top-band" aria-label="서비스 안내">
         <div className="container top-band-inner">
-          <p><Sparkles size={14} aria-hidden="true" /> 프레임워크 시연 · 원청 법인 직접고용 노조 교섭만 다룹니다</p>
+          <p><Sparkles size={14} aria-hidden="true" /> 2021–2025 검증 사실 데이터 · 원청 법인 직접고용 노조 교섭만 다룹니다</p>
           <p><Clock3 size={14} aria-hidden="true" /> 수집 설계 기준: 매일 06:30 KST · 법인별 1회</p>
         </div>
       </section>
@@ -352,21 +350,23 @@ export default function Home() {
             <a href="#framework">단계 프레임워크</a>
             <a href="#collection">수집 원칙</a>
           </nav>
-          <a className="header-link" href="#framework">설계 기준 <ArrowRight size={15} /></a>
+          <button className="header-link header-action" type="button" onClick={() => { setCompanyRequestMessage(""); setIsAddCompanyOpen(true); }}>
+            추적 기업 추가 <Plus size={15} />
+          </button>
         </div>
       </header>
 
       <section className="hero" id="overview">
         <div className="container hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow"><span className="pulse-dot" /> 2026 교섭상태 프레임워크 v1.0</div>
+            <div className="eyebrow"><span className="pulse-dot" /> 초기 추적 12개사 · 2021–2025 사실 데이터</div>
             <h1>진행률을 버리고,<br /><em>교섭의 맥락</em>을 읽습니다.</h1>
             <p className="hero-description">
               원청 법인에 직접 고용된 노동조합의 임금협상과 단체교섭을 하나의 직선으로 보지 않습니다. 각 교섭사건의 <strong>주 단계</strong>와
               조정·쟁의·대표성·인준의 <strong>병렬 상태</strong>를 함께 읽는 대시보드입니다.
             </p>
             <div className="hero-actions">
-              <a className="button button-primary" href="#board">시연 사건 살펴보기 <ArrowRight size={16} /></a>
+              <a className="button button-primary" href="#board">사실 사건 살펴보기 <ArrowRight size={16} /></a>
               <a className="button button-secondary" href="#framework">상태 모델 보기</a>
             </div>
             <p className="hero-footnote"><CircleAlert size={15} /> 0–100% 협상 진행률은 사용자에게 표시하지 않습니다.</p>
@@ -375,7 +375,7 @@ export default function Home() {
           <aside className="hero-insight" aria-label="프레임워크 핵심 요약">
             <div className="insight-topline">
               <span>관측 모델</span>
-              <span className="version-badge">Framework-first</span>
+              <span className="version-badge">근거 우선</span>
             </div>
             <div className="model-diagram">
               <div className="model-node primary-node">
@@ -400,8 +400,8 @@ export default function Home() {
 
       <section className="signal-strip" aria-label="프레임워크 핵심 지표">
         <div className="container signal-grid">
-          <div className="signal-item"><strong>10</strong><span>개 주 단계<br />U ~ S8</span></div>
-          <div className="signal-item"><strong>4</strong><span>개 병렬 관점<br />대표성·쟁의·인준·법적 쟁점</span></div>
+          <div className="signal-item"><strong>{trackingCompanies.length}</strong><span>개 초기 추적 법인<br />실명 기준</span></div>
+          <div className="signal-item"><strong>{historicalRecords.length}</strong><span>개 검증 사실 사건<br />2021–2025</span></div>
           <div className="signal-item"><strong>1×</strong><span>법인별 일일 수집<br />KST 06:30</span></div>
           <div className="signal-item signal-item-emphasis"><strong>≠</strong><span>뉴스 없음은<br />미착수가 아님</span></div>
         </div>
@@ -411,19 +411,46 @@ export default function Home() {
         <div className="container">
           <div className="section-heading dashboard-heading">
             <div>
-              <p className="section-kicker">CASE BOARD · DEMO</p>
+              <p className="section-kicker">사건 보드 · 사실 데이터</p>
               <h2>교섭사건 보드</h2>
-              <p><strong>원청 직접고용이 확인된 노조</strong>만, 법인 × 교섭연도 × 협약유형 × 교섭단위 × 적용범위의 사건으로 봅니다.</p>
+              <p><strong>원청 직접고용이 확인된 노조</strong>만, 법인 × 교섭연도 × 협약유형 × 교섭단위 × 적용범위의 사건으로 봅니다. 미확인 연도는 미착수·타결로 추정하지 않습니다.</p>
             </div>
-            <div className="data-health" aria-label="데이터 상태 설명">
-              <span className="health-light" aria-hidden="true" />
-              <span>데모 · 실제 현황 아님</span>
+            <div className="dashboard-actions">
+              <div className="data-health" aria-label="데이터 상태 설명">
+                <span className="health-light" aria-hidden="true" />
+                <span>검증 사실 {historicalRecords.length}건 · {selectedYear}년 조회</span>
+              </div>
+              <button className="board-add-company" type="button" onClick={() => { setCompanyRequestMessage(""); setIsAddCompanyOpen(true); }}>
+                <Plus size={15} /> 추적 기업 추가
+              </button>
             </div>
           </div>
 
           <div className="scope-guard" role="note">
             <ShieldCheck size={17} aria-hidden="true" />
             <p><strong>포함:</strong> 원청 법인에 직접 고용된 노조의 교섭사건. <strong>제외:</strong> 하청·사내협력사·용역·파견 노조의 원청 상대 교섭은 원청 노조 현황에 합산·표시하지 않으며, 별도 검토 대상으로 분리합니다.</p>
+          </div>
+
+          <div className="year-filter-bar" aria-label="과거 데이터 조회 연도">
+            <div className="year-filter-label"><CalendarDays size={16} /> 조회 연도</div>
+            <div className="year-filter-options" role="tablist" aria-label="교섭 연도 선택">
+              {historicalYears.map((year) => (
+                <button
+                  className={selectedYear === year ? "year-filter-chip active" : "year-filter-chip"}
+                  key={year}
+                  type="button"
+                  role="tab"
+                  aria-selected={selectedYear === year}
+                  onClick={() => {
+                    setSelectedYear(year);
+                    setSelectedId(getHistoricalCases(year)[0]?.id ?? "");
+                  }}
+                >
+                  {year}년
+                </button>
+              ))}
+            </div>
+            <span className="year-filter-note">원문·직접고용 근거가 함께 확인된 사건만 단계에 반영</span>
           </div>
 
           <div className="filter-bar" aria-label="협약 유형 필터">
@@ -493,12 +520,12 @@ export default function Home() {
           </div>
 
           <div className="case-layout">
-            <div className="case-list" role="list" aria-label="시연 교섭사건 목록">
+            <div className="case-list" role="list" aria-label="검증된 교섭사건 목록">
               {visibleCases.length === 0 && (
                 <div className="empty-result" role="status">
                   <Search size={20} aria-hidden="true" />
                   <strong>직접고용 확정 사건을 찾지 못했습니다.</strong>
-                  <span>이 데모는 원청 직접고용 노조 교섭만 검색 결과로 보여줍니다.</span>
+                  <span>원청 직접고용이 확인된 교섭사건만 검색 결과로 보여줍니다.</span>
                   <button type="button" onClick={() => { setSearchTerm(""); setStageFocus("ALL"); }}>검색·단계 필터 초기화</button>
                 </div>
               )}
@@ -544,7 +571,7 @@ export default function Home() {
             <article className="case-detail" aria-live="polite">
               <div className="case-detail-header">
                 <div>
-                  <p className="detail-overline">선택한 시연 사건</p>
+                  <p className="detail-overline">선택한 과거 사실 사건</p>
                   <h3>{selectedCase.name}</h3>
                   <p>{selectedCase.subtitle}</p>
                 </div>
@@ -592,7 +619,7 @@ export default function Home() {
 
               <div className="detail-bottom-grid">
                 <div className="evidence-list">
-                  <div className="subsection-title"><span>확인 근거</span><small>예시</small></div>
+                  <div className="subsection-title"><span>확인 근거</span><small>원문·범위 증빙</small></div>
                   {selectedCase.evidence.map((evidence) => (
                     <div className="evidence-row" key={`${evidence.date}-${evidence.title}`}>
                       <time>{evidence.date}</time>
@@ -623,12 +650,13 @@ export default function Home() {
                 </section>
               </div>
 
-              <section className="source-annotations" aria-label="원문 URL 주석 예시">
-                <div className="subsection-title"><span>원문 URL 주석</span><small>데모 형식 · 실제 기사 링크 아님</small></div>
+              <section className="source-annotations" aria-label="원문 URL 주석">
+                <div className="subsection-title"><span>원문 URL 주석</span><small>검증에 사용한 실제 원문</small></div>
+                {selectedCase.sourceAnnotations.length === 0 && <p className="source-annotation-empty">공개 가능한 원문과 직접고용 범위 근거를 추가 확인 중입니다.</p>}
                 {selectedCase.sourceAnnotations.map((annotation) => (
                   <div className="source-annotation" key={annotation.sourceUrl}>
                     <strong>{annotation.event}</strong>
-                    <code>{annotation.sourceUrl}</code>
+                    <a href={annotation.sourceUrl} target="_blank" rel="noreferrer"><code>{annotation.sourceUrl}</code></a>
                     <span>{annotation.note}</span>
                   </div>
                 ))}
@@ -642,7 +670,7 @@ export default function Home() {
         <div className="container">
           <div className="section-heading framework-heading">
             <div>
-              <p className="section-kicker">STATE MODEL</p>
+              <p className="section-kicker">상태 모델</p>
               <h2>단계는 정렬 좌표이고,<br />진행률이 아닙니다.</h2>
             </div>
             <div className="framework-note">
@@ -713,7 +741,7 @@ export default function Home() {
       <section className="collection-section" id="collection">
         <div className="container collection-layout">
           <div className="collection-copy">
-            <p className="section-kicker">DAILY COLLECTION DESIGN</p>
+            <p className="section-kicker">일일 수집 설계</p>
             <h2>매일 한 번,<br /><em>사실부터</em> 쌓습니다.</h2>
             <p>
               법인별 수집은 하루 1회로 제한합니다. 먼저 원청 법인 <strong>직접고용 노조 사건인지 검증</strong>하고, 기사 원문을 복제하는 대신 제목·링크·발행 정보와 짧은 사실 요약을 보존해 상태 변경의 근거를 추적합니다.
@@ -743,7 +771,7 @@ export default function Home() {
         <div className="container">
           <div className="section-heading compact-heading">
             <div>
-              <p className="section-kicker">INTERPRETATION GUARDRAILS</p>
+              <p className="section-kicker">해석 안전장치</p>
               <h2>상태를 과장하지 않는 규칙</h2>
             </div>
             <p>예정·주장·발생·정정은 같은 신호가 아닙니다.</p>
@@ -769,10 +797,53 @@ export default function Home() {
         </div>
       </section>
 
+      {isAddCompanyOpen && (
+        <div className="company-request-backdrop">
+          <section className="company-request-dialog" role="dialog" aria-modal="true" aria-labelledby="company-request-title">
+            <div className="company-request-heading">
+              <div>
+                <p>운영자 요청</p>
+                <h2 id="company-request-title">추적 기업 추가</h2>
+              </div>
+              <button className="dialog-close" type="button" aria-label="추적 기업 추가 창 닫기" onClick={() => setIsAddCompanyOpen(false)}><X size={18} /></button>
+            </div>
+            <p className="company-request-intro">법인 실명과 참고 근거를 보내면, 원청 직접고용 노조 범위 검토를 통과한 뒤에만 추적 목록에 반영합니다.</p>
+            <form className="company-request-form" onSubmit={submitCompanyRequest}>
+              <label>
+                <span>법인 실명 <b>필수</b></span>
+                <input required minLength={2} maxLength={120} value={companyRequest.companyLegalName} onChange={(event) => setCompanyRequest((current) => ({ ...current, companyLegalName: event.target.value }))} placeholder="예: 주식회사 ○○" />
+              </label>
+              <label>
+                <span>산업 분야</span>
+                <input maxLength={80} value={companyRequest.industry} onChange={(event) => setCompanyRequest((current) => ({ ...current, industry: event.target.value }))} placeholder="예: 자동차부품" />
+              </label>
+              <label>
+                <span>참고 URL</span>
+                <input type="url" maxLength={500} value={companyRequest.websiteUrl} onChange={(event) => setCompanyRequest((current) => ({ ...current, websiteUrl: event.target.value }))} placeholder="https://" />
+              </label>
+              <label>
+                <span>추가 사유</span>
+                <textarea maxLength={800} value={companyRequest.rationale} onChange={(event) => setCompanyRequest((current) => ({ ...current, rationale: event.target.value }))} placeholder="산업 영향, 직접고용 노조 교섭 노출도 등" rows={3} />
+              </label>
+              <label>
+                <span>운영 관리 코드 <b>필수</b></span>
+                <input type="password" required value={companyRequest.adminCode} onChange={(event) => setCompanyRequest((current) => ({ ...current, adminCode: event.target.value }))} autoComplete="off" placeholder="서버에만 보관되는 코드" />
+              </label>
+              <p className="company-request-security">관리 코드 원문은 저장하지 않으며, 요청은 검토 대기 상태로만 접수됩니다.</p>
+              {companyRequestMessage && <p className="company-request-message" role="status">{companyRequestMessage}</p>}
+              <div className="company-request-actions">
+                <button className="dialog-cancel" type="button" onClick={() => setIsAddCompanyOpen(false)}>취소</button>
+                <button className="dialog-submit" type="submit" disabled={isSubmittingCompanyRequest}>{isSubmittingCompanyRequest ? "요청 저장 중…" : "추가 요청 보내기"}</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      )}
+
       <footer className="site-footer">
         <div className="container footer-inner">
           <div><a className="brand footer-brand" href="#overview"><span className="brand-mark" aria-hidden="true"><Activity size={18} /></span> 노사교섭 <strong>레이더</strong></a><p>한국 대기업 임금·단체교섭 현황을 위한 상태 프레임워크</p></div>
-          <div className="footer-meta"><span>Framework v1.0</span><span>·</span><span>법률·연구 기반 설계</span><span>·</span><span>데모 화면</span></div>
+          <div className="footer-meta"><span>프레임워크 v1.0</span><span>·</span><span>법률·연구 기반 설계</span><span>·</span><span>2021–2025 검증 사실</span></div>
         </div>
       </footer>
     </main>

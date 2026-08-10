@@ -99,7 +99,7 @@
   },
   "scopeReviewAgent": {
     "id": "primary-union-scope-review",
-    "ruleVersion": "1.0.0",
+    "ruleVersion": "1.1.0",
     "executionOrder": "before_stage_classification",
     "publicScope": "selected_legal_entity_direct_employee_union_only"
   },

@@ -1,37 +1,37 @@
-# 뉴스 검색·주석 소스 전략
+# 뉴스 검색·주석 출처 전략
 
 ## 결정
 
-일일 상태 수집의 **주 수집원은 NAVER News Search API**로 둔다. Google Search grounding과 Tavily는 우열 관계가 아니라 역할이 다르므로, 각각 보조 탐색·요약 검증에 사용한다.
+일일 상태 수집의 **주 수집원은 NAVER 뉴스 검색 API**로 둔다. Google Search grounding과 Tavily는 우열 관계가 아니라 역할이 다르므로, 각각 보조 탐색·요약 검증에 사용한다.
 
 | 역할 | 권장 도구 | 이유 |
 | --- | --- | --- |
-| 매일 1회 한국 뉴스 후보 수집 | NAVER News Search API | 날짜순 정렬·페이지네이션이 가능한 한국 뉴스 검색 API이며, 메타데이터를 안정적으로 수집하기 좋다. |
-| 기사 목록 외의 누락 후보·심층 조사 | Tavily Search | news 주제, 날짜 범위, 도메인 제한, 검색 결과별 스니펫·추출 콘텐츠를 제어할 수 있다. |
+| 매일 1회 한국 뉴스 후보 수집 | NAVER 뉴스 검색 API | 날짜순 정렬·페이지네이션이 가능한 한국 뉴스 검색 API이며, 메타데이터를 안정적으로 수집하기 좋다. |
+| 기사 목록 외의 누락 후보·심층 조사 | Tavily 검색 | 뉴스 주제, 날짜 범위, 도메인 제한, 검색 결과별 발췌문·추출 콘텐츠를 제어할 수 있다. |
 | 사람이 읽는 이슈 요약·질의 응답의 보조 근거 | Gemini의 Google Search grounding | 검색 기반 답변과 인라인 주석을 생성할 수 있어, 검토된 후보를 설명하는 보조 수단으로 적합하다. |
 
 ## 왜 Google 모델을 일일 크롤러의 유일한 근거로 쓰지 않는가
 
 Google Search grounding은 모델이 질의를 판단·생성하고 결과를 종합해 답변과 주석을 반환하는 **검색 결합형 생성 기능**이다. 따라서 “이번 배치에서 어떤 원문을 몇 건 조회했는지”, “어제와 비교해 어떤 결과가 새로 생겼는지”를 재현 가능한 수집 로그로 만들기에는 전용 뉴스 검색 API보다 불리할 수 있다.
 
-반대로 Tavily는 검색·추출을 에이전트 친화적 결과로 제공하고 날짜·도메인 제한을 지원하므로, 후보의 맥락을 빠르게 확인하는 데 편리하다. 그러나 한국 제조업 노사 뉴스의 실제 재현율은 보장되지 않으므로, 메인 소스로 채택하기 전에 같은 회사·같은 30일 기간에서 NAVER 결과와 표본 비교가 필요하다.
+반대로 Tavily는 검색·추출을 에이전트 친화적 결과로 제공하고 날짜·도메인 제한을 지원하므로, 후보의 맥락을 빠르게 확인하는 데 편리하다. 그러나 한국 제조업 노사 뉴스의 실제 재현율은 보장되지 않으므로, 주 수집원으로 채택하기 전에 같은 회사·같은 30일 기간에서 NAVER 결과와 표본 비교가 필요하다.
 
 ## 권장 3단계 파이프라인
 
-1. **발견** — 각 법인·노조·별칭에 대해 NAVER News API를 날짜순으로 조회한다.
+1. **발견** — 각 법인·노조·별칭에 대해 NAVER 뉴스 검색 API를 날짜순으로 조회한다.
 2. **범위 판별** — 선택된 원청 법인에 직접 고용된 근로자를 대표하는 노조인지 먼저 확인한다. 하청·사내협력사·용역·파견·계열사 노조 기사와 원청·하청 혼합 기사는 격리하며, 원청 노조의 단계·쟁점·노출도에 합산하지 않는다.
 3. **검증** — 공식 노조·회사·고용노동부·노동위원회 원문을 우선하고, 필요한 경우 Tavily 또는 Google Search grounding으로 독립 보도를 보강한다.
-4. **설명** — 상태를 바꾸는 각 이벤트에 기사 원문 URL, 출처 등급, 실제 발생일·게시일, 한 줄 사실 주석을 붙인다. 모델 요약은 원문이 아니라 이 검증된 이벤트 레코드에서 생성한다.
+4. **설명** — 상태를 바꾸는 각 이벤트에 기사 원문 URL, 출처 등급, 실제 발생일·게시일, 한 줄 사실 주석을 붙인다. 모델 요약은 원문이 아니라 이 검증된 이벤트 기록에서 생성한다.
 
 ## 공개 화면의 주석 규칙
 
-- 모든 상태 변화에는 최소 1개의 source_url과 source_tier를 연결한다.
+- 모든 상태 변화에는 최소 1개의 `source_url`과 `source_tier`를 연결한다.
 - 사실 요약은 원문을 장문 복제하지 않고, “누가·언제·무엇을 했는지”의 짧은 자체 서술로 기록한다.
-- 같은 기사를 여러 화면에 재사용할 때는 article_group_id로 연결한다.
+- 같은 기사를 여러 화면에 재사용할 때는 `article_group_id`로 연결한다.
 - 단일 언론 기사·익명 인용·전망은 검토 후보로 보이고, 자동 상태 변경 근거가 되지 않는다.
 - 원문이 유료·로그인·삭제 상태가 되어도 당시의 제목·발행일·URL·검증시각은 남기되, 접근 우회는 하지 않는다.
 
-## 소스 선택 검증
+## 출처 선택 검증
 
 초기 10~15개 법인의 최근 30일 표본에 대해 아래를 비교한다.
 
@@ -47,6 +47,6 @@ Google Search grounding은 모델이 질의를 판단·생성하고 결과를 �
 
 ## 공식 문서
 
-- [NAVER News Search API](https://api.ncloud-docs.com/docs/en/naver-api-hub-search-news)
-- [Google Search grounding for Gemini](https://ai.google.dev/gemini-api/docs/google-search)
-- [Tavily Search API](https://docs.tavily.com/documentation/api-reference/endpoint/search)
+- [NAVER 뉴스 검색 API](https://api.ncloud-docs.com/docs/en/naver-api-hub-search-news)
+- [Gemini용 Google Search grounding](https://ai.google.dev/gemini-api/docs/google-search)
+- [Tavily 검색 API](https://docs.tavily.com/documentation/api-reference/endpoint/search)

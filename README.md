@@ -1,6 +1,6 @@
 # 노사교섭 레이더
 
-한국 주요 제조기업의 임금협상·단체협상 사건을 **원청 법인 직접고용 노조** 기준으로 추적하기 위한 대시보드 프레임워크입니다.
+한국 주요 제조기업의 임금협상·단체협상 사건을 **원청 법인 직접고용 노조** 기준으로 추적하는 사실 데이터 대시보드입니다.
 
 ## 핵심 원칙
 
@@ -12,11 +12,15 @@
 
 ## 구성
 
-- `app/` — 법인 검색·교섭 단계 조회·사건 상세를 제공하는 프레임워크 시연 화면
+- `app/` — 법인 검색·교섭 단계 조회·연도별 사실 사건 상세·추적 기업 추가 요청 화면
 - `docs/negotiation-framework.md` — 법률·연구 근거, 단계 모델, 데이터 규칙
 - `data/company-universe.json` — 초기 추적 후보와 선정 점수 기준
+- `data/historical-fact-seed.json` — 12개사 2021–2025 초기 사실 데이터. 원청 직접고용·원문 URL이 함께 확인된 행만 공개 후보로 포함
+- `scripts/build-historical-seed.mjs` — 조사 결과를 공개 가능한 초기 사실 데이터로 병합·검증
 - `scripts/collect-news.mjs` — KST 매일 06:30 기준 뉴스 후보 수집·범위 분류기
 - `docs/data-pipeline.md` — 수집 운영과 안전 장치
+- `docs/supabase-setup.md` — Supabase 테이블·RLS·환경 변수·초기 적재 운영 기준
+- `docs/공유-접근과-검색비노출-정책.md` — 공유 URL 열람과 검색 비노출 정책
 
 ## 실행
 
@@ -27,3 +31,11 @@ npm test
 ```
 
 뉴스 수집은 NAVER API HUB 자격증명이 있을 때 `NAVER_API_HUB_CLIENT_ID`, `NAVER_API_HUB_CLIENT_SECRET`을 설정한 뒤 실행합니다. 자세한 형식과 RSS 보조 탐색의 제한은 `docs/data-pipeline.md`를 참조하세요.
+
+초기 과거 데이터는 다음 명령으로 병합합니다.
+
+```bash
+node scripts/build-historical-seed.mjs --as-of 2026-08-10
+```
+
+Supabase에 실제로 적재하기 전에는 대상 프로젝트를 명시적으로 선택하고, 서버 전용 환경 변수만 배포 플랫폼에 설정합니다. 자세한 절차는 `docs/supabase-setup.md`를 참조하세요.

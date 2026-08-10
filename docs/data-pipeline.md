@@ -118,15 +118,15 @@ $primary-union-scope-review에 보관한다. 스킬은 직접고용 게이트를
 - `scopeClassification`: 고용·노조 범위 판정
 - `includeInPrimaryDashboard`: 원청 대시보드 집계 허용 여부
 
-| scope 코드 | 포함 | 판정 원칙 |
+| 범위 코드 | 포함 | 판정 원칙 |
 | --- | --- | --- |
-| PRIMARY_DIRECT_UNION | 예 | 선택 법인과 설정된 직접고용 원청 노조 별칭이 함께 확인됨 |
+| `PRIMARY_DIRECT_UNION` | 예 | 선택 법인과 설정된 직접고용 원청 노조 별칭이 함께 확인됨 |
 | `SUBCONTRACTOR_UNION_EXCLUDED` | 아니요 | 협력사·하청·사내하청·용역·파견 등 비직접고용 신호 |
 | `AFFILIATE_UNION_EXCLUDED` | 아니요 | 계열사·자회사·관계사 노조 신호 |
 | `UNKNOWN_REVIEW` | 아니요 | 직접 사용자와 적용 근로자 관계를 제목에서 확인하지 못함 |
 | `MIXED_NEEDS_SPLIT` | 아니요 | 원청 노조와 제외 대상 신호가 한 제목에 섞여 자동 분리 불가 |
 
-`SUBCONTRACTOR_UNION_EXCLUDED`에는 사내협력사·수급업체·subcontractor도 포함한다.
+`SUBCONTRACTOR_UNION_EXCLUDED`에는 사내협력사·수급업체·하청 사업자도 포함한다.
 계약 밖 사용자의 사용자성 주장이나 원청 상대 교섭 요구는 별도 감사 후보로만 남기고
 주 상태, 쟁점, 미디어 노출 건수에 합산하지 않는다. 혼합 기사를 자동으로 원청 몫으로
 나누지 않는다. 별도 근거로 사건을 분리하기 전까지 `MIXED_NEEDS_SPLIT` 검토 큐다.
@@ -136,13 +136,13 @@ $primary-union-scope-review에 보관한다. 스킬은 직접고용 게이트를
 `excludedAuditCount`로 제외 건수를 점검한다. 제외 기사에는
 `classification.excludedAudit`이 있지만 사용자 화면은 반드시
 `includeInPrimaryDashboard === true`만 렌더링한다. 범위 제외 기사의 주 상태는 `U`,
-retainMainState: true로 고정해 실수로 상태를 바꾸지 못하게 한다.
+`retainMainState: true`로 고정해 실수로 상태를 바꾸지 못하게 한다.
 
-검토 서브에이전트의 출력에는 scopeReview.agentId, scopeReview.ruleVersion,
-scopeReview.executionOrder, scopeReview.quarantined가 남는다. 공개 이벤트·회사
-지표는 이 값이 PRIMARY_DIRECT_UNION인 경우에만 후속 처리한다.
+검토 서브에이전트의 출력에는 `scopeReview.agentId`, `scopeReview.ruleVersion`,
+`scopeReview.executionOrder`, `scopeReview.quarantined`가 남는다. 공개 이벤트·회사
+지표는 이 값이 `PRIMARY_DIRECT_UNION`인 경우에만 후속 처리한다.
 
-## 단계 taxonomy
+## 단계 분류 체계
 
 | 코드 | 화면 라벨 | 의미 |
 | --- | --- | --- |
@@ -155,7 +155,7 @@ scopeReview.executionOrder, scopeReview.quarantined가 남는다. 공개 이벤�
 | `manual_review` | 수동검토 | 제목만으로 확정할 수 없음 |
 
 정상적인 설명 순서는 `준비 → 교섭 → 결렬·조정 → 쟁의 → 잠정합의 → 최종타결`이다.
-그러나 이 taxonomy는 기사 주제 라벨이며, 뒤 단계의 숫자가 항상 회사의 현재 주
+그러나 이 분류 체계는 기사 주제 라벨이며, 뒤 단계의 숫자가 항상 회사의 현재 주
 상태라는 뜻은 아니다. 현재 상태 집계에는 아래 `statusCode` 프레임워크를 사용한다.
 
 ### 대시보드 상태 프레임워크
@@ -175,15 +175,15 @@ scopeReview.executionOrder, scopeReview.quarantined가 남는다. 공개 이벤�
 
 각 분류에는 `eventState`가 함께 붙는다. 허용값은 `planned`, `occurred`,
 `cancelled`, `corrected`, `disputed`다. 예정·취소·정정·분쟁 보도는
-`retainMainState: true`이므로 reducer가 기존 주 상태를 덮어쓰지 않는다.
+`retainMainState: true`이므로 상태 집계기가 기존 주 상태를 덮어쓰지 않는다.
 
 중요하게, 파업 또는 쟁의행위 기사만으로 `S4`를 만들지 않는다. 제목에 실제 교섭
 결렬·교착이나 노동위원회 조정이 확인된 경우에만 `S4`를 낸다. 찬반투표·파업
 예정이나 진행만 확인되면 `statusCode: U`, `retainMainState: true`로 주 상태는
 유지하고, 다음 `parallelStates.dispute`만 갱신한다. 같은 제목에 교섭 결렬과
-파업이 모두 명시된 경우에는 `S4`와 파업 dispute 상태를 함께 낼 수 있다.
+파업이 모두 명시된 경우에는 `S4`와 파업 `dispute` 상태를 함께 낼 수 있다.
 
-| dispute 코드 | compact label | 의미 |
+| `dispute` 코드 | 간단 표시명 | 의미 |
 | --- | --- | --- |
 | `IMPASSE_REPORTED` | 교착 | 교섭 결렬·교착·난항 보도 |
 | `MEDIATION_REQUESTED` | 조정 신청 | 조정·중재 신청 |
@@ -270,12 +270,12 @@ scopeReview.executionOrder, scopeReview.quarantined가 남는다. 공개 이벤�
 날짜가 최신이라는 사실만으로 단계가 단조 증가한다고 가정하지 않는다. 결과 JSON의
 `taxonomy.dateAloneDoesNotImplyProgression`도 이 제약을 명시한다.
 
-## 회사·노조 메타와 기사 annotation
+## 회사·노조 메타데이터와 기사 주석
 
 `companyCoverage[].selection`에는 회사 선정 기준인 규모(`scale`), 산업영향
 (`industryImpact`), 언론노출도(`mediaExposure`), 법정 과반노조 여부
 (`majorityUnion.status`: `O`/`X`/`UNKNOWN`), 각 `verifiedAt`이 들어간다. 현재 값은
-편집용 seed이므로 `verifiedAt: null`, `needsReview: true`다.
+편집용 초기값이므로 `verifiedAt: null`, `needsReview: true`다.
 
 여기서 과반노조는 오직 노조법 제29조의2 제4항에 따른 **교섭창구 단일화 참여노조
 전체 조합원 중 과반**을 뜻한다. `numerator`, `denominator`, `calculationBasis`,
@@ -329,8 +329,8 @@ freshness = 0.5 ^ (ageDays / 30)
 
 ## 결과 스키마 요약
 
-초기 public/data/news-candidates.json은 네트워크 없이도 읽을 수 있도록 같은
-스키마의 빈 articles 배열과 12개 법인의 0건 coverage를 제공한다. 실제 수집 후
+초기 `public/data/news-candidates.json`은 네트워크 없이도 읽을 수 있도록 같은
+스키마의 빈 `articles` 배열과 12개 법인의 0건 커버리지를 제공한다. 실제 수집 후
 기사 한 건은 다음 모양이다.
 
 ```json

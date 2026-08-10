@@ -19,37 +19,71 @@ async function render() {
   );
 }
 
+async function requestCompanyAddition() {
+  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
+  workerUrl.searchParams.set("company-request", `${process.pid}-${Date.now()}`);
+  const { default: worker } = await import(workerUrl.href);
+
+  return worker.fetch(
+    new Request("http://localhost/api/company-requests", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-dashboard-admin-code": "incorrect-code",
+      },
+      body: JSON.stringify({ companyLegalName: "테스트 주식회사" }),
+    }),
+    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
+    { waitUntil() {}, passThroughOnException() {} },
+  );
+}
+
 test("server-renders the collective-bargaining framework dashboard", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+  assert.equal(
+    response.headers.get("x-robots-tag"),
+    "noindex, nofollow, noarchive, nosnippet, noimageindex",
+  );
 
   const html = await response.text();
-  assert.match(html, /<title>노사교섭 레이더 \| 교섭상태 프레임워크<\/title>/);
+  assert.match(html, /<title>노사교섭 레이더 \| 원청 직접고용 교섭 현황<\/title>/);
   assert.match(html, /교섭사건 보드/);
   assert.match(html, /원청 직접고용/);
   assert.match(html, /교섭 단계별 조회/);
-  assert.match(html, /S6/);
+  assert.match(html, /삼성전자 주식회사/);
+  assert.match(html, /HD현대중공업 주식회사/);
+  assert.match(html, /2021–2025 검증 사실 데이터/);
   assert.match(html, /원문 URL 주석/);
+  assert.doesNotMatch(html, /제조 법인 [A-E]|example\.invalid|데모 · 실제 현황 아님|프레임워크 시연/);
+  assert.match(html, /<meta name="robots" content="noindex, nofollow/);
+  assert.match(html, /<meta name="googlebot" content="noindex, nofollow/);
   assert.doesNotMatch(html, /Your site is taking shape|Building your site|loading skeleton/i);
 });
 
 test("keeps scope and source guards in the production-facing implementation", async () => {
-  const [page, layout, config, framework, pipeline] = await Promise.all([
+  const [page, layout, config, framework, pipeline, historicalSeed] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../data/source-config.json", import.meta.url), "utf8"),
     readFile(new URL("../data/negotiation-framework.json", import.meta.url), "utf8"),
     readFile(new URL("../scripts/collect-news.mjs", import.meta.url), "utf8"),
+    readFile(new URL("../data/historical-fact-seed.json", import.meta.url), "utf8"),
   ]);
 
   assert.match(page, /"use client"/);
   assert.match(page, /원청 직접고용 확정 법인 검색/);
   assert.match(page, /교섭 단계별 조회/);
   assert.match(page, /하청·사내협력사·용역·파견/);
+  assert.match(page, /추적 기업 추가/);
+  assert.match(page, /\/api\/company-requests/);
   assert.doesNotMatch(page, /SkeletonPreview/);
-  assert.match(layout, /노사교섭 레이더 \| 교섭상태 프레임워크/);
-  assert.match(layout, /social\/collective-bargaining-radar-og\.png/);
+  assert.match(layout, /노사교섭 레이더 \| 원청 직접고용 교섭 현황/);
+  assert.match(layout, /index: false/);
+  assert.match(layout, /noimageindex: true/);
+  assert.doesNotMatch(layout, /openGraph/);
+  assert.doesNotMatch(layout, /twitter/);
   assert.match(framework, /"S0"/);
   assert.match(framework, /"S8"/);
   assert.match(config, /"scopeReviewAgent"/);
@@ -59,7 +93,31 @@ test("keeps scope and source guards in the production-facing implementation", as
   assert.match(pipeline, /requiresSourceVerification/);
   assert.match(pipeline, /X-NCP-APIGW-API-KEY-ID/);
 
+  const seed = JSON.parse(historicalSeed);
+  assert.equal(seed.trackingCompanies.length, 12);
+  assert.equal(seed.coverage.length, 12);
+  assert.ok(seed.records.length >= 44);
+  assert.ok(seed.records.every((record) => record.scopeClassification === "PRIMARY_DIRECT_UNION"));
+  assert.ok(seed.records.every((record) => record.includeInPrimaryDashboard === true));
+  assert.ok(seed.records.every((record) => /^https?:\/\//.test(record.sourceUrl)));
+  assert.ok(seed.records.every((record) => !record.sourceUrl.includes("example.invalid")));
+
+  const robots = await readFile(new URL("../public/robots.txt", import.meta.url), "utf8");
+  assert.match(robots, /User-agent: \*/);
+  assert.match(robots, /Disallow: \//);
+
   await assert.rejects(access(new URL("app/_sites-preview", templateRoot)));
+});
+
+test("does not expose unauthenticated company-request writes before the database is configured", async () => {
+  const response = await requestCompanyAddition();
+  assert.equal(response.status, 503);
+  assert.equal(
+    response.headers.get("x-robots-tag"),
+    "noindex, nofollow, noarchive, nosnippet, noimageindex",
+  );
+  const body = await response.json();
+  assert.match(body.error, /데이터베이스 연결/);
 });
 
 test("quarantines subcontractor bargaining before a primary-company stage is assigned", async () => {

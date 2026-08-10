@@ -13,23 +13,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "노사교섭 레이더 | 교섭상태 프레임워크",
-  description: "한국 대기업 원청 직접고용 노조의 임금·단체교섭 상태를 위한 프레임워크 데모",
-  openGraph: {
-    title: "노사교섭 레이더",
-    description: "원청 직접고용 노조의 임금·단체교섭 상태 프레임워크",
-    images: [
-      {
-        url: "/social/collective-bargaining-radar-og.png",
-        width: 1609,
-        height: 977,
-        alt: "교섭 단계와 근거를 나타낸 노사교섭 레이더 일러스트",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    images: ["/social/collective-bargaining-radar-og.png"],
+  title: "노사교섭 레이더 | 원청 직접고용 교섭 현황",
+  description: "한국 주요 기업 원청 직접고용 노조의 임금·단체교섭 사실 데이터 현황",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      nosnippet: true,
+      noarchive: true,
+    },
   },
   icons: {
     icon: "/favicon.svg",
