@@ -147,6 +147,27 @@ export function buildEventRows(record, ids) {
   }));
 }
 
+/**
+ * 출처를 교섭 사건에 연결하는 주석 행. anon의 sources 정책이 이 연결의 존재를 요구하므로,
+ * 이걸 만들지 않으면 익명 사용자에게 출처가 하나도 보이지 않는다. 정확히 하나의 대상만
+ * 지정해야 한다는 CHECK가 있어 bargaining_case_id만 채운다.
+ */
+export function buildSourceAnnotationRow(record, sourceId, caseId) {
+  const verified = record.factualStatus === "VERIFIED_SOURCE";
+  return {
+    source_id: sourceId,
+    bargaining_case_id: caseId,
+    annotation_type: "FACT",
+    annotation_field: "stage",
+    // 기사 본문을 복제하지 않는다. 무엇을 확인했는지만 한 줄로 남긴다.
+    fact_note: `${record.sourceName} 보도 기준 ${record.stage} 확인 · ${record.eventDate}`,
+    is_published: verified,
+    verification_status: verified ? "VERIFIED" : "NEEDS_REVIEW",
+    confidence_score: record.confidence,
+    verified_at: verified ? `${record.eventDate}T00:00:00Z` : null,
+  };
+}
+
 export function buildSourceRow(record) {
   return {
     original_url: record.sourceUrl,
@@ -161,6 +182,25 @@ export function buildSourceRow(record) {
     verification_status: record.factualStatus === "VERIFIED_SOURCE" ? "VERIFIED" : "NEEDS_REVIEW",
     is_published: record.factualStatus === "VERIFIED_SOURCE",
   };
+}
+
+/**
+ * source_annotations에는 유니크 제약이 없어 업서트를 걸 수 없다. 스키마를 다시 바꾸게 하는
+ * 대신, 같은 연결이 이미 있으면 건너뛴다. 재실행해도 중복이 쌓이지 않아야 한다.
+ */
+async function ensureAnnotation(baseUrl, key, row) {
+  const query =
+    `${baseUrl.replace(/\/$/, "")}/rest/v1/source_annotations` +
+    `?select=id&source_id=eq.${row.source_id}&bargaining_case_id=eq.${row.bargaining_case_id}&limit=1`;
+  const existing = await fetch(query, {
+    headers: { apikey: key, authorization: `Bearer ${key}` },
+  });
+  if (existing.ok) {
+    const rows = await existing.json();
+    if (Array.isArray(rows) && rows.length > 0) return 0;
+  }
+  const inserted = await postRows(baseUrl, key, "source_annotations", [row]);
+  return inserted.length;
 }
 
 async function postRows(baseUrl, key, table, rows, conflictTarget) {
@@ -225,6 +265,7 @@ async function main() {
   const companyIdBySlug = new Map(insertedCompanies.map((row) => [row.slug, row.id]));
 
   let eventTotal = 0;
+  let annotationTotal = 0;
   for (const record of records) {
     const caseRow = buildCaseRow(record, companyIdBySlug);
     const [insertedCase] = await postRows(
@@ -234,7 +275,13 @@ async function main() {
       [caseRow],
       "company_id,bargaining_year,agreement_type,bargaining_unit_key,covered_worker_scope_key",
     );
-    await postRows(baseUrl, key, "sources", [buildSourceRow(record)], "original_url");
+    const [insertedSource] = await postRows(
+      baseUrl,
+      key,
+      "sources",
+      [buildSourceRow(record)],
+      "original_url",
+    );
     const eventRows = buildEventRows(record, {
       caseId: insertedCase.id,
       companyId: caseRow.company_id,
@@ -242,9 +289,18 @@ async function main() {
     });
     await postRows(baseUrl, key, "bargaining_events", eventRows, "bargaining_case_id,dedupe_key");
     eventTotal += eventRows.length;
+
+    // 출처를 사건에 연결한다. 이 연결이 없으면 anon에게 출처가 보이지 않는다.
+    if (insertedSource?.id) {
+      annotationTotal += await ensureAnnotation(
+        baseUrl,
+        key,
+        buildSourceAnnotationRow(record, insertedSource.id, insertedCase.id),
+      );
+    }
   }
 
-  console.log(`적재 완료 · 교섭 사건 ${records.length}건 · 경과 행 ${eventTotal}건`);
+  console.log(`적재 완료 · 교섭 사건 ${records.length}건 · 경과 행 ${eventTotal}건 · 출처 주석 ${annotationTotal}건`);
 }
 
 if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href) {
