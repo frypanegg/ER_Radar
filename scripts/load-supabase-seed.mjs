@@ -16,10 +16,17 @@ const root = new URL("../", import.meta.url);
 
 const BARGAINING_LEVEL = "ENTERPRISE";
 
-function requireEnv(name) {
-  const value = process.env[name];
-  if (!value) throw new Error(`${name} 환경 변수가 필요합니다.`);
-  return value;
+/**
+ * 같은 값이 환경에 따라 다른 이름으로 들어온다. 수집기가 NAVER 자격증명에서 쓰는 방식과
+ * 같이 별칭을 허용해, 운영자가 파일의 키 이름을 바꾸지 않아도 되게 한다.
+ */
+function requireEnv(names) {
+  const candidates = Array.isArray(names) ? names : [names];
+  for (const name of candidates) {
+    const value = process.env[name];
+    if (value) return value.trim();
+  }
+  throw new Error(`${candidates.join(" 또는 ")} 환경 변수가 필요합니다.`);
 }
 
 async function readJson(relativePath) {
@@ -165,8 +172,8 @@ async function main() {
     return;
   }
 
-  const baseUrl = requireEnv("SUPABASE_URL");
-  const key = requireEnv("SUPABASE_SERVICE_ROLE_KEY");
+  const baseUrl = requireEnv(["SUPABASE_URL", "SUPABASE_PJT_URL", "SUPABASE_PROJECT_URL"]);
+  const key = requireEnv(["SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SERVICE_KEY"]);
 
   const insertedCompanies = await postRows(baseUrl, key, "tracked_companies", companyRows, "slug");
   const companyIdBySlug = new Map(insertedCompanies.map((row) => [row.slug, row.id]));
