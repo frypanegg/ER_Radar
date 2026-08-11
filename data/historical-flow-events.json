@@ -58,6 +58,12 @@
       "researchedOn": "2026-08-12",
       "scope": "HD현대중공업 2024, SK하이닉스 2024",
       "note": "두 곳 모두 1차 합의안이 그대로 가지 않았다. HD현대중공업은 부결 사실이 명시돼 S3으로, SK하이닉스는 '재교섭 잠정합의'라는 표현만 있어 앞선 합의안의 결과는 기록하지 않았다."
+    },
+    {
+      "batch": 9,
+      "researchedOn": "2026-08-12",
+      "scope": "주식회사 포스코 2023, HD현대중공업 2023",
+      "note": "현대모비스 2024와 한국지엠 2023은 날짜가 명시된 근거를 찾지 못해 넘겼다. HD현대중공업 2023도 '2차' 잠정합의였고 1차 부결 보도가 있으나 날짜가 없어 넣지 않았다. 포스코 쟁의행위 투표 보도 역시 연도·날짜가 불확실해 제외했다."
     }
   ],
   "events": [
@@ -420,6 +426,30 @@
       "label": "대의원회 투표 가결",
       "summary": "대의원회 투표에서 199표 중 176표(88.4%) 찬성으로 가결됐다. 임금인상률 5.7%와 격려금 450만원이 담겼다.",
       "sourceUrl": "https://www.jbnews.com/news/articleView.html?idxno=1456763"
+    },
+    {
+      "recordId": "posco:2023:INTEGRATED:2023-11-09:https://www.hankyung.com/article/202311096039P",
+      "date": "2023-11-09",
+      "stage": "S6",
+      "label": "조합원 찬반투표 가결",
+      "summary": "조합원 11,245명 중 10,856명이 투표해 5,527명(50.91%) 찬성으로 가결됐다.",
+      "sourceUrl": "https://www.mdilbo.com/detail/GZEjMs/706367"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2023-wage-signing",
+      "date": "2023-09-07",
+      "stage": "S6",
+      "label": "2차 잠정합의안 가결",
+      "summary": "조합원 6,381명 중 5,895명(92.38%)이 투표해 찬성 3,450명(58.52%)·반대 2,426명(41.15%)으로 가결됐다.",
+      "sourceUrl": "https://www.hhi.co.kr/Public/pub01_2?page=7&ndate=2023-09-07&bidx=3040"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2023-wage-signing",
+      "date": "2023-09-15",
+      "stage": "S7",
+      "label": "임금교섭 조인식",
+      "summary": "노사가 9월 15일 울산 본사에서 2023년 임금교섭 조인식을 열었다.",
+      "sourceUrl": "https://www.hhi.co.kr/Public/pub01_2?page=7&ndate=2023-09-07&bidx=3040"
     }
   ]
 }

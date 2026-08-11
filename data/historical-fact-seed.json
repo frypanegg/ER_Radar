@@ -1069,7 +1069,16 @@
       "id": "posco:2023:INTEGRATED:2023-11-09:https://www.hankyung.com/article/202311096039P",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.hankyung.com/article/202311096039P"
+      "originalUrl": "https://www.hankyung.com/article/202311096039P",
+      "flowEvents": [
+        {
+          "date": "2023-11-09",
+          "stage": "S6",
+          "label": "조합원 찬반투표 가결",
+          "summary": "조합원 11,245명 중 10,856명이 투표해 5,527명(50.91%) 찬성으로 가결됐다.",
+          "sourceUrl": "https://www.mdilbo.com/detail/GZEjMs/706367"
+        }
+      ]
     },
     {
       "companyId": "kia",
@@ -1244,7 +1253,23 @@
       "id": "hd-hyundai-heavy-industries-2023-wage-signing",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.etoday.co.kr/news/view/2288595"
+      "originalUrl": "https://www.etoday.co.kr/news/view/2288595",
+      "flowEvents": [
+        {
+          "date": "2023-09-07",
+          "stage": "S6",
+          "label": "2차 잠정합의안 가결",
+          "summary": "조합원 6,381명 중 5,895명(92.38%)이 투표해 찬성 3,450명(58.52%)·반대 2,426명(41.15%)으로 가결됐다.",
+          "sourceUrl": "https://www.hhi.co.kr/Public/pub01_2?page=7&ndate=2023-09-07&bidx=3040"
+        },
+        {
+          "date": "2023-09-15",
+          "stage": "S7",
+          "label": "임금교섭 조인식",
+          "summary": "노사가 9월 15일 울산 본사에서 2023년 임금교섭 조인식을 열었다.",
+          "sourceUrl": "https://www.hhi.co.kr/Public/pub01_2?page=7&ndate=2023-09-07&bidx=3040"
+        }
+      ]
     },
     {
       "recordId": "hanwha-ocean-2023-wage-signing",
@@ -1851,8 +1876,8 @@
     }
   ],
   "timelineCoverage": {
-    "recordsWithTimeline": 19,
-    "recordsResultOnly": 25,
-    "eventsMerged": 45
+    "recordsWithTimeline": 21,
+    "recordsResultOnly": 23,
+    "eventsMerged": 48
   }
 }
