@@ -351,6 +351,18 @@ export default function Home() {
   });
   const [companyRequestMessage, setCompanyRequestMessage] = useState("");
   const [isSubmittingCompanyRequest, setIsSubmittingCompanyRequest] = useState(false);
+  // 크롤링 결과가 실제와 다를 때 사람이 고치는 경로. 접수와 공개는 분리한다.
+  const [isCorrectionOpen, setIsCorrectionOpen] = useState(false);
+  const [correction, setCorrection] = useState({
+    fieldName: "stage",
+    proposedValue: "",
+    evidenceUrl: "",
+    reason: "",
+    editorName: "",
+    adminCode: "",
+  });
+  const [correctionMessage, setCorrectionMessage] = useState("");
+  const [isSubmittingCorrection, setIsSubmittingCorrection] = useState(false);
   const todayKstDate = useSyncExternalStore(emptySubscribe, readTodayKstDate, () => null);
   const collectionLag = useMemo(
     () => (todayKstDate ? describeCollectionLag(lastCollectionKstDate, todayKstDate) : null),
@@ -408,6 +420,63 @@ export default function Home() {
       setCompanyRequestMessage("네트워크 오류 발생 · 잠시 후 재시도");
     } finally {
       setIsSubmittingCompanyRequest(false);
+    }
+  }
+
+  // 수정 대상의 기존값을 화면에서 그대로 보여주고 같은 값을 서버로도 보낸다. 이전값을
+  // 남겨야 되돌릴 수 있고, 무엇이 어떻게 바뀌는지 검토자가 판단할 수 있다.
+  const correctionPreviousValue = (() => {
+    const record = bargainingRecords.find((candidate) => candidate.id === selectedCase.id);
+    if (!record) return "";
+    switch (correction.fieldName) {
+      case "stage": return record.stage;
+      case "eventDate": return record.eventDate;
+      case "agreementType": return record.agreementType;
+      case "unionName": return record.unionName;
+      case "title": return record.title;
+      case "factSummary": return record.factSummary;
+      case "sourceUrl": return record.sourceUrl;
+      case "flowEvents": return `경과 ${record.flowEvents?.length ?? 0}건`;
+      default: return "";
+    }
+  })();
+
+  async function submitCorrection(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsSubmittingCorrection(true);
+    setCorrectionMessage("");
+    try {
+      const record = bargainingRecords.find((candidate) => candidate.id === selectedCase.id);
+      const response = await fetch("/api/record-corrections", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-dashboard-admin-code": correction.adminCode,
+        },
+        body: JSON.stringify({
+          targetRecordId: selectedCase.id,
+          companyIdKey: record?.companyId ?? "",
+          companyLegalName: selectedCase.name,
+          bargainingYear: record?.bargainingYear ?? selectedYear,
+          fieldName: correction.fieldName,
+          previousValue: correctionPreviousValue,
+          proposedValue: correction.proposedValue,
+          evidenceUrl: correction.evidenceUrl,
+          reason: correction.reason,
+          editorName: correction.editorName,
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        setCorrectionMessage(result.error ?? "수정 요청 접수 실패 · 입력값 확인 필요");
+        return;
+      }
+      setCorrectionMessage(result.message ?? "기록 수정 요청 접수 완료");
+      setCorrection((current) => ({ ...current, proposedValue: "", evidenceUrl: "", reason: "", adminCode: "" }));
+    } catch {
+      setCorrectionMessage("네트워크 오류 발생 · 잠시 후 재시도");
+    } finally {
+      setIsSubmittingCorrection(false);
     }
   }
 
@@ -618,10 +687,21 @@ export default function Home() {
                   <h3>{selectedCase.name}</h3>
                   <p>{selectedCase.subtitle}</p>
                 </div>
-                <div className="confidence-card" title={getTierLabel(selectedCase.sourceTier)}>
-                  <span>근거 신뢰도</span>
-                  <strong>{Math.round(selectedCase.confidence * 100)}<small>%</small></strong>
-                  <em>{getTierLabel(selectedCase.sourceTier)}</em>
+                <div className="detail-header-side">
+                  <div className="confidence-card" title={getTierLabel(selectedCase.sourceTier)}>
+                    <span>근거 신뢰도</span>
+                    <strong>{Math.round(selectedCase.confidence * 100)}<small>%</small></strong>
+                    <em>{getTierLabel(selectedCase.sourceTier)}</em>
+                  </div>
+                  {/* 크롤링 기록이 실제와 다를 때 고칠 경로. 접수는 검토 대기로만 남는다. */}
+                  <button
+                    className="record-correction-button"
+                    type="button"
+                    onClick={() => { setCorrectionMessage(""); setIsCorrectionOpen(true); }}
+                    disabled={!bargainingRecords.some((candidate) => candidate.id === selectedCase.id)}
+                  >
+                    <FileCheck2 size={14} /> 기록 수정 요청
+                  </button>
                 </div>
               </div>
 
@@ -902,6 +982,71 @@ export default function Home() {
           <a href="#board">교섭현황으로 돌아가기 <ArrowRight size={15} /></a>
         </div>
       </section>
+
+      {isCorrectionOpen && (
+        <div className="company-request-backdrop">
+          <section className="company-request-dialog" role="dialog" aria-modal="true" aria-labelledby="record-correction-title">
+            <div className="company-request-heading">
+              <div>
+                <p>운영자 수정</p>
+                <h2 id="record-correction-title">기록 수정 요청</h2>
+              </div>
+              <button className="dialog-close" type="button" aria-label="기록 수정 요청 창 닫기" onClick={() => setIsCorrectionOpen(false)}><X size={18} /></button>
+            </div>
+            <p className="company-request-intro">
+              {selectedCase.name} · {selectedYear}년 기록 · 근거 원문과 수정자를 함께 남기고 검토 후 공개 반영
+            </p>
+            <form className="company-request-form" onSubmit={submitCorrection}>
+              <label>
+                <span>수정 항목 <b>필수</b></span>
+                <select
+                  value={correction.fieldName}
+                  onChange={(event) => setCorrection((current) => ({ ...current, fieldName: event.target.value }))}
+                >
+                  <option value="stage">주 단계</option>
+                  <option value="eventDate">확인일</option>
+                  <option value="agreementType">협약유형</option>
+                  <option value="unionName">노조명</option>
+                  <option value="title">기록 제목</option>
+                  <option value="factSummary">사실 요약</option>
+                  <option value="sourceUrl">원문 URL</option>
+                  <option value="flowEvents">교섭 경과</option>
+                </select>
+              </label>
+              <label>
+                <span>기존값</span>
+                <input value={correctionPreviousValue} readOnly aria-readonly="true" />
+              </label>
+              <label>
+                <span>수정값 <b>필수</b></span>
+                <textarea required maxLength={2000} rows={2} value={correction.proposedValue} onChange={(event) => setCorrection((current) => ({ ...current, proposedValue: event.target.value }))} placeholder="예: S7" />
+              </label>
+              <label>
+                <span>근거 원문 URL <b>필수</b></span>
+                <input type="url" required maxLength={500} value={correction.evidenceUrl} onChange={(event) => setCorrection((current) => ({ ...current, evidenceUrl: event.target.value }))} placeholder="https://" />
+              </label>
+              <label>
+                <span>수정 사유 <b>필수</b></span>
+                <textarea required maxLength={800} rows={2} value={correction.reason} onChange={(event) => setCorrection((current) => ({ ...current, reason: event.target.value }))} placeholder="무엇이 실제와 다른지" />
+              </label>
+              <label>
+                <span>수정자 <b>필수</b></span>
+                <input required maxLength={80} value={correction.editorName} onChange={(event) => setCorrection((current) => ({ ...current, editorName: event.target.value }))} placeholder="표시할 이름" />
+              </label>
+              <label>
+                <span>운영 관리 코드 <b>필수</b></span>
+                <input type="password" required value={correction.adminCode} onChange={(event) => setCorrection((current) => ({ ...current, adminCode: event.target.value }))} autoComplete="off" placeholder="서버에만 보관되는 코드" />
+              </label>
+              <p className="company-request-security">수정자·수정 시각·이전값·이후값·근거 URL을 함께 기록 · 관리 코드 원문 미저장 · 검토 전 공개 반영 없음</p>
+              {correctionMessage && <p className="company-request-message" role="status">{correctionMessage}</p>}
+              <div className="company-request-actions">
+                <button className="dialog-cancel" type="button" onClick={() => setIsCorrectionOpen(false)}>취소</button>
+                <button className="dialog-submit" type="submit" disabled={isSubmittingCorrection}>{isSubmittingCorrection ? "요청 저장 중…" : "수정 요청 보내기"}</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      )}
 
       {isAddCompanyOpen && (
         <div className="company-request-backdrop">

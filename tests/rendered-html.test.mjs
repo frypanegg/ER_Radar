@@ -82,6 +82,50 @@ test("화면이 마지막 수집 시각을 보여준다", async () => {
   assert.match(html, /collection-state/);
 });
 
+test("기록 수정 요청은 검증 없이 공개 데이터를 바꾸지 못한다", async () => {
+  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
+  workerUrl.searchParams.set("correction", `${process.pid}-${Date.now()}`);
+  const { default: worker } = await import(workerUrl.href);
+
+  const post = (body, headers = {}) =>
+    worker.fetch(
+      new Request("http://localhost/api/record-corrections", {
+        method: "POST",
+        headers: { "content-type": "application/json", ...headers },
+        body: JSON.stringify(body),
+      }),
+      { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
+      { waitUntil() {}, passThroughOnException() {} },
+    );
+
+  // Supabase·관리 코드가 설정되지 않은 상태에서는 접수 자체를 열지 않는다.
+  const unconfigured = await post({ targetRecordId: "x" });
+  assert.equal(unconfigured.status, 503);
+  assert.match((await unconfigured.json()).error, /데이터베이스 연결/);
+  assert.equal(
+    unconfigured.headers.get("x-robots-tag"),
+    "noindex, nofollow, noarchive, nosnippet, noimageindex",
+  );
+
+  // GET으로는 접수되지 않는다.
+  const wrongMethod = await worker.fetch(
+    new Request("http://localhost/api/record-corrections"),
+    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
+    { waitUntil() {}, passThroughOnException() {} },
+  );
+  assert.equal(wrongMethod.status, 405);
+
+  // 수정 경로가 자동 수집보다 느슨해지지 않도록, 근거 URL과 수정자를 필수로 둔다.
+  const source = await readFile(new URL("worker/index.ts", templateRoot), "utf8");
+  assert.match(source, /근거 원문 URL은 http·https 주소로 입력 필요/);
+  assert.match(source, /수정자 이름 입력 필요/);
+  assert.match(source, /status: "PENDING"/);
+  assert.match(source, /admin_code_verified_at/);
+  // 관리 코드는 상수 시간 비교로만 확인하고 원문을 저장하지 않는다.
+  assert.match(source, /hasSameSecret\(request\.headers\.get\("x-dashboard-admin-code"\)/);
+  assert.doesNotMatch(source, /admin_code:\s*/);
+});
+
 test("교섭 경과와 종결·이월 상태를 함께 보여준다", async () => {
   // 이 화면은 현재 상태만 보는 도구가 아니다. 교착·조정 횟수, 쟁의 수준, 그리고 그 해에
   // 체결됐는지(또는 이듬해로 넘어갔는지)를 단계와 같이 읽을 수 있어야 한다.

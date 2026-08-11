@@ -187,6 +187,87 @@ export function buildSeed({ companyUniverse, groupResults, asOf }) {
   };
 }
 
+/**
+ * 과거 교섭의 단계별 경과를 시드 레코드에 병합한다.
+ *
+ * 과거 44건은 결과 한 컷만 확인된 상태로 출발했다. 상견례·본교섭·교착·조정·쟁의 일정은
+ * 조사해서 채워야 하고, 채운 만큼만 화면에 나타나야 한다. 그래서 병합은 검증을 통과한
+ * 사건만 받아들이고, 무엇이 비었는지 커버리지로 보고한다.
+ */
+export function mergeFlowEvents(records, flowEventInput) {
+  const events = flowEventInput?.events ?? [];
+  const byRecordId = new Map(records.map((record) => [record.recordId ?? record.id, record]));
+  const problems = [];
+  const grouped = new Map();
+
+  events.forEach((event, index) => {
+    const at = `events[${index}]`;
+    const target = byRecordId.get(event.recordId);
+    if (!target) {
+      problems.push(`${at}: recordId '${event.recordId}'에 해당하는 과거 기록이 없습니다.`);
+      return;
+    }
+    if (!STAGE_CODES.has(event.stage)) {
+      problems.push(`${at}: stage '${event.stage}'는 허용되지 않습니다.`);
+      return;
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(event.date ?? "")) {
+      problems.push(`${at}: date는 YYYY-MM-DD 형식이어야 합니다.`);
+      return;
+    }
+    // 교섭연도보다 이른 사건은 다른 해의 교섭이다. 이듬해로 넘어가는 것은 이월이므로 허용한다.
+    if (Number(event.date.slice(0, 4)) < target.bargainingYear) {
+      problems.push(`${at}: ${event.date}는 교섭연도 ${target.bargainingYear}보다 이릅니다.`);
+      return;
+    }
+    if (typeof event.sourceUrl !== "string" || !/^https?:\/\//.test(event.sourceUrl)) {
+      problems.push(`${at}: 근거 원문 URL이 없습니다. 근거 없는 경과는 넣지 않습니다.`);
+      return;
+    }
+    if (!event.label || !event.summary) {
+      problems.push(`${at}: label과 summary가 모두 필요합니다.`);
+      return;
+    }
+
+    const list = grouped.get(event.recordId) ?? [];
+    // 같은 원문이 두 번 들어오면 하나만 남긴다.
+    if (!list.some((existing) => existing.sourceUrl === event.sourceUrl)) {
+      list.push({
+        date: event.date,
+        stage: event.stage,
+        label: event.label,
+        summary: event.summary,
+        sourceUrl: event.sourceUrl,
+      });
+    }
+    grouped.set(event.recordId, list);
+  });
+
+  if (problems.length > 0) {
+    throw new Error(`과거 교섭 경과 입력이 규칙을 위반했습니다:\n- ${problems.join("\n- ")}`);
+  }
+
+  const merged = records.map((record) => {
+    const key = record.recordId ?? record.id;
+    const list = grouped.get(key);
+    if (!list || list.length === 0) return record;
+    return {
+      ...record,
+      flowEvents: [...list].sort((left, right) => left.date.localeCompare(right.date)),
+    };
+  });
+
+  const withTimeline = merged.filter((record) => (record.flowEvents ?? []).length > 0).length;
+  return {
+    records: merged,
+    coverage: {
+      recordsWithTimeline: withTimeline,
+      recordsResultOnly: merged.length - withTimeline,
+      eventsMerged: events.length,
+    },
+  };
+}
+
 async function main() {
   const options = readArgs(process.argv.slice(2));
   if (process.argv.includes("--help")) {
@@ -194,13 +275,22 @@ async function main() {
     return;
   }
 
-  const [companyUniverse, ...groupResults] = await Promise.all([
+  const [companyUniverse, flowEventInput, ...groupResults] = await Promise.all([
     readJson(resolve(PROJECT_ROOT, "data/company-universe.json")),
+    readJson(resolve(PROJECT_ROOT, "data/historical-flow-events.json")).catch(() => ({ events: [] })),
     ...options.inputPaths.map(readJson),
   ]);
   const seed = buildSeed({ companyUniverse, groupResults, asOf: options.asOf });
+
+  const { records, coverage } = mergeFlowEvents(seed.records, flowEventInput);
+  seed.records = records;
+  seed.timelineCoverage = coverage;
+
   await writeFile(options.outputPath, `${JSON.stringify(seed, null, 2)}\n`, "utf8");
   console.log(`초기 과거 사실 데이터 ${seed.records.length}건을 ${options.outputPath}에 기록했습니다.`);
+  console.log(
+    `단계별 경과: ${coverage.recordsWithTimeline}건 보유 · ${coverage.recordsResultOnly}건 결과만 확인 (병합한 사건 ${coverage.eventsMerged}건)`,
+  );
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === SCRIPT_PATH) {

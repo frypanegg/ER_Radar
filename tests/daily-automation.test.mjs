@@ -209,6 +209,65 @@ test("하청·복수법인·단계 미확인 기사는 자동 반영하지 않�
   assert.equal(selectCandidate(retain).reason, "retain_main_state");
 });
 
+test("과거 교섭 경과는 근거를 갖춘 사건만 병합된다", async () => {
+  const { mergeFlowEvents } = await import("../scripts/build-historical-seed.mjs");
+  const records = [
+    { recordId: "posco-2023-integrated", companyId: "posco", bargainingYear: 2023, stage: "S6" },
+  ];
+  const good = {
+    events: [
+      {
+        recordId: "posco-2023-integrated",
+        date: "2023-11-09",
+        stage: "S6",
+        label: "조합원 찬반투표 가결",
+        summary: "포스코노동조합이 잠정합의안을 조합원 투표로 가결했다.",
+        sourceUrl: "https://example.com/a",
+      },
+      {
+        recordId: "posco-2023-integrated",
+        date: "2023-09-20",
+        stage: "S4",
+        label: "중노위 조정 신청",
+        summary: "포스코노동조합이 중앙노동위원회에 조정을 신청했다.",
+        sourceUrl: "https://example.com/b",
+      },
+    ],
+  };
+
+  const merged = mergeFlowEvents(records, good);
+  assert.equal(merged.coverage.recordsWithTimeline, 1);
+  // 날짜 순으로 정렬되어야 경과를 읽을 수 있다.
+  assert.deepEqual(
+    merged.records[0].flowEvents.map((event) => event.date),
+    ["2023-09-20", "2023-11-09"],
+  );
+
+  // 근거 URL이 없는 경과는 받지 않는다. 수정·조사 경로가 자동 수집보다 느슨해지면 안 된다.
+  assert.throws(
+    () => mergeFlowEvents(records, { events: [{ ...good.events[0], sourceUrl: undefined }] }),
+    /근거 원문 URL이 없습니다/,
+  );
+  // 교섭연도보다 이른 사건은 다른 해의 교섭이다.
+  assert.throws(
+    () => mergeFlowEvents(records, { events: [{ ...good.events[0], date: "2022-05-01" }] }),
+    /교섭연도 2023보다 이릅니다/,
+  );
+  // 이듬해로 넘어가는 사건은 이월이므로 허용한다.
+  assert.equal(
+    mergeFlowEvents(records, { events: [{ ...good.events[0], date: "2024-03-02" }] })
+      .coverage.recordsWithTimeline,
+    1,
+  );
+  // 알 수 없는 대상·단계는 조용히 버리지 않고 실패로 알린다.
+  assert.throws(() => mergeFlowEvents(records, { events: [{ ...good.events[0], recordId: "nope" }] }), /해당하는 과거 기록이 없습니다/);
+  assert.throws(() => mergeFlowEvents(records, { events: [{ ...good.events[0], stage: "S9" }] }), /허용되지 않습니다/);
+
+  // 같은 원문이 두 번 들어오면 하나만 남는다.
+  const duplicated = mergeFlowEvents(records, { events: [good.events[0], good.events[0]] });
+  assert.equal(duplicated.records[0].flowEvents.length, 1);
+});
+
 test("조합원 가결만으로 최종 체결(S7)로 올리지 않는다", async () => {
   // 문서 원칙: S6→S7은 조합원 가결이 아니라 서명·조인·발효 근거가 필요하다.
   // 2026-08-11 후보의 한국GM 기사가 가결만으로 S7로 올라가고 있었다.

@@ -95,7 +95,7 @@
 ## 적용 순서
 
 1. 제품 소유자가 사용할 Supabase 프로젝트를 확정한다.
-2. 배포 플랫폼의 서버 전용 환경 변수에 `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `DASHBOARD_ADMIN_CODE`를 설정한다.
+2. 배포 플랫폼의 서버 전용 환경 변수에 `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `DASHBOARD_ADMIN_CODE`를 설정한다. Cloudflare Workers에서는 `npx wrangler secret put <이름>`으로 넣는다.
 3. [초기 마이그레이션](../supabase/migrations/20260810_initial_bargaining_dashboard.sql)을 적용한다.
 4. 보안 권고 도구로 RLS·권한·공개 스키마 경고를 점검한다.
 5. 12개 초기 추적 법인의 검증된 과거 5년 사실 데이터만 적재한다. 출처 URL이 없거나 원청 직접고용 범위가 확인되지 않은 항목은 공개 상태로 적재하지 않는다.
@@ -140,3 +140,54 @@ ORDER BY status;
 - 원청·하청 범위 검토 Skill의 규칙 버전과 `scope_review_audits.rule_version`을 함께 갱신한다.
 - 새 테이블을 `public` 스키마에 추가할 때는 RLS 활성화, `anon` 권한 최소화, 공개·검증 조건 정책, 인덱스를 같은 변경에 포함한다.
 - 역사 데이터의 정정은 기존 행을 조용히 덮어쓰기보다 원문 URL·검증 시각·정정 주석을 남겨 추적 가능하게 한다.
+
+## 개통 실행 순서 (2026-08-11 기준)
+
+준비된 것과 남은 것을 구분한다. **1번과 2번은 계정 소유자만 할 수 있고, 3번부터는 스크립트로 처리된다.**
+
+1. **Supabase 프로젝트 생성** — 제품 소유자가 대상 프로젝트를 확정한다. 다른 서비스의 데이터베이스에 적용하면 안 된다.
+2. **시크릿 등록** — `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `DASHBOARD_ADMIN_CODE`를 Worker 시크릿으로 넣는다. 서비스 역할 키는 RLS를 우회하므로 브라우저·`NEXT_PUBLIC_`·정적 파일·로그에 절대 넣지 않는다.
+3. **마이그레이션 적용** — 두 파일을 순서대로 한 번만 적용한다.
+
+   ```bash
+   supabase/migrations/20260810_initial_bargaining_dashboard.sql
+   supabase/migrations/20260811_bargaining_record_corrections.sql
+   ```
+
+4. **적재 전 검증** — 네트워크를 쓰지 않고 payload 형태와 건수를 먼저 확인한다.
+
+   ```bash
+   node scripts/load-supabase-seed.mjs --dry-run
+   ```
+
+5. **실제 적재** — 법인 → 교섭 사건 → 사건별 경과 순으로 자연키 기준 멱등 적재한다. 재실행해도 결과가 같다.
+
+   ```bash
+   node scripts/load-supabase-seed.mjs
+   ```
+
+6. **검증** — 익명 역할로 공개 행만 조회되는지, `scope_review_audits`·`company_add_requests`·`bargaining_record_corrections`가 전혀 보이지 않는지 확인한다.
+
+### 기록 수정 요청 대장
+
+`bargaining_record_corrections`는 사람이 제출한 수정 요청을 담는다. 화면의 **기록 수정 요청** 버튼 → `POST /api/record-corrections` 경로다.
+
+- 접수 조건: 관리 코드 일치, 근거 원문 URL(http·https), 수정 사유, 수정자 이름. 하나라도 없으면 접수하지 않는다.
+- 함께 저장하는 것: 대상 기록 식별자·법인·교섭연도, 수정 항목, **이전값과 이후값**, 근거 URL, 사유, **수정자 이름과 관리 코드 검증 시각**.
+- 저장하지 않는 것: 관리 코드 원문, 이메일·계정 식별자.
+- 상태는 `PENDING`으로만 생성된다. **검토를 통과하지 않은 수정은 공개 사실이 아니다.** 같은 기록·같은 항목에 검토 대기 요청이 이미 있으면 `409`로 거부한다.
+- 공개 시드에 반영하려면 사람이 근거를 확인한 뒤 시드를 갱신하고 상태를 `APPLIED`로 바꾼다. 자동 반영 경로는 만들지 않는다.
+
+### 과거 교섭 경과 적재
+
+`bargaining_events`가 단계별 경과의 적재지다. 입력 자료는 `data/historical-flow-events.json`이고, `scripts/build-historical-seed.mjs`가 검증 후 공개 시드의 `flowEvents`로 병합한다.
+
+검증 규칙은 다음과 같다. 위반하면 빌드가 실패한다.
+
+- `recordId`가 과거 시드의 기록과 일치해야 한다.
+- `date`는 `YYYY-MM-DD`이고 교섭연도보다 이르면 안 된다. 이듬해로 넘어가는 것은 이월이므로 허용한다.
+- `stage`는 `U`, `S0`–`S8` 중 하나다.
+- `sourceUrl`이 없으면 받지 않는다. 근거 없는 경과는 넣지 않는다.
+- 같은 `recordId` 안에서 같은 `sourceUrl`은 하나만 남는다.
+
+2026-08-11 기준 커버리지는 **경과 보유 12건(2026년), 결과만 확인 44건(2021–2025년)**이다. 과거 44건은 각 사건의 근거 URL을 확인하는 조사가 남아 있고, 채워지지 않은 연도는 화면에서 "결과만 확인된 기록"으로 표시된다.
