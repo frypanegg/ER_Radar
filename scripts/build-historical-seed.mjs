@@ -230,8 +230,14 @@ export function mergeFlowEvents(records, flowEventInput) {
     }
 
     const list = grouped.get(event.recordId) ?? [];
-    // 같은 원문이 두 번 들어오면 하나만 남긴다.
-    if (!list.some((existing) => existing.sourceUrl === event.sourceUrl)) {
+    // 같은 사건이 두 번 들어오면 하나만 남긴다. 한 기사가 상견례부터 조인까지 전체 일정을
+    // 요약하는 경우가 많으므로, 원문 URL만으로 묶으면 그중 한 건만 남는다. 날짜·단계까지
+    // 함께 봐야 같은 기사에서 여러 사건을 가져올 수 있다.
+    const isSameEvent = (existing) =>
+      existing.sourceUrl === event.sourceUrl &&
+      existing.date === event.date &&
+      existing.stage === event.stage;
+    if (!list.some(isSameEvent)) {
       list.push({
         date: event.date,
         stage: event.stage,

@@ -191,7 +191,23 @@
       "id": "hyundai-mobis-2025-integrated-ratification",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.etoday.co.kr/news/view/2515727?trc=main_list_news"
+      "originalUrl": "https://www.etoday.co.kr/news/view/2515727?trc=main_list_news",
+      "flowEvents": [
+        {
+          "date": "2025-10-13",
+          "stage": "S5",
+          "label": "잠정합의 도출",
+          "summary": "현대모비스 노사가 10월 13일 2025년 임단협 잠정합의안을 도출했다.",
+          "sourceUrl": "https://www.newsworks.co.kr/news/articleView.html?idxno=814349"
+        },
+        {
+          "date": "2025-10-17",
+          "stage": "S6",
+          "label": "3개 노조 찬반투표 가결",
+          "summary": "울산 모비스위원회 58.66%, 진천 노조 53.60%, 창원지회 64.04% 찬성으로 마무리됐다.",
+          "sourceUrl": "https://www.etnews.com/20251017000394"
+        }
+      ]
     },
     {
       "recordId": "gm-korea-2025-wage-ratification",
@@ -219,7 +235,30 @@
       "id": "gm-korea-2025-wage-ratification",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.fnnews.com/news/202509231547098402"
+      "originalUrl": "https://www.fnnews.com/news/202509231547098402",
+      "flowEvents": [
+        {
+          "date": "2025-05-29",
+          "stage": "S3",
+          "label": "상견례·교섭 개시",
+          "summary": "한국지엠 노사가 5월 29일 상견례를 열고 2025년 임금 교섭을 시작했다.",
+          "sourceUrl": "https://www.smartfn.co.kr/news/articleView.html?idxno=121063"
+        },
+        {
+          "date": "2025-09-18",
+          "stage": "S5",
+          "label": "19차 교섭 잠정합의",
+          "summary": "상견례부터 19차례 교섭을 거쳐 9월 18일 잠정합의안을 도출했다.",
+          "sourceUrl": "https://www.smartfn.co.kr/news/articleView.html?idxno=121063"
+        },
+        {
+          "date": "2025-09-23",
+          "stage": "S6",
+          "label": "조합원 찬반투표 가결",
+          "summary": "9월 22~23일 조합원 총회 투표에서 6,508명 중 4,330명(66.5%) 찬성으로 가결됐다.",
+          "sourceUrl": "https://www.smartfn.co.kr/news/articleView.html?idxno=121063"
+        }
+      ]
     },
     {
       "recordId": "hd-hyundai-heavy-industries-2025-wage-signing",
@@ -1560,8 +1599,8 @@
     }
   ],
   "timelineCoverage": {
-    "recordsWithTimeline": 3,
-    "recordsResultOnly": 41,
-    "eventsMerged": 8
+    "recordsWithTimeline": 5,
+    "recordsResultOnly": 39,
+    "eventsMerged": 13
   }
 }

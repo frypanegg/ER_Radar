@@ -263,9 +263,19 @@ test("과거 교섭 경과는 근거를 갖춘 사건만 병합된다", async ()
   assert.throws(() => mergeFlowEvents(records, { events: [{ ...good.events[0], recordId: "nope" }] }), /해당하는 과거 기록이 없습니다/);
   assert.throws(() => mergeFlowEvents(records, { events: [{ ...good.events[0], stage: "S9" }] }), /허용되지 않습니다/);
 
-  // 같은 원문이 두 번 들어오면 하나만 남는다.
+  // 같은 사건이 두 번 들어오면 하나만 남는다.
   const duplicated = mergeFlowEvents(records, { events: [good.events[0], good.events[0]] });
   assert.equal(duplicated.records[0].flowEvents.length, 1);
+
+  // 한 기사가 여러 사건을 보도하는 경우는 흔하다. 원문이 같아도 날짜·단계가 다르면 남긴다.
+  const oneArticleManyEvents = mergeFlowEvents(records, {
+    events: [
+      { ...good.events[0], date: "2023-09-20", stage: "S4", label: "조정 신청", summary: "조정을 신청했다." },
+      { ...good.events[0], date: "2023-11-01", stage: "S5", label: "잠정합의", summary: "잠정합의안을 도출했다." },
+      { ...good.events[0], date: "2023-11-09", stage: "S6", label: "가결", summary: "조합원 투표로 가결했다." },
+    ],
+  });
+  assert.equal(oneArticleManyEvents.records[0].flowEvents.length, 3);
 });
 
 test("조합원 가결만으로 최종 체결(S7)로 올리지 않는다", async () => {

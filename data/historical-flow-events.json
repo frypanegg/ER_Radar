@@ -7,7 +7,7 @@
     "stage는 U, S0~S8 중 하나다. 단계는 그 사건 직후의 좌표를 뜻한다.",
     "sourceUrl은 필수다. 근거 없는 경과는 넣지 않는다.",
     "summary는 기사 본문을 복제하지 않고 누가·언제·무엇을 했는지 한 줄로 적는다.",
-    "같은 recordId 안에서 sourceUrl이 중복되면 병합 단계에서 하나만 남는다."
+    "같은 recordId 안에서 sourceUrl·date·stage가 모두 같으면 하나만 남는다. 한 기사가 전체 일정을 요약한 경우 같은 URL로 여러 사건을 기록할 수 있다."
   ],
   "coverageNote": "조사 진행 중이다. 채워지지 않은 연도는 화면에서 '결과만 확인된 기록'으로 표시된다. 근거를 확인하지 못한 사건은 넣지 않는다.",
   "researchLog": [
@@ -16,6 +16,12 @@
       "researchedOn": "2026-08-11",
       "scope": "현대자동차 2025, 주식회사 포스코 2025, 기아 2024",
       "note": "기사에 명시된 날짜만 사용했다. 찬반투표는 가결 여부가 원문에 없으면 '실시'로만 기록했다."
+    },
+    {
+      "batch": 2,
+      "researchedOn": "2026-08-12",
+      "scope": "한국지엠 2025, 현대모비스 2025",
+      "note": "한 기사가 전체 일정을 요약한 경우 같은 URL로 여러 사건을 기록했다. 현대모비스 상견례 날짜는 검색 요약의 추정이라 넣지 않았다."
     }
   ],
   "events": [
@@ -82,6 +88,46 @@
       "label": "2차 잠정합의안 찬반투표",
       "summary": "2차 잠정합의안에 대한 조합원 찬반투표가 10월 8일 진행됐다.",
       "sourceUrl": "https://zdnet.co.kr/view/?no=20241008211521"
+    },
+    {
+      "recordId": "gm-korea-2025-wage-ratification",
+      "date": "2025-05-29",
+      "stage": "S3",
+      "label": "상견례·교섭 개시",
+      "summary": "한국지엠 노사가 5월 29일 상견례를 열고 2025년 임금 교섭을 시작했다.",
+      "sourceUrl": "https://www.smartfn.co.kr/news/articleView.html?idxno=121063"
+    },
+    {
+      "recordId": "gm-korea-2025-wage-ratification",
+      "date": "2025-09-18",
+      "stage": "S5",
+      "label": "19차 교섭 잠정합의",
+      "summary": "상견례부터 19차례 교섭을 거쳐 9월 18일 잠정합의안을 도출했다.",
+      "sourceUrl": "https://www.smartfn.co.kr/news/articleView.html?idxno=121063"
+    },
+    {
+      "recordId": "gm-korea-2025-wage-ratification",
+      "date": "2025-09-23",
+      "stage": "S6",
+      "label": "조합원 찬반투표 가결",
+      "summary": "9월 22~23일 조합원 총회 투표에서 6,508명 중 4,330명(66.5%) 찬성으로 가결됐다.",
+      "sourceUrl": "https://www.smartfn.co.kr/news/articleView.html?idxno=121063"
+    },
+    {
+      "recordId": "hyundai-mobis-2025-integrated-ratification",
+      "date": "2025-10-13",
+      "stage": "S5",
+      "label": "잠정합의 도출",
+      "summary": "현대모비스 노사가 10월 13일 2025년 임단협 잠정합의안을 도출했다.",
+      "sourceUrl": "https://www.newsworks.co.kr/news/articleView.html?idxno=814349"
+    },
+    {
+      "recordId": "hyundai-mobis-2025-integrated-ratification",
+      "date": "2025-10-17",
+      "stage": "S6",
+      "label": "3개 노조 찬반투표 가결",
+      "summary": "울산 모비스위원회 58.66%, 진천 노조 53.60%, 창원지회 64.04% 찬성으로 마무리됐다.",
+      "sourceUrl": "https://www.etnews.com/20251017000394"
     }
   ]
 }
