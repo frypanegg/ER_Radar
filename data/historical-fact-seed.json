@@ -514,7 +514,23 @@
       "id": "hyundai-steel-2024-integrated-ratification",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.businesspost.co.kr/BP?command=article_view&num=391318"
+      "originalUrl": "https://www.businesspost.co.kr/BP?command=article_view&num=391318",
+      "flowEvents": [
+        {
+          "date": "2025-04-10",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "노사가 4월 10일 임금 10만1,000원 인상과 성과급 450%+1,050만원을 담은 2024년 임단협 잠정합의에 이르렀다.",
+          "sourceUrl": "https://news.mt.co.kr/mtview.php?no=2025041009494437425"
+        },
+        {
+          "date": "2025-04-14",
+          "stage": "S6",
+          "label": "3개 지회 찬반투표 가결",
+          "summary": "인천·포항·당진하이스코 3개 지회 투표에서 투표율 88.5%에 찬성 55.5%로 가결됐고, 충남지회 57.86%·순천지회 58.4%도 가결됐다.",
+          "sourceUrl": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01774486642135792"
+        }
+      ]
     },
     {
       "companyId": "lg-electronics",
@@ -685,7 +701,23 @@
       "id": "posco:2024:WAGE:2024-12-27:https://www.mt.co.kr/industry/2024/12/27/2024122710534748577",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.mt.co.kr/industry/2024/12/27/2024122710534748577"
+      "originalUrl": "https://www.mt.co.kr/industry/2024/12/27/2024122710534748577",
+      "flowEvents": [
+        {
+          "date": "2024-06-27",
+          "stage": "S3",
+          "label": "임금협상 상견례",
+          "summary": "포스코 노사가 6월 27일 상견례로 2024년 임금협상을 시작했다.",
+          "sourceUrl": "https://www.businesspost.co.kr/BP?command=article_view&num=377928"
+        },
+        {
+          "date": "2024-12-24",
+          "stage": "S6",
+          "label": "조합원 찬반투표 가결",
+          "summary": "조합원 7,804명 중 7,609명이 투표해 5,275명(69.33%) 찬성으로 가결됐다.",
+          "sourceUrl": "https://www.businesspost.co.kr/BP?command=article_view&num=377928"
+        }
+      ]
     },
     {
       "recordId": "hd-hyundai-heavy-industries-2024-integrated-signing",
@@ -1748,8 +1780,8 @@
     }
   ],
   "timelineCoverage": {
-    "recordsWithTimeline": 13,
-    "recordsResultOnly": 31,
-    "eventsMerged": 32
+    "recordsWithTimeline": 15,
+    "recordsResultOnly": 29,
+    "eventsMerged": 36
   }
 }
