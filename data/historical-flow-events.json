@@ -28,6 +28,12 @@
       "researchedOn": "2026-08-12",
       "scope": "HD현대중공업 2025, 한화오션 2025",
       "note": "현대제철 2025는 검색 결과가 전부 2026년 기사(상견례 5/8, 투표 8/3~5)여서 넣지 않았다. 2026년 교섭을 2025년으로 옮기면 안 된다."
+    },
+    {
+      "batch": 4,
+      "researchedOn": "2026-08-12",
+      "scope": "SK하이닉스 2025, 삼성전자 2025·2024·2023",
+      "note": "SK하이닉스 9/5 조인식은 기사에 '예정'으로만 나와 제외했다. LG전자 2025는 결과만 보도되어 과정 사건을 확보하지 못했다. 삼성전자는 2023·2024 임금협약이 2025년 조인식에서 함께 완료된 것이 확인돼 이월 기록에도 사건을 붙였다."
     }
   ],
   "events": [
@@ -190,6 +196,54 @@
       "label": "임금교섭 타결 조인식",
       "summary": "전국금속노조 경남지부 한화오션지회와 9월 2일 2025년 임금교섭 타결 조인식을 진행했다.",
       "sourceUrl": "https://www.ajunews.com/view/20250902133615743"
+    },
+    {
+      "recordId": "sk-hynix:2025:WAGE:2025-09-04:https://www.ajunews.com/view/20250904094458330",
+      "date": "2025-09-04",
+      "stage": "S6",
+      "label": "대의원 투표 가결",
+      "summary": "임금 인상률 6%와 새 성과급 기준을 담은 잠정합의안이 대의원 투표에서 찬성 95.4%로 통과됐다.",
+      "sourceUrl": "https://www.asiae.co.kr/article/2025090410133241154"
+    },
+    {
+      "recordId": "samsung-electronics:2025:INTEGRATED:2025-03-05:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03739206642100368",
+      "date": "2025-02-24",
+      "stage": "S5",
+      "label": "잠정합의",
+      "summary": "삼성전자와 전국삼성전자노동조합이 평균 임금인상률 5.1%를 담은 잠정합의에 이르렀다.",
+      "sourceUrl": "https://www.thebigdata.co.kr/view.php?ud=2025022415192197025ed985c7c5_23"
+    },
+    {
+      "recordId": "samsung-electronics:2025:INTEGRATED:2025-03-05:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03739206642100368",
+      "date": "2025-03-05",
+      "stage": "S6",
+      "label": "조합원 찬반투표 가결",
+      "summary": "2월 28일부터 3월 5일까지 진행한 찬반투표에서 잠정합의안이 최종 가결됐다.",
+      "sourceUrl": "https://www.news1.kr/industry/general-industry/5709113"
+    },
+    {
+      "recordId": "samsung-electronics:2025:INTEGRATED:2025-03-05:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03739206642100368",
+      "date": "2025-03-05",
+      "stage": "S7",
+      "label": "임금·단체협약 조인식",
+      "summary": "노사가 3월 5일 2025년 임금·단체협약 조인식을 진행했다.",
+      "sourceUrl": "https://www.sedaily.com/NewsView/2GQ4LTFWT3"
+    },
+    {
+      "recordId": "samsung-electronics:2024:WAGE:2025-03-05:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03739206642100368",
+      "date": "2025-03-05",
+      "stage": "S7",
+      "label": "2024년 임금협약 함께 완료",
+      "summary": "수년째 미뤄졌던 2024년 임금협약이 2025년 조인식에서 함께 마무리됐다.",
+      "sourceUrl": "https://www.sedaily.com/NewsView/2GQ4LTFWT3"
+    },
+    {
+      "recordId": "samsung-electronics:2023:WAGE:2025-03-05:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03739206642100368",
+      "date": "2025-03-05",
+      "stage": "S7",
+      "label": "2023년 임금협약 함께 완료",
+      "summary": "수년째 미뤄졌던 2023년 임금협약이 2025년 조인식에서 함께 마무리됐다.",
+      "sourceUrl": "https://www.sedaily.com/NewsView/2GQ4LTFWT3"
     }
   ]
 }
