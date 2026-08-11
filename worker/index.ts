@@ -150,6 +150,89 @@ async function handleCompanyAddRequest(request: Request, env: Env) {
   return jsonResponse({ message: "추적 기업 추가 요청 접수 완료", requestId }, 201);
 }
 
+/**
+ * 공개 사실 데이터를 Supabase에서 읽어 화면이 쓰는 모양으로 돌려준다.
+ *
+ * 화면은 빌드 시점에 정적 시드를 번들에 담고 있고, 이 응답이 오면 그걸로 갈아탄다.
+ * DB가 비어 있거나 연결이 끊겨도 화면이 비지 않아야 하므로, 실패는 조용히 null로
+ * 알리고 화면이 정적 시드를 그대로 쓰게 한다.
+ *
+ * 공개 게이트는 DB 질의에서 한 번 더 건다. RLS를 신뢰하되 의존하지는 않는다.
+ */
+async function handlePublishedFacts(env: Env) {
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
+    return jsonResponse({ source: "unconfigured", records: null }, 200);
+  }
+
+  const base = env.SUPABASE_URL.replace(/\/$/, "");
+  const headers = {
+    apikey: env.SUPABASE_SERVICE_ROLE_KEY,
+    authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`,
+  };
+  const select = [
+    "bargaining_year",
+    "agreement_type",
+    "primary_stage",
+    "bargaining_unit_name",
+    "current_fact_summary",
+    "latest_event_on",
+    "source_tier",
+    "confidence_score",
+    "tracked_companies!bargaining_cases_company_id_fkey(slug,legal_name)",
+    "bargaining_events(occurred_on,stage_after,fact_summary,event_type,is_published)",
+  ].join(",");
+
+  let rows: unknown;
+  try {
+    const response = await fetch(
+      `${base}/rest/v1/bargaining_cases?select=${encodeURIComponent(select)}` +
+        "&is_published=eq.true&verification_status=eq.VERIFIED" +
+        "&scope_classification=eq.PRIMARY_DIRECT_UNION&covered_worker_relation=eq.DIRECT" +
+        "&order=bargaining_year.desc",
+      { headers },
+    );
+    if (!response.ok) return jsonResponse({ source: "error", records: null }, 200);
+    rows = await response.json();
+  } catch {
+    return jsonResponse({ source: "error", records: null }, 200);
+  }
+
+  if (!Array.isArray(rows) || rows.length === 0) {
+    return jsonResponse({ source: "empty", records: null }, 200);
+  }
+
+  const records = (rows as Array<Record<string, never>>).map((row) => {
+    const company = (row as { tracked_companies?: { slug?: string; legal_name?: string } })
+      .tracked_companies ?? {};
+    const events = ((row as { bargaining_events?: Array<Record<string, string | boolean>> })
+      .bargaining_events ?? [])
+      .filter((event) => event.is_published !== false && event.event_type === "STAGE_CONFIRMED")
+      .map((event) => ({
+        date: String(event.occurred_on ?? ""),
+        stage: String(event.stage_after ?? "U"),
+        label: String(event.stage_after ?? ""),
+        summary: String(event.fact_summary ?? ""),
+      }))
+      .filter((event) => event.date);
+
+    return {
+      companyId: company.slug ?? "",
+      companyLegalName: company.legal_name ?? "",
+      bargainingYear: Number((row as { bargaining_year?: number }).bargaining_year ?? 0),
+      agreementType: String((row as { agreement_type?: string }).agreement_type ?? "UNKNOWN"),
+      stage: String((row as { primary_stage?: string }).primary_stage ?? "U"),
+      eventDate: String((row as { latest_event_on?: string }).latest_event_on ?? ""),
+      unionName: String((row as { bargaining_unit_name?: string }).bargaining_unit_name ?? ""),
+      factSummary: String((row as { current_fact_summary?: string }).current_fact_summary ?? ""),
+      sourceTier: String((row as { source_tier?: string }).source_tier ?? "C"),
+      confidence: Number((row as { confidence_score?: number }).confidence_score ?? 0),
+      flowEvents: events,
+    };
+  });
+
+  return jsonResponse({ source: "database", recordCount: records.length, records }, 200);
+}
+
 const CORRECTABLE_FIELDS = new Set([
   "stage",
   "eventDate",
@@ -311,6 +394,10 @@ const worker = {
 
     if (url.pathname === "/api/record-corrections") {
       return withRobotsTag(await handleRecordCorrectionRequest(request, env));
+    }
+
+    if (url.pathname === "/api/published-facts") {
+      return withRobotsTag(await handlePublishedFacts(env));
     }
 
     return withRobotsTag(await handler.fetch(request, env, ctx));

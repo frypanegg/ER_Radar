@@ -3175,3 +3175,23 @@ a:focus-visible {
     font-size: 10px;
   }
 }
+
+/* 데이터 출처 표시. DB 폴백이 작동했는지 사람이 화면에서 구분할 수 있어야 한다. */
+.fact-source {
+  margin-left: 8px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.fact-source-seed {
+  color: #6b7684;
+  background: #eef1f4;
+}
+
+.fact-source-database {
+  color: #177c5d;
+  background: #e9f8f1;
+}

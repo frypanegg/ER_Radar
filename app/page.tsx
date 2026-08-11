@@ -165,6 +165,79 @@ function getYearLabel(year: number) {
   return year === currentYear ? `${year}년 현재` : `${year}년`;
 }
 
+// ── 공개 사실의 출처: DB 우선, 정적 시드 폴백 ─────────────────────────────
+//
+// 번들에 담긴 정적 시드로 먼저 그리고, Worker가 Supabase에서 읽어온 공개 행이 도착하면
+// 그걸로 갈아탄다. DB가 비었거나 연결이 끊겨도 화면이 비지 않는다.
+//
+// DB가 채우는 것은 단계·확인일·요약·경과다. 제목·원문 URL처럼 화면 표시에만 쓰는 필드는
+// 시드 값을 유지한다. 두 곳의 값이 다르면 DB를 사실로 본다(수정 요청이 반영되는 곳이다).
+type PublishedFact = {
+  companyId: string;
+  bargainingYear: number;
+  stage: string;
+  eventDate: string;
+  factSummary: string;
+  sourceTier: string;
+  confidence: number;
+  flowEvents: { date: string; stage: string; label: string; summary: string }[];
+};
+
+type FactSource = { source: string; facts: PublishedFact[] | null };
+
+let factSnapshot: FactSource = { source: "seed", facts: null };
+let factFetchStarted = false;
+const factListeners = new Set<() => void>();
+
+function loadPublishedFacts() {
+  if (factFetchStarted) return;
+  factFetchStarted = true;
+  fetch("/api/published-facts")
+    .then((response) => (response.ok ? response.json() : null))
+    .then((payload) => {
+      if (!payload || !Array.isArray(payload.records) || payload.records.length === 0) return;
+      factSnapshot = { source: payload.source ?? "database", facts: payload.records };
+      for (const listener of factListeners) listener();
+    })
+    .catch(() => {
+      // 조회 실패는 화면을 비우지 않는다. 정적 시드로 계속 그린다.
+    });
+}
+
+function subscribeFacts(onChange: () => void) {
+  factListeners.add(onChange);
+  loadPublishedFacts();
+  return () => factListeners.delete(onChange);
+}
+
+const seedFactSnapshot: FactSource = { source: "seed", facts: null };
+
+/** 같은 법인·연도의 DB 값으로 시드 레코드를 덮어쓴다. 없는 연도는 시드 그대로 둔다. */
+function applyPublishedFacts(records: HistoricalRecord[], facts: PublishedFact[] | null) {
+  if (!facts || facts.length === 0) return records;
+  const byKey = new Map(facts.map((fact) => [`${fact.companyId}:${fact.bargainingYear}`, fact]));
+  return records.map((record) => {
+    const fact = byKey.get(`${record.companyId}:${record.bargainingYear}`);
+    if (!fact) return record;
+    return {
+      ...record,
+      stage: fact.stage || record.stage,
+      eventDate: fact.eventDate || record.eventDate,
+      factSummary: fact.factSummary || record.factSummary,
+      sourceTier: (fact.sourceTier as HistoricalRecord["sourceTier"]) || record.sourceTier,
+      confidence: typeof fact.confidence === "number" ? fact.confidence : record.confidence,
+      flowEvents: fact.flowEvents?.length
+        ? fact.flowEvents.map((event) => ({
+            date: event.date,
+            stage: event.stage,
+            label: event.label || stageByCode.get(event.stage)?.label || event.stage,
+            summary: event.summary,
+          }))
+        : record.flowEvents,
+    };
+  });
+}
+
 // 목록 카드에서는 법인 형태 표기를 떼어 이름이 한 줄에 들어오게 한다. 데이터와 상세
 // 화면은 법적 실명을 그대로 유지한다.
 function shortCompanyName(legalName: string) {
@@ -183,9 +256,12 @@ function toBulletPoints(text: string) {
     .filter(Boolean);
 }
 
-function getBargainingCases(year: number): CaseExample[] {
+function getBargainingCases(
+  year: number,
+  records: HistoricalRecord[] = bargainingRecords,
+): CaseExample[] {
   return trackingCompanies.map((company) => {
-    const record = bargainingRecords
+    const record = records
       .filter((candidate) => candidate.companyId === company.id && candidate.bargainingYear === year)
       .sort((left, right) => right.eventDate.localeCompare(left.eventDate))[0];
 
@@ -368,7 +444,20 @@ export default function Home() {
     () => (todayKstDate ? describeCollectionLag(lastCollectionKstDate, todayKstDate) : null),
     [todayKstDate],
   );
-  const caseExamples = useMemo(() => getBargainingCases(selectedYear), [selectedYear]);
+  // DB 공개 행이 도착하면 그것으로 갈아탄다. 서버 스냅샷은 시드이므로 하이드레이션이 어긋나지 않는다.
+  const factState = useSyncExternalStore(
+    subscribeFacts,
+    () => factSnapshot,
+    () => seedFactSnapshot,
+  );
+  const activeRecords = useMemo(
+    () => applyPublishedFacts(bargainingRecords, factState.facts),
+    [factState],
+  );
+  const caseExamples = useMemo(
+    () => getBargainingCases(selectedYear, activeRecords),
+    [selectedYear, activeRecords],
+  );
 
   const visibleCases = useMemo(
     () => {
@@ -536,7 +625,12 @@ export default function Home() {
             <div className="dashboard-actions">
               <div className="data-health" aria-label="데이터 상태 설명">
                 <span className="health-light" aria-hidden="true" />
-                <span>{currentAsOf} 기준 · 검증 교섭 기록 {bargainingRecords.length}건 · {getYearLabel(selectedYear)} 조회</span>
+                <span>
+                  {currentAsOf} 기준 · 검증 교섭 기록 {activeRecords.length}건 · {getYearLabel(selectedYear)} 조회
+                  <b className={`fact-source fact-source-${factState.source}`}>
+                    {factState.source === "seed" ? "내장 데이터" : "DB 연결"}
+                  </b>
+                </span>
               </div>
               <button className="board-add-company" type="button" onClick={() => { setCompanyRequestMessage(""); setIsAddCompanyOpen(true); }}>
                 <Plus size={15} /> 추적 기업 추가
