@@ -1063,7 +1063,23 @@
       "id": "kia:2023:INTEGRATED:2023-10-20:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02876566635774888",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02876566635774888"
+      "originalUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02876566635774888",
+      "flowEvents": [
+        {
+          "date": "2023-10-18",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "노사가 10월 18일 성과급 400%+1,050만원과 고용세습 조항 정리를 담은 2023년 임단협 잠정합의에 이르렀다.",
+          "sourceUrl": "https://zdnet.co.kr/view/?no=20231018000841"
+        },
+        {
+          "date": "2023-10-20",
+          "stage": "S6",
+          "label": "조합원 찬반투표",
+          "summary": "10월 20일 잠정합의안에 대한 조합원 찬반투표가 진행됐다.",
+          "sourceUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02876566635774888"
+        }
+      ]
     },
     {
       "recordId": "gm-korea-2023-wage-ratification",
@@ -1117,7 +1133,30 @@
       "id": "hyundai-motor:2023:INTEGRATED:2023-09-20:https://www.yna.co.kr/view/AKR20230920061700057",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.yna.co.kr/view/AKR20230920061700057"
+      "originalUrl": "https://www.yna.co.kr/view/AKR20230920061700057",
+      "flowEvents": [
+        {
+          "date": "2023-09-12",
+          "stage": "S5",
+          "label": "21차 교섭 잠정합의",
+          "summary": "울산공장에서 열린 21차 임단협 교섭에서 단체교섭 잠정합의안을 도출했다.",
+          "sourceUrl": "https://www.nocutnews.co.kr/news/6014545"
+        },
+        {
+          "date": "2023-09-19",
+          "stage": "S6",
+          "label": "조합원 찬반투표 가결",
+          "summary": "찬반투표에서 찬성 58.8%로 가결됐고 반대는 1만5,880표(41.1%)였다.",
+          "sourceUrl": "https://www.nocutnews.co.kr/news/6014545"
+        },
+        {
+          "date": "2023-09-20",
+          "stage": "S7",
+          "label": "임단협 조인식",
+          "summary": "노사가 9월 20일 2023년 임단협 조인식을 열었다.",
+          "sourceUrl": "https://www.yna.co.kr/view/AKR20230920061700057"
+        }
+      ]
     },
     {
       "recordId": "hyundai-mobis-2023-integrated-ratification",
@@ -1780,8 +1819,8 @@
     }
   ],
   "timelineCoverage": {
-    "recordsWithTimeline": 15,
-    "recordsResultOnly": 29,
-    "eventsMerged": 36
+    "recordsWithTimeline": 17,
+    "recordsResultOnly": 27,
+    "eventsMerged": 41
   }
 }

@@ -113,7 +113,17 @@ const historicalRecords = historicalSeed.records as HistoricalRecord[];
 const currentRecords = currentSeed.records as HistoricalRecord[];
 const bargainingRecords = [...historicalRecords, ...currentRecords];
 const trackingCompanies = historicalSeed.trackingCompanies as TrackingCompany[];
-const currentAsOf = currentSeed.asOf ?? "2026-08-10";
+const lastCollectionKstDate = automationHeartbeat.lastRunKstDate ?? null;
+const lastCollectionOutcome = automationHeartbeat.lastRunOutcome ?? null;
+
+// 시드의 기준일은 사실을 마지막으로 검증한 날이고, 수집 흔적은 마지막으로 확인한 날이다.
+// 둘을 나란히 쓰면 한 화면에 다른 날짜가 두 개 보인다. 수집이 성공한 날은 그날까지 사실이
+// 확인된 것이므로, 수집일이 더 늦으면 그것을 기준일로 쓴다.
+const seedAsOf = currentSeed.asOf ?? "2026-08-10";
+const currentAsOf =
+  lastCollectionOutcome === "success" && lastCollectionKstDate && lastCollectionKstDate > seedAsOf
+    ? lastCollectionKstDate
+    : seedAsOf;
 const currentYear = Number(currentAsOf.slice(0, 4));
 const availableYears = Array.from(
   new Set([...bargainingRecords.map((record) => record.bargainingYear), currentYear]),
@@ -131,9 +141,6 @@ const agreementLabels: Record<AgreementType, string> = {
 function formatDate(date: string) {
   return date.replaceAll("-", ".");
 }
-
-const lastCollectionKstDate = automationHeartbeat.lastRunKstDate ?? null;
-const lastCollectionOutcome = automationHeartbeat.lastRunOutcome ?? null;
 
 // 보는 시점의 KST 날짜. 서버 렌더·프리렌더 시점의 날짜를 굳혀 두면 캐시된 HTML이
 // "오늘 수집 완료"를 틀리게 말할 수 있으므로, 브라우저 시계로만 판단한다.

@@ -46,6 +46,12 @@
       "researchedOn": "2026-08-12",
       "scope": "주식회사 포스코 2024, 현대제철 2024",
       "note": "포스코 잠정합의 날짜와 2024년 쟁의행위 투표 날짜는 기사에 명시되지 않아 제외했다. 현대제철 2024는 교섭이 2025년 4월까지 이어진 이월 기록이며, 파업·직장폐쇄가 있었다는 보도는 날짜가 없어 넣지 않았다."
+    },
+    {
+      "batch": 7,
+      "researchedOn": "2026-08-12",
+      "scope": "기아 2023, 현대자동차 2023",
+      "note": "기아 10/20 투표는 결과가 원문에 없어 '진행'으로만 기록했다."
     }
   ],
   "events": [
@@ -336,6 +342,46 @@
       "label": "3개 지회 찬반투표 가결",
       "summary": "인천·포항·당진하이스코 3개 지회 투표에서 투표율 88.5%에 찬성 55.5%로 가결됐고, 충남지회 57.86%·순천지회 58.4%도 가결됐다.",
       "sourceUrl": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01774486642135792"
+    },
+    {
+      "recordId": "kia:2023:INTEGRATED:2023-10-20:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02876566635774888",
+      "date": "2023-10-18",
+      "stage": "S5",
+      "label": "잠정합의",
+      "summary": "노사가 10월 18일 성과급 400%+1,050만원과 고용세습 조항 정리를 담은 2023년 임단협 잠정합의에 이르렀다.",
+      "sourceUrl": "https://zdnet.co.kr/view/?no=20231018000841"
+    },
+    {
+      "recordId": "kia:2023:INTEGRATED:2023-10-20:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02876566635774888",
+      "date": "2023-10-20",
+      "stage": "S6",
+      "label": "조합원 찬반투표",
+      "summary": "10월 20일 잠정합의안에 대한 조합원 찬반투표가 진행됐다.",
+      "sourceUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02876566635774888"
+    },
+    {
+      "recordId": "hyundai-motor:2023:INTEGRATED:2023-09-20:https://www.yna.co.kr/view/AKR20230920061700057",
+      "date": "2023-09-12",
+      "stage": "S5",
+      "label": "21차 교섭 잠정합의",
+      "summary": "울산공장에서 열린 21차 임단협 교섭에서 단체교섭 잠정합의안을 도출했다.",
+      "sourceUrl": "https://www.nocutnews.co.kr/news/6014545"
+    },
+    {
+      "recordId": "hyundai-motor:2023:INTEGRATED:2023-09-20:https://www.yna.co.kr/view/AKR20230920061700057",
+      "date": "2023-09-19",
+      "stage": "S6",
+      "label": "조합원 찬반투표 가결",
+      "summary": "찬반투표에서 찬성 58.8%로 가결됐고 반대는 1만5,880표(41.1%)였다.",
+      "sourceUrl": "https://www.nocutnews.co.kr/news/6014545"
+    },
+    {
+      "recordId": "hyundai-motor:2023:INTEGRATED:2023-09-20:https://www.yna.co.kr/view/AKR20230920061700057",
+      "date": "2023-09-20",
+      "stage": "S7",
+      "label": "임단협 조인식",
+      "summary": "노사가 9월 20일 2023년 임단협 조인식을 열었다.",
+      "sourceUrl": "https://www.yna.co.kr/view/AKR20230920061700057"
     }
   ]
 }
