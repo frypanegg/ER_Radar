@@ -9,6 +9,79 @@
     "summary는 기사 본문을 복제하지 않고 누가·언제·무엇을 했는지 한 줄로 적는다.",
     "같은 recordId 안에서 sourceUrl이 중복되면 병합 단계에서 하나만 남는다."
   ],
-  "coverageNote": "현재 비어 있다. 과거 44건은 결과 한 컷만 확인된 상태이며, 각 사건마다 근거 URL을 확인해 조사한 뒤 채운다. 채워지지 않은 연도는 화면에서 '결과만 확인된 기록'으로 표시된다.",
-  "events": []
+  "coverageNote": "조사 진행 중이다. 채워지지 않은 연도는 화면에서 '결과만 확인된 기록'으로 표시된다. 근거를 확인하지 못한 사건은 넣지 않는다.",
+  "researchLog": [
+    {
+      "batch": 1,
+      "researchedOn": "2026-08-11",
+      "scope": "현대자동차 2025, 주식회사 포스코 2025, 기아 2024",
+      "note": "기사에 명시된 날짜만 사용했다. 찬반투표는 가결 여부가 원문에 없으면 '실시'로만 기록했다."
+    }
+  ],
+  "events": [
+    {
+      "recordId": "hyundai-motor:2025:INTEGRATED:2025-09-17:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=04113126642301104",
+      "date": "2025-06-18",
+      "stage": "S3",
+      "label": "상견례·본교섭 개시",
+      "summary": "현대자동차 노사가 6월 18일 상견례를 열고 2025년 임금·단체협약 교섭을 시작했다.",
+      "sourceUrl": "https://www.hyundai.co.kr/news/CONT0000000000186364"
+    },
+    {
+      "recordId": "hyundai-motor:2025:INTEGRATED:2025-09-17:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=04113126642301104",
+      "date": "2025-09-09",
+      "stage": "S5",
+      "label": "20차 교섭 잠정합의",
+      "summary": "울산공장에서 열린 20차 임단협 교섭에서 잠정합의안을 도출했다. 상견례로부터 83일이 걸렸다.",
+      "sourceUrl": "https://www.hyundaimotorgroup.com/ko/news/CONT0000000000186364"
+    },
+    {
+      "recordId": "hyundai-motor:2025:INTEGRATED:2025-09-17:https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=04113126642301104",
+      "date": "2025-09-15",
+      "stage": "S6",
+      "label": "조합원 찬반투표 가결",
+      "summary": "9월 15일 조합원 투표에서 잠정합의안이 통과돼 2025년 임단협이 종료 절차에 들어갔다.",
+      "sourceUrl": "https://news.imbc.com/news/2025/econo/article/6756272_36737.html"
+    },
+    {
+      "recordId": "posco:2025:INTEGRATED:2025-09-17:https://www.posco.co.kr/homepage/docs/kor7/jsp/prcenter/press/s91c600110v.jsp?idx=2586&onPage=1",
+      "date": "2025-09-05",
+      "stage": "S5",
+      "label": "무쟁의 잠정합의 도출",
+      "summary": "포스코 노사가 9월 5일 2025년 임금·단체협약 잠정합의안을 쟁의행위 없이 도출했다.",
+      "sourceUrl": "https://www.ajunews.com/view/20250906111400679"
+    },
+    {
+      "recordId": "kia:2024:INTEGRATED:2024-10-08:https://zdnet.co.kr/view/?no=20241008211521",
+      "date": "2024-09-09",
+      "stage": "S5",
+      "label": "9차 본교섭 1차 잠정합의",
+      "summary": "기아 노사가 오토랜드 광명에서 열린 9차 본교섭에서 2024년 임단협 1차 잠정합의안을 도출했다.",
+      "sourceUrl": "https://www.g-enews.com/article/Industry/2024/09/202409100324032708112616b072_1"
+    },
+    {
+      "recordId": "kia:2024:INTEGRATED:2024-10-08:https://zdnet.co.kr/view/?no=20241008211521",
+      "date": "2024-09-12",
+      "stage": "S6",
+      "label": "1차 잠정합의안 찬반투표 실시",
+      "summary": "1차 잠정합의안에 대한 조합원 찬반투표가 9월 12일 진행됐다.",
+      "sourceUrl": "https://www.motorgraph.com/news/articleView.html?idxno=40946"
+    },
+    {
+      "recordId": "kia:2024:INTEGRATED:2024-10-08:https://zdnet.co.kr/view/?no=20241008211521",
+      "date": "2024-10-02",
+      "stage": "S5",
+      "label": "11차 본교섭 2차 잠정합의",
+      "summary": "추석 연휴 이후 추가 교섭을 거쳐 10월 2일 11차 본교섭에서 2차 잠정합의안을 도출했다.",
+      "sourceUrl": "https://www.etnews.com/20241002000329"
+    },
+    {
+      "recordId": "kia:2024:INTEGRATED:2024-10-08:https://zdnet.co.kr/view/?no=20241008211521",
+      "date": "2024-10-08",
+      "stage": "S6",
+      "label": "2차 잠정합의안 찬반투표",
+      "summary": "2차 잠정합의안에 대한 조합원 찬반투표가 10월 8일 진행됐다.",
+      "sourceUrl": "https://zdnet.co.kr/view/?no=20241008211521"
+    }
+  ]
 }
