@@ -738,11 +738,15 @@ export default function Home() {
                     <span>{selectedCase.history.settlement.label}</span>
                   </div>
                 )}
+                {/* 목록은 최신 일정이 위로 온다. 지금 어디까지 왔는지가 먼저 읽혀야 한다.
+                    누적 지표는 위의 flow-rollup이 담으므로 순서를 뒤집어도 셈은 그대로다. */}
                 {selectedCase.flowEvents.length === 0 ? (
                   <p className="flow-empty">해당 연도 교섭 경과 표시에 필요한 원청 노조 근거 미확보</p>
                 ) : (
                   <ol className="flow-list">
-                    {selectedCase.flowEvents.map((flow, index) => (
+                    {[...selectedCase.flowEvents]
+                      .sort((left, right) => right.date.localeCompare(left.date))
+                      .map((flow, index) => (
                       <li className="flow-item" key={`${flow.date}-${flow.label}-${index}`}>
                         <time>{formatDate(flow.date)}</time>
                         <span className="flow-dot" aria-hidden="true" />
@@ -775,10 +779,11 @@ export default function Home() {
                 <div><span>현재 국면</span><strong>{selectedCase.round ?? "교섭 확인 대기"}</strong></div>
               </div>
 
+              {/* 참여노조 과반·조합원 수는 12개 법인 전부 근거가 없어 항상 "확인중"·"공개 근거
+                  미확인"만 표시됐다. 값이 없는 칸을 늘어놓기보다 근거를 확보한 뒤 되살린다.
+                  과반 판정 기준(참여노조 조합원 분모)은 docs/negotiation-framework.md에 남아 있다. */}
               <div className="identity-facts" aria-label="교섭 기본 정보">
                 <div><span>올해 협상유형</span><strong>{selectedCase.yearType}</strong></div>
-                <div title="교섭창구 참여노조 조합원 기준 · 대표교섭노조 여부, 원청 노조 전체 대비 가입률과 구분"><span>참여노조 과반</span><strong className={`majority-${selectedCase.majorityUnion === "O" ? "yes" : selectedCase.majorityUnion === "X" ? "no" : "pending"}`}>{selectedCase.majorityUnion}</strong></div>
-                <div><span>조합원 수</span><strong>{selectedCase.unionMembers}</strong></div>
                 {/* 노조 선거 단독 항목은 이슈로 보기 어렵다. 쟁의 경과·찬반투표·노동위원회
                     판단처럼 실제로 교섭을 움직인 사실을 한 칸에 모아 보여준다. */}
                 <div className="identity-issues">
@@ -792,7 +797,6 @@ export default function Home() {
                   )}
                 </div>
               </div>
-              <p className="majority-definition">※ 참여노조 과반 = <strong>교섭창구 참여노조 조합원 기준</strong> · 대표교섭노조 여부와 원청 노조 전체 대비 가입률은 별도 필드 기록 · 상호 대체 불가</p>
 
               {/* 병렬 상태 행은 주 단계에서 그대로 파생된 값만 보여줘서 정보가 늘지 않았다.
                   교섭을 움직인 사실은 위의 이슈 칸과 교섭 경과가 담는다. */}
