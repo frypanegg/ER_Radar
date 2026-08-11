@@ -1,9 +1,8 @@
 name: 수집 지연 감시
 
 # 수집이 멈추면 워크플로 이력이 그냥 비어 있을 뿐 아무 신호가 없다. 그 침묵을
-# 실패로 바꿔 알림이 오게 한다(GitHub은 실패한 워크플로를 저장소 소유자에게 메일로
-# 알린다). 저장소의 실행 흔적과 공개 페이지를 함께 확인해서, 수집이 멈춘 것인지
-# 배포가 끊긴 것인지 구분한다.
+# 실패와 메일로 바꾼다. 저장소의 실행 흔적과 공개 페이지를 함께 확인해서, 수집이
+# 멈춘 것인지 배포가 끊긴 것인지 구분한다.
 #
 # 한계: 이 감시도 GitHub schedule 이벤트에 의존하므로 같은 유실 위험을 공유한다.
 # 완전히 독립적인 감시는 저장소 밖(Cloudflare Cron 등)에 두어야 한다.
@@ -30,7 +29,54 @@ jobs:
         with:
           node-version: "22"
 
+      # 판정 결과로 바로 실패하지 않는다. 먼저 메일을 보내고 마지막에 실패시킨다.
       - name: 실행 흔적·공개 페이지 신선도 확인
+        id: freshness
         run: |
+          mkdir -p tmp
+          set +e
           node scripts/check-collection-freshness.mjs \
-            --live https://er-radar.er-radar.workers.dev/
+            --live https://er-radar.er-radar.workers.dev/ > tmp/freshness.log 2>&1
+          status=$?
+          set -e
+
+          cat tmp/freshness.log
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          grep -a '^::error::' tmp/freshness.log | sed 's/^::error:://' > tmp/freshness-problems.txt || true
+
+      - name: 지연 알림 메일 발송
+        if: steps.freshness.outputs.status != '0'
+        env:
+          MAIL_SMTP_USER: ${{ secrets.MAIL_SMTP_USER }}
+          MAIL_SMTP_PASSWORD: ${{ secrets.MAIL_SMTP_PASSWORD }}
+          MAIL_TO: ${{ vars.MAIL_TO || 'fry@kakao.com' }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$MAIL_SMTP_USER" ] || [ -z "$MAIL_SMTP_PASSWORD" ]; then
+            echo "::warning::MAIL_SMTP_USER·MAIL_SMTP_PASSWORD 시크릿이 없어 알림 메일을 건너뜁니다."
+            exit 0
+          fi
+
+          node scripts/build-daily-report.mjs \
+            --mode staleness \
+            --out tmp/staleness-report.eml \
+            --from "$MAIL_SMTP_USER" \
+            --to "$MAIL_TO" \
+            --run-url "$RUN_URL" \
+            --problems "$(cat tmp/freshness-problems.txt)"
+
+          curl --silent --show-error --ssl-reqd \
+            --url "smtps://smtp.gmail.com:465" \
+            --user "$MAIL_SMTP_USER:$MAIL_SMTP_PASSWORD" \
+            --mail-from "$MAIL_SMTP_USER" \
+            --mail-rcpt "$MAIL_TO" \
+            --upload-file tmp/staleness-report.eml
+
+          echo "지연 알림 메일 발송 완료: $MAIL_TO"
+
+      # 메일과 별개로 워크플로 자체를 실패시켜 GitHub 알림에도 남긴다.
+      - name: 판정 결과 반영
+        if: steps.freshness.outputs.status != '0'
+        run: |
+          echo "::error::일일 수집이 최신이 아닙니다. 위 로그와 발송된 메일을 확인하세요."
+          exit 1

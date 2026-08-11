@@ -357,6 +357,104 @@ test("수집이 멈추면 감시 워크플로가 실패로 드러낸다", async 
   assert.match(alarm, /check-collection-freshness\.mjs/);
   // 저장소 흔적만 보지 않고 공개 페이지까지 확인해 배포 중단도 잡는다.
   assert.match(alarm, /--live\s+https:\/\//);
+  // 지연이면 메일을 보내고, 그와 별개로 워크플로도 실패시킨다.
+  assert.match(alarm, /steps\.freshness\.outputs\.status != '0'[\s\S]{0,600}--mode staleness/);
+  assert.match(alarm, /판정 결과 반영[\s\S]{0,200}exit 1/);
+});
+
+test("수집 결과 메일이 성공·실패 양쪽에서 발송된다", async () => {
+  const workflow = await readFile(
+    new URL("../.github/workflows/daily-bargaining-update.yml", import.meta.url),
+    "utf8",
+  );
+  // 메일이 안 오는 것 자체가 신호가 되어야 하므로 실패한 날에도 보낸다.
+  assert.match(workflow, /수집 결과 메일 발송\s*\n\s*if: always\(\)/);
+  assert.match(workflow, /mode=failure/);
+  // 자격증명이 없으면 조용히 건너뛴다.
+  assert.match(workflow, /-z "\$MAIL_SMTP_USER"/);
+  // 메일 비밀값도 이름으로만 참조한다.
+  assert.doesNotMatch(workflow, /MAIL_SMTP_PASSWORD\s*:\s*["'][^$]/);
+  // 저장소 쓰기 권한이 있는 작업이라 서드파티 액션을 끌어들이지 않는다.
+  assert.doesNotMatch(workflow, /uses:\s*(?!actions\/)[a-z0-9-]+\//i);
+});
+
+test("메일 본문이 감사 로그를 사람이 읽을 형태로 요약한다", async () => {
+  const { buildReport, encodeSubject, buildMimeMessage } = await import(
+    "../scripts/build-daily-report.mjs"
+  );
+
+  const audit = {
+    runs: [
+      {
+        consideredArticles: 306,
+        appliedCount: 1,
+        skippedCount: 305,
+        primarySource: "google",
+        applied: [
+          {
+            companyId: "hyundai-steel",
+            companyLegalName: "현대제철 주식회사",
+            previousStage: "S6",
+            previousEventDate: "2026-08-01",
+            nextStage: "S7",
+            nextEventDate: "2026-08-11",
+            sourceUrl: "https://example.com/article",
+            sourceName: "매일노동뉴스",
+            confidence: 0.91,
+          },
+        ],
+        skippedReasonCounts: { scope_excluded: 256 },
+      },
+    ],
+  };
+  const batch = {
+    stats: { totalQueries: 60, failedQueries: 0, receivedItems: 600, finalCandidates: 306 },
+    articles: [
+      { originalUrl: "https://example.com/article", title: "현대제철 임단협 조인식", media: "매일노동뉴스" },
+    ],
+  };
+
+  const report = buildReport({ audit, batch, todayKstDate: "2026-08-11", siteUrl: "https://example.test/" });
+  assert.match(report.subject, /2026-08-11 수집 결과 · 반영 1건/);
+  assert.match(report.text, /현대제철 주식회사/);
+  assert.match(report.text, /S6 인준·서명 대기 → S7 최종 체결·발효/);
+  // 감사 로그에 없는 제목은 후보 목록에서 찾아 붙인다.
+  assert.match(report.text, /현대제철 임단협 조인식/);
+  assert.match(report.text, /https:\/\/example\.com\/article/);
+
+  // 반영이 없는 날에도 "왜 안 바뀌었는지"를 알려준다.
+  const quiet = buildReport({
+    audit: { runs: [{ consideredArticles: 10, appliedCount: 0, skippedCount: 10, applied: [] }] },
+    todayKstDate: "2026-08-11",
+  });
+  assert.match(quiet.text, /상태가 바뀐 교섭 없음/);
+
+  // 실패한 날은 제목에서 바로 구분된다.
+  assert.match(buildReport({ mode: "failure", todayKstDate: "2026-08-11" }).subject, /수집 실패/);
+
+  // 지연 알림은 복구 명령을 함께 담는다.
+  const staleness = buildReport({
+    mode: "staleness",
+    todayKstDate: "2026-08-11",
+    heartbeat: { lastRunKstDate: "2026-08-08", lastRunOutcome: "success" },
+    freshnessProblems: ["마지막 수집이 2026-08-08입니다."],
+  });
+  assert.match(staleness.subject, /수집 지연 감지/);
+  assert.match(staleness.text, /force=true/);
+
+  // 한국어 제목이 SMTP 경로에서 깨지지 않도록 인코딩한다.
+  assert.match(encodeSubject("한글 제목"), /^=\?UTF-8\?B\?[A-Za-z0-9+/=]+\?=$/);
+  const message = buildMimeMessage({
+    from: "sender@example.com",
+    to: "receiver@example.com",
+    subject: "한글 제목",
+    text: "본문",
+    date: new Date("2026-08-11T00:00:00Z"),
+  });
+  assert.match(message, /^From: sender@example\.com\r\nTo: receiver@example\.com\r\nSubject: =\?UTF-8\?B\?/);
+  assert.match(message, /Content-Type: text\/plain; charset=UTF-8/);
+  // 기사 본문을 담지 않는 경계는 메일에서도 유지한다.
+  assert.match(report.text, /기사 본문은 담지 않습니다/);
 });
 
 test("60일 자동 비활성화를 막는 실행 흔적이 항상 커밋된다", async () => {
