@@ -116,6 +116,32 @@ function blocksSettledRecord(existing, nextStage) {
   );
 }
 
+/**
+ * 단계를 뒤로 되돌리는 반영을 막는다.
+ *
+ * 파업·집회 기사는 교섭이 진행 중이라는 신호를 함께 담기 때문에, 이미 교착·조정(S4)로
+ * 기록된 법인이 "노사 교섭 계속" 표현 하나로 본교섭(S3)으로 내려갈 수 있다. 실제로
+ * 2026-08-11 후보에서 현대자동차가 그 경로에 걸렸다.
+ *
+ * 되돌림 자체가 틀린 것은 아니다. 잠정합의 부결이나 재교섭 결렬은 실제로 단계가
+ * 내려간다. 그 경우들은 수집기가 예외 전이(exception_transition)나 명시적 교착·조정
+ * 근거로 표시하므로, 그때만 허용한다.
+ */
+function blocksStageDowngrade(existing, article, ranks) {
+  const nextStage = article.classification.statusCode;
+  const currentRank = ranks.get(existing.stage);
+  const nextRank = ranks.get(nextStage);
+  if (typeof currentRank !== "number" || typeof nextRank !== "number") return false;
+  if (nextRank >= currentRank) return false;
+
+  const explicitDowngradeBasis = new Set([
+    "exception_transition",
+    "explicit_impasse_or_mediation",
+    "explicit_state_signal",
+  ]);
+  return !explicitDowngradeBasis.has(article.classification.statusBasis);
+}
+
 function selectCandidate(article) {
   const classification = article.classification;
   if (!classification) return { ok: false, reason: "no_classification" };
@@ -270,6 +296,14 @@ async function main() {
       });
       continue;
     }
+    if (blocksStageDowngrade(record, article, ranks)) {
+      skipped.push({
+        title: article.title,
+        url: article.originalUrl,
+        reason: "stage_downgrade_without_explicit_evidence",
+      });
+      continue;
+    }
 
     const updated = applyArticleToRecord(record, article, eventDate);
     recordsByCompany.set(companyId, updated);
@@ -351,4 +385,10 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   });
 }
 
-export { applyArticleToRecord, blocksSettledRecord, selectCandidate };
+export {
+  applyArticleToRecord,
+  blocksSettledRecord,
+  blocksStageDowngrade,
+  selectCandidate,
+  stageRanks,
+};

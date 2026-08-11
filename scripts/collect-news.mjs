@@ -1006,8 +1006,17 @@ function deriveFrameworkClassification(
     exceptionCode ?? framework.defaultStageMap[stageClassification.stage.code] ?? "U";
   let statusBasis = exceptionCode ? "exception_transition" : "stage_mapping";
 
-  const explicitState = framework.explicitStateSignals.find((signal) =>
-    signal.patterns.some((pattern) => matchesPattern(title, pattern)),
+  // 파업·쟁의행위 찬반투표는 인준 투표가 아니다. 그런데 제목 뒤쪽에 "임단협"이 들어
+  // 있으면 S6(인준·서명 대기) 패턴에 걸려, 파업으로 가는 상황이 타결 직전으로 표시된다.
+  // 2026-08-11 후보의 "현대차 노조, 오늘 파업 찬반투표...임단협 갈등 고조"가 그 사례다.
+  const isStrikeVoteTitle = matchesPattern(
+    title,
+    "(?:쟁의행위|파업).{0,8}찬반투표|찬반투표.{0,12}(?:쟁의행위|파업)",
+  );
+  const explicitState = framework.explicitStateSignals.find(
+    (signal) =>
+      !(isStrikeVoteTitle && signal.code === "S6") &&
+      signal.patterns.some((pattern) => matchesPattern(title, pattern)),
   );
   if (
     explicitState &&
@@ -1166,26 +1175,68 @@ function matchingAliases(title, aliases) {
 
 function classifyEmploymentScope(title, company, unitMatches, config) {
   const comparableTitle = comparableText(title);
+  // 법인명과 노조 표현이 제목에서 붙어 있는 경우만 보면 대부분을 놓친다. 실제 제목은
+  // "현대제철, 임단협 마무리..노조 잠정합의안 가결"처럼 사이에 다른 말이 끼고,
+  // "포스코 노사, 단체교섭 조정기간 연장"처럼 "노사"를 쓰는 경우도 많다.
+  //
+  // 그래서 법인명 뒤 일정 거리 안에 노조 표현이 있으면 같은 사건으로 본다. 느슨해 보이지만
+  // 하청 사건은 "사내하청 노조"처럼 배제 어휘를 함께 쓰므로 아래 배제 분기가 먼저 걸러내고,
+  // 노사협의회 기사는 그 앞의 works-council 분기가 잡는다. 복수 법인이 섞인 제목은
+  // 반영 단계에서 따로 막는다.
+  const UNION_PHRASE_WINDOW = 20;
+  const unionWords = ["노조", "노동조합", "지부", "노사"].map((word) => comparableText(word));
   const hasCompanyUnionPhrase = company.aliases.some((alias) => {
     const comparableAlias = comparableText(alias);
-    return ["노조", "노동조합", "지부"].some((suffix) =>
-      comparableTitle.includes(`${comparableAlias}${comparableText(suffix)}`),
-    );
+    let searchFrom = comparableTitle.indexOf(comparableAlias);
+    while (searchFrom >= 0) {
+      const windowStart = searchFrom + comparableAlias.length;
+      const window = comparableTitle.slice(windowStart, windowStart + UNION_PHRASE_WINDOW);
+      if (unionWords.some((word) => window.includes(word))) return true;
+      searchFrom = comparableTitle.indexOf(comparableAlias, searchFrom + 1);
+    }
+    return false;
   });
   const hasDirectUnionUnit = unitMatches.some(
     (unit) => unit.id !== "works-council",
   );
   const hasWorksCouncilOnly =
     unitMatches.length > 0 && !hasDirectUnionUnit;
+
+  // 등록된 교섭단위 별칭이 제목에 나오면 직접고용이 확정된다. 그런데 한국 노동 보도는
+  // 대개 "현대차 노조"처럼 약칭만 쓰고 정식 지부명을 생략한다. 그 경우까지 격리하면
+  // 실제로는 원청 직영 교섭 기사인데 전체의 79%가 검토 대기로 빠진다(2026-08-11 실측).
+  //
+  // 배제 어휘(하청·사내협력사·용역·파견·계열사)는 정밀도가 높아서, 하청 기사는 아래
+  // 배제 분기에서 먼저 걸러진다. 그래서 "회사명+노조" 표현이 있고 배제 신호가 하나도
+  // 없고, 그 법인에 등록된 교섭단위가 전부 직접고용 단위라면 직접고용으로 본다.
+  //
+  // 이 경로는 근거가 약하므로 등급을 낮춰 기록한다. 원문 URL 확인·단일 법인·단계 규칙
+  // 게이트는 그대로 적용되므로, 이 판정만으로 공개 단계가 바뀌지는 않는다.
+  // 주의: 레지스트리에 하청 교섭단위를 추가하면 이 조건이 자동으로 꺼져야 한다.
+  const configuredDirectUnits = (company.bargainingUnits ?? []).filter(
+    (unit) => unit.id !== "works-council",
+  );
+  const registryListsOnlyDirectUnits =
+    configuredDirectUnits.length > 0 &&
+    !configuredDirectUnits.some((unit) =>
+      ["하청", "비정규", "협력", "사내", "파견", "용역"].some((marker) =>
+        (unit.name ?? "").includes(marker),
+      ),
+    );
+  const hasCompanyUnionPhraseEvidence =
+    hasCompanyUnionPhrase && registryListsOnlyDirectUnits;
   const hasSubcontractorSignal = config.scopePolicy.subcontractorSignals.some(
     (pattern) => matchesPattern(title, pattern),
   );
   const hasAffiliateSignal = config.scopePolicy.affiliateSignals.some((pattern) =>
     matchesPattern(title, pattern),
   );
-  const hasDirectEvidence = hasDirectUnionUnit;
+  const hasDirectEvidence = hasDirectUnionUnit || hasCompanyUnionPhraseEvidence;
 
-  if (hasDirectEvidence && (hasSubcontractorSignal || hasAffiliateSignal)) {
+  // 혼재로 볼 수 있는 건 정식 지부명이 확인된 강한 근거와 배제 신호가 함께 있을 때다.
+  // "한화오션 하청 노조"처럼 약칭 근거와 하청 신호가 겹치는 건 그냥 하청 사건이므로,
+  // 여기서 걸러지지 않고 아래 배제 분기로 내려가야 한다.
+  if (hasDirectUnionUnit && (hasSubcontractorSignal || hasAffiliateSignal)) {
     return {
       scopeClassification: "MIXED_NEEDS_SPLIT",
       includeInPrimaryDashboard: false,
@@ -1227,6 +1278,11 @@ function classifyEmploymentScope(title, company, unitMatches, config) {
       includeInPrimaryDashboard: true,
       directEmployerMatch: true,
       coveredWorkerRelation: "DIRECT",
+      // 어느 경로로 직접고용을 인정했는지 감사에 남긴다. 약한 경로로 들어온 기록은
+      // 사람 검증 때 우선 확인 대상이다.
+      scopeEvidenceTier: hasDirectUnionUnit
+        ? "CONFIGURED_UNION_ALIAS"
+        : "COMPANY_UNION_PHRASE_NO_EXCLUSION_SIGNAL",
       reasonCodes: [
         hasDirectUnionUnit ? "configured_direct_union_alias" : "company_union_phrase",
       ],
@@ -1499,11 +1555,24 @@ function deriveArticleAnnotations(record, frameworkClassification, bargainingYea
         },
       }
     : null;
+  // 협약유형은 화면 필터용 메타데이터다. 제목만으로 임금협상·통합 임단협을 구분하지
+  // 못하는 것과, 이 기사가 단계를 바꿀 근거가 되는지는 별개 문제다. 시드에는 이미
+  // 사람이 검증한 협약유형이 있고 반영 단계가 그 값을 유지하므로, 협약유형 미확인으로
+  // 단계 갱신까지 막지 않는다. 미확인 사실은 agreementType.needsReview로 남는다.
   const needsReview =
-    !agreementType ||
     !record.originalUrl ||
     Boolean(impasseReason?.needsReview) ||
     Boolean(ratification?.proposalChangeSummary.needsReview);
+
+  // 근거 등급은 실제 검증 상태를 따라간다. NAVER가 직접 준 원문이거나, Google News
+  // 링크를 발행사 주소로 되돌린 뒤 페이지 도달·제목 일치까지 확인한 경우가 더 강한
+  // 근거다. 이전에는 이 셋을 상수로 박아 두어, 원문까지 확인한 기사도 미확인 기사와
+  // 같은 등급으로 기록됐다.
+  const publisherVerified = Boolean(
+    record.originalUrl &&
+      (record.collectionSources?.includes("naver") ||
+        record.sourceVerification?.status === RESOLUTION_STATUS.verified),
+  );
 
   return {
     agreementType: {
@@ -1516,9 +1585,13 @@ function deriveArticleAnnotations(record, frameworkClassification, bargainingYea
     issueSummary,
     impasseReason,
     ratification,
-    originalUrlStatus: record.originalUrl ? "DIRECT" : "AGGREGATOR_ONLY",
-    sourceTier: "C",
-    factStatus: "INFERENCE",
+    originalUrlStatus: record.originalUrl
+      ? publisherVerified
+        ? "PUBLISHER_VERIFIED"
+        : "DIRECT"
+      : "AGGREGATOR_ONLY",
+    sourceTier: publisherVerified ? "B" : "C",
+    factStatus: publisherVerified ? "TITLE_BASIS_SOURCE_VERIFIED" : "INFERENCE",
     needsReview,
   };
 }

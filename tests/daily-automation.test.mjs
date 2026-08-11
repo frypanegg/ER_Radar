@@ -22,8 +22,33 @@ import {
 import {
   applyArticleToRecord,
   blocksSettledRecord,
+  blocksStageDowngrade,
   selectCandidate,
+  stageRanks,
 } from "../scripts/apply-daily-update.mjs";
+import { classifyArticle, validateConfiguration } from "../scripts/collect-news.mjs";
+
+/** 제목 하나를 실제 설정으로 분류한다. 원문 검증까지 통과한 기사로 취급한다. */
+async function classifyTitle(title, companyId = "hyundai-motor") {
+  const config = JSON.parse(
+    await readFile(new URL("../data/source-config.json", import.meta.url), "utf8"),
+  );
+  validateConfiguration(config);
+  return classifyArticle(
+    {
+      title,
+      media: "검증 매체",
+      publishedAt: "2026-08-11T00:00:00.000Z",
+      url: "https://news.google.com/rss/articles/CBMiTEST",
+      originalUrl: "https://example.com/original",
+      collectionSources: ["naver"],
+      originCompanyIds: [companyId],
+    },
+    config,
+    new Date("2026-08-11T00:00:00.000Z"),
+    2026,
+  ).classification;
+}
 
 function verifiedArticle(overrides = {}) {
   return {
@@ -182,6 +207,124 @@ test("하청·복수법인·단계 미확인 기사는 자동 반영하지 않�
   const retain = verifiedArticle();
   retain.classification.retainMainState = true;
   assert.equal(selectCandidate(retain).reason, "retain_main_state");
+});
+
+test("조합원 가결만으로 최종 체결(S7)로 올리지 않는다", async () => {
+  // 문서 원칙: S6→S7은 조합원 가결이 아니라 서명·조인·발효 근거가 필요하다.
+  // 2026-08-11 후보의 한국GM 기사가 가결만으로 S7로 올라가고 있었다.
+  const ratified = await classifyTitle(
+    "‘부분파업’ 벌였던 한국GM 노조, 올해 임단협 가결...56.5% 찬성",
+    "gm-korea",
+  );
+  assert.notEqual(ratified.statusCode, "S7");
+
+  // 조인·서명이 확인되면 그때 S7이 된다.
+  const signed = await classifyTitle("한국GM 노조, 2026년 임단협 조인식...협약 체결", "gm-korea");
+  assert.equal(signed.statusCode, "S7");
+});
+
+test("파업 찬반투표를 인준 투표로 읽지 않는다", async () => {
+  // 제목 뒤쪽의 "임단협" 때문에 S6(인준·서명 대기) 패턴에 걸리면, 파업으로 가는
+  // 상황이 타결 직전으로 표시된다.
+  const strikeVote = await classifyTitle("현대차 노조, 오늘 파업 찬반투표...임단협 갈등 고조");
+  assert.notEqual(strikeVote.statusCode, "S6");
+
+  // 잠정합의안 인준 투표는 그대로 S6이어야 한다.
+  const ratificationVote = await classifyTitle("현대차 노조, 잠정합의안 가결...인준 완료");
+  assert.equal(ratificationVote.statusCode, "S6");
+});
+
+test("명시적 근거 없이 단계를 뒤로 되돌리지 않는다", async () => {
+  const framework = JSON.parse(
+    await readFile(new URL("../data/negotiation-framework.json", import.meta.url), "utf8"),
+  );
+  const ranks = stageRanks(framework);
+  const impasseRecord = seedRecord({ stage: "S4" });
+
+  // 파업 기사에 "노사 교섭 계속"이 붙으면 본교섭(S3) 신호가 잡혀 단계가 내려간다.
+  const downgrade = verifiedArticle({
+    classification: { statusCode: "S3", statusBasis: "concurrent_main_stage_signal" },
+  });
+  assert.equal(blocksStageDowngrade(impasseRecord, downgrade, ranks), true);
+
+  // 재교섭·부결처럼 예외 전이로 표시된 하강은 실제 사실이므로 허용한다.
+  const reopened = verifiedArticle({
+    classification: { statusCode: "S3", statusBasis: "exception_transition" },
+  });
+  assert.equal(blocksStageDowngrade(impasseRecord, reopened, ranks), false);
+
+  // 전진하는 반영은 막지 않는다.
+  const forward = verifiedArticle({
+    classification: { statusCode: "S5", statusBasis: "stage_mapping" },
+  });
+  assert.equal(blocksStageDowngrade(impasseRecord, forward, ranks), false);
+});
+
+test("정식 지부명이 없어도 배제 신호가 없으면 직영으로 보되 근거 등급을 낮춘다", async () => {
+  // 한국 노동 보도는 "현대차 노조"처럼 약칭만 쓴다. 이것까지 격리하면 실제 직영
+  // 교섭 기사의 79%가 검토 대기로 빠진다(2026-08-11 실측).
+  const colloquial = await classifyTitle(
+    "두산에너빌리티 노조, 임단협 노동위 조정 신청",
+    "doosan-enerbility",
+  );
+  assert.equal(colloquial.scopeClassification, "PRIMARY_DIRECT_UNION");
+  const scope = colloquial.companies.find((company) => company.companyId === "doosan-enerbility");
+  assert.equal(scope.scopeEvidenceTier, "COMPANY_UNION_PHRASE_NO_EXCLUSION_SIGNAL");
+
+  // 하청 신호가 하나라도 있으면 이 완화가 적용되지 않는다.
+  const subcontracted = await classifyTitle(
+    "두산에너빌리티 사내하청 노조, 원청에 교섭 요구",
+    "doosan-enerbility",
+  );
+  assert.equal(subcontracted.scopeClassification, "SUBCONTRACTOR_UNION_EXCLUDED");
+
+  // 정식 지부명이 있으면 더 강한 근거로 기록된다.
+  const configured = await classifyTitle("금속노조 현대자동차지부, 임금협상 교섭 재개");
+  const configuredScope = configured.companies.find(
+    (company) => company.companyId === "hyundai-motor",
+  );
+  assert.equal(configuredScope.scopeEvidenceTier, "CONFIGURED_UNION_ALIAS");
+});
+
+test("실제 보도 제목으로 직영·하청 판정을 고정한다", async () => {
+  // 2026-08-11 수집분에서 뽑은 실제 제목이다. 범위 규칙을 손댈 때 이 표가 먼저 깨진다.
+  const directCases = [
+    ["현대제철, 임단협 마무리..노조 잠정합의안 가결", "hyundai-steel"],
+    ["포스코 노사, 단체교섭 조정기간 연장...18일 최종 담판", "posco"],
+    ["두산에너빌리티 노조, 임단협 노동위 조정 신청", "doosan-enerbility"],
+    ["SK하이닉스 노조, 임단협서 주 4.5일제·정년연장 요구할 듯", "sk-hynix"],
+    ["삼성전자 노조, 오늘부터 임단협 잠정합의안 투표", "samsung-electronics"],
+  ];
+  const excludedCases = [
+    ["한화오션 하청 노조 파업권 확보...노란봉투법 시행 뒤 첫 사례", "hanwha-ocean"],
+    ["“원청 나와라” 현대제철 하청 파업...노봉법 여파 본격화", "hyundai-steel"],
+    ["한화오션 하청업체 노조, 원청 상대 파업권 확보...\"교섭 나서야\"", "hanwha-ocean"],
+  ];
+
+  for (const [title, companyId] of directCases) {
+    const classification = await classifyTitle(title, companyId);
+    assert.equal(
+      classification.scopeClassification,
+      "PRIMARY_DIRECT_UNION",
+      `직영으로 판정해야 한다: ${title}`,
+    );
+  }
+  for (const [title, companyId] of excludedCases) {
+    const classification = await classifyTitle(title, companyId);
+    assert.equal(
+      classification.scopeClassification,
+      "SUBCONTRACTOR_UNION_EXCLUDED",
+      `하청으로 격리해야 한다: ${title}`,
+    );
+    assert.equal(classification.includeInPrimaryDashboard, false);
+    assert.equal(classification.eligibleForStatusAggregation, false);
+  }
+});
+
+test("원문까지 확인된 기사는 미확인 기사와 같은 근거 등급으로 기록되지 않는다", async () => {
+  const verified = await classifyTitle("현대차 노조, 임금협상 교섭 재개");
+  assert.equal(verified.annotations.sourceTier, "B");
+  assert.equal(verified.annotations.originalUrlStatus, "PUBLISHER_VERIFIED");
 });
 
 test("사람이 검증한 체결 기록을 제목 추론 기사로 되돌리지 않는다", () => {

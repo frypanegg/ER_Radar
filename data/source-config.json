@@ -8,8 +8,17 @@
         "mediaExposure",
         "majorityUnion"
       ],
-      "ratingValues": ["HIGH", "MEDIUM", "LOW", "UNVERIFIED"],
-      "majorityUnionValues": ["O", "X", "UNKNOWN"],
+      "ratingValues": [
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "UNVERIFIED"
+      ],
+      "majorityUnionValues": [
+        "O",
+        "X",
+        "UNKNOWN"
+      ],
       "majorityUnionDefinition": "노조법 제29조의2 제4항상 교섭창구 단일화 참여노조 전체 조합원 수를 분모로 한 과반 여부",
       "separateFields": [
         "representativeBargainingUnion",
@@ -18,7 +27,11 @@
       "verificationRule": "분자·분모·산정기준·근거일·근거URL 중 하나라도 없으면 status=UNKNOWN이며 대표교섭노조 여부나 전체 직접고용 대비 가입률과 혼용 금지"
     },
     "unionProfile": {
-      "fields": ["memberCount", "electionIssues", "verifiedAt"],
+      "fields": [
+        "memberCount",
+        "electionIssues",
+        "verifiedAt"
+      ],
       "defaults": {
         "memberCount": null,
         "electionIssues": [],
@@ -27,7 +40,11 @@
       }
     },
     "agreementType": {
-      "values": ["WAGE", "CBA", "INTEGRATED"],
+      "values": [
+        "WAGE",
+        "CBA",
+        "INTEGRATED"
+      ],
       "scope": "current_bargaining_year"
     }
   },
@@ -42,7 +59,8 @@
     "requestTimeoutMs": 15000,
     "maxRetries": 3,
     "freshnessHalfLifeDays": 30,
-    "freshnessReviewDays": 120
+    "freshnessReviewDays": 120,
+    "maxUrlResolutions": 150
   },
   "scopePolicy": {
     "primaryScope": "selected_legal_entity_directly_employed_union_only",
@@ -198,8 +216,7 @@
         "order": 60,
         "signals": [
           "(?:임금|단체|임단)\\s*(?:협상|교섭).{0,12}(?:최종\\s*)?타결",
-          "임단협.{0,12}(?:조인|체결|가결)",
-          "잠정\\s*합의안?.{0,12}(?:가결|통과)",
+          "임단협.{0,12}(?:조인|체결)",
           "(?:단체협약|임금협약).{0,8}(?:조인|체결)",
           "노사.{0,10}(?:최종\\s*합의|협상\\s*타결)"
         ]
@@ -276,7 +293,9 @@
     "guards": {
       "future": [
         {
-          "stageCodes": ["bargaining"],
+          "stageCodes": [
+            "bargaining"
+          ],
           "fallbackStage": "preparation",
           "patterns": [
             "(?:교섭|협상).{0,8}(?:예정|계획|방침|앞두고|열기로)",
@@ -284,7 +303,9 @@
           ]
         },
         {
-          "stageCodes": ["breakdown_mediation"],
+          "stageCodes": [
+            "breakdown_mediation"
+          ],
           "fallbackStage": "bargaining",
           "patterns": [
             "(?:조정\\s*신청|교섭\\s*결렬).{0,8}(?:예정|예고|계획|방침|검토)",
@@ -292,7 +313,9 @@
           ]
         },
         {
-          "stageCodes": ["industrial_action"],
+          "stageCodes": [
+            "industrial_action"
+          ],
           "fallbackStage": "manual_review",
           "patterns": [
             "(?:파업|쟁의행위|준법투쟁).{0,10}(?:예정|예고|계획|방침|검토|찬반투표를?\\s*앞두고)",
@@ -301,14 +324,18 @@
           ]
         },
         {
-          "stageCodes": ["tentative_agreement"],
+          "stageCodes": [
+            "tentative_agreement"
+          ],
           "fallbackStage": "bargaining",
           "patterns": [
             "잠정\\s*합의(?:할|를?\\s*추진|를?\\s*목표).{0,6}(?:예정|계획|방침)?"
           ]
         },
         {
-          "stageCodes": ["final_agreement"],
+          "stageCodes": [
+            "final_agreement"
+          ],
           "fallbackStage": "tentative_agreement",
           "patterns": [
             "(?:타결|최종\\s*합의).{0,8}(?:예정|전망|기대|목표|계획)",
@@ -318,21 +345,27 @@
       ],
       "negation": [
         {
-          "stageCodes": ["bargaining"],
+          "stageCodes": [
+            "bargaining"
+          ],
           "fallbackStage": "manual_review",
           "patterns": [
             "(?:교섭|협상).{0,7}(?:안\\s*해|않|거부|부인)"
           ]
         },
         {
-          "stageCodes": ["breakdown_mediation"],
+          "stageCodes": [
+            "breakdown_mediation"
+          ],
           "fallbackStage": "bargaining",
           "patterns": [
             "(?:결렬|조정\\s*신청).{0,7}(?:아니|않|부인)"
           ]
         },
         {
-          "stageCodes": ["industrial_action"],
+          "stageCodes": [
+            "industrial_action"
+          ],
           "fallbackStage": "manual_review",
           "patterns": [
             "(?:파업|쟁의행위).{0,9}(?:안\\s*해|않|없|철회|유보|중단|취소|부인)",
@@ -340,14 +373,18 @@
           ]
         },
         {
-          "stageCodes": ["tentative_agreement"],
+          "stageCodes": [
+            "tentative_agreement"
+          ],
           "fallbackStage": "bargaining",
           "patterns": [
             "잠정\\s*합의안?.{0,9}(?:아니|부인|무산|부결|거부|폐기)"
           ]
         },
         {
-          "stageCodes": ["final_agreement"],
+          "stageCodes": [
+            "final_agreement"
+          ],
           "fallbackStage": "breakdown_mediation",
           "patterns": [
             "(?:타결|최종\\s*합의).{0,9}(?:아니|못|실패|불발|무산|부인)"
@@ -364,22 +401,65 @@
         "tentative_agreement",
         "final_agreement"
       ],
-      "stateKey": ["companyId", "bargainingUnitId"],
+      "stateKey": [
+        "companyId",
+        "bargainingUnitId"
+      ],
       "neverInferMonotonicProgressFromDateAlone": true,
       "manualReviewOnUnknownUnitWhenMultipleUnits": true
     },
     "statusFramework": {
       "states": [
-        { "code": "U", "name": "unverified", "label": "올해 현황 미확인" },
-        { "code": "S0", "name": "not_started", "label": "미착수·기존협약 확인" },
-        { "code": "S1", "name": "preparing", "label": "요구안 준비·확정" },
-        { "code": "S2", "name": "representation", "label": "대표·교섭단위 정비" },
-        { "code": "S3", "name": "bargaining", "label": "본교섭 진행" },
-        { "code": "S4", "name": "impasse_mediation", "label": "교착·조정 경로" },
-        { "code": "S5", "name": "tentative", "label": "잠정합의" },
-        { "code": "S6", "name": "ratification", "label": "인준·서명 대기" },
-        { "code": "S7", "name": "signed_effective", "label": "최종 체결·발효" },
-        { "code": "S8", "name": "implementation", "label": "이행·사후관리" }
+        {
+          "code": "U",
+          "name": "unverified",
+          "label": "올해 현황 미확인"
+        },
+        {
+          "code": "S0",
+          "name": "not_started",
+          "label": "미착수·기존협약 확인"
+        },
+        {
+          "code": "S1",
+          "name": "preparing",
+          "label": "요구안 준비·확정"
+        },
+        {
+          "code": "S2",
+          "name": "representation",
+          "label": "대표·교섭단위 정비"
+        },
+        {
+          "code": "S3",
+          "name": "bargaining",
+          "label": "본교섭 진행"
+        },
+        {
+          "code": "S4",
+          "name": "impasse_mediation",
+          "label": "교착·조정 경로"
+        },
+        {
+          "code": "S5",
+          "name": "tentative",
+          "label": "잠정합의"
+        },
+        {
+          "code": "S6",
+          "name": "ratification",
+          "label": "인준·서명 대기"
+        },
+        {
+          "code": "S7",
+          "name": "signed_effective",
+          "label": "최종 체결·발효"
+        },
+        {
+          "code": "S8",
+          "name": "implementation",
+          "label": "이행·사후관리"
+        }
       ],
       "eventStates": [
         "planned",
@@ -689,31 +769,41 @@
             "code": "AUTO_EXTENSION",
             "label": "협약 자동연장",
             "eventState": "occurred",
-            "patterns": ["(?:협약|단체협약).{0,10}자동\\s*연장"]
+            "patterns": [
+              "(?:협약|단체협약).{0,10}자동\\s*연장"
+            ]
           },
           {
             "code": "THREE_MONTH_CONTINUATION",
             "label": "3개월 효력 지속",
             "eventState": "occurred",
-            "patterns": ["(?:협약|단체협약).{0,12}3개월.{0,8}(?:효력|지속|연장)"]
+            "patterns": [
+              "(?:협약|단체협약).{0,12}3개월.{0,8}(?:효력|지속|연장)"
+            ]
           },
           {
             "code": "EXPIRING",
             "label": "협약 만료 예정",
             "eventState": "planned",
-            "patterns": ["(?:협약|단체협약).{0,10}(?:만료\\s*예정|만료\\s*임박)"]
+            "patterns": [
+              "(?:협약|단체협약).{0,10}(?:만료\\s*예정|만료\\s*임박)"
+            ]
           },
           {
             "code": "EXPIRED",
             "label": "협약 만료",
             "eventState": "occurred",
-            "patterns": ["(?:협약|단체협약).{0,10}(?:만료|효력\\s*상실)"]
+            "patterns": [
+              "(?:협약|단체협약).{0,10}(?:만료|효력\\s*상실)"
+            ]
           },
           {
             "code": "ACTIVE",
             "label": "협약 유효",
             "eventState": "occurred",
-            "patterns": ["(?:협약|단체협약).{0,10}(?:유효|효력\\s*유지)"]
+            "patterns": [
+              "(?:협약|단체협약).{0,10}(?:유효|효력\\s*유지)"
+            ]
           }
         ]
       }
@@ -724,31 +814,68 @@
       "id": "samsung-electronics",
       "name": "삼성전자",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "aliases": ["삼성전자", "Samsung Electronics"],
+      "aliases": [
+        "삼성전자",
+        "Samsung Electronics"
+      ],
       "bargainingUnits": [
         {
           "id": "representative-union",
           "name": "교섭대표 노동조합",
-          "aliases": ["전국삼성전자노동조합", "전삼노", "교섭대표노조"]
+          "aliases": [
+            "전국삼성전자노동조합",
+            "전삼노",
+            "교섭대표노조"
+          ]
         },
         {
           "id": "works-council",
           "name": "노사협의회",
-          "aliases": ["삼성전자 노사협의회", "노사협의회"]
+          "aliases": [
+            "삼성전자 노사협의회",
+            "노사협의회"
+          ]
         },
         {
           "id": "office-union",
           "name": "사무직·소수 노동조합",
-          "aliases": ["삼성전자 사무직노조", "동행노조", "구미네트워크노조"]
+          "aliases": [
+            "삼성전자 사무직노조",
+            "동행노조",
+            "구미네트워크노조"
+          ]
         }
       ],
       "queries": [
@@ -763,26 +890,60 @@
       "id": "lg-electronics",
       "name": "LG전자",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "aliases": ["LG전자", "엘지전자", "LG Electronics"],
+      "aliases": [
+        "LG전자",
+        "엘지전자",
+        "LG Electronics"
+      ],
       "bargainingUnits": [
         {
           "id": "production-union",
           "name": "생산직 노동조합",
-          "aliases": ["LG전자 노동조합", "엘지전자 노동조합", "금속노련 LG전자"]
+          "aliases": [
+            "LG전자 노동조합",
+            "엘지전자 노동조합",
+            "금속노련 LG전자"
+          ]
         },
         {
           "id": "office-union",
           "name": "사무직 노동조합",
-          "aliases": ["LG전자 사무직노조", "사람중심 사무직노조"]
+          "aliases": [
+            "LG전자 사무직노조",
+            "사람중심 사무직노조"
+          ]
         }
       ],
       "queries": [
@@ -797,21 +958,53 @@
       "id": "hyundai-motor",
       "name": "현대자동차",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "aliases": ["현대자동차", "현대차", "Hyundai Motor"],
+      "aliases": [
+        "현대자동차",
+        "현대차",
+        "Hyundai Motor"
+      ],
       "bargainingUnits": [
         {
           "id": "metal-union-branch",
           "name": "금속노조 현대자동차지부",
-          "aliases": ["금속노조 현대자동차지부", "현대자동차지부", "현대차 노조", "현대차노조"]
+          "aliases": [
+            "금속노조 현대자동차지부",
+            "현대자동차지부",
+            "현대차 노조",
+            "현대차노조"
+          ]
         }
       ],
       "queries": [
@@ -826,21 +1019,53 @@
       "id": "kia",
       "name": "기아",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "aliases": ["기아", "기아차", "Kia"],
+      "aliases": [
+        "기아",
+        "기아차",
+        "Kia"
+      ],
       "bargainingUnits": [
         {
           "id": "metal-union-branch",
           "name": "금속노조 기아지부",
-          "aliases": ["금속노조 기아지부", "기아지부", "기아 노조", "기아차 노조"]
+          "aliases": [
+            "금속노조 기아지부",
+            "기아지부",
+            "기아 노조",
+            "기아차 노조"
+          ]
         }
       ],
       "queries": [
@@ -855,26 +1080,62 @@
       "id": "sk-hynix",
       "name": "SK하이닉스",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "aliases": ["SK하이닉스", "에스케이하이닉스", "SK hynix"],
+      "aliases": [
+        "SK하이닉스",
+        "에스케이하이닉스",
+        "SK hynix"
+      ],
       "bargainingUnits": [
         {
           "id": "production-union",
           "name": "생산직 노동조합",
-          "aliases": ["SK하이닉스 노동조합", "하이닉스 노동조합", "이천 노조", "청주 노조"]
+          "aliases": [
+            "SK하이닉스 노동조합",
+            "하이닉스 노동조합",
+            "이천 노조",
+            "청주 노조"
+          ]
         },
         {
           "id": "technical-office-union",
           "name": "기술사무직 노동조합",
-          "aliases": ["SK하이닉스 기술사무직지회", "하이닉스 기술사무직노조", "기술사무직지회"]
+          "aliases": [
+            "SK하이닉스 기술사무직지회",
+            "하이닉스 기술사무직노조",
+            "기술사무직지회"
+          ]
         }
       ],
       "queries": [
@@ -889,26 +1150,60 @@
       "id": "posco",
       "name": "포스코",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "aliases": ["포스코", "POSCO", "포항제철"],
+      "aliases": [
+        "포스코",
+        "POSCO",
+        "포항제철"
+      ],
       "bargainingUnits": [
         {
           "id": "posco-labor-union",
           "name": "포스코노동조합",
-          "aliases": ["포스코노동조합", "포스코 노조", "금속노련 포스코"]
+          "aliases": [
+            "포스코노동조합",
+            "포스코 노조",
+            "금속노련 포스코"
+          ]
         },
         {
           "id": "metal-union-branch",
           "name": "금속노조 포스코지회",
-          "aliases": ["금속노조 포스코지회", "포스코지회"]
+          "aliases": [
+            "금속노조 포스코지회",
+            "포스코지회"
+          ]
         }
       ],
       "queries": [
@@ -923,26 +1218,62 @@
       "id": "hyundai-steel",
       "name": "현대제철",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "aliases": ["현대제철", "Hyundai Steel"],
+      "aliases": [
+        "현대제철",
+        "Hyundai Steel"
+      ],
       "bargainingUnits": [
         {
           "id": "metal-union-units",
           "name": "금속노조 사업장별 지회",
-          "aliases": ["금속노조 현대제철", "현대제철지회", "당진지회", "인천지회", "포항지회", "순천지회"]
+          "aliases": [
+            "금속노조 현대제철",
+            "현대제철지회",
+            "당진지회",
+            "인천지회",
+            "포항지회",
+            "순천지회"
+          ]
         },
         {
           "id": "hyundai-steel-union",
           "name": "현대제철 노동조합",
-          "aliases": ["현대제철 노동조합", "현대제철 노조"]
+          "aliases": [
+            "현대제철 노동조합",
+            "현대제철 노조"
+          ]
         }
       ],
       "queries": [
@@ -957,26 +1288,60 @@
       "id": "hd-hyundai-heavy-industries",
       "name": "HD현대중공업",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "aliases": ["HD현대중공업", "현대중공업", "Hyundai Heavy Industries"],
+      "aliases": [
+        "HD현대중공업",
+        "현대중공업",
+        "Hyundai Heavy Industries"
+      ],
       "bargainingUnits": [
         {
           "id": "metal-union-branch",
           "name": "금속노조 현대중공업지부",
-          "aliases": ["금속노조 현대중공업지부", "현대중공업지부", "현중 노조"]
+          "aliases": [
+            "금속노조 현대중공업지부",
+            "현대중공업지부",
+            "현중 노조"
+          ]
         },
         {
           "id": "office-union",
           "name": "사무직 노동조합",
-          "aliases": ["HD현대중공업 사무직노조", "현대중공업 사무직노조"]
+          "aliases": [
+            "HD현대중공업 사무직노조",
+            "현대중공업 사무직노조"
+          ]
         }
       ],
       "queries": [
@@ -991,26 +1356,60 @@
       "id": "hanwha-ocean",
       "name": "한화오션",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "aliases": ["한화오션", "대우조선해양", "Hanwha Ocean"],
+      "aliases": [
+        "한화오션",
+        "대우조선해양",
+        "Hanwha Ocean"
+      ],
       "bargainingUnits": [
         {
           "id": "metal-union-branch",
           "name": "금속노조 대우조선지회",
-          "aliases": ["금속노조 대우조선지회", "대우조선지회", "한화오션 노조"]
+          "aliases": [
+            "금속노조 대우조선지회",
+            "대우조선지회",
+            "한화오션 노조"
+          ]
         },
         {
           "id": "office-union",
           "name": "사무직 노동조합",
-          "aliases": ["한화오션 사무직노조", "대우조선 사무직노조"]
+          "aliases": [
+            "한화오션 사무직노조",
+            "대우조선 사무직노조"
+          ]
         }
       ],
       "queries": [
@@ -1025,26 +1424,61 @@
       "id": "gm-korea",
       "name": "한국GM",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "aliases": ["한국GM", "한국지엠", "GM Korea"],
+      "aliases": [
+        "한국GM",
+        "한국지엠",
+        "GM Korea"
+      ],
       "bargainingUnits": [
         {
           "id": "metal-union-branch",
           "name": "금속노조 한국지엠지부",
-          "aliases": ["금속노조 한국지엠지부", "한국지엠지부", "한국GM 노조", "한국지엠 노조"]
+          "aliases": [
+            "금속노조 한국지엠지부",
+            "한국지엠지부",
+            "한국GM 노조",
+            "한국지엠 노조"
+          ]
         },
         {
           "id": "office-union",
           "name": "사무직 노동조합",
-          "aliases": ["한국GM 사무직노조", "한국지엠 사무직노조"]
+          "aliases": [
+            "한국GM 사무직노조",
+            "한국지엠 사무직노조"
+          ]
         }
       ],
       "queries": [
@@ -1059,21 +1493,49 @@
       "id": "hyundai-mobis",
       "name": "현대모비스",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "HIGH", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed_t1_direct_employee_only",
         "needsReview": true
       },
-      "aliases": ["현대모비스", "Hyundai Mobis"],
+      "aliases": [
+        "현대모비스",
+        "Hyundai Mobis"
+      ],
       "bargainingUnits": [
         {
           "id": "hyundai-mobis-direct-union",
           "name": "현대모비스 직접고용 노동조합",
-          "aliases": ["현대모비스 노동조합"]
+          "aliases": [
+            "현대모비스 노동조합"
+          ]
         }
       ],
       "queries": [
@@ -1088,21 +1550,50 @@
       "id": "doosan-enerbility",
       "name": "두산에너빌리티",
       "selection": {
-        "scale": { "rating": "HIGH", "verifiedAt": null },
-        "industryImpact": { "rating": "HIGH", "verifiedAt": null },
-        "mediaExposure": { "rating": "MEDIUM", "verifiedAt": null },
-        "majorityUnion": { "status": "UNKNOWN", "numerator": null, "denominator": null, "calculationBasis": null, "evidenceDate": null, "evidenceUrl": null, "verifiedAt": null },
-        "representativeBargainingUnion": { "status": "UNKNOWN", "verifiedAt": null },
-        "directEmploymentUnionizationRate": { "value": null, "verifiedAt": null },
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
         "basis": "editorial_seed_t2_direct_employee_only",
         "needsReview": true
       },
-      "aliases": ["두산에너빌리티", "두산에너빌리티㈜", "Doosan Enerbility"],
+      "aliases": [
+        "두산에너빌리티",
+        "두산에너빌리티㈜",
+        "Doosan Enerbility"
+      ],
       "bargainingUnits": [
         {
           "id": "doosan-enerbility-direct-union",
           "name": "두산에너빌리티 직접고용 노동조합",
-          "aliases": ["두산에너빌리티 노동조합"]
+          "aliases": [
+            "두산에너빌리티 노동조합"
+          ]
         }
       ],
       "queries": [
