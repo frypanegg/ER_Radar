@@ -73,6 +73,8 @@ type TrackingCompany = {
 
 type CaseExample = {
   id: string;
+  // 연도를 바꿔도 같은 법인을 계속 보려면 카드가 자기 법인을 알아야 한다.
+  companyId: string;
   name: string;
   subtitle: string;
   agreementType: AgreementType;
@@ -276,6 +278,7 @@ function getBargainingCases(
     if (!record) {
       return {
         id: `${company.id}-${year}-unverified`,
+        companyId: company.id,
         name: company.legalName,
         subtitle: "원청 노조 교섭 근거 미확인",
         agreementType: "UNKNOWN",
@@ -313,6 +316,7 @@ function getBargainingCases(
 
     return {
       id: record.id,
+      companyId: record.companyId,
       name: record.companyLegalName,
       subtitle: record.unionName,
       agreementType: record.agreementType,
@@ -664,8 +668,14 @@ export default function Home() {
                   role="tab"
                   aria-selected={selectedYear === year}
                   onClick={() => {
+                    // 연도만 바꾸는 것이지 보고 있던 회사를 바꾸는 게 아니다. 같은 법인의
+                    // 그 해 기록으로 이어가고, 그 법인이 목록에 없을 때만 첫 항목으로 간다.
                     setSelectedYear(year);
-                    setSelectedId(getBargainingCases(year)[0]?.id ?? "");
+                    const nextCases = getBargainingCases(year, activeRecords);
+                    const sameCompany = nextCases.find(
+                      (item) => item.companyId === selectedCase.companyId,
+                    );
+                    setSelectedId(sameCompany?.id ?? nextCases[0]?.id ?? "");
                   }}
                 >
                   {getYearLabel(year)}
@@ -685,7 +695,11 @@ export default function Home() {
                     key={filter.id}
                     onClick={() => {
                       setActiveFilter(filter.id);
-                      const next = caseExamples.find((item) => filter.id === "ALL" || item.agreementType === filter.id);
+                      // 보고 있던 기록이 새 필터에도 남아 있으면 선택을 유지한다.
+                      const matches = (item: CaseExample) =>
+                        filter.id === "ALL" || item.agreementType === filter.id;
+                      if (matches(selectedCase)) return;
+                      const next = caseExamples.find(matches);
                       if (next) setSelectedId(next.id);
                     }}
                     role="tab"
