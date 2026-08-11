@@ -22,6 +22,12 @@
       "researchedOn": "2026-08-12",
       "scope": "한국지엠 2025, 현대모비스 2025",
       "note": "한 기사가 전체 일정을 요약한 경우 같은 URL로 여러 사건을 기록했다. 현대모비스 상견례 날짜는 검색 요약의 추정이라 넣지 않았다."
+    },
+    {
+      "batch": 3,
+      "researchedOn": "2026-08-12",
+      "scope": "HD현대중공업 2025, 한화오션 2025",
+      "note": "현대제철 2025는 검색 결과가 전부 2026년 기사(상견례 5/8, 투표 8/3~5)여서 넣지 않았다. 2026년 교섭을 2025년으로 옮기면 안 된다."
     }
   ],
   "events": [
@@ -128,6 +134,62 @@
       "label": "3개 노조 찬반투표 가결",
       "summary": "울산 모비스위원회 58.66%, 진천 노조 53.60%, 창원지회 64.04% 찬성으로 마무리됐다.",
       "sourceUrl": "https://www.etnews.com/20251017000394"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2025-wage-signing",
+      "date": "2025-05-20",
+      "stage": "S3",
+      "label": "임금협상 상견례",
+      "summary": "HD현대중공업 노사가 5월 20일 2025년 임금협상 상견례를 열었다.",
+      "sourceUrl": "https://www.smartfn.co.kr/news/articleView.html?idxno=120773"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2025-wage-signing",
+      "date": "2025-07-18",
+      "stage": "S5",
+      "label": "1차 잠정합의",
+      "summary": "기본급 13만3,000원 인상(호봉승급분 포함)을 담은 1차 잠정합의안을 마련했다.",
+      "sourceUrl": "https://www.newsis.com/view/NISX20250718_0003257976"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2025-wage-signing",
+      "date": "2025-07-22",
+      "stage": "S3",
+      "label": "1차 잠정합의안 부결",
+      "summary": "조합원 6,551명 중 6,193명 투표에 찬성 2,203명(35.57%)·반대 3,949명(63.77%)으로 부결돼 교섭이 다시 진행됐다.",
+      "sourceUrl": "https://www.etoday.co.kr/news/view/2490161"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2025-wage-signing",
+      "date": "2025-09-17",
+      "stage": "S5",
+      "label": "24차 교섭 2차 잠정합의",
+      "summary": "9월 17일 24차 교섭에서 2차 잠정합의안을 마련했다.",
+      "sourceUrl": "https://www.cnbnews.com/news/article.html?no=750988"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2025-wage-signing",
+      "date": "2025-09-19",
+      "stage": "S6",
+      "label": "2차 잠정합의안 가결",
+      "summary": "투표율 93.07%에 찬성 59.56%로 2차 잠정합의안이 가결됐다.",
+      "sourceUrl": "https://www.ajunews.com/view/20250919171800368"
+    },
+    {
+      "recordId": "hanwha-ocean-2025-wage-signing",
+      "date": "2025-07-24",
+      "stage": "S6",
+      "label": "조합원 찬반투표 통과",
+      "summary": "7월 24일 조합원 찬반투표에서 찬성 61.7%로 교섭안이 통과됐다.",
+      "sourceUrl": "https://www.geojenews.co.kr/news/articleView.html?idxno=77647"
+    },
+    {
+      "recordId": "hanwha-ocean-2025-wage-signing",
+      "date": "2025-09-02",
+      "stage": "S7",
+      "label": "임금교섭 타결 조인식",
+      "summary": "전국금속노조 경남지부 한화오션지회와 9월 2일 2025년 임금교섭 타결 조인식을 진행했다.",
+      "sourceUrl": "https://www.ajunews.com/view/20250902133615743"
     }
   ]
 }
