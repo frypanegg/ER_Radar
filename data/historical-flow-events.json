@@ -34,6 +34,12 @@
       "researchedOn": "2026-08-12",
       "scope": "SK하이닉스 2025, 삼성전자 2025·2024·2023",
       "note": "SK하이닉스 9/5 조인식은 기사에 '예정'으로만 나와 제외했다. LG전자 2025는 결과만 보도되어 과정 사건을 확보하지 못했다. 삼성전자는 2023·2024 임금협약이 2025년 조인식에서 함께 완료된 것이 확인돼 이월 기록에도 사건을 붙였다."
+    },
+    {
+      "batch": 5,
+      "researchedOn": "2026-08-12",
+      "scope": "현대자동차 2024, 한국지엠 2024",
+      "note": "한국지엠의 첫 잠정합의안은 날짜가 확인되지 않아 넣지 않고, '두 번째'라는 보도 표현만 라벨에 남겼다."
     }
   ],
   "events": [
@@ -244,6 +250,54 @@
       "label": "2023년 임금협약 함께 완료",
       "summary": "수년째 미뤄졌던 2023년 임금협약이 2025년 조인식에서 함께 마무리됐다.",
       "sourceUrl": "https://www.sedaily.com/NewsView/2GQ4LTFWT3"
+    },
+    {
+      "recordId": "hyundai-motor:2024:WAGE:2024-07-15:https://news.tf.co.kr/read/economy/2115867.htm",
+      "date": "2024-05-23",
+      "stage": "S3",
+      "label": "임금협상 상견례",
+      "summary": "현대자동차 노사가 5월 23일 2024년 임금협상 상견례를 열었다.",
+      "sourceUrl": "https://www.laborplus.co.kr/news/articleView.html?idxno=34092"
+    },
+    {
+      "recordId": "hyundai-motor:2024:WAGE:2024-07-15:https://news.tf.co.kr/read/economy/2115867.htm",
+      "date": "2024-07-08",
+      "stage": "S5",
+      "label": "11차 교섭 잠정합의",
+      "summary": "울산공장에서 열린 11차 임금교섭에서 잠정합의안을 도출했다.",
+      "sourceUrl": "https://www.laborplus.co.kr/news/articleView.html?idxno=34092"
+    },
+    {
+      "recordId": "hyundai-motor:2024:WAGE:2024-07-15:https://news.tf.co.kr/read/economy/2115867.htm",
+      "date": "2024-07-13",
+      "stage": "S6",
+      "label": "조합원 찬반투표 가결",
+      "summary": "조합원 찬반투표에서 찬성 58.93%(2만 1,563명)로 잠정합의안이 가결됐다.",
+      "sourceUrl": "https://www.laborplus.co.kr/news/articleView.html?idxno=34092"
+    },
+    {
+      "recordId": "hyundai-motor:2024:WAGE:2024-07-15:https://news.tf.co.kr/read/economy/2115867.htm",
+      "date": "2024-07-15",
+      "stage": "S7",
+      "label": "임금협상 조인식",
+      "summary": "7월 15일 울산공장에서 노사 교섭대표가 참석해 2024년 임금협상 조인식을 열었다.",
+      "sourceUrl": "https://www.news1.kr/local/ulsan/5479738"
+    },
+    {
+      "recordId": "gm-korea-2024-integrated-ratification",
+      "date": "2024-08-30",
+      "stage": "S5",
+      "label": "두 번째 잠정합의안 도출",
+      "summary": "노사가 8월 30일 2024년 임단협 두 번째 잠정합의안을 도출했다.",
+      "sourceUrl": "https://www.dizzotv.com/site/data/html_dir/2024/08/30/2024083080237.html"
+    },
+    {
+      "recordId": "gm-korea-2024-integrated-ratification",
+      "date": "2024-09-04",
+      "stage": "S6",
+      "label": "조합원 찬반투표 가결",
+      "summary": "9월 3~4일 조합원 총회 투표에서 6,915명 중 4,173명(60.3%) 찬성으로 가결됐다.",
+      "sourceUrl": "https://www.mt.co.kr/industry/2024/09/04/2024090416012091718"
     }
   ]
 }

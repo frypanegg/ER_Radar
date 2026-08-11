@@ -108,10 +108,24 @@ export type HistoryInput = {
   flowEvents?: FlowEvent[];
 };
 
+/** U는 좌표 미확인이라 가장 앞, S0~S8은 숫자 순서를 그대로 쓴다. */
+export function stageRankOf(stage: string) {
+  if (!stage || stage === "U") return -1;
+  const rank = Number.parseInt(stage.slice(1), 10);
+  return Number.isFinite(rank) ? rank : -1;
+}
+
+/**
+ * 같은 날 두 사건이 있으면 날짜만으로는 순서가 정해지지 않는다. 잠정합의 가결과 조인식이
+ * 같은 날 이뤄지는 일이 흔하고(삼성전자 2025-03-05), 그때는 뒤 단계가 나중 일이다.
+ * 날짜가 같으면 단계 순위로 가른다.
+ */
+export function compareEventsAscending(left: FlowEvent, right: FlowEvent) {
+  return left.date.localeCompare(right.date) || stageRankOf(left.stage) - stageRankOf(right.stage);
+}
+
 export function deriveCaseHistory(record: HistoryInput): CaseHistory {
-  const timeline = [...(record.flowEvents ?? [])].sort((left, right) =>
-    left.date.localeCompare(right.date),
-  );
+  const timeline = [...(record.flowEvents ?? [])].sort(compareEventsAscending);
   const text = textOf(record);
   const eventYear = Number.parseInt(record.eventDate.slice(0, 4), 10);
   const settled = record.stage === "S7" || record.stage === "S8";

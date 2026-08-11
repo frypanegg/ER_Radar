@@ -851,7 +851,23 @@
       "id": "gm-korea-2024-integrated-ratification",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://news.tf.co.kr/read/economy/2130960.htm"
+      "originalUrl": "https://news.tf.co.kr/read/economy/2130960.htm",
+      "flowEvents": [
+        {
+          "date": "2024-08-30",
+          "stage": "S5",
+          "label": "두 번째 잠정합의안 도출",
+          "summary": "노사가 8월 30일 2024년 임단협 두 번째 잠정합의안을 도출했다.",
+          "sourceUrl": "https://www.dizzotv.com/site/data/html_dir/2024/08/30/2024083080237.html"
+        },
+        {
+          "date": "2024-09-04",
+          "stage": "S6",
+          "label": "조합원 찬반투표 가결",
+          "summary": "9월 3~4일 조합원 총회 투표에서 6,915명 중 4,173명(60.3%) 찬성으로 가결됐다.",
+          "sourceUrl": "https://www.mt.co.kr/industry/2024/09/04/2024090416012091718"
+        }
+      ]
     },
     {
       "companyId": "hyundai-motor",
@@ -877,7 +893,37 @@
       "id": "hyundai-motor:2024:WAGE:2024-07-15:https://news.tf.co.kr/read/economy/2115867.htm",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://news.tf.co.kr/read/economy/2115867.htm"
+      "originalUrl": "https://news.tf.co.kr/read/economy/2115867.htm",
+      "flowEvents": [
+        {
+          "date": "2024-05-23",
+          "stage": "S3",
+          "label": "임금협상 상견례",
+          "summary": "현대자동차 노사가 5월 23일 2024년 임금협상 상견례를 열었다.",
+          "sourceUrl": "https://www.laborplus.co.kr/news/articleView.html?idxno=34092"
+        },
+        {
+          "date": "2024-07-08",
+          "stage": "S5",
+          "label": "11차 교섭 잠정합의",
+          "summary": "울산공장에서 열린 11차 임금교섭에서 잠정합의안을 도출했다.",
+          "sourceUrl": "https://www.laborplus.co.kr/news/articleView.html?idxno=34092"
+        },
+        {
+          "date": "2024-07-13",
+          "stage": "S6",
+          "label": "조합원 찬반투표 가결",
+          "summary": "조합원 찬반투표에서 찬성 58.93%(2만 1,563명)로 잠정합의안이 가결됐다.",
+          "sourceUrl": "https://www.laborplus.co.kr/news/articleView.html?idxno=34092"
+        },
+        {
+          "date": "2024-07-15",
+          "stage": "S7",
+          "label": "임금협상 조인식",
+          "summary": "7월 15일 울산공장에서 노사 교섭대표가 참석해 2024년 임금협상 조인식을 열었다.",
+          "sourceUrl": "https://www.news1.kr/local/ulsan/5479738"
+        }
+      ]
     },
     {
       "recordId": "hyundai-mobis-2024-integrated-ratification",
@@ -1702,8 +1748,8 @@
     }
   ],
   "timelineCoverage": {
-    "recordsWithTimeline": 11,
-    "recordsResultOnly": 33,
-    "eventsMerged": 26
+    "recordsWithTimeline": 13,
+    "recordsResultOnly": 31,
+    "eventsMerged": 32
   }
 }

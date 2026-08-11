@@ -30,6 +30,13 @@ const REQUIRED_RECORD_FIELDS = [
 ];
 
 const STAGE_CODES = new Set(["U", "S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"]);
+
+/** U는 좌표 미확인이라 가장 앞, S0~S8은 숫자 순서를 그대로 쓴다. */
+function stageRank(stage) {
+  if (!stage || stage === "U") return -1;
+  const rank = Number.parseInt(stage.slice(1), 10);
+  return Number.isFinite(rank) ? rank : -1;
+}
 const AGREEMENT_TYPES = new Set(["WAGE", "CBA", "INTEGRATED", "SUPPLEMENTAL"]);
 
 function readArgs(argv) {
@@ -259,7 +266,12 @@ export function mergeFlowEvents(records, flowEventInput) {
     if (!list || list.length === 0) return record;
     return {
       ...record,
-      flowEvents: [...list].sort((left, right) => left.date.localeCompare(right.date)),
+      // 같은 날 두 사건이 있으면 단계 순위로 가른다. 잠정합의 가결과 조인식이 같은 날
+      // 이뤄지는 일이 흔하고, 그때는 뒤 단계가 나중 일이다.
+      flowEvents: [...list].sort(
+        (left, right) =>
+          left.date.localeCompare(right.date) || stageRank(left.stage) - stageRank(right.stage),
+      ),
     };
   });
 

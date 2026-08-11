@@ -24,6 +24,7 @@ import historicalSeed from "../data/historical-fact-seed.json";
 import currentSeed from "../data/current-2026-fact-seed.json";
 import automationHeartbeat from "../data/automation-heartbeat.json";
 import {
+  compareEventsAscending,
   deriveCaseHistory,
   INDUSTRIAL_ACTION_LABELS,
   issueHighlights,
@@ -841,7 +842,7 @@ export default function Home() {
                 ) : (
                   <ol className="flow-list">
                     {[...selectedCase.flowEvents]
-                      .sort((left, right) => right.date.localeCompare(left.date))
+                      .sort((left, right) => compareEventsAscending(right, left))
                       .map((flow, index) => (
                       <li className="flow-item" key={`${flow.date}-${flow.label}-${index}`}>
                         <time>{formatDate(flow.date)}</time>
