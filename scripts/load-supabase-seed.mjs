@@ -16,6 +16,27 @@ const root = new URL("../", import.meta.url);
 
 const BARGAINING_LEVEL = "ENTERPRISE";
 
+// 시드의 관찰군 표기와 스키마의 허용값이 다르다. 여기서만 옮긴다.
+const COVERAGE_TIER_BY_SEED_TIER = { T1: "CORE", T2: "EXPANDED", T3: "WATCH" };
+
+/**
+ * 사람이 검증한 사실만 공개 상태로 올린다. 제목 기반 자동 수집 기록은 같은 등급이
+ * 아니므로 검토 대기로 넣고 공개하지 않는다.
+ */
+function publicationState(record) {
+  const verified = record.factualStatus === "VERIFIED_SOURCE";
+  return {
+    // 스키마의 공개 CHECK는 include_in_primary_dashboard까지 함께 켜져 있어야 통과한다.
+    // 원청 직접고용 게이트를 DB에서 한 번 더 확인하는 구조다.
+    include_in_primary_dashboard: true,
+    verification_status: verified ? "VERIFIED" : "NEEDS_REVIEW",
+    is_published: verified,
+  };
+}
+
+// 주 단계에서 사건 상태를 옮긴다. 체결은 합의, 이행은 이행 중, 나머지는 진행 중이다.
+const CASE_STATUS_BY_STAGE = { S7: "AGREED", S8: "IMPLEMENTING" };
+
 /**
  * 같은 값이 환경에 따라 다른 이름으로 들어온다. 수집기가 NAVER 자격증명에서 쓰는 방식과
  * 같이 별칭을 허용해, 운영자가 파일의 키 이름을 바꾸지 않아도 되게 한다.
@@ -49,7 +70,10 @@ export function buildCompanyRows(trackingCompanies) {
     legal_name: company.legalName,
     display_name: company.legalName.replace(/\s*주식회사\s*/g, " ").trim(),
     industry: company.industry,
-    coverage_tier: company.tier,
+    coverage_tier: COVERAGE_TIER_BY_SEED_TIER[company.tier] ?? "WATCH",
+    // 추적 목록의 12개 법인은 사람이 확정한 대상이다.
+    verification_status: "VERIFIED",
+    is_published: true,
   }));
 }
 
@@ -71,6 +95,17 @@ export function buildCaseRow(record, companyIdBySlug) {
     covered_worker_scope_name: "해당 법인 직접고용 근로자",
     covered_worker_relation: "DIRECT",
     scope_classification: "PRIMARY_DIRECT_UNION",
+    primary_stage: record.stage,
+    stage_observed_at: `${record.eventDate}T00:00:00Z`,
+    case_status: CASE_STATUS_BY_STAGE[record.stage] ?? "OPEN",
+    current_fact_summary: record.factSummary,
+    latest_event_on: record.eventDate,
+    scope_evidence_url: record.scopeEvidenceUrl ?? null,
+    scope_evidence_summary: record.directEmploymentEvidence ?? null,
+    scope_review_rule_version: record.scopeRuleVersion ?? null,
+    source_tier: record.sourceTier,
+    confidence_score: record.confidence,
+    ...publicationState(record),
   };
 }
 
@@ -105,6 +140,8 @@ export function buildEventRows(record, ids) {
     fact_summary: event.fact_summary,
     scope_classification: "PRIMARY_DIRECT_UNION",
     covered_worker_relation: "DIRECT",
+    source_tier: record.sourceTier,
+    ...publicationState(record),
     // 같은 사건을 두 번 넣지 않기 위한 자연키. 재실행해도 결과가 같아야 한다.
     dedupe_key: `${record.recordId ?? record.id}|${event.stage_after}|${event.occurred_on}|${event.source_url}`,
   }));
@@ -114,22 +151,31 @@ export function buildSourceRow(record) {
   return {
     original_url: record.sourceUrl,
     publisher_name: record.sourceName,
-    source_type: "NEWS_ARTICLE",
+    // 스키마가 허용하는 값은 OFFICIAL_EMPLOYER·OFFICIAL_UNION·PUBLIC_AGENCY·
+    // COURT_OR_COMMISSION·NEWS·OTHER다. 시드의 근거는 대부분 언론 보도다.
+    source_type: "NEWS",
+    headline: record.title,
+    source_published_at: `${record.eventDate}T00:00:00Z`,
     source_tier: record.sourceTier,
+    confidence_score: record.confidence,
+    verification_status: record.factualStatus === "VERIFIED_SOURCE" ? "VERIFIED" : "NEEDS_REVIEW",
+    is_published: record.factualStatus === "VERIFIED_SOURCE",
   };
 }
 
 async function postRows(baseUrl, key, table, rows, conflictTarget) {
   if (rows.length === 0) return [];
   const url = new URL(`${baseUrl.replace(/\/$/, "")}/rest/v1/${table}`);
+  // PostgREST는 업서트 충돌 대상을 쿼리 파라미터로 받는다. 헤더로 보내면 무시되고
+  // 중복 키 오류가 난다. 재실행 가능성이 이 파라미터에 달려 있다.
+  if (conflictTarget) url.searchParams.set("on_conflict", conflictTarget);
   const response = await fetch(url, {
     method: "POST",
     headers: {
       apikey: key,
       authorization: `Bearer ${key}`,
       "content-type": "application/json",
-      prefer: `return=representation,resolution=merge-duplicates`,
-      ...(conflictTarget ? { "on-conflict": conflictTarget } : {}),
+      prefer: "return=representation,resolution=merge-duplicates",
     },
     body: JSON.stringify(rows),
   });
@@ -186,7 +232,7 @@ async function main() {
       key,
       "bargaining_cases",
       [caseRow],
-      "bargaining_unit_key",
+      "company_id,bargaining_year,agreement_type,bargaining_unit_key,covered_worker_scope_key",
     );
     await postRows(baseUrl, key, "sources", [buildSourceRow(record)], "original_url");
     const eventRows = buildEventRows(record, {
@@ -194,7 +240,7 @@ async function main() {
       companyId: caseRow.company_id,
       employerId: caseRow.direct_employer_company_id,
     });
-    await postRows(baseUrl, key, "bargaining_events", eventRows, "dedupe_key");
+    await postRows(baseUrl, key, "bargaining_events", eventRows, "bargaining_case_id,dedupe_key");
     eventTotal += eventRows.length;
   }
 
