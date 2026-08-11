@@ -1257,6 +1257,98 @@ a:focus-visible {
   background: #f7f9fb;
 }
 
+/* 상단 메뉴는 왼쪽에 모으고 추적 기업 추가만 오른쪽으로 밀어낸다. */
+.header-inner-left {
+  justify-content: flex-start;
+  gap: 18px;
+}
+
+.header-inner-left .header-action {
+  margin-left: auto;
+}
+
+/* 서비스 이름을 히어로 제목 자리에서 아이콘과 함께 보여준다. */
+.hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 그 해에 체결됐는지, 이듬해로 넘어갔는지를 단계 옆에서 바로 읽게 한다. */
+.settlement-chip {
+  display: inline-flex;
+  align-items: center;
+  margin: 2px 0 6px;
+  padding: 2px 9px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.settlement-settled {
+  color: #177c5d;
+  border-color: #b6e0cd;
+  background: #e9f8f1;
+}
+
+.settlement-continued_past_year {
+  color: #9a5a1c;
+  border-color: #e8cba6;
+  background: #fdf3e6;
+}
+
+.settlement-settlement_unconfirmed {
+  color: #6b7684;
+  border-color: #d6dde5;
+  background: #f4f6f8;
+}
+
+/* 교섭 경과의 누적 지표. 과거 기록에서 "무엇이 비어 있는지"도 함께 읽힌다. */
+.flow-rollup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f7f9fb;
+  color: #6b7684;
+  font-size: 11px;
+}
+
+.flow-rollup strong {
+  color: #23303f;
+  font-weight: 750;
+}
+
+.flow-carryover-note {
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  border-left: 3px solid #e0b070;
+  background: #fdf7ee;
+  color: #7d5a26;
+  font-size: 11px;
+}
+
+/* 이슈 칸은 여러 항목을 담으므로 목록으로 쌓는다. */
+.identity-issues {
+  grid-column: span 2;
+}
+
+.identity-issue-list {
+  margin: 2px 0 0;
+  padding-left: 14px;
+  color: #23303f;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.identity-issue-list li {
+  margin: 1px 0;
+}
+
 .overlay-line small {
   color: #8b98a6;
   font-size: 9px;

@@ -23,6 +23,12 @@ import framework from "../data/negotiation-framework.json";
 import historicalSeed from "../data/historical-fact-seed.json";
 import currentSeed from "../data/current-2026-fact-seed.json";
 import automationHeartbeat from "../data/automation-heartbeat.json";
+import {
+  deriveCaseHistory,
+  INDUSTRIAL_ACTION_LABELS,
+  issueHighlights,
+  type CaseHistory,
+} from "./bargaining-history";
 
 type AgreementFilter = "ALL" | "WAGE" | "INTEGRATED" | "CBA" | "SUPPLEMENTAL" | "UNKNOWN";
 type AgreementType = Exclude<AgreementFilter, "ALL">;
@@ -82,18 +88,15 @@ type CaseExample = {
   round?: string;
   majorityUnion: "O" | "X" | "확인중";
   unionMembers: string;
-  electionIssue: string;
+  history: CaseHistory | null;
   issueSummary: string[];
   breakdownReason: string[];
   voteChangeSummary: string[];
-  overlays: { label: string; tone: BadgeTone; group: string }[];
   evidence: { date: string; title: string; source: string; tier: "S" | "A" | "B" | "C" }[];
   sourceAnnotations: { event: string; sourceUrl: string; note: string }[];
   flowEvents: BargainingFlowEvent[];
   next: string;
 };
-
-type BadgeTone = "blue" | "purple" | "orange" | "green" | "gray" | "red";
 
 const stageMeta = framework.enums.primary_stage.map((stage) => ({
   code: stage.code,
@@ -180,14 +183,6 @@ function toBulletPoints(text: string) {
     .filter(Boolean);
 }
 
-function stageOverlay(stage: string): { label: string; tone: BadgeTone; group: string }[] {
-  if (stage === "S7" || stage === "S8") return [{ label: "조인·체결 확인", tone: "green", group: "합의·인준" }];
-  if (stage === "S6") return [{ label: "찬반·인준 확인", tone: "green", group: "합의·인준" }];
-  if (stage === "S5") return [{ label: "잠정합의 확인", tone: "green", group: "합의·인준" }];
-  if (stage === "S4") return [{ label: "교착·조정 확인", tone: "orange", group: "조정·쟁의" }];
-  return [{ label: "원청 노조 근거 보강", tone: "orange", group: "근거 품질" }];
-}
-
 function getBargainingCases(year: number): CaseExample[] {
   return trackingCompanies.map((company) => {
     const record = bargainingRecords
@@ -212,11 +207,10 @@ function getBargainingCases(year: number): CaseExample[] {
         scope: "원청 노조 교섭 근거 미확인 · 공개 단계 갱신 금지",
         majorityUnion: "확인중",
         unionMembers: "공개 근거 미확인",
-        electionIssue: "공개 근거 미확인",
+        history: null,
         issueSummary: ["원청 노조 범위와 해당 연도 교섭 기록을 한 원문에서 함께 확인한 뒤에만 쟁점 표시"],
         breakdownReason: ["결렬 여부 추정 금지"],
         voteChangeSummary: ["찬반투표·최종안·기존 대비 변경을 확인한 원문 없음"],
-        overlays: [{ label: "공개 근거 미확인", tone: "gray", group: "근거 품질" }],
         evidence: [{ date: "—", title: "공개 가능한 원청 노조 사실 없음", source: "검증 보류", tier: "C" }],
         sourceAnnotations: [],
         flowEvents: [],
@@ -224,17 +218,13 @@ function getBargainingCases(year: number): CaseExample[] {
       };
     }
 
+    // 범위 증빙은 공개 대상 판정에만 쓰는 내부 근거다. 화면에서는 교섭 사실을 확인한
+    // 원문만 보여준다. 판정 자체는 수집 단계의 필수 게이트로 그대로 남아 있다.
     const sourceAnnotations = [
       { event: record.title, sourceUrl: record.sourceUrl, note: `${record.sourceName} · ${formatDate(record.eventDate)} · ${record.annotation}` },
-      ...(record.scopeEvidenceUrl && record.scopeEvidenceUrl !== record.sourceUrl
-        ? [{ event: "원청 노조 범위 증빙", sourceUrl: record.scopeEvidenceUrl, note: record.directEmploymentEvidence }]
-        : []),
     ];
     const evidence = [
       { date: record.eventDate.slice(5).replace("-", "."), title: record.title, source: record.sourceName, tier: record.sourceTier },
-      ...(record.scopeEvidenceUrl && record.scopeEvidenceUrl !== record.sourceUrl
-        ? [{ date: "범위", title: "원청 노조 범위 증빙", source: "교섭 범위 검토", tier: "A" as const }]
-        : []),
     ];
 
     return {
@@ -255,7 +245,7 @@ function getBargainingCases(year: number): CaseExample[] {
       round: record.stage === "S7" ? "조인·체결 확인" : record.stage === "S6" ? "찬반·인준 확인" : "원문 교섭 확인",
       majorityUnion: "확인중",
       unionMembers: "공개 근거 미확인",
-      electionIssue: "공개 근거 미확인",
+      history: deriveCaseHistory(record),
       issueSummary: toBulletPoints(record.factSummary),
       breakdownReason: toBulletPoints(
         `${record.bargainingYear === currentYear ? "현재 확인한 기사" : "이 초기 기록"}에 확인된 결렬 사유 없음 · 원문 명시 시에만 별도 쟁점 갱신`,
@@ -264,7 +254,6 @@ function getBargainingCases(year: number): CaseExample[] {
         record.stage === "S6" || record.stage === "S7"
           ? toBulletPoints(record.factSummary)
           : toBulletPoints("찬반투표·최종안의 기존 대비 변경 · 확인된 원문 있을 때만 표시"),
-      overlays: stageOverlay(record.stage),
       evidence,
       sourceAnnotations,
       flowEvents: record.flowEvents?.length
@@ -334,9 +323,6 @@ function StagePill({ stage }: { stage: string }) {
   return <span className={`stage-pill stage-${stage.toLowerCase()}`}>{meta?.shortLabel ?? stage}</span>;
 }
 
-function OverlayBadge({ label, tone }: { label: string; tone: BadgeTone }) {
-  return <span className={`overlay-badge overlay-${tone}`}>{label}</span>;
-}
 
 function RadarMark({ compact = false }: { compact?: boolean }) {
   return (
@@ -389,6 +375,7 @@ export default function Home() {
   const selectedCase =
     visibleCases.find((item) => item.id === selectedId) ?? visibleCases[0] ?? caseExamples[0];
   const selectedStage = stageByCode.get(selectedCase.stage) ?? stageMeta[0];
+  const selectedIssues = selectedCase.history ? issueHighlights(selectedCase.history) : [];
   const activeStageIndex = stageMeta.findIndex((stage) => stage.code === selectedCase.stage);
   const displayStages = showAllStages ? stageMeta : stageMeta.slice(0, 6);
 
@@ -428,7 +415,7 @@ export default function Home() {
     <main className="site-shell">
       <section className="top-band" aria-label="서비스 안내">
         <div className="container top-band-inner">
-          <p><Sparkles size={14} aria-hidden="true" /> {currentAsOf} 기준 현황 · 원청 노조 교섭만 수록</p>
+          <p><Sparkles size={14} aria-hidden="true" /> {currentAsOf} 기준 대한민국 주요 제조업의 단체교섭 현황을 모니터링합니다 · 원청 노조 교섭만 수록</p>
           <p>
             <Clock3 size={14} aria-hidden="true" /> 수집 예정: 매일 06:30 KST · 법인별 1회
             {lastCollectionKstDate ? (
@@ -440,12 +427,10 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 상단 바에는 메뉴만 왼쪽으로 두고, 서비스 이름은 히어로의 제목 자리로 옮긴다.
+          같은 이름을 두 줄에 반복하지 않고 제목 한 곳에서만 크게 보여주기 위한 배치다. */}
       <header className="site-header">
-        <div className="container header-inner">
-          <a className="brand" href="#overview" aria-label="노사교섭 레이더 처음으로">
-            <RadarMark />
-            <span>노사교섭 <strong>레이더</strong></span>
-          </a>
+        <div className="container header-inner header-inner-left">
           <nav className="header-nav" aria-label="주요 섹션">
             <a href="#board">교섭현황</a>
             <a href="#framework">단계 프레임워크</a>
@@ -460,7 +445,10 @@ export default function Home() {
       <section className="hero compact-hero" id="overview">
         <div className="container hero-grid compact-hero-grid">
           <div className="hero-copy">
-            <h1>대한민국 주요 제조업의 단체 교섭 현황을 모니터링 합니다.</h1>
+            <h1 className="hero-brand">
+              <RadarMark />
+              <span>노사교섭 <strong>레이더</strong></span>
+            </h1>
             <p className="hero-description">
               원청 노조의 임금협상과 단체교섭 <strong>주 단계</strong>와 교섭·조정·쟁의·타결의 <strong>상태</strong>를 함께 읽는 대시보드
             </p>
@@ -475,7 +463,6 @@ export default function Home() {
             <div>
               <p className="section-kicker">교섭현황 · 검증 데이터</p>
               <h2>교섭현황 대시보드</h2>
-              <p><strong>원청 노조</strong>만 · 법인 × 교섭연도 × 협약유형 × 교섭단위 × 적용범위 단위의 교섭 기록</p>
             </div>
             <div className="dashboard-actions">
               <div className="data-health" aria-label="데이터 상태 설명">
@@ -643,12 +630,34 @@ export default function Home() {
                 <div>
                   <p>{selectedYear === currentYear ? "현재 주 단계" : "해당 연도 최종 확인 단계"}</p>
                   <h4>{selectedStage.label}</h4>
+                  {/* 그 해에 체결됐는지, 이듬해까지 이어졌는지를 단계와 같이 읽어야 한다.
+                      이월은 기록 일자가 교섭연도를 넘긴 경우에만 확정으로 말한다. */}
+                  {selectedCase.history && (
+                    <span
+                      className={`settlement-chip settlement-${selectedCase.history.settlement.status.toLowerCase()}`}
+                      title={selectedCase.history.settlement.detail}
+                    >
+                      {selectedCase.history.settlement.label}
+                    </span>
+                  )}
                   <span>{selectedCase.reason}</span>
                 </div>
               </div>
 
               <section className="bargaining-flow" aria-label="교섭 경과">
                 <div className="subsection-title"><span>교섭 경과</span><small>기사 원문에서 확인된 발생·확인 순서</small></div>
+                {/* 경과가 몇 건이든 먼저 누적 지표를 보여준다. 단계 하나만 남은 과거
+                    기록에서는 "무엇이 없는지"가 그 자체로 정보다. */}
+                {selectedCase.history && (
+                  <div className="flow-rollup">
+                    <span>교착·조정 <strong>{selectedCase.history.impasseCount}회</strong></span>
+                    <span>본교섭 기록 <strong>{selectedCase.history.bargainingRoundCount}회</strong></span>
+                    <span>
+                      쟁의 <strong>{INDUSTRIAL_ACTION_LABELS[selectedCase.history.industrialActionLevel]}</strong>
+                    </span>
+                    <span>{selectedCase.history.settlement.label}</span>
+                  </div>
+                )}
                 {selectedCase.flowEvents.length === 0 ? (
                   <p className="flow-empty">해당 연도 교섭 경과 표시에 필요한 원청 노조 근거 미확보</p>
                 ) : (
@@ -666,8 +675,17 @@ export default function Home() {
                     ))}
                   </ol>
                 )}
-                {selectedCase.flowEvents.length === 1 && selectedYear !== currentYear && (
-                  <p className="flow-coverage-note">초기 데이터에서 검증한 핵심 경과 · 앞선 과정은 원문 근거 추가 확보 시 순서대로 연결 표시</p>
+                {selectedCase.history?.settlement.status === "CONTINUED_PAST_YEAR" && (
+                  <p className="flow-carryover-note">
+                    {selectedCase.history.settlement.detail} 이후 경과는 {selectedCase.history.settlement.spannedIntoYear}년
+                    이후 기록에서 이어 확인한다.
+                  </p>
+                )}
+                {selectedCase.history && !selectedCase.history.hasTimeline && (
+                  <p className="flow-coverage-note">
+                    이 연도는 결과만 확인된 기록이다. 상견례·본교섭·교착·쟁의 일정은 원문 근거를 확보하는
+                    대로 순서대로 채운다. 2026년 이후 교섭은 매일 수집이 경과를 자동으로 누적한다.
+                  </p>
                 )}
               </section>
 
@@ -681,25 +699,27 @@ export default function Home() {
                 <div><span>올해 협상유형</span><strong>{selectedCase.yearType}</strong></div>
                 <div title="교섭창구 참여노조 조합원 기준 · 대표교섭노조 여부, 원청 노조 전체 대비 가입률과 구분"><span>참여노조 과반</span><strong className={`majority-${selectedCase.majorityUnion === "O" ? "yes" : selectedCase.majorityUnion === "X" ? "no" : "pending"}`}>{selectedCase.majorityUnion}</strong></div>
                 <div><span>조합원 수</span><strong>{selectedCase.unionMembers}</strong></div>
-                <div><span>노조 선거 이슈</span><strong>{selectedCase.electionIssue}</strong></div>
+                {/* 노조 선거 단독 항목은 이슈로 보기 어렵다. 쟁의 경과·찬반투표·노동위원회
+                    판단처럼 실제로 교섭을 움직인 사실을 한 칸에 모아 보여준다. */}
+                <div className="identity-issues">
+                  <span>이슈</span>
+                  {selectedIssues.length === 0 ? (
+                    <strong>확인된 이슈 없음</strong>
+                  ) : (
+                    <ul className="identity-issue-list">
+                      {selectedIssues.map((issue) => <li key={issue}>{issue}</li>)}
+                    </ul>
+                  )}
+                </div>
               </div>
               <p className="majority-definition">※ 참여노조 과반 = <strong>교섭창구 참여노조 조합원 기준</strong> · 대표교섭노조 여부와 원청 노조 전체 대비 가입률은 별도 필드 기록 · 상호 대체 불가</p>
 
-              <div className="overlay-area">
-                <div className="subsection-title"><span>병렬 상태</span><small>주 단계와 독립적으로 함께 표시</small></div>
-                <div className="overlay-groups">
-                  {selectedCase.overlays.map((overlay) => (
-                    <div className="overlay-line" key={`${overlay.group}-${overlay.label}`}>
-                      <small>{overlay.group}</small>
-                      <OverlayBadge label={overlay.label} tone={overlay.tone} />
-                    </div>
-                  ))}
-                </div>
-              </div>
+              {/* 병렬 상태 행은 주 단계에서 그대로 파생된 값만 보여줘서 정보가 늘지 않았다.
+                  교섭을 움직인 사실은 위의 이슈 칸과 교섭 경과가 담는다. */}
 
               <div className="detail-bottom-grid">
                 <div className="evidence-list">
-                  <div className="subsection-title"><span>확인 근거</span><small>원문·범위 증빙</small></div>
+                  <div className="subsection-title"><span>확인 근거</span><small>검증에 사용한 원문</small></div>
                   {selectedCase.evidence.map((evidence) => (
                     <div className="evidence-row" key={`${evidence.date}-${evidence.title}`}>
                       <time>{evidence.date}</time>

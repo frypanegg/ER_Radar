@@ -82,6 +82,29 @@ test("화면이 마지막 수집 시각을 보여준다", async () => {
   assert.match(html, /collection-state/);
 });
 
+test("교섭 경과와 종결·이월 상태를 함께 보여준다", async () => {
+  // 이 화면은 현재 상태만 보는 도구가 아니다. 교착·조정 횟수, 쟁의 수준, 그리고 그 해에
+  // 체결됐는지(또는 이듬해로 넘어갔는지)를 단계와 같이 읽을 수 있어야 한다.
+  const html = await (await render()).text();
+
+  assert.match(html, /flow-rollup/, "교섭 경과 누적 지표가 있어야 한다");
+  assert.match(html, /교착·조정/);
+  assert.match(html, /본교섭 기록/);
+  assert.match(html, /settlement-chip settlement-(settled|continued_past_year|settlement_unconfirmed)/);
+
+  // 이슈는 노조 선거 단독 항목이 아니라 교섭을 움직인 사실을 모아 보여준다.
+  assert.match(html, /identity-issues/);
+  assert.doesNotMatch(html, /노조 선거 이슈/);
+
+  // 주 단계에서 그대로 파생되던 병렬 상태 행과, 내부 판정용 범위 증빙은 화면에서 뺀다.
+  assert.doesNotMatch(html, /병렬 상태/);
+  assert.doesNotMatch(html, /원청 노조 범위 증빙/);
+  assert.doesNotMatch(html, /법인 × 교섭연도 × 협약유형/);
+
+  // 서비스 이름은 히어로 제목 자리에서 한 번만 크게 보여준다.
+  assert.match(html, /hero-brand/);
+});
+
 test("keeps scope and source guards in the production-facing implementation", async () => {
   const [page, layout, config, framework, pipeline, historicalSeed, currentSeed] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
