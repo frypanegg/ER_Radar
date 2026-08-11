@@ -191,3 +191,40 @@ ORDER BY status;
 - 같은 `recordId` 안에서 같은 `sourceUrl`은 하나만 남는다.
 
 2026-08-11 기준 커버리지는 **경과 보유 12건(2026년), 결과만 확인 44건(2021–2025년)**이다. 과거 44건은 각 사건의 근거 URL을 확인하는 조사가 남아 있고, 채워지지 않은 연도는 화면에서 "결과만 확인된 기록"으로 표시된다.
+
+## anon 역할 RLS 검증 결과 (2026-08-12)
+
+`SUPABASE_ANON_KEY`로 실제 조회·쓰기를 시도해 확인했다. 모든 행이 공개 상태라 "숨김이
+작동하는지"는 조회만으로 증명되지 않으므로, **비공개 행을 하나 만들어 음성 검증**을 했다.
+
+| 항목 | 결과 |
+| --- | --- |
+| 공개 사실 테이블 anon 읽기 | `tracked_companies` 12 · `bargaining_cases` 56 · `bargaining_events` 79 |
+| 비공개 행 음성 검증 | 임시 `is_published=false` 행 → service_role 1건 / **anon 0건** |
+| `verification_status ≠ VERIFIED` 행 | anon 조회 0건 |
+| `scope_review_audits` | anon `401` 거부 |
+| `company_add_requests` | anon `401` 거부 |
+| `bargaining_record_corrections` | anon `401` 거부 |
+| anon `INSERT` / `UPDATE` / `DELETE` | 모두 `401` 거부 |
+| 키 없이 접근 | `401` 거부 |
+
+검증용으로 만든 행과 종단 확인용 수정 요청 행은 확인 후 삭제했다.
+
+### 남은 문제: `sources`가 anon에 0건
+
+정책이 `source_annotations`와의 연결을 요구한다.
+
+```sql
+CREATE POLICY anon_read_sources_linked_to_published_facts ON public.sources
+  FOR SELECT TO anon USING (
+    is_published AND verification_status = 'VERIFIED'
+    AND EXISTS (SELECT 1 FROM public.source_annotations sa
+                WHERE sa.source_id = sources.id AND sa.is_published
+                  AND sa.verification_status = 'VERIFIED')
+  );
+```
+
+적재기가 `source_annotations`를 만들지 않으므로 anon에게는 출처가 하나도 보이지 않는다.
+지금은 화면이 Worker(service_role)를 거쳐 사실을 읽으므로 렌더링에 영향이 없다. 다만
+**브라우저가 anon 키로 Supabase를 직접 읽는 구조로 바꾸면 출처 표시가 사라진다.**
+그 전에 `scripts/load-supabase-seed.mjs`가 `source_annotations`를 함께 적재해야 한다.
