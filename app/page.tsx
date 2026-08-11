@@ -83,9 +83,9 @@ type CaseExample = {
   majorityUnion: "O" | "X" | "확인중";
   unionMembers: string;
   electionIssue: string;
-  issueSummary: string;
-  breakdownReason: string;
-  voteChangeSummary: string;
+  issueSummary: string[];
+  breakdownReason: string[];
+  voteChangeSummary: string[];
   overlays: { label: string; tone: BadgeTone; group: string }[];
   evidence: { date: string; title: string; source: string; tier: "S" | "A" | "B" | "C" }[];
   sourceAnnotations: { event: string; sourceUrl: string; note: string }[];
@@ -162,6 +162,24 @@ function getYearLabel(year: number) {
   return year === currentYear ? `${year}년 현재` : `${year}년`;
 }
 
+// 목록 카드에서는 법인 형태 표기를 떼어 이름이 한 줄에 들어오게 한다. 데이터와 상세
+// 화면은 법적 실명을 그대로 유지한다.
+function shortCompanyName(legalName: string) {
+  return legalName
+    .replace(/\s*주식회사\s*/g, " ")
+    .replace(/\s*\(주\)\s*/g, " ")
+    .trim();
+}
+
+// 서술형 한 덩어리는 읽히지 않는다. 문장과 " · " 구분자를 기준으로 끊어 글머리 기호로
+// 보여준다. 원문 문장을 다시 쓰지 않고 그대로 나누기만 한다.
+function toBulletPoints(text: string) {
+  return text
+    .split(/(?<=다\.)\s+|\s+·\s+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+}
+
 function stageOverlay(stage: string): { label: string; tone: BadgeTone; group: string }[] {
   if (stage === "S7" || stage === "S8") return [{ label: "조인·체결 확인", tone: "green", group: "합의·인준" }];
   if (stage === "S6") return [{ label: "찬반·인준 확인", tone: "green", group: "합의·인준" }];
@@ -195,9 +213,9 @@ function getBargainingCases(year: number): CaseExample[] {
         majorityUnion: "확인중",
         unionMembers: "공개 근거 미확인",
         electionIssue: "공개 근거 미확인",
-        issueSummary: "원청 노조 범위와 해당 연도 교섭 기록을 한 원문에서 함께 확인한 뒤에만 쟁점 표시",
-        breakdownReason: "결렬 여부 추정 금지",
-        voteChangeSummary: "찬반투표·최종안·기존 대비 변경을 확인한 원문 없음",
+        issueSummary: ["원청 노조 범위와 해당 연도 교섭 기록을 한 원문에서 함께 확인한 뒤에만 쟁점 표시"],
+        breakdownReason: ["결렬 여부 추정 금지"],
+        voteChangeSummary: ["찬반투표·최종안·기존 대비 변경을 확인한 원문 없음"],
         overlays: [{ label: "공개 근거 미확인", tone: "gray", group: "근거 품질" }],
         evidence: [{ date: "—", title: "공개 가능한 원청 노조 사실 없음", source: "검증 보류", tier: "C" }],
         sourceAnnotations: [],
@@ -238,11 +256,14 @@ function getBargainingCases(year: number): CaseExample[] {
       majorityUnion: "확인중",
       unionMembers: "공개 근거 미확인",
       electionIssue: "공개 근거 미확인",
-      issueSummary: `${record.bargainingYear === currentYear ? "현재 확인 요약" : "과거 기록 요약"}: ${record.factSummary}`,
-      breakdownReason: `${record.bargainingYear === currentYear ? "현재 확인한 기사" : "이 초기 기록"}에 확인된 결렬 사유 없음 · 원문 명시 시에만 별도 쟁점 갱신`,
-      voteChangeSummary: record.stage === "S6" || record.stage === "S7"
-        ? `원문 확인: ${record.factSummary}`
-        : "찬반투표·최종안의 기존 대비 변경 · 확인된 원문 있을 때만 표시",
+      issueSummary: toBulletPoints(record.factSummary),
+      breakdownReason: toBulletPoints(
+        `${record.bargainingYear === currentYear ? "현재 확인한 기사" : "이 초기 기록"}에 확인된 결렬 사유 없음 · 원문 명시 시에만 별도 쟁점 갱신`,
+      ),
+      voteChangeSummary:
+        record.stage === "S6" || record.stage === "S7"
+          ? toBulletPoints(record.factSummary)
+          : toBulletPoints("찬반투표·최종안의 기존 대비 변경 · 확인된 원문 있을 때만 표시"),
       overlays: stageOverlay(record.stage),
       evidence,
       sourceAnnotations,
@@ -585,24 +606,18 @@ export default function Home() {
                       <span className="case-type">{item.yearType}</span>
                       <StagePill stage={item.stage} />
                     </span>
+                    {/* 목록은 어느 법인을 고를지 판단할 최소 정보만 담는다. 교섭 단계 상세,
+                        참여노조 과반, 선거, 근거 등급은 오른쪽 상세에서 모두 보여준다. */}
                     <span className="case-card-title-row">
-                      <strong>{item.name}</strong><ChevronRight size={17} aria-hidden="true" />
+                      {/* 카드에서는 법인 형태 표기를 떼어 읽기 좋게 하고, 법적 실명은
+                          제목 속성으로 남긴다. 실명 표기 원칙을 잃지 않기 위한 것이다. */}
+                      <strong title={item.name}>{shortCompanyName(item.name)}</strong>
+                      <ChevronRight size={17} aria-hidden="true" />
                     </span>
                     <span className="case-card-subtitle">{item.subtitle}</span>
-                    <span className="case-card-stage">{meta?.label}</span>
-                    <span className="case-badges">
-                      {item.overlays.slice(0, 2).map((overlay) => (
-                        <OverlayBadge key={overlay.label} label={overlay.label} tone={overlay.tone} />
-                      ))}
-                    </span>
-                    <span className="case-facts">
-                      <span title="교섭창구 참여노조 조합원 기준 · 대표교섭노조 여부, 원청 노조 전체 대비 가입률과 구분">참여노조 과반 <b className={`majority-${item.majorityUnion === "O" ? "yes" : item.majorityUnion === "X" ? "no" : "pending"}`}>{item.majorityUnion}</b></span>
-                      <span>조합원 {item.unionMembers}</span>
-                    </span>
-                    <span className="election-snippet">선거: {item.electionIssue}</span>
                     <span className="case-card-footer">
+                      <span>{meta?.label ?? "단계 미확인"}</span>
                       <span>검증 {item.verifiedAt}</span>
-                      <span className="confidence-inline">신뢰도 {Math.round(item.confidence * 100)}%</span>
                     </span>
                   </button>
                 );
@@ -703,15 +718,21 @@ export default function Home() {
               <div className="case-inspection-grid">
                 <section className="inspection-card">
                   <div className="subsection-title"><span>쟁점 요약</span><small>교섭 단위별 분리 기록</small></div>
-                  <p>{selectedCase.issueSummary}</p>
+                  <ul className="inspection-list">
+                    {selectedCase.issueSummary.map((point) => <li key={point}>{point}</li>)}
+                  </ul>
                 </section>
                 <section className="inspection-card">
                   <div className="subsection-title"><span>결렬 사유</span><small>추정 금지</small></div>
-                  <p>{selectedCase.breakdownReason}</p>
+                  <ul className="inspection-list">
+                    {selectedCase.breakdownReason.map((point) => <li key={point}>{point}</li>)}
+                  </ul>
                 </section>
                 <section className="inspection-card inspection-vote">
                   <div className="subsection-title"><span>찬반투표·최종안 변경</span><small>기존·전년 대비</small></div>
-                  <p>{selectedCase.voteChangeSummary}</p>
+                  <ul className="inspection-list">
+                    {selectedCase.voteChangeSummary.map((point) => <li key={point}>{point}</li>)}
+                  </ul>
                 </section>
               </div>
 

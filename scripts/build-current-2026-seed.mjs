@@ -53,6 +53,47 @@ function validDate(value) {
   return /^2026-\d{2}-\d{2}$/.test(value);
 }
 
+/**
+ * 협약유형이 그 레코드의 근거로 뒷받침되는지 판정한다.
+ *
+ * 협약유형은 화면 필터의 축인데 지금까지 근거 검증 없이 값만 채워져 있었다. 실제로
+ * 현대모비스는 근거 제목이 "2026년 단체교섭 5차 본교섭"뿐인데 통합 임단협으로 기록돼
+ * 있었다. "단체교섭"은 교섭 일반을 가리키는 포괄 표현이므로 임금 포함 여부를 증명하지
+ * 못한다.
+ *
+ * 판정은 제목·요약 텍스트만 본다. 새 사실을 만들지 않고, 근거가 없으면 없다고 말한다.
+ */
+export function assessAgreementTypeEvidence(record) {
+  const evidence = `${record.title ?? ""} ${record.factSummary ?? ""}`;
+  const hasWageTerm = /임금\s*(?:협약|협상|교섭|인상)/.test(evidence);
+  const hasCollectiveTerm = /단체\s*(?:협약|교섭)/.test(evidence);
+  const hasIntegrated =
+    /임금\s*[·]?\s*단체|임단협|임금\s*및\s*단체/.test(evidence) ||
+    // "2024년 단체교섭·임금협상 잠정합의안"처럼 두 축이 따로 적힌 경우도 통합 교섭이다.
+    (hasWageTerm && hasCollectiveTerm);
+  const hasWageOnly = hasWageTerm;
+  const hasCollectiveAgreement = /단체\s*협약/.test(evidence);
+  // "단체교섭"은 임금·단체를 모두 포괄할 수 있어 단독으로는 유형을 특정하지 못한다.
+  const hasGenericBargainingOnly =
+    /단체\s*교섭/.test(evidence) && !hasIntegrated && !hasCollectiveAgreement && !hasWageOnly;
+
+  const supported = {
+    INTEGRATED: hasIntegrated,
+    WAGE: hasWageOnly && !hasIntegrated,
+    CBA: hasCollectiveAgreement && !hasIntegrated,
+    SUPPLEMENTAL: /보충\s*협약|특별\s*협약/.test(evidence),
+  }[record.agreementType] ?? false;
+
+  return {
+    supported,
+    reason: supported
+      ? "evidence_matches_declared_type"
+      : hasGenericBargainingOnly
+        ? "generic_collective_bargaining_term_only"
+        : "no_agreement_type_signal_in_evidence",
+  };
+}
+
 export function validateCurrentRecord(record, index, companyIds) {
   for (const field of REQUIRED_FIELDS) {
     assert(record[field] !== undefined && record[field] !== null && record[field] !== "", `records[${index}]에 ${field}가 필요합니다.`);

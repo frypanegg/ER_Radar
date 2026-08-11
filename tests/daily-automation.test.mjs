@@ -286,6 +286,40 @@ test("정식 지부명이 없어도 배제 신호가 없으면 직영으로 보�
   assert.equal(configuredScope.scopeEvidenceTier, "CONFIGURED_UNION_ALIAS");
 });
 
+test("공개 레코드의 협약유형은 근거로 뒷받침된다", async () => {
+  const { assessAgreementTypeEvidence } = await import("../scripts/build-current-2026-seed.mjs");
+
+  // 협약유형은 화면 필터의 축인데 그동안 근거 검증 없이 값만 채워져 있었다.
+  // 아래 두 건은 근거가 유형을 특정하지 못하는 기존 부채다. 이 목록이 늘어나면
+  // 실패해야 한다. 줄이려면 근거를 보강하거나 유형을 미확인으로 내려야 한다.
+  const knownUnsupported = new Set([
+    "hyundai-mobis|2026", // 근거가 "단체교섭"뿐이라 임금 포함 여부를 특정하지 못한다
+    "sk-hynix|2024", // 근거가 "재교섭 잠정합의안 가결"뿐이다
+  ]);
+
+  const unsupported = [];
+  for (const file of ["current-2026-fact-seed.json", "historical-fact-seed.json"]) {
+    const seed = JSON.parse(
+      await readFile(new URL(`../data/${file}`, import.meta.url), "utf8"),
+    );
+    for (const record of seed.records) {
+      if (assessAgreementTypeEvidence(record).supported) continue;
+      unsupported.push(`${record.companyId}|${record.bargainingYear}`);
+    }
+  }
+
+  const unexpected = unsupported.filter((key) => !knownUnsupported.has(key));
+  assert.deepEqual(
+    unexpected,
+    [],
+    `협약유형이 근거로 뒷받침되지 않는 레코드가 새로 생겼다: ${unexpected.join(", ")}`,
+  );
+
+  // 근거가 보강돼 부채가 사라졌으면 위 목록에서도 지워야 한다.
+  const resolved = [...knownUnsupported].filter((key) => !unsupported.includes(key));
+  assert.deepEqual(resolved, [], `근거가 보강된 레코드는 예외 목록에서 지운다: ${resolved.join(", ")}`);
+});
+
 test("실제 보도 제목으로 직영·하청 판정을 고정한다", async () => {
   // 2026-08-11 수집분에서 뽑은 실제 제목이다. 범위 규칙을 손댈 때 이 표가 먼저 깨진다.
   const directCases = [
