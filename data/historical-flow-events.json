@@ -52,6 +52,12 @@
       "researchedOn": "2026-08-12",
       "scope": "기아 2023, 현대자동차 2023",
       "note": "기아 10/20 투표는 결과가 원문에 없어 '진행'으로만 기록했다."
+    },
+    {
+      "batch": 8,
+      "researchedOn": "2026-08-12",
+      "scope": "HD현대중공업 2024, SK하이닉스 2024",
+      "note": "두 곳 모두 1차 합의안이 그대로 가지 않았다. HD현대중공업은 부결 사실이 명시돼 S3으로, SK하이닉스는 '재교섭 잠정합의'라는 표현만 있어 앞선 합의안의 결과는 기록하지 않았다."
     }
   ],
   "events": [
@@ -382,6 +388,38 @@
       "label": "임단협 조인식",
       "summary": "노사가 9월 20일 2023년 임단협 조인식을 열었다.",
       "sourceUrl": "https://www.yna.co.kr/view/AKR20230920061700057"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2024-integrated-signing",
+      "date": "2024-11-08",
+      "stage": "S3",
+      "label": "1차 잠정합의안 부결",
+      "summary": "조합원 6,130명(92.21%)이 참여한 투표에서 반대 59.67%로 부결돼 재교섭에 들어갔다.",
+      "sourceUrl": "https://news.mt.co.kr/mtview.php?no=2024110818024161956"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2024-integrated-signing",
+      "date": "2024-11-21",
+      "stage": "S6",
+      "label": "2차 잠정합의안 가결",
+      "summary": "조합원 6,656명 중 6,192명(93.03%)이 투표해 찬성 3,664명(59.17%)·반대 2,484명(40.12%)으로 가결됐다.",
+      "sourceUrl": "https://www.inews24.com/view/1785886"
+    },
+    {
+      "recordId": "sk-hynix:2024:INTEGRATED:2024-10-28:https://www.newsis.com/view/NISX20241028_0002936269",
+      "date": "2024-10-23",
+      "stage": "S5",
+      "label": "재교섭 잠정합의안 마련",
+      "summary": "노사가 10월 23일 재교섭 잠정합의안을 마련했다.",
+      "sourceUrl": "https://www.jbnews.com/news/articleView.html?idxno=1456763"
+    },
+    {
+      "recordId": "sk-hynix:2024:INTEGRATED:2024-10-28:https://www.newsis.com/view/NISX20241028_0002936269",
+      "date": "2024-10-28",
+      "stage": "S6",
+      "label": "대의원회 투표 가결",
+      "summary": "대의원회 투표에서 199표 중 176표(88.4%) 찬성으로 가결됐다. 임금인상률 5.7%와 격려금 450만원이 담겼다.",
+      "sourceUrl": "https://www.jbnews.com/news/articleView.html?idxno=1456763"
     }
   ]
 }
