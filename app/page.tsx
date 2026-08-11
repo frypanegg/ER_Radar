@@ -573,7 +573,9 @@ export default function Home() {
     <main className="site-shell">
       <section className="top-band" aria-label="서비스 안내">
         <div className="container top-band-inner">
-          <p><Sparkles size={14} aria-hidden="true" /> {currentAsOf} 기준 대한민국 주요 제조업의 단체교섭 현황을 모니터링합니다 · 원청 노조 교섭만 수록</p>
+          {/* 기준일은 같은 행 오른쪽의 마지막 수집 표시가 이미 담당한다. 여기서 한 번 더
+              쓰면 같은 줄에 날짜가 두 번 나온다. */}
+          <p><Sparkles size={14} aria-hidden="true" /> 대한민국 주요 제조업의 단체교섭 현황을 모니터링합니다 · 원청 노조 교섭만 수록</p>
           <p>
             <Clock3 size={14} aria-hidden="true" /> 수집 예정: 매일 06:30 KST · 법인별 1회
             {lastCollectionKstDate ? (
