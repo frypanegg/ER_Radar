@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-11T04:48:59.637Z",
+  "generatedAt": "2026-08-11T05:03:49.894Z",
   "batch": {
     "status": "complete",
     "frequency": "daily",
@@ -22,19 +22,19 @@
       "receivedItems": 600,
       "discardedInvalid": 0,
       "discardedOutsideTargetYear": 0,
-      "discardedIrrelevant": 177,
-      "candidatesBeforeDeduplication": 423,
-      "removedByUrlDeduplication": 108,
+      "discardedIrrelevant": 178,
+      "candidatesBeforeDeduplication": 422,
+      "removedByUrlDeduplication": 107,
       "removedByTitleDeduplication": 6,
       "finalCandidates": 309,
       "urlResolution": {
         "attempted": 150,
-        "verified": 139,
-        "failed": 11,
+        "verified": 138,
+        "failed": 12,
         "skipped": 23,
         "byStatus": {
-          "RESOLVED_AND_REACHABLE": 139,
-          "RESOLVED_UNREACHABLE": 9,
+          "RESOLVED_AND_REACHABLE": 138,
+          "RESOLVED_UNREACHABLE": 10,
           "RESOLVED_TITLE_MISMATCH": 2
         }
       },
@@ -844,7 +844,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.9814,
+          "score": 0.9812,
           "ageDays": 0.8,
           "band": "very_recent"
         },
@@ -1018,7 +1018,7 @@
         "httpStatus": 200,
         "resolvedMedia": "머니투데이",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:26.746Z",
+        "verifiedAt": "2026-08-11T05:06:13.573Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -1085,8 +1085,8 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.9495,
-          "ageDays": 2.2,
+          "score": 0.9493,
+          "ageDays": 2.3,
           "band": "very_recent"
         },
         "companies": [
@@ -1226,7 +1226,7 @@
     {
       "id": "news_6125e2a01bba0969",
       "title": "현대제철은 합의, 포스코는 진통...엇갈린 철강업계 임단협",
-      "media": "부산일보",
+      "media": "busan.com",
       "publishedAt": "2026-08-06T07:06:07.000Z",
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBxVWhUaVJqVlhiam9xRTlWMzJtdGQ0YkFxN0NOMHdycDRzSzdQV2t4czliY1h4Tm5namxGMXBHbDV1akxZZkFxMXA0WGdXNmtIQjk1MzJzd3hGQW83U3R6XzNab2RXdW9ZaVlUckJWV3FCeHdI",
       "originalUrl": null,
@@ -1288,7 +1288,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.8929,
+          "score": 0.8926,
           "ageDays": 4.9,
           "band": "very_recent"
         },
@@ -1404,7 +1404,7 @@
         "httpStatus": 200,
         "resolvedMedia": "머니투데이",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:11.845Z",
+        "verifiedAt": "2026-08-11T05:08:56.071Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -1471,7 +1471,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.8735,
+          "score": 0.8733,
           "ageDays": 5.9,
           "band": "very_recent"
         },
@@ -1524,15 +1524,15 @@
       "media": "아시아경제",
       "publishedAt": "2026-08-05T08:13:42.000Z",
       "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9wX2JmMEo0T0tDamJlSFRQVE15c3hOOTVLb2FjZnBCSUdsQnBPa3ZXb2VWcTdPd0tyWkNkWFJWYlRETkI0M3BUVUNfb2tCa0wteWlsUWNWYnZlaWN0YUhkLQ",
-      "originalUrl": "https://asiae.co.kr/article/2026080517134259108",
+      "originalUrl": null,
       "sourceVerification": {
         "method": "google-news-batchexecute",
         "originalUrl": "https://asiae.co.kr/article/2026080517134259108",
-        "httpStatus": 200,
+        "httpStatus": null,
         "resolvedMedia": "asiae.co.kr",
-        "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:46.896Z",
-        "status": "RESOLVED_AND_REACHABLE"
+        "titleOverlap": null,
+        "verifiedAt": "2026-08-11T05:08:21.807Z",
+        "status": "RESOLVED_UNREACHABLE"
       },
       "classification": {
         "stage": {
@@ -1551,7 +1551,7 @@
         "scopeClassification": "PRIMARY_DIRECT_UNION",
         "includeInPrimaryDashboard": true,
         "eligibleForStatusAggregation": false,
-        "requiresSourceVerification": false,
+        "requiresSourceVerification": true,
         "parallelStates": {
           "dispute": {
             "code": "MEDIATION_ACTIVE",
@@ -1590,15 +1590,15 @@
             "needsReview": true
           },
           "ratification": null,
-          "originalUrlStatus": "PUBLISHER_VERIFIED",
-          "sourceTier": "B",
-          "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
+          "originalUrlStatus": "AGGREGATOR_ONLY",
+          "sourceTier": "C",
+          "factStatus": "INFERENCE",
           "needsReview": true
         },
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.8734,
+          "score": 0.8732,
           "ageDays": 5.9,
           "band": "very_recent"
         },
@@ -1710,7 +1710,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.8733,
+          "score": 0.8731,
           "ageDays": 5.9,
           "band": "very_recent"
         },
@@ -1786,7 +1786,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:35.710Z",
+        "verifiedAt": "2026-08-11T05:08:13.535Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -1853,7 +1853,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.872,
+          "score": 0.8718,
           "ageDays": 5.9,
           "band": "very_recent"
         },
@@ -1913,7 +1913,7 @@
         "httpStatus": 200,
         "resolvedMedia": "kbmaeil.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:43.212Z",
+        "verifiedAt": "2026-08-11T05:08:18.501Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -1974,7 +1974,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.8719,
+          "score": 0.8717,
           "ageDays": 5.9,
           "band": "very_recent"
         },
@@ -2086,8 +2086,8 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.8717,
-          "ageDays": 5.9,
+          "score": 0.8715,
+          "ageDays": 6,
           "band": "very_recent"
         },
         "companies": [
@@ -2254,7 +2254,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.8711,
+          "score": 0.8709,
           "ageDays": 6,
           "band": "very_recent"
         },
@@ -2320,7 +2320,7 @@
     {
       "id": "news_95947b5846f01a4a",
       "title": "현대제철 ‘조기 합의’·포스코 ‘파업 위기’...임단협 명암",
-      "media": "sentv.co.kr",
+      "media": "서울경제TV",
       "publishedAt": "2026-08-04T09:21:28.000Z",
       "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1kLWoyMS1ZbmpSZmVYNGFmaEtlY1MzYXFBRWplRkRwMjRWQTRiUUlYNXVUQ2pOZ19yTW5HM2pwc1pSRFp4dlFYSVpOOUxramJDaW5SWkpmOWVFZ3VvNGY2WDd4YkF3WHg5bmQw",
       "originalUrl": null,
@@ -2382,7 +2382,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.8544,
+          "score": 0.8542,
           "ageDays": 6.8,
           "band": "very_recent"
         },
@@ -2498,7 +2498,7 @@
         "httpStatus": 200,
         "resolvedMedia": "hidomin.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:12.751Z",
+        "verifiedAt": "2026-08-11T05:08:56.887Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -2559,7 +2559,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.814,
+          "score": 0.8138,
           "ageDays": 8.9,
           "band": "recent"
         },
@@ -2619,7 +2619,7 @@
         "httpStatus": 200,
         "resolvedMedia": "newstomato.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:29.832Z",
+        "verifiedAt": "2026-08-11T05:09:14.914Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -2680,8 +2680,8 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.7784,
-          "ageDays": 10.8,
+          "score": 0.7782,
+          "ageDays": 10.9,
           "band": "recent"
         },
         "companies": [
@@ -2740,7 +2740,7 @@
         "httpStatus": 200,
         "resolvedMedia": "v.daum.net",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:33.551Z",
+        "verifiedAt": "2026-08-11T05:09:18.392Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -2807,7 +2807,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.778,
+          "score": 0.7778,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -2925,7 +2925,7 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.7772,
+          "score": 0.777,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -3203,7 +3203,7 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.7772,
+          "score": 0.777,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -3418,7 +3418,7 @@
         "httpStatus": 200,
         "resolvedMedia": "매일경제",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:59.459Z",
+        "verifiedAt": "2026-08-11T05:07:41.983Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -3485,7 +3485,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.7772,
+          "score": 0.777,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -3545,7 +3545,7 @@
         "httpStatus": 200,
         "resolvedMedia": "news.jtbc.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:02.610Z",
+        "verifiedAt": "2026-08-11T05:07:44.932Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -3612,7 +3612,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.7772,
+          "score": 0.777,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -3672,7 +3672,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:04.583Z",
+        "verifiedAt": "2026-08-11T05:07:46.689Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -3733,7 +3733,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.7772,
+          "score": 0.777,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -3856,7 +3856,7 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.7772,
+          "score": 0.777,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -3972,7 +3972,7 @@
         "httpStatus": 200,
         "resolvedMedia": "yonhapnewstv.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:20.755Z",
+        "verifiedAt": "2026-08-11T05:09:05.455Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -4039,7 +4039,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.7772,
+          "score": 0.777,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -4099,7 +4099,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:23.738Z",
+        "verifiedAt": "2026-08-11T05:09:08.029Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -4166,7 +4166,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.7772,
+          "score": 0.777,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -4226,7 +4226,7 @@
         "httpStatus": 200,
         "resolvedMedia": "조선일보",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:26.255Z",
+        "verifiedAt": "2026-08-11T05:09:11.131Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -4293,7 +4293,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.7772,
+          "score": 0.777,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -4353,7 +4353,7 @@
         "httpStatus": 200,
         "resolvedMedia": "biz.newdaily.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:31.893Z",
+        "verifiedAt": "2026-08-11T05:09:16.833Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -4420,7 +4420,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.7772,
+          "score": 0.777,
           "ageDays": 10.9,
           "band": "recent"
         },
@@ -4480,7 +4480,7 @@
         "httpStatus": 200,
         "resolvedMedia": "전자신문",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:19.282Z",
+        "verifiedAt": "2026-08-11T05:06:01.207Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -4541,7 +4541,7 @@
         "confidence": 0.86,
         "needsReview": false,
         "freshness": {
-          "score": 0.7421,
+          "score": 0.7419,
           "ageDays": 12.9,
           "band": "recent"
         },
@@ -4624,15 +4624,15 @@
       "media": "CEO스코어데일리",
       "publishedAt": "2026-07-28T08:44:45.000Z",
       "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE45ak5hRTZ3Vno1enQ5VlV4aXhnRVNQZk1jd2N4c2lCTXp3NEx1SmJvaGRNbVdWSi0takl6NlZBTHJSdG4tX3E2bXpzTFZndkxlZ3V2ZHM3c1JxWGZLMmM5ZUtnN2hPRTVt",
-      "originalUrl": null,
+      "originalUrl": "https://m.ceoscoredaily.com/page/view/2026072817431407301",
       "sourceVerification": {
         "method": "google-news-batchexecute",
         "originalUrl": "https://m.ceoscoredaily.com/page/view/2026072817431407301",
-        "httpStatus": null,
+        "httpStatus": 200,
         "resolvedMedia": "m.ceoscoredaily.com",
-        "titleOverlap": null,
-        "verifiedAt": "2026-08-11T04:55:40.565Z",
-        "status": "RESOLVED_UNREACHABLE"
+        "titleOverlap": 1,
+        "verifiedAt": "2026-08-11T05:10:15.062Z",
+        "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
         "stage": {
@@ -4651,7 +4651,7 @@
         "scopeClassification": "PRIMARY_DIRECT_UNION",
         "includeInPrimaryDashboard": true,
         "eligibleForStatusAggregation": false,
-        "requiresSourceVerification": true,
+        "requiresSourceVerification": false,
         "parallelStates": {
           "dispute": {
             "code": "NONE",
@@ -4684,15 +4684,15 @@
           "issueSummary": [],
           "impasseReason": null,
           "ratification": null,
-          "originalUrlStatus": "AGGREGATOR_ONLY",
-          "sourceTier": "C",
-          "factStatus": "INFERENCE",
-          "needsReview": true
+          "originalUrlStatus": "PUBLISHER_VERIFIED",
+          "sourceTier": "B",
+          "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
+          "needsReview": false
         },
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.7264,
+          "score": 0.7262,
           "ageDays": 13.8,
           "band": "recent"
         },
@@ -4805,7 +4805,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.7252,
+          "score": 0.725,
           "ageDays": 13.9,
           "band": "recent"
         },
@@ -5031,7 +5031,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.7252,
+          "score": 0.725,
           "ageDays": 13.9,
           "band": "recent"
         },
@@ -5177,7 +5177,7 @@
         "httpStatus": 200,
         "resolvedMedia": "조선일보",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:34.004Z",
+        "verifiedAt": "2026-08-11T05:10:10.023Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -5238,7 +5238,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.7252,
+          "score": 0.725,
           "ageDays": 13.9,
           "band": "recent"
         },
@@ -5327,7 +5327,7 @@
         "httpStatus": 200,
         "resolvedMedia": "newscj.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:31.294Z",
+        "verifiedAt": "2026-08-11T05:07:15.932Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -5394,7 +5394,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.711,
+          "score": 0.7108,
           "ageDays": 14.8,
           "band": "recent"
         },
@@ -5535,7 +5535,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.7107,
+          "score": 0.7105,
           "ageDays": 14.8,
           "band": "recent"
         },
@@ -5640,7 +5640,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:20.767Z",
+        "verifiedAt": "2026-08-11T05:07:04.400Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -5707,7 +5707,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.7086,
+          "score": 0.7084,
           "ageDays": 14.9,
           "band": "recent"
         },
@@ -5796,7 +5796,7 @@
         "httpStatus": 200,
         "resolvedMedia": "kyeonggi.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:39.025Z",
+        "verifiedAt": "2026-08-11T05:07:24.243Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -5863,7 +5863,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.7086,
+          "score": 0.7084,
           "ageDays": 14.9,
           "band": "recent"
         },
@@ -5952,7 +5952,7 @@
         "httpStatus": 200,
         "resolvedMedia": "kbmaeil.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:19.972Z",
+        "verifiedAt": "2026-08-11T05:07:59.368Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -6019,7 +6019,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6978,
+          "score": 0.6976,
           "ageDays": 15.6,
           "band": "recent"
         },
@@ -6131,7 +6131,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.6766,
+          "score": 0.6764,
           "ageDays": 16.9,
           "band": "recent"
         },
@@ -6207,7 +6207,7 @@
         "httpStatus": 200,
         "resolvedMedia": "shinailbo.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:38.864Z",
+        "verifiedAt": "2026-08-11T05:06:24.734Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -6268,7 +6268,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.6611,
+          "score": 0.661,
           "ageDays": 17.9,
           "band": "recent"
         },
@@ -6357,7 +6357,7 @@
         "httpStatus": 200,
         "resolvedMedia": "매일경제",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:55.182Z",
+        "verifiedAt": "2026-08-11T05:06:39.366Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -6424,7 +6424,7 @@
         "confidence": 0.86,
         "needsReview": false,
         "freshness": {
-          "score": 0.6611,
+          "score": 0.661,
           "ageDays": 17.9,
           "band": "recent"
         },
@@ -6514,7 +6514,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:36.578Z",
+        "verifiedAt": "2026-08-11T05:07:21.057Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -6575,7 +6575,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.6611,
+          "score": 0.661,
           "ageDays": 17.9,
           "band": "recent"
         },
@@ -6664,7 +6664,7 @@
         "httpStatus": 200,
         "resolvedMedia": "etoday.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:49.894Z",
+        "verifiedAt": "2026-08-11T05:07:34.256Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -6725,7 +6725,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.6611,
+          "score": 0.661,
           "ageDays": 17.9,
           "band": "recent"
         },
@@ -6876,7 +6876,7 @@
         "httpStatus": 200,
         "resolvedMedia": "v.daum.net",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:45.031Z",
+        "verifiedAt": "2026-08-11T05:08:20.343Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -6943,7 +6943,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.6611,
+          "score": 0.661,
           "ageDays": 17.9,
           "band": "recent"
         },
@@ -6993,7 +6993,7 @@
     {
       "id": "news_9c4e184f8b09dff6",
       "title": "[르포] 한국지엠 노조, 임단협 투표 앞두고 부평2공장에 미래를 묻다...'Beyond E.O.P' 상영회",
-      "media": "electimes.com",
+      "media": "전기신문",
       "publishedAt": "2026-07-24T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5XeUtsUVV1OUxFSVcyRnRDajFXaGZLeFhETG9pNUJhbkM5VGZVZ0l2NTVmMUlFZWFMV2NPV0tROGduQkRRTThqNEIwUlVOanhnNl9QNzVpLUVHMWdsaXk1aXV5Q3lWaWJiMFZnU9IBcEFVX3lxTFBHREI5Y2pjUFI0N1B5WEFCNWJQZjNSSW4yX1gtX0lMM0dVZlFnNTN4OHRmQ0c4NTJ2S2NYRFpSLWg5Rl9EYnNrOWVyQkdGa3k4VkpyOXlKYXVnbGNPM0t3MXZYS2dUdUxGckh6QUNFZEc",
       "originalUrl": null,
@@ -7003,7 +7003,7 @@
         "httpStatus": null,
         "resolvedMedia": "electimes.com",
         "titleOverlap": null,
-        "verifiedAt": "2026-08-11T04:55:27.680Z",
+        "verifiedAt": "2026-08-11T05:10:03.009Z",
         "status": "RESOLVED_UNREACHABLE"
       },
       "classification": {
@@ -7064,7 +7064,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.6611,
+          "score": 0.661,
           "ageDays": 17.9,
           "band": "recent"
         },
@@ -7205,7 +7205,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6611,
+          "score": 0.661,
           "ageDays": 17.9,
           "band": "recent"
         },
@@ -7321,7 +7321,7 @@
         "confidence": 0.46,
         "needsReview": true,
         "freshness": {
-          "score": 0.6611,
+          "score": 0.661,
           "ageDays": 17.9,
           "band": "recent"
         },
@@ -7426,7 +7426,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:08.842Z",
+        "verifiedAt": "2026-08-11T05:05:51.487Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -7487,7 +7487,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.646,
+          "score": 0.6459,
           "ageDays": 18.9,
           "band": "recent"
         },
@@ -7576,7 +7576,7 @@
         "httpStatus": 200,
         "resolvedMedia": "조선일보",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:22.514Z",
+        "verifiedAt": "2026-08-11T05:06:04.687Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -7637,7 +7637,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.646,
+          "score": 0.6459,
           "ageDays": 18.9,
           "band": "recent"
         },
@@ -7726,7 +7726,7 @@
         "httpStatus": 200,
         "resolvedMedia": "yonhapnewstv.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:24.515Z",
+        "verifiedAt": "2026-08-11T05:06:08.171Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -7787,7 +7787,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.646,
+          "score": 0.6459,
           "ageDays": 18.9,
           "band": "recent"
         },
@@ -7928,7 +7928,7 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.646,
+          "score": 0.6459,
           "ageDays": 18.9,
           "band": "recent"
         },
@@ -8074,7 +8074,7 @@
         "httpStatus": 200,
         "resolvedMedia": "economist.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:27.413Z",
+        "verifiedAt": "2026-08-11T05:08:05.514Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -8135,7 +8135,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.646,
+          "score": 0.6459,
           "ageDays": 18.9,
           "band": "recent"
         },
@@ -8195,7 +8195,7 @@
         "httpStatus": 200,
         "resolvedMedia": "경향신문",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:38.852Z",
+        "verifiedAt": "2026-08-11T05:08:16.451Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -8262,134 +8262,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.646,
-          "ageDays": 18.9,
-          "band": "recent"
-        },
-        "companies": [
-          {
-            "companyId": "posco",
-            "companyName": "포스코",
-            "matchBasis": "title_alias",
-            "confidence": 0.94,
-            "bargainingUnits": [],
-            "bargainingUnitScope": "unspecified",
-            "representationState": {
-              "code": "MULTI_UNION",
-              "label": "교섭단위 불명",
-              "eventState": "disputed",
-              "eventStateCode": "DISPUTED"
-            },
-            "unionProfiles": [],
-            "scopeClassification": "PRIMARY_DIRECT_UNION",
-            "includeInPrimaryDashboard": true,
-            "directEmployerMatch": true,
-            "coveredWorkerRelation": "DIRECT",
-            "scopeEvidenceTier": "COMPANY_UNION_PHRASE_NO_EXCLUSION_SIGNAL",
-            "reasonCodes": [
-              "company_union_phrase"
-            ],
-            "scopeReview": {
-              "agentId": "primary-union-scope-review",
-              "ruleVersion": "1.1.0",
-              "executionOrder": "before_stage_classification",
-              "publicScope": "selected_legal_entity_direct_employee_union_only",
-              "quarantined": false
-            },
-            "needsReview": true,
-            "reasonCode": "multiple_units_unspecified"
-          }
-        ],
-        "reasonCodes": [
-          "stage_signal",
-          "multiple_units_unspecified"
-        ],
-        "collectionSources": [
-          "google-news-rss"
-        ]
-      }
-    },
-    {
-      "id": "news_1c45516a26bb4b34",
-      "title": "포스코 노사 단체교섭 결렬..중앙노동위원회 조정 돌입",
-      "media": "imnews.imbc.com",
-      "publishedAt": "2026-07-23T07:00:00.000Z",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBvY3pFZGJxb3JyeHRabURZYlM3WmpVaHp4bjYwcklWOV9lNHJwMFBiMGVBRG45dVA5a0hTQ2M4c1RZVzAxZlZoS1JKMGxuVUJoVEsyTGRITUtKbTJDQ3BWbE9TakYxN1RsUUNGTlZ1YlY1OTBo0gF0QVVfeXFMTXE1d0VRSllXSERJNTJkcmIySWx6Ml9LVWd2OS1fMmJYUDJseFhvTWJzUFZDdGsxdWZrU05IVEpHczNTajFMdm0tNVAtMjhJRXZmQXRjVW1lOXpfcktwcElYbGtjVlh1V0FxSGMzSXpfRlFNMDQ",
-      "originalUrl": "https://imnews.imbc.com/news/2026/econo/article/6839547_36932.html",
-      "sourceVerification": {
-        "method": "google-news-batchexecute",
-        "originalUrl": "https://imnews.imbc.com/news/2026/econo/article/6839547_36932.html",
-        "httpStatus": 200,
-        "resolvedMedia": "MBC",
-        "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:41.172Z",
-        "status": "RESOLVED_AND_REACHABLE"
-      },
-      "classification": {
-        "stage": {
-          "code": "breakdown_mediation",
-          "label": "결렬·조정"
-        },
-        "eventType": "stage_update",
-        "transitionHint": "evaluate_by_date",
-        "statusCode": "S4",
-        "statusName": "impasse_mediation",
-        "statusLabel": "교착·조정 경로",
-        "eventState": "occurred",
-        "eventStateCode": "OCCURRED",
-        "retainMainState": false,
-        "statusBasis": "stage_mapping",
-        "scopeClassification": "PRIMARY_DIRECT_UNION",
-        "includeInPrimaryDashboard": true,
-        "eligibleForStatusAggregation": false,
-        "requiresSourceVerification": false,
-        "parallelStates": {
-          "dispute": {
-            "code": "IMPASSE_REPORTED",
-            "label": "교착",
-            "eventState": "occurred",
-            "eventStateCode": "OCCURRED"
-          },
-          "representation": {
-            "code": "MULTI_UNION",
-            "label": "교섭단위 불명",
-            "eventState": "disputed",
-            "eventStateCode": "DISPUTED"
-          },
-          "agreement": {
-            "code": "NONE",
-            "label": "없음",
-            "eventState": "occurred",
-            "eventStateCode": "OCCURRED"
-          },
-          "agreementLifecycle": null
-        },
-        "annotations": {
-          "agreementType": {
-            "code": "CBA",
-            "bargainingYear": 2026,
-            "bargainingYearScope": "current_year",
-            "factBasis": "title_keyword",
-            "needsReview": false
-          },
-          "issueSummary": [],
-          "impasseReason": {
-            "issueCodes": [],
-            "summary": null,
-            "causalLinkConfirmed": false,
-            "factBasis": "title_keywords_only",
-            "needsReview": true
-          },
-          "ratification": null,
-          "originalUrlStatus": "PUBLISHER_VERIFIED",
-          "sourceTier": "B",
-          "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
-          "needsReview": true
-        },
-        "confidence": 0.86,
-        "needsReview": true,
-        "freshness": {
-          "score": 0.646,
+          "score": 0.6459,
           "ageDays": 18.9,
           "band": "recent"
         },
@@ -8449,7 +8322,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:50.764Z",
+        "verifiedAt": "2026-08-11T05:08:32.298Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -8516,7 +8389,134 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.646,
+          "score": 0.6459,
+          "ageDays": 18.9,
+          "band": "recent"
+        },
+        "companies": [
+          {
+            "companyId": "posco",
+            "companyName": "포스코",
+            "matchBasis": "title_alias",
+            "confidence": 0.94,
+            "bargainingUnits": [],
+            "bargainingUnitScope": "unspecified",
+            "representationState": {
+              "code": "MULTI_UNION",
+              "label": "교섭단위 불명",
+              "eventState": "disputed",
+              "eventStateCode": "DISPUTED"
+            },
+            "unionProfiles": [],
+            "scopeClassification": "PRIMARY_DIRECT_UNION",
+            "includeInPrimaryDashboard": true,
+            "directEmployerMatch": true,
+            "coveredWorkerRelation": "DIRECT",
+            "scopeEvidenceTier": "COMPANY_UNION_PHRASE_NO_EXCLUSION_SIGNAL",
+            "reasonCodes": [
+              "company_union_phrase"
+            ],
+            "scopeReview": {
+              "agentId": "primary-union-scope-review",
+              "ruleVersion": "1.1.0",
+              "executionOrder": "before_stage_classification",
+              "publicScope": "selected_legal_entity_direct_employee_union_only",
+              "quarantined": false
+            },
+            "needsReview": true,
+            "reasonCode": "multiple_units_unspecified"
+          }
+        ],
+        "reasonCodes": [
+          "stage_signal",
+          "multiple_units_unspecified"
+        ],
+        "collectionSources": [
+          "google-news-rss"
+        ]
+      }
+    },
+    {
+      "id": "news_6d2b206e099c962e",
+      "title": "포스코 노사 단체교섭 결렬...대화 재개 여부 주목",
+      "media": "연합인포맥스",
+      "publishedAt": "2026-07-23T07:00:00.000Z",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1XMDg2UlExTERYLWVDZUppb1hhTmw4aEZBLXZkN19TWFM2bm1vS01MNV93bnF6TTY3TVF1V0Mzdm5Ca01BMFJNWVdJZTFtWFFPelZEajVncVp4dHdTZWlZOC1OTDl2eVNSUUQxd2V0UkQ",
+      "originalUrl": "https://news.einfomax.co.kr/news/articleView.html?idxno=4426525",
+      "sourceVerification": {
+        "method": "google-news-batchexecute",
+        "originalUrl": "https://news.einfomax.co.kr/news/articleView.html?idxno=4426525",
+        "httpStatus": 200,
+        "resolvedMedia": "news.einfomax.co.kr",
+        "titleOverlap": 1,
+        "verifiedAt": "2026-08-11T05:08:39.672Z",
+        "status": "RESOLVED_AND_REACHABLE"
+      },
+      "classification": {
+        "stage": {
+          "code": "breakdown_mediation",
+          "label": "결렬·조정"
+        },
+        "eventType": "stage_update",
+        "transitionHint": "evaluate_by_date",
+        "statusCode": "S4",
+        "statusName": "impasse_mediation",
+        "statusLabel": "교착·조정 경로",
+        "eventState": "occurred",
+        "eventStateCode": "OCCURRED",
+        "retainMainState": false,
+        "statusBasis": "stage_mapping",
+        "scopeClassification": "PRIMARY_DIRECT_UNION",
+        "includeInPrimaryDashboard": true,
+        "eligibleForStatusAggregation": false,
+        "requiresSourceVerification": false,
+        "parallelStates": {
+          "dispute": {
+            "code": "IMPASSE_REPORTED",
+            "label": "교착",
+            "eventState": "occurred",
+            "eventStateCode": "OCCURRED"
+          },
+          "representation": {
+            "code": "MULTI_UNION",
+            "label": "교섭단위 불명",
+            "eventState": "disputed",
+            "eventStateCode": "DISPUTED"
+          },
+          "agreement": {
+            "code": "NONE",
+            "label": "없음",
+            "eventState": "occurred",
+            "eventStateCode": "OCCURRED"
+          },
+          "agreementLifecycle": null
+        },
+        "annotations": {
+          "agreementType": {
+            "code": "CBA",
+            "bargainingYear": 2026,
+            "bargainingYearScope": "current_year",
+            "factBasis": "title_keyword",
+            "needsReview": false
+          },
+          "issueSummary": [],
+          "impasseReason": {
+            "issueCodes": [],
+            "summary": null,
+            "causalLinkConfirmed": false,
+            "factBasis": "title_keywords_only",
+            "needsReview": true
+          },
+          "ratification": null,
+          "originalUrlStatus": "PUBLISHER_VERIFIED",
+          "sourceTier": "B",
+          "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
+          "needsReview": true
+        },
+        "confidence": 0.8,
+        "needsReview": true,
+        "freshness": {
+          "score": 0.6459,
           "ageDays": 18.9,
           "band": "recent"
         },
@@ -8576,7 +8576,7 @@
         "httpStatus": 200,
         "resolvedMedia": "newstomato.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:51.053Z",
+        "verifiedAt": "2026-08-11T05:10:17.429Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -8637,7 +8637,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6413,
+          "score": 0.6411,
           "ageDays": 19.2,
           "band": "recent"
         },
@@ -8749,7 +8749,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.6333,
+          "score": 0.6331,
           "ageDays": 19.8,
           "band": "recent"
         },
@@ -8810,7 +8810,7 @@
         "httpStatus": 200,
         "resolvedMedia": "news.einfomax.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:52.535Z",
+        "verifiedAt": "2026-08-11T05:06:36.744Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -8871,7 +8871,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.6313,
+          "score": 0.6311,
           "ageDays": 19.9,
           "band": "recent"
         },
@@ -9023,7 +9023,7 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.6313,
+          "score": 0.6311,
           "ageDays": 19.9,
           "band": "recent"
         },
@@ -9169,7 +9169,7 @@
         "httpStatus": 200,
         "resolvedMedia": "MBC",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:57.257Z",
+        "verifiedAt": "2026-08-11T05:07:39.810Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -9236,7 +9236,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6313,
+          "score": 0.6311,
           "ageDays": 19.9,
           "band": "recent"
         },
@@ -9296,7 +9296,7 @@
         "httpStatus": 200,
         "resolvedMedia": "v.daum.net",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:04.868Z",
+        "verifiedAt": "2026-08-11T05:09:47.688Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -9363,7 +9363,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.6313,
+          "score": 0.6311,
           "ageDays": 19.9,
           "band": "recent"
         },
@@ -9475,7 +9475,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6313,
+          "score": 0.6311,
           "ageDays": 19.9,
           "band": "recent"
         },
@@ -9593,7 +9593,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6313,
+          "score": 0.6311,
           "ageDays": 19.9,
           "band": "recent"
         },
@@ -9711,7 +9711,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6313,
+          "score": 0.6311,
           "ageDays": 19.9,
           "band": "recent"
         },
@@ -9829,7 +9829,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6313,
+          "score": 0.6311,
           "ageDays": 19.9,
           "band": "recent"
         },
@@ -9952,7 +9952,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6313,
+          "score": 0.6311,
           "ageDays": 19.9,
           "band": "recent"
         },
@@ -10075,7 +10075,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6313,
+          "score": 0.6311,
           "ageDays": 19.9,
           "band": "recent"
         },
@@ -10193,7 +10193,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.6169,
+          "score": 0.6167,
           "ageDays": 20.9,
           "band": "recent"
         },
@@ -10282,7 +10282,7 @@
         "httpStatus": 200,
         "resolvedMedia": "v.daum.net",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:44.227Z",
+        "verifiedAt": "2026-08-11T05:06:29.868Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -10349,7 +10349,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.6028,
+          "score": 0.6026,
           "ageDays": 21.9,
           "band": "recent"
         },
@@ -10496,7 +10496,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.6028,
+          "score": 0.6026,
           "ageDays": 21.9,
           "band": "recent"
         },
@@ -10572,7 +10572,7 @@
         "httpStatus": 200,
         "resolvedMedia": "머니투데이",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:21.448Z",
+        "verifiedAt": "2026-08-11T05:06:03.678Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -10639,7 +10639,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.589,
+          "score": 0.5889,
           "ageDays": 22.9,
           "band": "recent"
         },
@@ -10780,7 +10780,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.589,
+          "score": 0.5889,
           "ageDays": 22.9,
           "band": "recent"
         },
@@ -10978,7 +10978,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.5624,
+          "score": 0.5623,
           "ageDays": 24.9,
           "band": "recent"
         },
@@ -11124,7 +11124,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:59.911Z",
+        "verifiedAt": "2026-08-11T05:06:43.746Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -11185,7 +11185,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.5496,
+          "score": 0.5494,
           "ageDays": 25.9,
           "band": "recent"
         },
@@ -11274,7 +11274,7 @@
         "httpStatus": 200,
         "resolvedMedia": "전자신문",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:08.580Z",
+        "verifiedAt": "2026-08-11T05:06:51.692Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -11335,7 +11335,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.5496,
+          "score": 0.5494,
           "ageDays": 25.9,
           "band": "recent"
         },
@@ -11424,7 +11424,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ytn.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:58.938Z",
+        "verifiedAt": "2026-08-11T05:06:42.853Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -11485,7 +11485,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.537,
+          "score": 0.5369,
           "ageDays": 26.9,
           "band": "recent"
         },
@@ -11626,7 +11626,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.537,
+          "score": 0.5369,
           "ageDays": 26.9,
           "band": "recent"
         },
@@ -11921,7 +11921,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.537,
+          "score": 0.5369,
           "ageDays": 26.9,
           "band": "recent"
         },
@@ -12153,7 +12153,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.537,
+          "score": 0.5369,
           "ageDays": 26.9,
           "band": "recent"
         },
@@ -12281,7 +12281,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.5247,
+          "score": 0.5246,
           "ageDays": 27.9,
           "band": "recent"
         },
@@ -12427,7 +12427,7 @@
         "httpStatus": 200,
         "resolvedMedia": "경향신문",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:17.145Z",
+        "verifiedAt": "2026-08-11T05:05:59.080Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -12488,7 +12488,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.5128,
+          "score": 0.5126,
           "ageDays": 28.9,
           "band": "recent"
         },
@@ -12577,7 +12577,7 @@
         "httpStatus": 200,
         "resolvedMedia": "한겨레",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:21.936Z",
+        "verifiedAt": "2026-08-11T05:09:58.152Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -12638,7 +12638,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.5128,
+          "score": 0.5126,
           "ageDays": 28.9,
           "band": "recent"
         },
@@ -12727,7 +12727,7 @@
         "httpStatus": 200,
         "resolvedMedia": "eroun.net",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:57.864Z",
+        "verifiedAt": "2026-08-11T05:08:43.401Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -12796,7 +12796,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.4675,
+          "score": 0.4674,
           "ageDays": 32.9,
           "band": "aging"
         },
@@ -12938,7 +12938,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.4675,
+          "score": 0.4674,
           "ageDays": 32.9,
           "band": "aging"
         },
@@ -13066,7 +13066,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.4675,
+          "score": 0.4674,
           "ageDays": 32.9,
           "band": "aging"
         },
@@ -13241,7 +13241,7 @@
         "httpStatus": 200,
         "resolvedMedia": "newstomato.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:02.469Z",
+        "verifiedAt": "2026-08-11T05:06:46.677Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -13302,8 +13302,8 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.4575,
-          "ageDays": 33.8,
+          "score": 0.4573,
+          "ageDays": 33.9,
           "band": "aging"
         },
         "companies": [
@@ -13392,7 +13392,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:04.501Z",
+        "verifiedAt": "2026-08-11T05:06:10.472Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -13453,7 +13453,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.4568,
+          "score": 0.4567,
           "ageDays": 33.9,
           "band": "aging"
         },
@@ -13542,7 +13542,7 @@
         "httpStatus": 200,
         "resolvedMedia": "livebiz.today",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:01.607Z",
+        "verifiedAt": "2026-08-11T05:09:44.779Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -13603,7 +13603,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.4568,
+          "score": 0.4567,
           "ageDays": 33.9,
           "band": "aging"
         },
@@ -13786,7 +13786,7 @@
         "httpStatus": 200,
         "resolvedMedia": "newstomato.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:19.908Z",
+        "verifiedAt": "2026-08-11T05:09:56.163Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -13847,7 +13847,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.4362,
+          "score": 0.4361,
           "ageDays": 35.9,
           "band": "aging"
         },
@@ -13988,7 +13988,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.4362,
+          "score": 0.4361,
           "ageDays": 35.9,
           "band": "aging"
         },
@@ -14135,7 +14135,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.4262,
+          "score": 0.4261,
           "ageDays": 36.9,
           "band": "aging"
         },
@@ -14211,7 +14211,7 @@
         "httpStatus": 200,
         "resolvedMedia": "매일경제",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:14.850Z",
+        "verifiedAt": "2026-08-11T05:05:57.321Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -14272,7 +14272,7 @@
         "confidence": 0.86,
         "needsReview": false,
         "freshness": {
-          "score": 0.407,
+          "score": 0.4069,
           "ageDays": 38.9,
           "band": "aging"
         },
@@ -14419,7 +14419,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.407,
+          "score": 0.4069,
           "ageDays": 38.9,
           "band": "aging"
         },
@@ -14553,7 +14553,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.407,
+          "score": 0.4069,
           "ageDays": 38.9,
           "band": "aging"
         },
@@ -14629,7 +14629,7 @@
         "httpStatus": 200,
         "resolvedMedia": "yonhapnewstv.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:32.664Z",
+        "verifiedAt": "2026-08-11T05:06:19.651Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -14690,7 +14690,7 @@
         "confidence": 0.91,
         "needsReview": false,
         "freshness": {
-          "score": 0.3977,
+          "score": 0.3976,
           "ageDays": 39.9,
           "band": "aging"
         },
@@ -14779,7 +14779,7 @@
         "httpStatus": 403,
         "resolvedMedia": "businesspost.co.kr",
         "titleOverlap": null,
-        "verifiedAt": "2026-08-11T04:51:38.223Z",
+        "verifiedAt": "2026-08-11T05:06:24.085Z",
         "status": "RESOLVED_UNREACHABLE"
       },
       "classification": {
@@ -14846,7 +14846,7 @@
         "confidence": 0.91,
         "needsReview": true,
         "freshness": {
-          "score": 0.3977,
+          "score": 0.3976,
           "ageDays": 39.9,
           "band": "aging"
         },
@@ -14935,7 +14935,7 @@
         "httpStatus": 200,
         "resolvedMedia": "greened.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:46.472Z",
+        "verifiedAt": "2026-08-11T05:06:31.911Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -14996,7 +14996,7 @@
         "confidence": 0.91,
         "needsReview": false,
         "freshness": {
-          "score": 0.3977,
+          "score": 0.3976,
           "ageDays": 39.9,
           "band": "aging"
         },
@@ -15085,7 +15085,7 @@
         "httpStatus": 200,
         "resolvedMedia": "4th.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:46.216Z",
+        "verifiedAt": "2026-08-11T05:07:30.934Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -15146,7 +15146,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.3977,
+          "score": 0.3976,
           "ageDays": 39.9,
           "band": "aging"
         },
@@ -15355,7 +15355,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.3977,
+          "score": 0.3976,
           "ageDays": 39.9,
           "band": "aging"
         },
@@ -15431,7 +15431,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ytn.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:51.305Z",
+        "verifiedAt": "2026-08-11T05:06:35.894Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -15492,7 +15492,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.3797,
+          "score": 0.3796,
           "ageDays": 41.9,
           "band": "aging"
         },
@@ -15582,7 +15582,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:35.128Z",
+        "verifiedAt": "2026-08-11T05:06:21.687Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -15643,7 +15643,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.3711,
+          "score": 0.371,
           "ageDays": 42.9,
           "band": "aging"
         },
@@ -15732,7 +15732,7 @@
         "httpStatus": 200,
         "resolvedMedia": "이데일리",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:49.305Z",
+        "verifiedAt": "2026-08-11T05:06:33.749Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -15793,7 +15793,7 @@
         "confidence": 0.91,
         "needsReview": false,
         "freshness": {
-          "score": 0.3696,
+          "score": 0.3695,
           "ageDays": 43.1,
           "band": "aging"
         },
@@ -15934,7 +15934,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.3626,
+          "score": 0.3625,
           "ageDays": 43.9,
           "band": "aging"
         },
@@ -16097,7 +16097,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.3543,
+          "score": 0.3542,
           "ageDays": 44.9,
           "band": "aging"
         },
@@ -16192,7 +16192,7 @@
     {
       "id": "news_0e32cf876185a860",
       "title": "두산에너빌리티 교섭 결렬...20년 만에 파업 위기",
-      "media": "KBS 뉴스",
+      "media": "news.kbs.co.kr",
       "publishedAt": "2026-06-27T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE8wT3lkU25pcEFYTUIyM2FmNk4yZ0VRa3V1OVgzS0RsbFl5NWdCSWZtNm9kZDM3SkstcU0zalZHWmVZVm1aSnhOSEdhWXpRbVJPLTdROXQyNnJTdmM",
       "originalUrl": null,
@@ -16254,7 +16254,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.3543,
+          "score": 0.3542,
           "ageDays": 44.9,
           "band": "aging"
         },
@@ -16417,7 +16417,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.3462,
+          "score": 0.3461,
           "ageDays": 45.9,
           "band": "aging"
         },
@@ -16506,7 +16506,7 @@
         "httpStatus": 200,
         "resolvedMedia": "yonhapnewstv.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:11.749Z",
+        "verifiedAt": "2026-08-11T05:05:54.627Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -16567,7 +16567,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.3383,
+          "score": 0.3382,
           "ageDays": 46.9,
           "band": "aging"
         },
@@ -16656,7 +16656,7 @@
         "httpStatus": 200,
         "resolvedMedia": "경향신문",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:42.123Z",
+        "verifiedAt": "2026-08-11T05:06:28.034Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -16723,7 +16723,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.3383,
+          "score": 0.3382,
           "ageDays": 46.9,
           "band": "aging"
         },
@@ -16802,7 +16802,7 @@
     {
       "id": "news_48f172eb974d7a1a",
       "title": "현대차 노조 파업 현실화?...생산 차질 우려",
-      "media": "KBS 뉴스",
+      "media": "news.kbs.co.kr",
       "publishedAt": "2026-06-25T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9OSXZIamtMMGxzNnhwTm9iRGpiVG1YOXV5YUpyTVZLWEc5NHR1Y2Y2SU9HLUQyTUJKYWJsaGVXaUdjbUVHZlpRMzFBdFdjQU5kZkRoX1RxbHFNaVk",
       "originalUrl": "https://news.kbs.co.kr/news/view.do?ncd=8594329",
@@ -16812,7 +16812,7 @@
         "httpStatus": 200,
         "resolvedMedia": "KBS",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:57.645Z",
+        "verifiedAt": "2026-08-11T05:06:41.125Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -16873,7 +16873,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.3383,
+          "score": 0.3382,
           "ageDays": 46.9,
           "band": "aging"
         },
@@ -16962,7 +16962,7 @@
         "httpStatus": 200,
         "resolvedMedia": "steeldaily.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:08.181Z",
+        "verifiedAt": "2026-08-11T05:08:52.675Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -17023,7 +17023,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.3383,
+          "score": 0.3382,
           "ageDays": 46.9,
           "band": "aging"
         },
@@ -17106,7 +17106,7 @@
     {
       "id": "news_bb17850df29df8b9",
       "title": "현대차 노조, 오늘 파업 찬반투표...임단협 갈등 고조",
-      "media": "sentv.co.kr",
+      "media": "서울경제TV",
       "publishedAt": "2026-06-24T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE9ING1lUU9TMng2ZlVIV2ZlNFJxcFNSd05FTWhVbkprcllGOGRJakhMY212UHo5Q3Z1QWpDN084Qkk5cU5lQWVEQ0hzczAxalBfcnNQUU92ajJ0cVJHSHFGdlFPQ1E",
       "originalUrl": "https://sentv.co.kr/article/view/sentv202606240011",
@@ -17116,7 +17116,7 @@
         "httpStatus": 200,
         "resolvedMedia": "sentv.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:30.951Z",
+        "verifiedAt": "2026-08-11T05:06:17.884Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -17185,7 +17185,7 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.3306,
+          "score": 0.3305,
           "ageDays": 47.9,
           "band": "aging"
         },
@@ -17327,7 +17327,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.3306,
+          "score": 0.3305,
           "ageDays": 47.9,
           "band": "aging"
         },
@@ -17403,7 +17403,7 @@
         "httpStatus": 200,
         "resolvedMedia": "news.bizwatch.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:19.200Z",
+        "verifiedAt": "2026-08-11T05:09:03.676Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -17464,7 +17464,7 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.3306,
+          "score": 0.3305,
           "ageDays": 47.9,
           "band": "aging"
         },
@@ -17576,7 +17576,7 @@
     {
       "id": "news_92c41045aebb449d",
       "title": "“원청 나와라” 현대제철 하청 파업...노봉법 여파 본격화",
-      "media": "부산일보",
+      "media": "busan.com",
       "publishedAt": "2026-06-24T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5ETUludVhQdHBhVkxvV2RtYVA5MC04ZHBTaVYwNGxuTUtjUnpETDh4LWs0RWgtTENBWWswWTN3TnNnaktsemZkRy1FZEcwU3gyZjUxMU81RC1vSjRjTjFhY3V6QW5BN0t0UGZBRmx2ck9xcGR2",
       "originalUrl": null,
@@ -17644,7 +17644,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.3306,
+          "score": 0.3305,
           "ageDays": 47.9,
           "band": "aging"
         },
@@ -17772,7 +17772,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.3306,
+          "score": 0.3305,
           "ageDays": 47.9,
           "band": "aging"
         },
@@ -17900,7 +17900,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.3306,
+          "score": 0.3305,
           "ageDays": 47.9,
           "band": "aging"
         },
@@ -18106,7 +18106,7 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.3306,
+          "score": 0.3305,
           "ageDays": 47.9,
           "band": "aging"
         },
@@ -18315,7 +18315,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.323,
+          "score": 0.3229,
           "ageDays": 48.9,
           "band": "aging"
         },
@@ -18821,7 +18821,7 @@
         "httpStatus": 200,
         "resolvedMedia": "etoday.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:55.487Z",
+        "verifiedAt": "2026-08-11T05:09:40.009Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -18948,7 +18948,7 @@
         "httpStatus": 200,
         "resolvedMedia": "newslock.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:58.423Z",
+        "verifiedAt": "2026-08-11T05:09:42.106Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -19075,7 +19075,7 @@
         "httpStatus": 403,
         "resolvedMedia": "뉴스1",
         "titleOverlap": null,
-        "verifiedAt": "2026-08-11T04:49:44.361Z",
+        "verifiedAt": "2026-08-11T05:04:32.027Z",
         "status": "RESOLVED_UNREACHABLE"
       },
       "classification": {
@@ -19202,7 +19202,7 @@
         "httpStatus": 200,
         "resolvedMedia": "newspim.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:15.009Z",
+        "verifiedAt": "2026-08-11T05:06:58.425Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -19263,7 +19263,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.2945,
+          "score": 0.2944,
           "ageDays": 52.9,
           "band": "aging"
         },
@@ -19414,7 +19414,7 @@
         "httpStatus": 200,
         "resolvedMedia": "sisajournal-e.com",
         "titleOverlap": 0,
-        "verifiedAt": "2026-08-11T04:54:15.861Z",
+        "verifiedAt": "2026-08-11T05:09:00.601Z",
         "status": "RESOLVED_TITLE_MISMATCH"
       },
       "classification": {
@@ -19481,7 +19481,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.2945,
+          "score": 0.2944,
           "ageDays": 52.9,
           "band": "aging"
         },
@@ -19622,7 +19622,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.2945,
+          "score": 0.2944,
           "ageDays": 52.9,
           "band": "aging"
         },
@@ -19771,7 +19771,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.2878,
+          "score": 0.2877,
           "ageDays": 53.9,
           "band": "aging"
         },
@@ -19919,7 +19919,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.2878,
+          "score": 0.2877,
           "ageDays": 53.9,
           "band": "aging"
         },
@@ -20060,7 +20060,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.2812,
+          "score": 0.2811,
           "ageDays": 54.9,
           "band": "aging"
         },
@@ -20136,7 +20136,7 @@
         "httpStatus": 200,
         "resolvedMedia": "inews24.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:55.539Z",
+        "verifiedAt": "2026-08-11T05:07:38.449Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -20208,7 +20208,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.2812,
+          "score": 0.2811,
           "ageDays": 54.9,
           "band": "aging"
         },
@@ -20320,7 +20320,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.2812,
+          "score": 0.2811,
           "ageDays": 54.9,
           "band": "aging"
         },
@@ -20396,7 +20396,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ulsanpress.net",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:36.075Z",
+        "verifiedAt": "2026-08-11T05:09:20.646Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -20457,7 +20457,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.2812,
+          "score": 0.2811,
           "ageDays": 54.9,
           "band": "aging"
         },
@@ -20517,7 +20517,7 @@
         "httpStatus": 403,
         "resolvedMedia": "businesspost.co.kr",
         "titleOverlap": null,
-        "verifiedAt": "2026-08-11T04:55:19.259Z",
+        "verifiedAt": "2026-08-11T05:09:55.509Z",
         "status": "RESOLVED_UNREACHABLE"
       },
       "classification": {
@@ -20578,7 +20578,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.2812,
+          "score": 0.2811,
           "ageDays": 54.9,
           "band": "aging"
         },
@@ -20667,7 +20667,7 @@
         "httpStatus": 200,
         "resolvedMedia": "yonhapnewstv.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:24.580Z",
+        "verifiedAt": "2026-08-11T05:10:00.024Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -20736,7 +20736,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.2812,
+          "score": 0.2811,
           "ageDays": 54.9,
           "band": "aging"
         },
@@ -20826,7 +20826,7 @@
         "httpStatus": 200,
         "resolvedMedia": "kyeonggi.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:28.958Z",
+        "verifiedAt": "2026-08-11T05:10:04.386Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -20895,7 +20895,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.2812,
+          "score": 0.2811,
           "ageDays": 54.9,
           "band": "aging"
         },
@@ -21037,7 +21037,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.2748,
+          "score": 0.2747,
           "ageDays": 55.9,
           "band": "aging"
         },
@@ -21113,7 +21113,7 @@
         "httpStatus": 200,
         "resolvedMedia": "incheonilbo.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:15.271Z",
+        "verifiedAt": "2026-08-11T05:09:52.181Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -21174,7 +21174,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.2748,
+          "score": 0.2747,
           "ageDays": 55.9,
           "band": "aging"
         },
@@ -21286,7 +21286,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.2685,
+          "score": 0.2684,
           "ageDays": 56.9,
           "band": "aging"
         },
@@ -21402,7 +21402,7 @@
         "httpStatus": 200,
         "resolvedMedia": "alphabiz.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:27.793Z",
+        "verifiedAt": "2026-08-11T05:06:14.691Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -21566,7 +21566,7 @@
         "httpStatus": 200,
         "resolvedMedia": "dhdaily.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:17.349Z",
+        "verifiedAt": "2026-08-11T05:07:00.700Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -21858,7 +21858,7 @@
         "httpStatus": 200,
         "resolvedMedia": "biz.newdaily.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:23.595Z",
+        "verifiedAt": "2026-08-11T05:07:07.694Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -22070,7 +22070,7 @@
         "httpStatus": 200,
         "resolvedMedia": "v.daum.net",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:25.292Z",
+        "verifiedAt": "2026-08-11T05:08:03.442Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -22191,7 +22191,7 @@
         "httpStatus": 200,
         "resolvedMedia": "조선일보",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:21.710Z",
+        "verifiedAt": "2026-08-11T05:08:01.221Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -22258,7 +22258,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.2448,
+          "score": 0.2447,
           "ageDays": 60.9,
           "band": "aging"
         },
@@ -22794,7 +22794,7 @@
     {
       "id": "news_a9a62a1f53cc9163",
       "title": "SK하이닉스, 임단협 시동...이달 협상 착수",
-      "media": "sentv.co.kr",
+      "media": "서울경제TV",
       "publishedAt": "2026-06-09T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFB2czVpMkFsNmcxelNfeWlKYXp5d0l5eDFDRTRaT3pKS0lDTkNEVGo2YzR3Nl9MUUh1WGxaLVJnekhxNHk5SFZOVzVfaURhX08wWk9KdHByMEhhODhVNmcwQXJwUVI",
       "originalUrl": null,
@@ -23050,7 +23050,7 @@
     {
       "id": "news_952389767d5166ba",
       "title": "SK하이닉스, 6월 임단협 돌입...쟁점은 '복지 확대'",
-      "media": "newsworks.co.kr",
+      "media": "뉴스웍스",
       "publishedAt": "2026-06-09T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBlNGNqOXNFTU11TUJMS1oxci1QYmtvMnVOQUNjS1MxaUJYb1JKcTN0WnNkZVVnbmNic1ZGVnVTWHM2UU43ald3eGhiNDdxUFY0MUpHcnNaUVFYYkVJcG1zaTA2NGJkU05mNzNhbU15VdIBc0FVX3lxTFBJQl9EcDVMc1JhTmRYTmd4T1BsNlBlVElJSWhnNzlVMUVBb1RDWGZKQzVKX21ERDZpV1VtUjJ0RzlpRkxOOEJPc29BLVBxQjZEc1B6azRWbTJjYUNuUzhDNlQ3elpMcnlrMVZUVDVrU1Njejg",
       "originalUrl": null,
@@ -23194,7 +23194,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ngetnews.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:05.066Z",
+        "verifiedAt": "2026-08-11T05:08:49.628Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -23682,7 +23682,7 @@
         "httpStatus": 200,
         "resolvedMedia": "rightknow.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:25.643Z",
+        "verifiedAt": "2026-08-11T05:07:09.432Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -23743,7 +23743,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.2232,
+          "score": 0.2231,
           "ageDays": 64.9,
           "band": "aging"
         },
@@ -24017,7 +24017,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.2232,
+          "score": 0.2231,
           "ageDays": 64.9,
           "band": "aging"
         },
@@ -24196,7 +24196,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.2181,
+          "score": 0.218,
           "ageDays": 65.9,
           "band": "aging"
         },
@@ -24302,7 +24302,7 @@
     {
       "id": "news_1b9c41e0391cfbdf",
       "title": "HD현대중공업·현대차 임단협 본격화...성과급 쟁점",
-      "media": "KBS 뉴스",
+      "media": "news.kbs.co.kr",
       "publishedAt": "2026-06-04T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1KQVFZanpRb0dQZHFkVHpJQklCNE1qWmJIRWtFb3NwMjB6NFBwdEI1bG1qQWpEd0VSLUtNclhlVlFwXzktUURVUTRQVmNuUnAyTWNXUENOb3Fyemc",
       "originalUrl": null,
@@ -25267,7 +25267,7 @@
         "httpStatus": 200,
         "resolvedMedia": "biz.newdaily.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:41.299Z",
+        "verifiedAt": "2026-08-11T05:09:26.017Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -25388,7 +25388,7 @@
         "httpStatus": 200,
         "resolvedMedia": "뉴시스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:42.966Z",
+        "verifiedAt": "2026-08-11T05:09:27.661Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -25509,7 +25509,7 @@
         "httpStatus": 200,
         "resolvedMedia": "imaeil.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:44.122Z",
+        "verifiedAt": "2026-08-11T05:09:29.128Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -25948,7 +25948,7 @@
         "httpStatus": 200,
         "resolvedMedia": "asiae.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:29.200Z",
+        "verifiedAt": "2026-08-11T05:08:07.223Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -26092,7 +26092,7 @@
     {
       "id": "news_e66a05c23b0f444f",
       "title": "철강업계, 관세·노사 리스크 '이중고'...포스코·현대제철 임단협 본격화",
-      "media": "sentv.co.kr",
+      "media": "서울경제TV",
       "publishedAt": "2026-06-01T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5ORFh5NDNZZ0hZVWJkQk5mUXIwQXJpMUhyUVpaS29sNGRBQTJwdHpaeGNxLU13TTY5UHUtM0F2V2JYWWZSelJoa3lRdW94MFRIS084QjMwMjNlbUtSbmhTNDgwNUU",
       "originalUrl": null,
@@ -26270,7 +26270,7 @@
         "httpStatus": 200,
         "resolvedMedia": "newslock.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:33.026Z",
+        "verifiedAt": "2026-08-11T05:08:11.158Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -26686,7 +26686,7 @@
         "httpStatus": 200,
         "resolvedMedia": "조선일보",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:52.047Z",
+        "verifiedAt": "2026-08-11T05:07:36.420Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -26753,7 +26753,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.1899,
+          "score": 0.1898,
           "ageDays": 71.9,
           "band": "aging"
         },
@@ -26865,7 +26865,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.1899,
+          "score": 0.1898,
           "ageDays": 71.9,
           "band": "aging"
         },
@@ -26993,7 +26993,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.1899,
+          "score": 0.1898,
           "ageDays": 71.9,
           "band": "aging"
         },
@@ -27121,7 +27121,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.1899,
+          "score": 0.1898,
           "ageDays": 71.9,
           "band": "aging"
         },
@@ -27197,7 +27197,7 @@
         "httpStatus": 200,
         "resolvedMedia": "kyeongin.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:37.416Z",
+        "verifiedAt": "2026-08-11T05:10:12.177Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -27258,7 +27258,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.1899,
+          "score": 0.1898,
           "ageDays": 71.9,
           "band": "aging"
         },
@@ -27376,7 +27376,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.1899,
+          "score": 0.1898,
           "ageDays": 71.9,
           "band": "aging"
         },
@@ -27481,7 +27481,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ajunews.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:28.909Z",
+        "verifiedAt": "2026-08-11T05:07:13.183Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -27542,7 +27542,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.1813,
+          "score": 0.1812,
           "ageDays": 73.9,
           "band": "aging"
         },
@@ -27744,7 +27744,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.1813,
+          "score": 0.1812,
           "ageDays": 73.9,
           "band": "aging"
         },
@@ -27872,7 +27872,7 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.1813,
+          "score": 0.1812,
           "ageDays": 73.9,
           "band": "aging"
         },
@@ -28302,7 +28302,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ynenews.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:01.257Z",
+        "verifiedAt": "2026-08-11T05:08:46.369Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -28820,7 +28820,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ytn.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:49:38.520Z",
+        "verifiedAt": "2026-08-11T05:04:26.707Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -29193,7 +29193,7 @@
     {
       "id": "news_4d98b2491c43cdfe",
       "title": "삼성전자 임금교섭 잠정합의안, 노조 투표서 가결",
-      "media": "KBS 뉴스",
+      "media": "news.kbs.co.kr",
       "publishedAt": "2026-05-27T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1oaXloQWZRekNLOUZWOTluQ0JEWGVoLTZNa2xsUmtMczVhb0R3SVJIQUpYUURSM0J6ZnZqR0Z1d0lZd1RFYWFSVEZsS2NzS2xSb3lEM2V1NmhHY2pqWGlaMWZHelBaUQ",
       "originalUrl": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8570905",
@@ -29203,7 +29203,7 @@
         "httpStatus": 200,
         "resolvedMedia": "KBS",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:49:39.430Z",
+        "verifiedAt": "2026-08-11T05:04:27.630Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -29722,7 +29722,7 @@
         "httpStatus": 200,
         "resolvedMedia": "imsn.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:49:49.420Z",
+        "verifiedAt": "2026-08-11T05:04:36.637Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -30300,7 +30300,7 @@
     {
       "id": "news_ee4abb1bbc280f97",
       "title": "한국 GM, 올해 임단협 교섭 위한 상견례 “조속히 마무리 할 것”",
-      "media": "donga.com",
+      "media": "동아일보",
       "publishedAt": "2026-05-27T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE82dUpfckFJdHYwcWEzN0ZpNlRBSHZQQnFuOVpjNW0zM0xnZnZjNXhHTzEzNXVqbzlxVi0wcnJNLVZmRkJkQjBEU3cyZDZmOWkwaS14YlhjNk1Wei1Tbi1NTmRpQV9wOWtCRFQ0NC02TGFuZzE1aEHSAWZBVV95cUxQU09TUklsaENzTEluZkMtZWxJRnYtZ2hldHhyWVRNWERHdHBqUlJST3QyRHJod0VYN3BjQ0VZc21oQWYzUThDdV9PQ3dJeS1HMXZEQmc1dHk1Wm5pNTBrWEQtcmN5YXc",
       "originalUrl": null,
@@ -30438,7 +30438,7 @@
         "httpStatus": 200,
         "resolvedMedia": "연합뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:30.655Z",
+        "verifiedAt": "2026-08-11T05:10:06.694Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -30695,7 +30695,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ekoreanews.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:49:54.711Z",
+        "verifiedAt": "2026-08-11T05:04:40.636Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -30816,7 +30816,7 @@
         "httpStatus": 200,
         "resolvedMedia": "outsourcing.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:05.341Z",
+        "verifiedAt": "2026-08-11T05:06:48.745Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -31065,7 +31065,7 @@
         "httpStatus": 200,
         "resolvedMedia": "asiatoday.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:10.731Z",
+        "verifiedAt": "2026-08-11T05:06:54.109Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -31601,7 +31601,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.1653,
+          "score": 0.1652,
           "ageDays": 77.9,
           "band": "aging"
         },
@@ -31677,7 +31677,7 @@
         "httpStatus": 200,
         "resolvedMedia": "조선일보",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:49:51.364Z",
+        "verifiedAt": "2026-08-11T05:04:38.291Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -31746,7 +31746,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.1653,
+          "score": 0.1652,
           "ageDays": 77.9,
           "band": "aging"
         },
@@ -31867,7 +31867,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.1653,
+          "score": 0.1652,
           "ageDays": 77.9,
           "band": "aging"
         },
@@ -32001,7 +32001,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.1653,
+          "score": 0.1652,
           "ageDays": 77.9,
           "band": "aging"
         },
@@ -32351,7 +32351,7 @@
         "httpStatus": 200,
         "resolvedMedia": "서울경제",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:49:45.870Z",
+        "verifiedAt": "2026-08-11T05:04:33.456Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -32472,7 +32472,7 @@
         "httpStatus": 200,
         "resolvedMedia": "머니투데이",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:49:58.379Z",
+        "verifiedAt": "2026-08-11T05:04:43.719Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -32593,7 +32593,7 @@
         "httpStatus": 200,
         "resolvedMedia": "경향신문",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:32.377Z",
+        "verifiedAt": "2026-08-11T05:05:15.794Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -32704,7 +32704,7 @@
     {
       "id": "news_116602fbc54df350",
       "title": "삼성전자 ‘비반도체’ “상실감 크다...잠정합의 부결 운동 시작” [지금뉴스]",
-      "media": "KBS 뉴스",
+      "media": "news.kbs.co.kr",
       "publishedAt": "2026-05-22T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE51X3RsQnhqNy1vWUxKZXpvZHlES093MURZWWw1bjFITDBWOEpvbE1JVEhNdXdvT2xCMVluVi1OR21mNDFySTZLN01PeHNwTWRPSkdnTVg1ZGFxT2s",
       "originalUrl": null,
@@ -32976,7 +32976,7 @@
         "httpStatus": 200,
         "resolvedMedia": "greened.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:53.596Z",
+        "verifiedAt": "2026-08-11T05:09:38.199Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -33135,7 +33135,7 @@
         "httpStatus": 200,
         "resolvedMedia": "alphabiz.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:49:40.372Z",
+        "verifiedAt": "2026-08-11T05:04:28.393Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -33278,7 +33278,7 @@
     {
       "id": "news_1bd7856a11bea772",
       "title": "이런 파업은 없었다...삼성전자 교섭이 남긴 것",
-      "media": "KBS 뉴스",
+      "media": "news.kbs.co.kr",
       "publishedAt": "2026-05-21T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9zbG0tRnliZTVTZE14Tl80dFRfQTJka3ZZdXRyX0xXMWpGUmtvLUpscjQxdGtibmYyNnhqcS1DY20xN0g4azA0ZXBlTEhISFBzQzdyWXd0WHhCS0k",
       "originalUrl": null,
@@ -33629,7 +33629,7 @@
         "httpStatus": 200,
         "resolvedMedia": "매일노동뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:20.532Z",
+        "verifiedAt": "2026-08-11T05:05:04.989Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -34047,7 +34047,7 @@
         "httpStatus": 200,
         "resolvedMedia": "efnews.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:59.579Z",
+        "verifiedAt": "2026-08-11T05:05:43.950Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -34206,7 +34206,7 @@
         "httpStatus": 403,
         "resolvedMedia": "뉴스1",
         "titleOverlap": null,
-        "verifiedAt": "2026-08-11T04:51:03.771Z",
+        "verifiedAt": "2026-08-11T05:05:46.978Z",
         "status": "RESOLVED_UNREACHABLE"
       },
       "classification": {
@@ -34390,7 +34390,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ebn.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:05.364Z",
+        "verifiedAt": "2026-08-11T05:05:48.458Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -34543,7 +34543,7 @@
         "httpStatus": 200,
         "resolvedMedia": "insightkorea.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:42.618Z",
+        "verifiedAt": "2026-08-11T05:07:27.788Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -35097,7 +35097,7 @@
         "httpStatus": 200,
         "resolvedMedia": "straightnews.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:11.866Z",
+        "verifiedAt": "2026-08-11T05:07:53.005Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -35250,7 +35250,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ytn.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:15.220Z",
+        "verifiedAt": "2026-08-11T05:07:56.138Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -35409,7 +35409,7 @@
         "httpStatus": 200,
         "resolvedMedia": "조선일보",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:16.629Z",
+        "verifiedAt": "2026-08-11T05:07:57.181Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -35562,7 +35562,7 @@
         "httpStatus": 200,
         "resolvedMedia": "한국경제",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:45.846Z",
+        "verifiedAt": "2026-08-11T05:09:30.951Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -36253,7 +36253,7 @@
         "httpStatus": 200,
         "resolvedMedia": "breaknews.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:51.070Z",
+        "verifiedAt": "2026-08-11T05:09:35.444Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -37336,7 +37336,7 @@
         "httpStatus": 200,
         "resolvedMedia": "한겨레",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:49:59.484Z",
+        "verifiedAt": "2026-08-11T05:04:45.717Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -37397,7 +37397,7 @@
         "confidence": 0.91,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -37457,7 +37457,7 @@
         "httpStatus": 200,
         "resolvedMedia": "조선일보",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:03.299Z",
+        "verifiedAt": "2026-08-11T05:04:49.159Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -37518,7 +37518,7 @@
         "confidence": 0.91,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -37578,7 +37578,7 @@
         "httpStatus": 200,
         "resolvedMedia": "m.ekn.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:06.598Z",
+        "verifiedAt": "2026-08-11T05:04:51.516Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -37639,7 +37639,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -37699,7 +37699,7 @@
         "httpStatus": 200,
         "resolvedMedia": "경향신문",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:08.382Z",
+        "verifiedAt": "2026-08-11T05:04:53.493Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -37760,7 +37760,7 @@
         "confidence": 0.91,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -37872,7 +37872,7 @@
         "confidence": 0.91,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -37948,7 +37948,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ytn.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:12.074Z",
+        "verifiedAt": "2026-08-11T05:04:56.613Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -38009,7 +38009,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -38069,7 +38069,7 @@
         "httpStatus": 200,
         "resolvedMedia": "MBC",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:13.116Z",
+        "verifiedAt": "2026-08-11T05:04:57.499Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -38130,7 +38130,7 @@
         "confidence": 0.91,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -38190,7 +38190,7 @@
         "httpStatus": 200,
         "resolvedMedia": "news.einfomax.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:17.147Z",
+        "verifiedAt": "2026-08-11T05:05:01.147Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -38251,7 +38251,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -38311,7 +38311,7 @@
         "httpStatus": 200,
         "resolvedMedia": "ytn.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:19.664Z",
+        "verifiedAt": "2026-08-11T05:05:03.964Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -38372,7 +38372,7 @@
         "confidence": 0.91,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -38432,7 +38432,7 @@
         "httpStatus": 200,
         "resolvedMedia": "매일경제",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:24.802Z",
+        "verifiedAt": "2026-08-11T05:05:08.304Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -38493,7 +38493,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -38554,7 +38554,7 @@
         "httpStatus": 200,
         "resolvedMedia": "한국경제",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:30.221Z",
+        "verifiedAt": "2026-08-11T05:05:13.518Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -38621,7 +38621,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -38681,7 +38681,7 @@
         "httpStatus": 200,
         "resolvedMedia": "imsn.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:38.492Z",
+        "verifiedAt": "2026-08-11T05:05:22.036Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -38742,7 +38742,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -38825,7 +38825,7 @@
     {
       "id": "news_1ab815eaee8f1b28",
       "title": "삼성전자 노사 교섭, 오후 4시 재개...김영훈 장관 조정 나서",
-      "media": "newsworks.co.kr",
+      "media": "뉴스웍스",
       "publishedAt": "2026-05-20T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE9rYlg4bVBCODl4RVJEbHhhS0VZcGFzNUdWQ0RZRHp3eE9sSzAyMnJPQ3IzU2k3N21FdEFIRnNHVGNHTWxqQ3Y4TWs5c3lFSjU4RjFEVUhaRGJpcWFfQmRLWWROSnE0UlozRE1pdmJEUdIBc0FVX3lxTE1uc185QnVIM0Q0cFRxbllzeV8ySTUwZzNkWlh3NTZPTVJxMjZmR3JuYW84SVA3dEczRVlzWDNWUVFDbUNSR3pFNlkwM0FkOU5zdmQ2UUNCbEZnU0sxRkc5Q292T1BzUEhZWjVXa3FlVFBSMmc",
       "originalUrl": "https://newsworks.co.kr/news/articleView.html?idxno=841369",
@@ -38835,7 +38835,7 @@
         "httpStatus": 200,
         "resolvedMedia": "newsworks.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:53.501Z",
+        "verifiedAt": "2026-08-11T05:05:37.899Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -38896,7 +38896,7 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -38981,15 +38981,15 @@
       "media": "전자신문",
       "publishedAt": "2026-05-20T07:00:00.000Z",
       "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE8zbTZnZVh2aFpfZEM2Q21DS0hIcGh4YnVFaTVLWTRGSUNGZWRwWFByemVHZzVzU3lTYThFZU92QWJtMzk2QVlCZm9vMzNPZw",
-      "originalUrl": "https://etnews.com/20260520000526",
+      "originalUrl": null,
       "sourceVerification": {
         "method": "google-news-batchexecute",
         "originalUrl": "https://etnews.com/20260520000526",
-        "httpStatus": 200,
+        "httpStatus": null,
         "resolvedMedia": "전자신문",
-        "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:51:01.585Z",
-        "status": "RESOLVED_AND_REACHABLE"
+        "titleOverlap": null,
+        "verifiedAt": "2026-08-11T05:05:45.772Z",
+        "status": "RESOLVED_UNREACHABLE"
       },
       "classification": {
         "stage": {
@@ -39008,7 +39008,7 @@
         "scopeClassification": "PRIMARY_DIRECT_UNION",
         "includeInPrimaryDashboard": true,
         "eligibleForStatusAggregation": false,
-        "requiresSourceVerification": false,
+        "requiresSourceVerification": true,
         "parallelStates": {
           "dispute": {
             "code": "STRIKE_SUSPENDED_OR_RETURNED",
@@ -39041,15 +39041,15 @@
           "issueSummary": [],
           "impasseReason": null,
           "ratification": null,
-          "originalUrlStatus": "PUBLISHER_VERIFIED",
-          "sourceTier": "B",
-          "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
-          "needsReview": false
+          "originalUrlStatus": "AGGREGATOR_ONLY",
+          "sourceTier": "C",
+          "factStatus": "INFERENCE",
+          "needsReview": true
         },
         "confidence": 0.74,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -39194,7 +39194,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -39351,7 +39351,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.1473,
+          "score": 0.1472,
           "ageDays": 82.9,
           "band": "aging"
         },
@@ -39440,7 +39440,7 @@
         "httpStatus": 200,
         "resolvedMedia": "MBC",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:28.600Z",
+        "verifiedAt": "2026-08-11T05:05:11.194Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -39561,7 +39561,7 @@
         "httpStatus": 200,
         "resolvedMedia": "조선일보",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:34.545Z",
+        "verifiedAt": "2026-08-11T05:07:19.087Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -39779,7 +39779,7 @@
         "httpStatus": 403,
         "resolvedMedia": "businesspost.co.kr",
         "titleOverlap": null,
-        "verifiedAt": "2026-08-11T04:54:35.374Z",
+        "verifiedAt": "2026-08-11T05:09:19.921Z",
         "status": "RESOLVED_UNREACHABLE"
       },
       "classification": {
@@ -40991,7 +40991,7 @@
         "httpStatus": 200,
         "resolvedMedia": "thelec.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:40.826Z",
+        "verifiedAt": "2026-08-11T05:05:24.236Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -41052,7 +41052,7 @@
         "confidence": 0.69,
         "needsReview": true,
         "freshness": {
-          "score": 0.1343,
+          "score": 0.1342,
           "ageDays": 86.9,
           "band": "aging"
         },
@@ -41196,7 +41196,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.1343,
+          "score": 0.1342,
           "ageDays": 86.9,
           "band": "aging"
         },
@@ -41370,7 +41370,7 @@
         "httpStatus": 200,
         "resolvedMedia": "한국경제",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:52:40.726Z",
+        "verifiedAt": "2026-08-11T05:07:25.871Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -41583,7 +41583,7 @@
         "httpStatus": 200,
         "resolvedMedia": "etoday.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:48.106Z",
+        "verifiedAt": "2026-08-11T05:09:33.109Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -41762,7 +41762,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.1253,
+          "score": 0.1252,
           "ageDays": 89.9,
           "band": "aging"
         },
@@ -41878,7 +41878,7 @@
         "httpStatus": 200,
         "resolvedMedia": "smarttoday.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:09.569Z",
+        "verifiedAt": "2026-08-11T05:07:52.012Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -41939,7 +41939,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.1253,
+          "score": 0.1252,
           "ageDays": 89.9,
           "band": "aging"
         },
@@ -42031,7 +42031,7 @@
         "httpStatus": 200,
         "resolvedMedia": "haesanews.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:54:39.319Z",
+        "verifiedAt": "2026-08-11T05:09:24.085Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -42092,7 +42092,7 @@
         "confidence": 0.86,
         "needsReview": true,
         "freshness": {
-          "score": 0.1253,
+          "score": 0.1252,
           "ageDays": 89.9,
           "band": "aging"
         },
@@ -42152,7 +42152,7 @@
         "httpStatus": 200,
         "resolvedMedia": "전자신문",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:47.194Z",
+        "verifiedAt": "2026-08-11T05:05:30.552Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -42305,7 +42305,7 @@
         "httpStatus": 200,
         "resolvedMedia": "매일노동뉴스",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:53.126Z",
+        "verifiedAt": "2026-08-11T05:08:35.416Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -42781,7 +42781,7 @@
         "httpStatus": 200,
         "resolvedMedia": "m.ekn.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:36.972Z",
+        "verifiedAt": "2026-08-11T05:05:20.288Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -43102,7 +43102,7 @@
         "httpStatus": 200,
         "resolvedMedia": "서울경제",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:06.965Z",
+        "verifiedAt": "2026-08-11T05:07:49.075Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -43395,7 +43395,7 @@
         "httpStatus": 200,
         "resolvedMedia": "v.daum.net",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:53:55.953Z",
+        "verifiedAt": "2026-08-11T05:08:41.638Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -43865,7 +43865,7 @@
         "httpStatus": 403,
         "resolvedMedia": "businesspost.co.kr",
         "titleOverlap": null,
-        "verifiedAt": "2026-08-11T04:55:27.017Z",
+        "verifiedAt": "2026-08-11T05:10:02.346Z",
         "status": "RESOLVED_UNREACHABLE"
       },
       "classification": {
@@ -44044,7 +44044,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.1066,
+          "score": 0.1065,
           "ageDays": 96.9,
           "band": "aging"
         },
@@ -44277,7 +44277,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.1066,
+          "score": 0.1065,
           "ageDays": 96.9,
           "band": "aging"
         },
@@ -44480,7 +44480,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.0972,
+          "score": 0.0971,
           "ageDays": 100.9,
           "band": "aging"
         },
@@ -44608,7 +44608,7 @@
         "confidence": 0.38,
         "needsReview": true,
         "freshness": {
-          "score": 0.0972,
+          "score": 0.0971,
           "ageDays": 100.9,
           "band": "aging"
         },
@@ -44812,7 +44812,7 @@
         "httpStatus": 200,
         "resolvedMedia": "newspim.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:34.671Z",
+        "verifiedAt": "2026-08-11T05:05:18.050Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -44873,7 +44873,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.0928,
+          "score": 0.0927,
           "ageDays": 102.9,
           "band": "aging"
         },
@@ -44933,7 +44933,7 @@
         "httpStatus": 200,
         "resolvedMedia": "incheontoday.com",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:55:07.014Z",
+        "verifiedAt": "2026-08-11T05:09:49.588Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -44994,7 +44994,7 @@
         "confidence": 0.49,
         "needsReview": true,
         "freshness": {
-          "score": 0.0928,
+          "score": 0.0927,
           "ageDays": 102.9,
           "band": "aging"
         },
@@ -45083,7 +45083,7 @@
         "httpStatus": 200,
         "resolvedMedia": "realmeter.net",
         "titleOverlap": 0,
-        "verifiedAt": "2026-08-11T04:50:15.468Z",
+        "verifiedAt": "2026-08-11T05:04:59.874Z",
         "status": "RESOLVED_TITLE_MISMATCH"
       },
       "classification": {
@@ -45367,7 +45367,7 @@
         "httpStatus": 200,
         "resolvedMedia": "thelec.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:56.495Z",
+        "verifiedAt": "2026-08-11T05:05:41.232Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -46356,7 +46356,7 @@
         "httpStatus": 403,
         "resolvedMedia": "businesspost.co.kr",
         "titleOverlap": null,
-        "verifiedAt": "2026-08-11T04:50:40.123Z",
+        "verifiedAt": "2026-08-11T05:05:23.574Z",
         "status": "RESOLVED_UNREACHABLE"
       },
       "classification": {
@@ -46488,7 +46488,7 @@
         "httpStatus": 200,
         "resolvedMedia": "industrynews.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:43.823Z",
+        "verifiedAt": "2026-08-11T05:05:27.359Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -46641,7 +46641,7 @@
         "httpStatus": 200,
         "resolvedMedia": "조선일보",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:49.333Z",
+        "verifiedAt": "2026-08-11T05:05:32.849Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -46702,7 +46702,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.0395,
+          "score": 0.0394,
           "ageDays": 139.9,
           "band": "archive"
         },
@@ -46794,7 +46794,7 @@
         "httpStatus": 200,
         "resolvedMedia": "youthdaily.co.kr",
         "titleOverlap": 1,
-        "verifiedAt": "2026-08-11T04:50:51.570Z",
+        "verifiedAt": "2026-08-11T05:05:35.229Z",
         "status": "RESOLVED_AND_REACHABLE"
       },
       "classification": {
@@ -46861,7 +46861,7 @@
         "confidence": 0.8,
         "needsReview": true,
         "freshness": {
-          "score": 0.0395,
+          "score": 0.0394,
           "ageDays": 139.9,
           "band": "archive"
         },
