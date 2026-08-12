@@ -5,7 +5,7 @@
       "name": "bargaining-radar",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
-      "port": 5173
+      "port": 3000
     }
   ]
 }

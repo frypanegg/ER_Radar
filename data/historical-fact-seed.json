@@ -163,7 +163,16 @@
       "id": "hyundai-steel-2025-wage-ratification",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.newspim.com/news/view/20251104001419"
+      "originalUrl": "https://www.newspim.com/news/view/20251104001419",
+      "flowEvents": [
+        {
+          "date": "2025-10-30",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "노사가 10월 30일 임금 8만원 인상·성과급 300%+500만원을 담은 잠정합의안을 마련했다.",
+          "sourceUrl": "https://www.newspim.com/news/view/20251104001419"
+        }
+      ]
     },
     {
       "recordId": "hyundai-mobis-2025-integrated-ratification",
@@ -1015,7 +1024,16 @@
       "id": "hyundai-mobis-2024-integrated-ratification",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://v.daum.net/v/20240712220522022"
+      "originalUrl": "https://v.daum.net/v/20240712220522022",
+      "flowEvents": [
+        {
+          "date": "2024-07-09",
+          "stage": "S5",
+          "label": "잠정합의안 도출",
+          "summary": "노사가 파업 예고일을 앞둔 7월 9일 잠정합의안을 마련했다.",
+          "sourceUrl": "https://v.daum.net/v/20240712220522022"
+        }
+      ]
     },
     {
       "recordId": "hyundai-steel-2023-wage-signing",
@@ -1043,7 +1061,37 @@
       "id": "hyundai-steel-2023-wage-signing",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://mobile.newsis.com/view/NISX20240423_0002710121"
+      "originalUrl": "https://mobile.newsis.com/view/NISX20240423_0002710121",
+      "flowEvents": [
+        {
+          "date": "2023-09-15",
+          "stage": "S3",
+          "label": "첫 상견례",
+          "summary": "노사가 9월 15일 2023년 임금협상 첫 상견례를 열었다.",
+          "sourceUrl": "https://mobile.newsis.com/view/NISX20240423_0002710121"
+        },
+        {
+          "date": "2024-03-26",
+          "stage": "S6",
+          "label": "순천지회 찬반투표 가결",
+          "summary": "광전지부 현대제철 순천지회가 3월 26일 가장 먼저 찬반투표로 합의를 마쳤다.",
+          "sourceUrl": "https://mobile.newsis.com/view/NISX20240423_0002710121"
+        },
+        {
+          "date": "2024-03-27",
+          "stage": "S7",
+          "label": "인천지부·포항지부 조인",
+          "summary": "3월 27일 인천지부와 포항지부가 조인을 마쳤다.",
+          "sourceUrl": "https://mobile.newsis.com/view/NISX20240423_0002710121"
+        },
+        {
+          "date": "2024-04-11",
+          "stage": "S7",
+          "label": "당진하이스코지회 조인",
+          "summary": "4월 11일 당진하이스코지회가 조인을 마쳤다.",
+          "sourceUrl": "https://mobile.newsis.com/view/NISX20240423_0002710121"
+        }
+      ]
     },
     {
       "companyId": "posco",
@@ -1148,7 +1196,37 @@
       "id": "gm-korea-2023-wage-ratification",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202309261542220670219"
+      "originalUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202309261542220670219",
+      "flowEvents": [
+        {
+          "date": "2023-06-22",
+          "stage": "S3",
+          "label": "상견례·교섭 개시",
+          "summary": "노사가 6월 22일 첫 상견례를 열고 2023년 임금교섭을 시작했다.",
+          "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202309261542220670219"
+        },
+        {
+          "date": "2023-09-08",
+          "stage": "S5",
+          "label": "1차 잠정합의",
+          "summary": "노사가 9월 8일 기본급 7만원 인상·일시금 1,000만원을 담은 1차 잠정합의안을 마련했으나 조합원 투표에서 부결됐다.",
+          "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202309261542220670219"
+        },
+        {
+          "date": "2023-09-15",
+          "stage": "S4",
+          "label": "부분파업 돌입",
+          "summary": "노조가 9월 15일부터 20일까지 하루 4시간씩 부분파업을 벌였다.",
+          "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202309261542220670219"
+        },
+        {
+          "date": "2023-09-21",
+          "stage": "S5",
+          "label": "2차 잠정합의",
+          "summary": "노사가 9월 21일 기본급 8만원 인상·타결 일시금 550만원을 담은 2차 잠정합의안을 마련했다.",
+          "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202309261542220670219"
+        }
+      ]
     },
     {
       "companyId": "hyundai-motor",
@@ -1225,7 +1303,16 @@
       "id": "hyundai-mobis-2023-integrated-ratification",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://v.daum.net/v/ZeTdF8paFG"
+      "originalUrl": "https://v.daum.net/v/ZeTdF8paFG",
+      "flowEvents": [
+        {
+          "date": "2023-09-13",
+          "stage": "S5",
+          "label": "잠정합의안 도출",
+          "summary": "노사가 9월 13일 기본급 11만1천원 인상·성과금 400%+1,050만원을 담은 잠정합의안을 마련했다.",
+          "sourceUrl": "https://v.daum.net/v/ZeTdF8paFG"
+        }
+      ]
     },
     {
       "recordId": "hd-hyundai-heavy-industries-2023-wage-signing",
@@ -1351,7 +1438,23 @@
       "id": "hd-hyundai-heavy-industries-2022-wage-signing",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.hd-hhi.com/filedown/hhifamily202301.pdf"
+      "originalUrl": "https://www.hd-hhi.com/filedown/hhifamily202301.pdf",
+      "flowEvents": [
+        {
+          "date": "2022-12-06",
+          "stage": "S5",
+          "label": "36차 교섭 잠정합의",
+          "summary": "노사가 36차 교섭 끝에 12월 6일 새벽 기본급 8만원 인상 등을 담은 잠정합의안을 도출했다.",
+          "sourceUrl": "https://www.newsis.com/view/?id=NISX20221208_0002115530"
+        },
+        {
+          "date": "2022-12-08",
+          "stage": "S3",
+          "label": "1차 잠정합의안 부결",
+          "summary": "12월 8일 찬반투표에서 투표율 93.02%에 찬성 49.94%(3,093표)·반대 49.69%(3,078표)로 부결됐다.",
+          "sourceUrl": "https://www.labortoday.co.kr/news/articleView.html?idxno=212406"
+        }
+      ]
     },
     {
       "recordId": "hanwha-ocean-2022-integrated-ratification",
@@ -1379,7 +1482,23 @@
       "id": "hanwha-ocean-2022-integrated-ratification",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02794566632556552"
+      "originalUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02794566632556552",
+      "flowEvents": [
+        {
+          "date": "2022-04-28",
+          "stage": "S1",
+          "label": "노조 요구안 전달",
+          "summary": "노조가 4월 28일 회사에 2022년 임금·단체협약 요구안을 전달했다.",
+          "sourceUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02794566632556552"
+        },
+        {
+          "date": "2022-12-06",
+          "stage": "S5",
+          "label": "잠정합의 도출",
+          "summary": "노사가 12월 6일 기본급 8만5천원 인상·격려금 200만원을 담은 잠정합의안을 마련했다.",
+          "sourceUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02794566632556552"
+        }
+      ]
     },
     {
       "recordId": "gm-korea-2022-integrated-signing",
@@ -1459,7 +1578,16 @@
       "id": "hyundai-motor:2022:WAGE:2022-07-21:https://www.newsis.com/view/NISI20220721_0019052218",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.newsis.com/view/NISI20220721_0019052218"
+      "originalUrl": "https://www.newsis.com/view/NISI20220721_0019052218",
+      "flowEvents": [
+        {
+          "date": "2022-07-19",
+          "stage": "S6",
+          "label": "조합원 찬반투표 가결",
+          "summary": "7월 19일 찬반투표에서 조합원 4만6,413명 중 3만9,125명(84.3%)이 투표해 61.9%(2만4,225명) 찬성으로 가결됐다.",
+          "sourceUrl": "https://mobile.busan.com/view/busan/view.php?code=2022072008275323102"
+        }
+      ]
     },
     {
       "recordId": "hd-hyundai-heavy-industries-2021-wage-signing",
@@ -1487,7 +1615,44 @@
       "id": "hd-hyundai-heavy-industries-2021-wage-signing",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.newspim.com/news/view/20220531000811"
+      "originalUrl": "https://www.newspim.com/news/view/20220531000811",
+      "flowEvents": [
+        {
+          "date": "2021-08-30",
+          "stage": "S3",
+          "label": "임금교섭 개시",
+          "summary": "현대중공업 노사가 8월 30일 2021년 임금교섭을 시작했다.",
+          "sourceUrl": "https://www.newspim.com/news/view/20220531000811"
+        },
+        {
+          "date": "2022-03-15",
+          "stage": "S5",
+          "label": "1차 잠정합의안 도출",
+          "summary": "노사가 3월 15일 기본급 7만3천원 인상·성과금 148%를 담은 잠정합의안을 마련했으나 조합원 투표에서 부결됐다.",
+          "sourceUrl": "https://www.labortoday.co.kr/news/articleView.html?idxno=208602"
+        },
+        {
+          "date": "2022-04-27",
+          "stage": "S4",
+          "label": "2021년 임금협상 관련 부분파업",
+          "summary": "회사가 2021년도 임금협상 관련 부분파업으로 4월 27일부터 5월 4일까지 울산지역 사업장 생산중단을 공시했다.",
+          "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20220427800005"
+        },
+        {
+          "date": "2022-05-10",
+          "stage": "S5",
+          "label": "2차 잠정합의",
+          "summary": "노사가 5월 10일 기본급 7만3천원 인상·성과금 148%·격려금 250만원을 담은 잠정합의안을 마련했다.",
+          "sourceUrl": "https://www.newspim.com/news/view/20220531000811"
+        },
+        {
+          "date": "2022-05-12",
+          "stage": "S6",
+          "label": "조합원 찬반투표 가결",
+          "summary": "5월 12일 조합원 투표에서 현대중공업은 가결, 현대일렉트릭·현대건설기계는 부결됐다.",
+          "sourceUrl": "https://www.newspim.com/news/view/20220531000811"
+        }
+      ]
     },
     {
       "recordId": "hanwha-ocean-2021-wage-ratification",
@@ -1515,7 +1680,16 @@
       "id": "hanwha-ocean-2021-wage-ratification",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.dailian.co.kr/news/view/1104855/%EB%8C%80%EC%9A%B0%EC%A1%B0%EC%84%A0-%EC%A7%80%EB%82%9C%ED%95%B4-%EC%9E%84%ED%98%91-%EC%9E%A0%EC%A0%95%ED%95%A9%EC%9D%98%EC%95%88-%EA%B0%80%EA%B2%B0-2022"
+      "originalUrl": "https://www.dailian.co.kr/news/view/1104855/%EB%8C%80%EC%9A%B0%EC%A1%B0%EC%84%A0-%EC%A7%80%EB%82%9C%ED%95%B4-%EC%9E%84%ED%98%91-%EC%9E%A0%EC%A0%95%ED%95%A9%EC%9D%98%EC%95%88-%EA%B0%80%EA%B2%B0-2022",
+      "flowEvents": [
+        {
+          "date": "2022-04-15",
+          "stage": "S5",
+          "label": "40차 단체교섭 잠정합의",
+          "summary": "노사가 4월 15일 40차 단체교섭에서 2021년 임금협상 잠정합의안을 마련했다.",
+          "sourceUrl": "https://www.dailian.co.kr/news/view/1104855"
+        }
+      ]
     },
     {
       "companyId": "kia",
@@ -1569,7 +1743,23 @@
       "id": "gm-korea-2021-wage-signing",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.donga.com/news/Economy/article/all/20210827/108794362/1"
+      "originalUrl": "https://www.donga.com/news/Economy/article/all/20210827/108794362/1",
+      "flowEvents": [
+        {
+          "date": "2021-05-27",
+          "stage": "S3",
+          "label": "상견례·교섭 개시",
+          "summary": "한국지엠 노사가 5월 27일 2021년 임금협상 첫 교섭을 열었다.",
+          "sourceUrl": "https://www.mt.co.kr/industry/2021/07/22/2021072220013083099"
+        },
+        {
+          "date": "2021-07-22",
+          "stage": "S5",
+          "label": "14차 교섭 잠정합의",
+          "summary": "노사가 7월 22일 14차 교섭에서 잠정합의안을 마련했다.",
+          "sourceUrl": "https://www.mt.co.kr/industry/2021/07/22/2021072220013083099"
+        }
+      ]
     },
     {
       "companyId": "samsung-electronics",
@@ -1621,7 +1811,16 @@
       "id": "hyundai-motor:2021:INTEGRATED:2021-07-29:https://www.yna.co.kr/view/AKR20210729112000057",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.yna.co.kr/view/AKR20210729112000057"
+      "originalUrl": "https://www.yna.co.kr/view/AKR20210729112000057",
+      "flowEvents": [
+        {
+          "date": "2021-07-20",
+          "stage": "S5",
+          "label": "잠정합의 도출",
+          "summary": "현대자동차 노사가 7월 20일 2021년 임금·단체협약 잠정합의안을 마련했다.",
+          "sourceUrl": "https://www.mt.co.kr/industry/2021/07/22/2021072220013083099"
+        }
+      ]
     },
     {
       "recordId": "hyundai-mobis-2021-integrated-impasse",
@@ -1876,8 +2075,8 @@
     }
   ],
   "timelineCoverage": {
-    "recordsWithTimeline": 21,
-    "recordsResultOnly": 23,
-    "eventsMerged": 48
+    "recordsWithTimeline": 33,
+    "recordsResultOnly": 11,
+    "eventsMerged": 73
   }
 }

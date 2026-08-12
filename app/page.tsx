@@ -29,6 +29,7 @@ import {
   issueHighlights,
   type CaseHistory,
 } from "./bargaining-history";
+import { toKeyPoints } from "./key-points";
 
 type AgreementType = "WAGE" | "INTEGRATED" | "CBA" | "SUPPLEMENTAL" | "UNKNOWN";
 type BargainingFlowEvent = {
@@ -261,13 +262,6 @@ function shortCompanyName(legalName: string) {
 
 // 서술형 한 덩어리는 읽히지 않는다. 문장과 " · " 구분자를 기준으로 끊어 글머리 기호로
 // 보여준다. 원문 문장을 다시 쓰지 않고 그대로 나누기만 한다.
-function toBulletPoints(text: string) {
-  return text
-    .split(/(?<=다\.)\s+|\s+·\s+/)
-    .map((sentence) => sentence.trim())
-    .filter(Boolean);
-}
-
 function getBargainingCases(
   year: number,
   records: HistoricalRecord[] = bargainingRecords,
@@ -336,14 +330,14 @@ function getBargainingCases(
       majorityUnion: "확인중",
       unionMembers: "공개 근거 미확인",
       history: deriveCaseHistory(record),
-      issueSummary: toBulletPoints(record.factSummary),
-      breakdownReason: toBulletPoints(
+      issueSummary: toKeyPoints(record.factSummary),
+      breakdownReason: toKeyPoints(
         `${record.bargainingYear === currentYear ? "현재 확인한 기사" : "이 초기 기록"}에 확인된 결렬 사유 없음 · 원문 명시 시에만 별도 쟁점 갱신`,
       ),
       voteChangeSummary:
         record.stage === "S6" || record.stage === "S7"
-          ? toBulletPoints(record.factSummary)
-          : toBulletPoints("찬반투표·최종안의 기존 대비 변경 · 확인된 원문 있을 때만 표시"),
+          ? toKeyPoints(record.factSummary)
+          : toKeyPoints("찬반투표·최종안의 기존 대비 변경 · 확인된 원문 있을 때만 표시"),
       evidence,
       sourceAnnotations,
       flowEvents: record.flowEvents?.length

@@ -29,7 +29,11 @@ import {
 import { classifyArticle, validateConfiguration } from "../scripts/collect-news.mjs";
 
 /** 제목 하나를 실제 설정으로 분류한다. 원문 검증까지 통과한 기사로 취급한다. */
-async function classifyTitle(title, companyId = "hyundai-motor") {
+async function classifyTitle(
+  title,
+  companyId = "hyundai-motor",
+  bargainingYear = 2026,
+) {
   const config = JSON.parse(
     await readFile(new URL("../data/source-config.json", import.meta.url), "utf8"),
   );
@@ -46,7 +50,7 @@ async function classifyTitle(title, companyId = "hyundai-motor") {
     },
     config,
     new Date("2026-08-11T00:00:00.000Z"),
-    2026,
+    bargainingYear,
   ).classification;
 }
 
@@ -460,6 +464,55 @@ test("실제 보도 제목으로 직영·하청 판정을 고정한다", async (
     assert.equal(classification.includeInPrimaryDashboard, false);
     assert.equal(classification.eligibleForStatusAggregation, false);
   }
+});
+
+test("제목의 '임단협' 관용 표현이 임금교섭 해를 통합 임단협으로 뒤집지 않는다", async () => {
+  // 포스코는 매년 임금교섭, 2년 주기 단체교섭이라고 공표했고 2025년이 단체교섭 해였다.
+  // 따라서 2026년은 임금교섭 해다. 그런데 매체마다 같은 사건을 '단체교섭', '임단협',
+  // '임금교섭'으로 제각각 쓴다. 아래 세 제목은 모두 2026년 7월 결렬 보도다.
+  for (const title of [
+    "포스코 노사, 2026년 단체교섭 결렬…중노위 조정 돌입",
+    "'57년 무분규' 갈림길 선 포스코...2026 임단협 교섭 결렬",
+    "포스코 임금교섭 결국 결렬…노조, 중노위 조정 절차 예고",
+  ]) {
+    const { agreementType } = (await classifyTitle(title, "posco", 2026)).annotations;
+    assert.equal(agreementType.code, "WAGE", `임금협상으로 봐야 한다: ${title}`);
+  }
+
+  // 주기가 단체교섭 해로 가리키면 같은 관용 표현이라도 통합으로 남는다.
+  const cbaYear = await classifyTitle(
+    "포스코 노사, 2025년 임단협 잠정합의안 도출",
+    "posco",
+    2025,
+  );
+  assert.equal(cbaYear.annotations.agreementType.code, "INTEGRATED");
+
+  // 현대모비스는 매년 임금·복리후생을 함께 단체교섭한다. 제목이 '단체교섭'뿐이어도
+  // 임금이 빠진 교섭이 아니다.
+  const mobis = await classifyTitle(
+    "현대모비스 2026년 단체교섭 5차 본교섭",
+    "hyundai-mobis",
+    2026,
+  );
+  assert.equal(mobis.annotations.agreementType.code, "INTEGRATED");
+
+  // 주기를 뒤집었으면 사람이 보게 남긴다. 주기 등록이 틀렸을 수도 있기 때문이다.
+  const overridden = await classifyTitle(
+    "'57년 무분규' 갈림길 선 포스코...2026 임단협 교섭 결렬",
+    "posco",
+    2026,
+  );
+  assert.equal(
+    overridden.annotations.agreementType.factBasis,
+    "company_cycle_overrode_title",
+  );
+  assert.equal(overridden.annotations.agreementType.cycleConflict.titleDerived, "INTEGRATED");
+  assert.equal(overridden.annotations.needsReview, true);
+
+  // 주기를 등록하지 않은 회사는 종전대로 제목 분류를 따른다.
+  const noCycle = await classifyTitle("기아 2026 임단협 타결", "kia", 2026);
+  assert.equal(noCycle.annotations.agreementType.code, "INTEGRATED");
+  assert.equal(noCycle.annotations.agreementType.factBasis, "title_keyword");
 });
 
 test("원문까지 확인된 기사는 미확인 기사와 같은 근거 등급으로 기록되지 않는다", async () => {

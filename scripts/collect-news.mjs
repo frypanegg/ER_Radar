@@ -1496,6 +1496,69 @@ function deriveAgreementType(title) {
   return null;
 }
 
+// 회사가 공표한 교섭 주기로 그 해가 단체교섭 해인지 답한다. 주기를 모르면 null을
+// 돌려 제목 분류를 그대로 쓰게 한다.
+function isCollectiveBargainingYear(cycle, bargainingYear) {
+  const periodYears = cycle?.cba?.periodYears;
+  const anchorYear = cycle?.cba?.anchorYear;
+  if (
+    !Number.isInteger(periodYears) ||
+    periodYears < 1 ||
+    !Number.isInteger(anchorYear) ||
+    !Number.isInteger(bargainingYear)
+  ) {
+    return null;
+  }
+  return (bargainingYear - anchorYear) % periodYears === 0;
+}
+
+// 제목 분류를 회사의 공표 주기와 대조한다. 다수 매체가 임금교섭 해에도 제목에
+// '임단협'을 관용적으로 쓰기 때문에, 제목만 보면 임금협상 해가 통합 임단협으로
+// 뒤집힌다. 포스코 2026년이 그렇게 INTEGRATED로 잘못 들어갔다.
+//
+// 주기가 등록된 회사는 주기를 신뢰한다. 회사가 직접 공표한 근거인 반면 제목의
+// '임단협'은 관용 표현이라 근거로 약하다. 다만 실제로 그 해만 교섭 구조가 달라졌을
+// 수도 있으므로 뒤집을 때는 needsReview를 세워 사람이 보게 남긴다.
+function resolveAgreementType(title, cycle, bargainingYear) {
+  const derived = deriveAgreementType(title);
+  const cbaYear = isCollectiveBargainingYear(cycle, bargainingYear);
+  if (cbaYear === null) {
+    return {
+      code: derived,
+      factBasis: derived ? "title_keyword" : "unverified",
+      needsReview: !derived,
+      cycleConflict: null,
+    };
+  }
+  const expected = cbaYear ? "INTEGRATED" : "WAGE";
+  if (derived === null) {
+    return {
+      code: expected,
+      factBasis: "company_cycle",
+      needsReview: false,
+      cycleConflict: null,
+    };
+  }
+  if (derived === expected) {
+    return {
+      code: expected,
+      factBasis: "title_keyword_cycle_confirmed",
+      needsReview: false,
+      cycleConflict: null,
+    };
+  }
+  return {
+    code: expected,
+    factBasis: "company_cycle_overrode_title",
+    needsReview: true,
+    cycleConflict: {
+      titleDerived: derived,
+      cycleExpected: expected,
+      evidenceUrl: cycle?.evidenceUrl ?? null,
+    },
+  };
+}
+
 function deriveIssueSummary(title) {
   const issueDefinitions = [
     ["WAGE_BASE", "기본급·임금체계", "기본급|호봉|정기승급|임금체계"],
@@ -1515,8 +1578,17 @@ function deriveIssueSummary(title) {
     .map(([code, label]) => ({ code, label, factBasis: "title_keyword" }));
 }
 
-function deriveArticleAnnotations(record, frameworkClassification, bargainingYear) {
-  const agreementType = deriveAgreementType(record.title);
+function deriveArticleAnnotations(
+  record,
+  frameworkClassification,
+  bargainingYear,
+  bargainingCycle,
+) {
+  const agreementType = resolveAgreementType(
+    record.title,
+    bargainingCycle,
+    bargainingYear,
+  );
   const issueSummary = deriveIssueSummary(record.title);
   const isImpasse =
     frameworkClassification.statusCode === "S4" ||
@@ -1559,10 +1631,15 @@ function deriveArticleAnnotations(record, frameworkClassification, bargainingYea
   // 못하는 것과, 이 기사가 단계를 바꿀 근거가 되는지는 별개 문제다. 시드에는 이미
   // 사람이 검증한 협약유형이 있고 반영 단계가 그 값을 유지하므로, 협약유형 미확인으로
   // 단계 갱신까지 막지 않는다. 미확인 사실은 agreementType.needsReview로 남는다.
+  //
+  // 다만 주기 대조가 제목을 뒤집은 경우는 예외로 올린다. 협약유형을 못 읽은 것과
+  // 달리 이때는 수집기가 원문 표현을 적극적으로 덮어쓴 것이라, 주기 등록이 틀렸는지
+  // 그 해만 교섭 구조가 달랐는지 사람이 판단해야 한다.
   const needsReview =
     !record.originalUrl ||
     Boolean(impasseReason?.needsReview) ||
-    Boolean(ratification?.proposalChangeSummary.needsReview);
+    Boolean(ratification?.proposalChangeSummary.needsReview) ||
+    Boolean(agreementType.cycleConflict);
 
   // 근거 등급은 실제 검증 상태를 따라간다. NAVER가 직접 준 원문이거나, Google News
   // 링크를 발행사 주소로 되돌린 뒤 페이지 도달·제목 일치까지 확인한 경우가 더 강한
@@ -1576,11 +1653,12 @@ function deriveArticleAnnotations(record, frameworkClassification, bargainingYea
 
   return {
     agreementType: {
-      code: agreementType,
+      code: agreementType.code,
       bargainingYear,
       bargainingYearScope: "current_year",
-      factBasis: agreementType ? "title_keyword" : "unverified",
-      needsReview: !agreementType,
+      factBasis: agreementType.factBasis,
+      needsReview: agreementType.needsReview,
+      cycleConflict: agreementType.cycleConflict,
     },
     issueSummary,
     impasseReason,
@@ -1686,10 +1764,28 @@ function classifyArticle(
     record.title,
     frameworkClassification.parallelStates,
   );
+  // 교섭 주기는 회사마다 다르므로 대상 회사가 하나로 좁혀질 때만 적용한다. 한 기사가
+  // 여러 회사를 걸치면 어느 쪽 주기를 써야 할지 알 수 없어 제목 분류에 맡긴다.
+  //
+  // 범위 판정과는 별개로 본다. 제목에 노조명이 없어 UNKNOWN_REVIEW로 남는 기사도
+  // 원청 교섭을 다루는 것은 마찬가지라 회사 주기가 그대로 적용된다. 반면 하청·계열사
+  // 노조로 격리된 기사는 원청 주기를 따르지 않으므로 제외한다.
+  const cycleEligible = companies.filter(
+    (company) =>
+      company.scopeClassification !== "SUBCONTRACTOR_UNION_EXCLUDED" &&
+      company.scopeClassification !== "AFFILIATE_UNION_EXCLUDED",
+  );
+  const bargainingCycle =
+    cycleEligible.length === 1
+      ? config.companies.find(
+          (company) => company.id === cycleEligible[0].companyId,
+        )?.bargainingCycle ?? null
+      : null;
   const annotations = deriveArticleAnnotations(
     record,
     frameworkClassification,
     bargainingYear,
+    bargainingCycle,
   );
   const freshness = freshnessFor(record.publishedAt, now, config.collectionPolicy);
   const companyNeedsReview = companies.some((company) => company.needsReview);

@@ -64,6 +64,12 @@
       "researchedOn": "2026-08-12",
       "scope": "주식회사 포스코 2023, HD현대중공업 2023",
       "note": "현대모비스 2024와 한국지엠 2023은 날짜가 명시된 근거를 찾지 못해 넘겼다. HD현대중공업 2023도 '2차' 잠정합의였고 1차 부결 보도가 있으나 날짜가 없어 넣지 않았다. 포스코 쟁의행위 투표 보도 역시 연도·날짜가 불확실해 제외했다."
+    },
+    {
+      "batch": 10,
+      "researchedOn": "2026-08-12",
+      "scope": "HD현대중공업 2021·2022, 한국지엠 2021·2023, 현대자동차 2021·2022, 한화오션 2021·2022, 현대모비스 2023·2024, 현대제철 2023·2025",
+      "note": "2021~2022년은 뉴스 검색이 최근 기사만 돌려줘, DART 생산중단 공시로 HD현대중공업 2021년 임금협상 부분파업 날짜를 확정했다. 공시 사유란에 '2021년도 임금협상 관련 부분파업'이 그대로 적혀 있다. 반대로 현대제철 2021·2022년 생산중단은 협력사(하청) 파업이라 공개 데이터에서 제외했다."
     }
   ],
   "events": [
@@ -450,6 +456,206 @@
       "label": "임금교섭 조인식",
       "summary": "노사가 9월 15일 울산 본사에서 2023년 임금교섭 조인식을 열었다.",
       "sourceUrl": "https://www.hhi.co.kr/Public/pub01_2?page=7&ndate=2023-09-07&bidx=3040"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2021-wage-signing",
+      "date": "2021-08-30",
+      "stage": "S3",
+      "label": "임금교섭 개시",
+      "summary": "현대중공업 노사가 8월 30일 2021년 임금교섭을 시작했다.",
+      "sourceUrl": "https://www.newspim.com/news/view/20220531000811"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2021-wage-signing",
+      "date": "2022-03-15",
+      "stage": "S5",
+      "label": "1차 잠정합의안 도출",
+      "summary": "노사가 3월 15일 기본급 7만3천원 인상·성과금 148%를 담은 잠정합의안을 마련했으나 조합원 투표에서 부결됐다.",
+      "sourceUrl": "https://www.labortoday.co.kr/news/articleView.html?idxno=208602"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2021-wage-signing",
+      "date": "2022-04-27",
+      "stage": "S4",
+      "label": "2021년 임금협상 관련 부분파업",
+      "summary": "회사가 2021년도 임금협상 관련 부분파업으로 4월 27일부터 5월 4일까지 울산지역 사업장 생산중단을 공시했다.",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20220427800005"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2021-wage-signing",
+      "date": "2022-05-10",
+      "stage": "S5",
+      "label": "2차 잠정합의",
+      "summary": "노사가 5월 10일 기본급 7만3천원 인상·성과금 148%·격려금 250만원을 담은 잠정합의안을 마련했다.",
+      "sourceUrl": "https://www.newspim.com/news/view/20220531000811"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2021-wage-signing",
+      "date": "2022-05-12",
+      "stage": "S6",
+      "label": "조합원 찬반투표 가결",
+      "summary": "5월 12일 조합원 투표에서 현대중공업은 가결, 현대일렉트릭·현대건설기계는 부결됐다.",
+      "sourceUrl": "https://www.newspim.com/news/view/20220531000811"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2022-wage-signing",
+      "date": "2022-12-06",
+      "stage": "S5",
+      "label": "36차 교섭 잠정합의",
+      "summary": "노사가 36차 교섭 끝에 12월 6일 새벽 기본급 8만원 인상 등을 담은 잠정합의안을 도출했다.",
+      "sourceUrl": "https://www.newsis.com/view/?id=NISX20221208_0002115530"
+    },
+    {
+      "recordId": "hd-hyundai-heavy-industries-2022-wage-signing",
+      "date": "2022-12-08",
+      "stage": "S3",
+      "label": "1차 잠정합의안 부결",
+      "summary": "12월 8일 찬반투표에서 투표율 93.02%에 찬성 49.94%(3,093표)·반대 49.69%(3,078표)로 부결됐다.",
+      "sourceUrl": "https://www.labortoday.co.kr/news/articleView.html?idxno=212406"
+    },
+    {
+      "recordId": "gm-korea-2021-wage-signing",
+      "date": "2021-05-27",
+      "stage": "S3",
+      "label": "상견례·교섭 개시",
+      "summary": "한국지엠 노사가 5월 27일 2021년 임금협상 첫 교섭을 열었다.",
+      "sourceUrl": "https://www.mt.co.kr/industry/2021/07/22/2021072220013083099"
+    },
+    {
+      "recordId": "gm-korea-2021-wage-signing",
+      "date": "2021-07-22",
+      "stage": "S5",
+      "label": "14차 교섭 잠정합의",
+      "summary": "노사가 7월 22일 14차 교섭에서 잠정합의안을 마련했다.",
+      "sourceUrl": "https://www.mt.co.kr/industry/2021/07/22/2021072220013083099"
+    },
+    {
+      "recordId": "gm-korea-2023-wage-ratification",
+      "date": "2023-06-22",
+      "stage": "S3",
+      "label": "상견례·교섭 개시",
+      "summary": "노사가 6월 22일 첫 상견례를 열고 2023년 임금교섭을 시작했다.",
+      "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202309261542220670219"
+    },
+    {
+      "recordId": "gm-korea-2023-wage-ratification",
+      "date": "2023-09-08",
+      "stage": "S5",
+      "label": "1차 잠정합의",
+      "summary": "노사가 9월 8일 기본급 7만원 인상·일시금 1,000만원을 담은 1차 잠정합의안을 마련했으나 조합원 투표에서 부결됐다.",
+      "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202309261542220670219"
+    },
+    {
+      "recordId": "gm-korea-2023-wage-ratification",
+      "date": "2023-09-15",
+      "stage": "S4",
+      "label": "부분파업 돌입",
+      "summary": "노조가 9월 15일부터 20일까지 하루 4시간씩 부분파업을 벌였다.",
+      "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202309261542220670219"
+    },
+    {
+      "recordId": "gm-korea-2023-wage-ratification",
+      "date": "2023-09-21",
+      "stage": "S5",
+      "label": "2차 잠정합의",
+      "summary": "노사가 9월 21일 기본급 8만원 인상·타결 일시금 550만원을 담은 2차 잠정합의안을 마련했다.",
+      "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202309261542220670219"
+    },
+    {
+      "recordId": "hyundai-motor:2021:INTEGRATED:2021-07-29:https://www.yna.co.kr/view/AKR20210729112000057",
+      "date": "2021-07-20",
+      "stage": "S5",
+      "label": "잠정합의 도출",
+      "summary": "현대자동차 노사가 7월 20일 2021년 임금·단체협약 잠정합의안을 마련했다.",
+      "sourceUrl": "https://www.mt.co.kr/industry/2021/07/22/2021072220013083099"
+    },
+    {
+      "recordId": "hyundai-motor:2022:WAGE:2022-07-21:https://www.newsis.com/view/NISI20220721_0019052218",
+      "date": "2022-07-19",
+      "stage": "S6",
+      "label": "조합원 찬반투표 가결",
+      "summary": "7월 19일 찬반투표에서 조합원 4만6,413명 중 3만9,125명(84.3%)이 투표해 61.9%(2만4,225명) 찬성으로 가결됐다.",
+      "sourceUrl": "https://mobile.busan.com/view/busan/view.php?code=2022072008275323102"
+    },
+    {
+      "recordId": "hanwha-ocean-2021-wage-ratification",
+      "date": "2022-04-15",
+      "stage": "S5",
+      "label": "40차 단체교섭 잠정합의",
+      "summary": "노사가 4월 15일 40차 단체교섭에서 2021년 임금협상 잠정합의안을 마련했다.",
+      "sourceUrl": "https://www.dailian.co.kr/news/view/1104855"
+    },
+    {
+      "recordId": "hanwha-ocean-2022-integrated-ratification",
+      "date": "2022-04-28",
+      "stage": "S1",
+      "label": "노조 요구안 전달",
+      "summary": "노조가 4월 28일 회사에 2022년 임금·단체협약 요구안을 전달했다.",
+      "sourceUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02794566632556552"
+    },
+    {
+      "recordId": "hanwha-ocean-2022-integrated-ratification",
+      "date": "2022-12-06",
+      "stage": "S5",
+      "label": "잠정합의 도출",
+      "summary": "노사가 12월 6일 기본급 8만5천원 인상·격려금 200만원을 담은 잠정합의안을 마련했다.",
+      "sourceUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02794566632556552"
+    },
+    {
+      "recordId": "hyundai-mobis-2023-integrated-ratification",
+      "date": "2023-09-13",
+      "stage": "S5",
+      "label": "잠정합의안 도출",
+      "summary": "노사가 9월 13일 기본급 11만1천원 인상·성과금 400%+1,050만원을 담은 잠정합의안을 마련했다.",
+      "sourceUrl": "https://v.daum.net/v/ZeTdF8paFG"
+    },
+    {
+      "recordId": "hyundai-mobis-2024-integrated-ratification",
+      "date": "2024-07-09",
+      "stage": "S5",
+      "label": "잠정합의안 도출",
+      "summary": "노사가 파업 예고일을 앞둔 7월 9일 잠정합의안을 마련했다.",
+      "sourceUrl": "https://v.daum.net/v/20240712220522022"
+    },
+    {
+      "recordId": "hyundai-steel-2023-wage-signing",
+      "date": "2023-09-15",
+      "stage": "S3",
+      "label": "첫 상견례",
+      "summary": "노사가 9월 15일 2023년 임금협상 첫 상견례를 열었다.",
+      "sourceUrl": "https://mobile.newsis.com/view/NISX20240423_0002710121"
+    },
+    {
+      "recordId": "hyundai-steel-2023-wage-signing",
+      "date": "2024-03-26",
+      "stage": "S6",
+      "label": "순천지회 찬반투표 가결",
+      "summary": "광전지부 현대제철 순천지회가 3월 26일 가장 먼저 찬반투표로 합의를 마쳤다.",
+      "sourceUrl": "https://mobile.newsis.com/view/NISX20240423_0002710121"
+    },
+    {
+      "recordId": "hyundai-steel-2023-wage-signing",
+      "date": "2024-03-27",
+      "stage": "S7",
+      "label": "인천지부·포항지부 조인",
+      "summary": "3월 27일 인천지부와 포항지부가 조인을 마쳤다.",
+      "sourceUrl": "https://mobile.newsis.com/view/NISX20240423_0002710121"
+    },
+    {
+      "recordId": "hyundai-steel-2023-wage-signing",
+      "date": "2024-04-11",
+      "stage": "S7",
+      "label": "당진하이스코지회 조인",
+      "summary": "4월 11일 당진하이스코지회가 조인을 마쳤다.",
+      "sourceUrl": "https://mobile.newsis.com/view/NISX20240423_0002710121"
+    },
+    {
+      "recordId": "hyundai-steel-2025-wage-ratification",
+      "date": "2025-10-30",
+      "stage": "S5",
+      "label": "잠정합의",
+      "summary": "노사가 10월 30일 임금 8만원 인상·성과급 300%+500만원을 담은 잠정합의안을 마련했다.",
+      "sourceUrl": "https://www.newspim.com/news/view/20251104001419"
     }
   ]
 }

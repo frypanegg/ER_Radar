@@ -36,6 +36,14 @@ const eslintConfig = defineConfig([
       },
     },
   },
+  // .cjs는 CommonJS 파일이라 require()가 정상 문법이다. ESM 기준 규칙을 그대로
+  // 적용하면 올바른 코드가 에러로 잡힌다.
+  {
+    files: ["**/*.cjs"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;
