@@ -396,7 +396,7 @@ test("정식 지부명이 없어도 배제 신호가 없으면 직영으로 보�
 test("공개 레코드의 협약유형은 근거로 뒷받침된다", async () => {
   const { assessAgreementTypeEvidence } = await import("../scripts/build-current-2026-seed.mjs");
 
-  // 협약유형은 화면 필터의 축인데 그동안 근거 검증 없이 값만 채워져 있었다.
+  // 협약유형은 회사 상세에서 보여 주는 정보이므로 필터에서 빠져도 근거 검증은 유지한다.
   // 아래 두 건은 근거가 유형을 특정하지 못하는 기존 부채다. 이 목록이 늘어나면
   // 실패해야 한다. 줄이려면 근거를 보강하거나 유형을 미확인으로 내려야 한다.
   const knownUnsupported = new Set([

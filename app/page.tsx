@@ -10,7 +10,6 @@ import {
   Clock3,
   Database,
   FileCheck2,
-  Filter,
   Landmark,
   Plus,
   Search,
@@ -31,8 +30,7 @@ import {
   type CaseHistory,
 } from "./bargaining-history";
 
-type AgreementFilter = "ALL" | "WAGE" | "INTEGRATED" | "CBA" | "SUPPLEMENTAL" | "UNKNOWN";
-type AgreementType = Exclude<AgreementFilter, "ALL">;
+type AgreementType = "WAGE" | "INTEGRATED" | "CBA" | "SUPPLEMENTAL" | "UNKNOWN";
 type BargainingFlowEvent = {
   date: string;
   stage: string;
@@ -362,15 +360,6 @@ function getBargainingCases(
   });
 }
 
-const filters: { id: AgreementFilter; label: string }[] = [
-  { id: "ALL", label: "전체 교섭" },
-  { id: "WAGE", label: "임금협상" },
-  { id: "INTEGRATED", label: "통합 임단협" },
-  { id: "CBA", label: "단체협약" },
-  { id: "SUPPLEMENTAL", label: "특별·보충" },
-  { id: "UNKNOWN", label: "유형 미확인" },
-];
-
 const pipeline = [
   { icon: Search, title: "뉴스 후보 수집", text: "법인명·임단협·교섭·잠정합의 등 5개 의도로 후보 수집" },
   { icon: Database, title: "사실 단위 정규화", text: "URL·제목·발행일 결합 · 예정과 발생 구분" },
@@ -427,7 +416,6 @@ function RadarMark({ compact = false }: { compact?: boolean }) {
 }
 
 export default function Home() {
-  const [activeFilter, setActiveFilter] = useState<AgreementFilter>("ALL");
   const [selectedYear, setSelectedYear] = useState(defaultYear);
   const [selectedId, setSelectedId] = useState(() => getBargainingCases(defaultYear)[0]?.id ?? "");
   const [showAllStages, setShowAllStages] = useState(false);
@@ -482,14 +470,13 @@ export default function Home() {
     () => {
       const normalizedSearch = searchTerm.trim().toLocaleLowerCase("ko-KR");
       return caseExamples.filter((item) => {
-        const matchesAgreement = activeFilter === "ALL" || item.agreementType === activeFilter;
         const matchesStage = stageFocus === "ALL" || item.stage === stageFocus;
         const searchTarget = `${item.name} ${item.subtitle} ${item.yearType} ${item.agreementLabel}`.toLocaleLowerCase("ko-KR");
         const matchesSearch = !normalizedSearch || searchTarget.includes(normalizedSearch);
-        return matchesAgreement && matchesStage && matchesSearch;
+        return matchesStage && matchesSearch;
       });
     },
-    [activeFilter, caseExamples, searchTerm, stageFocus],
+    [caseExamples, searchTerm, stageFocus],
   );
 
   const selectedCase =
@@ -613,9 +600,9 @@ export default function Home() {
         <div className="container top-band-inner">
           {/* 기준일은 같은 행 오른쪽의 마지막 수집 표시가 이미 담당한다. 여기서 한 번 더
               쓰면 같은 줄에 날짜가 두 번 나온다. */}
-          <p><Sparkles size={14} aria-hidden="true" /> 대한민국 주요 제조업의 단체교섭 현황을 모니터링합니다 · 원청 노조 교섭만 수록</p>
-          <p>
-            <Clock3 size={14} aria-hidden="true" /> 수집 예정: 매일 06:30 KST · 법인별 1회
+          <p><Sparkles size={14} aria-hidden="true" /><span>대한민국 주요 제조업의 단체교섭 현황을 모니터링합니다 · <b>원청 노조 교섭만 수록</b></span></p>
+          <p className="collection-summary">
+            <Clock3 size={14} aria-hidden="true" /><span>수집 예정: 매일 06:30 KST · 법인별 1회</span>
             {lastCollectionKstDate ? (
               <span className={`collection-state collection-state-${collectionLag?.tone ?? "idle"}`}>
                 {collectionLag?.text ?? `마지막 수집 ${lastCollectionKstDate} KST`}
@@ -688,7 +675,7 @@ export default function Home() {
 
           <div className="scope-guard" role="note">
             <ShieldCheck size={17} aria-hidden="true" />
-            <p><strong>포함:</strong> 원청 노조의 교섭 기록 · <strong>제외:</strong> 하청·사내협력사·용역·파견 노조의 원청 상대 교섭 → 원청 노조 현황 합산·표시 제외, 별도 검토 대상 분리</p>
+            <p><span><strong>포함:</strong> 원청 노조의 교섭 기록</span><span><strong>제외:</strong> 하청·사내협력사·용역·파견 노조의 원청 상대 교섭 → 원청 노조 현황 합산·표시 제외, 별도 검토 대상 분리</span></p>
           </div>
 
           <div className="year-filter-bar" aria-label="연도별 교섭현황 조회">
@@ -719,32 +706,8 @@ export default function Home() {
             <span className="year-filter-note">2026년은 최신 기사 기준, 이전 연도는 기록된 교섭 경과를 함께 표시</span>
           </div>
 
-          <div className="filter-bar" aria-label="협약 유형 필터">
-            <div className="filter-main">
-              <div className="filter-label"><Filter size={15} /> 협약 범위</div>
-              <div className="filter-options" role="tablist" aria-label="협약 범위 선택">
-                {filters.map((filter) => (
-                  <button
-                    className={activeFilter === filter.id ? "filter-chip active" : "filter-chip"}
-                    key={filter.id}
-                    onClick={() => {
-                      setActiveFilter(filter.id);
-                      // 보고 있던 기록이 새 필터에도 남아 있으면 선택을 유지한다.
-                      const matches = (item: CaseExample) =>
-                        filter.id === "ALL" || item.agreementType === filter.id;
-                      if (matches(selectedCase)) return;
-                      const next = caseExamples.find(matches);
-                      if (next) setSelectedId(next.id);
-                    }}
-                    role="tab"
-                    aria-selected={activeFilter === filter.id}
-                    type="button"
-                  >
-                    {filter.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <div className="company-search-panel" aria-label="회사 검색">
+            <span className="company-search-title"><Search size={15} aria-hidden="true" /> 회사 검색</span>
             <label className="company-search">
               <Search size={16} aria-hidden="true" />
               <span className="sr-only">원청 노조 확정 법인 검색</span>
@@ -779,7 +742,7 @@ export default function Home() {
                   aria-selected={stageFocus === stage.code}
                   onClick={() => {
                     setStageFocus(stage.code);
-                    const next = caseExamples.find((item) => item.stage === stage.code && (activeFilter === "ALL" || item.agreementType === activeFilter));
+                    const next = caseExamples.find((item) => item.stage === stage.code);
                     if (next) setSelectedId(next.id);
                   }}
                 >
@@ -1043,7 +1006,7 @@ export default function Home() {
                       type="button"
                       onClick={() => {
                         setStageFocus((current) => current === stage.code ? "ALL" : stage.code);
-                        const next = caseExamples.find((item) => item.stage === stage.code && (activeFilter === "ALL" || item.agreementType === activeFilter));
+                        const next = caseExamples.find((item) => item.stage === stage.code);
                         if (next) setSelectedId(next.id);
                       }}
                       aria-pressed={isFocused}

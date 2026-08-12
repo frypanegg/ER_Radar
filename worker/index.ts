@@ -498,6 +498,46 @@ async function handleAdminReviewDecision(request: Request, env: Env) {
   const approve = decision === "approve";
   let status = approve ? "APPROVED" : "REJECTED";
   let changedCase: { id: string; column: string; previous: string | number | null } | null = null;
+  let correctionClaimed = false;
+
+  // 메일 버튼을 두 번 누르거나 두 창에서 거의 동시에 승인해도 한 요청만 DB를
+  // 바꾸도록 먼저 처리권을 선점한다. 공개 상태를 새 enum으로 바꾸지 않고 감사 필드에
+  // 짧게 표시하므로 기존 스키마와도 호환된다.
+  const releaseCorrectionClaim = async () => {
+    if (!correctionClaimed) return;
+    await fetch(
+      `${base}/rest/v1/bargaining_record_corrections?id=eq.${id}&status=eq.PENDING&reviewed_by=eq.EMAIL_REVIEW_PROCESSING`,
+      {
+        method: "PATCH",
+        headers: supabaseHeaders(env, true),
+        body: JSON.stringify({ reviewed_by: null, updated_at: new Date().toISOString() }),
+      },
+    );
+    correctionClaimed = false;
+  };
+  const correctionFailure = async (content: string, responseStatus: number) => {
+    await releaseCorrectionClaim();
+    return htmlResponse(content, responseStatus);
+  };
+
+  if (kind === "correction") {
+    const claimResponse = await fetch(
+      `${base}/rest/v1/bargaining_record_corrections?id=eq.${id}&status=eq.PENDING&reviewed_by=is.null`,
+      {
+        method: "PATCH",
+        headers: { ...supabaseHeaders(env, true), prefer: "return=representation" },
+        body: JSON.stringify({ reviewed_by: "EMAIL_REVIEW_PROCESSING", updated_at: now }),
+      },
+    );
+    const claimedRows = claimResponse.ok ? await claimResponse.json() as ReviewRequestRow[] : [];
+    if (!claimResponse.ok) {
+      return htmlResponse('<section class="card"><h1>수정 요청의 처리권을 확인하지 못했습니다.</h1><small>잠시 후 다시 시도해 주세요.</small></section>', 502);
+    }
+    if (claimedRows.length !== 1) {
+      return htmlResponse('<section class="card"><h1>이 수정 요청은 이미 처리 중이거나 완료되었습니다.</h1><small>같은 승인 버튼을 다시 누르지 않아도 됩니다.</small></section>', 409);
+    }
+    correctionClaimed = true;
+  }
 
   if (kind === "correction" && approve) {
     const companyResponse = await fetch(
@@ -506,7 +546,7 @@ async function handleAdminReviewDecision(request: Request, env: Env) {
     );
     const companyRows = companyResponse.ok ? await companyResponse.json() as Array<{ id?: string }> : [];
     const companyId = companyRows[0]?.id;
-    if (!companyId) return htmlResponse('<section class="card"><h1>수정 대상 회사를 DB에서 찾을 수 없습니다.</h1></section>', 409);
+    if (!companyId) return correctionFailure('<section class="card"><h1>수정 대상 회사를 DB에서 찾을 수 없습니다.</h1></section>', 409);
 
     const fieldMap: Record<string, string> = {
       stage: "primary_stage",
@@ -516,11 +556,11 @@ async function handleAdminReviewDecision(request: Request, env: Env) {
       factSummary: "current_fact_summary",
     };
     const column = fieldMap[String(row.field_name)];
-    if (!column) return htmlResponse('<section class="card"><h1>자동 적용할 수 없는 수정 항목입니다.</h1></section>', 409);
+    if (!column) return correctionFailure('<section class="card"><h1>자동 적용할 수 없는 수정 항목입니다.</h1></section>', 409);
     const proposed = String(row.proposed_value ?? "").trim();
-    if (column === "primary_stage" && !/^(?:U|S[0-8])$/.test(proposed)) return htmlResponse('<section class="card"><h1>올바르지 않은 교섭 단계입니다.</h1></section>', 400);
-    if (column === "latest_event_on" && !/^\d{4}-\d{2}-\d{2}$/.test(proposed)) return htmlResponse('<section class="card"><h1>확인일은 YYYY-MM-DD 형식이어야 합니다.</h1></section>', 400);
-    if (column === "agreement_type" && !["WAGE", "CBA", "INTEGRATED", "SUPPLEMENTAL", "WORKS_COUNCIL"].includes(proposed)) return htmlResponse('<section class="card"><h1>올바르지 않은 협약유형입니다.</h1></section>', 400);
+    if (column === "primary_stage" && !/^(?:U|S[0-8])$/.test(proposed)) return correctionFailure('<section class="card"><h1>올바르지 않은 교섭 단계입니다.</h1></section>', 400);
+    if (column === "latest_event_on" && !/^\d{4}-\d{2}-\d{2}$/.test(proposed)) return correctionFailure('<section class="card"><h1>확인일은 YYYY-MM-DD 형식이어야 합니다.</h1></section>', 400);
+    if (column === "agreement_type" && !["WAGE", "CBA", "INTEGRATED", "SUPPLEMENTAL", "WORKS_COUNCIL"].includes(proposed)) return correctionFailure('<section class="card"><h1>올바르지 않은 협약유형입니다.</h1></section>', 400);
 
     const caseResponse = await fetch(
       `${base}/rest/v1/bargaining_cases?select=id,${column}&company_id=eq.${companyId}&bargaining_year=eq.${row.bargaining_year}&order=latest_event_on.desc.nullslast&limit=1`,
@@ -528,13 +568,13 @@ async function handleAdminReviewDecision(request: Request, env: Env) {
     );
     const caseRows = caseResponse.ok ? await caseResponse.json() as Array<Record<string, string | number | null>> : [];
     const bargainingCase = caseRows[0];
-    if (!bargainingCase?.id) return htmlResponse('<section class="card"><h1>수정할 교섭 기록을 DB에서 찾을 수 없습니다.</h1></section>', 409);
+    if (!bargainingCase?.id) return correctionFailure('<section class="card"><h1>수정할 교섭 기록을 DB에서 찾을 수 없습니다.</h1></section>', 409);
     const updateResponse = await fetch(`${base}/rest/v1/bargaining_cases?id=eq.${bargainingCase.id}`, {
       method: "PATCH",
       headers: { ...supabaseHeaders(env, true), prefer: "return=minimal" },
       body: JSON.stringify({ [column]: proposed, updated_at: now }),
     });
-    if (!updateResponse.ok) return htmlResponse('<section class="card"><h1>교섭 기록 수정에 실패했습니다.</h1></section>', 502);
+    if (!updateResponse.ok) return correctionFailure('<section class="card"><h1>교섭 기록 수정에 실패했습니다.</h1></section>', 502);
     changedCase = { id: String(bargainingCase.id), column, previous: bargainingCase[column] ?? null };
     status = "APPLIED";
   }
@@ -543,7 +583,8 @@ async function handleAdminReviewDecision(request: Request, env: Env) {
   const requestUpdate: Record<string, string> = kind === "correction"
     ? { status, review_note: approve ? "아침 알림 메일에서 승인" : "아침 알림 메일에서 반려", reviewed_at: now, reviewed_by: "EMAIL_REVIEW", updated_at: now, ...(approve ? { applied_at: now } : {}) }
     : { status, review_note: approve ? "아침 알림 메일에서 승인 · 과거자료 수집 대기" : "아침 알림 메일에서 반려", reviewed_at: now, updated_at: now };
-  const response = await fetch(`${base}/rest/v1/${table}?id=eq.${id}&status=eq.PENDING`, {
+  const ownershipFilter = kind === "correction" ? "&reviewed_by=eq.EMAIL_REVIEW_PROCESSING" : "";
+  const response = await fetch(`${base}/rest/v1/${table}?id=eq.${id}&status=eq.PENDING${ownershipFilter}`, {
     method: "PATCH",
     headers: { ...supabaseHeaders(env, true), prefer: "return=representation" },
     body: JSON.stringify(requestUpdate),
@@ -557,8 +598,13 @@ async function handleAdminReviewDecision(request: Request, env: Env) {
         body: JSON.stringify({ [changedCase.column]: changedCase.previous, updated_at: now }),
       });
     }
+    await releaseCorrectionClaim();
+    if (response.ok && updatedRows.length === 0) {
+      return htmlResponse('<section class="card"><h1>이 요청은 이미 다른 창에서 처리되었습니다.</h1></section>', 409);
+    }
     return htmlResponse('<section class="card"><h1>DB 반영 중 오류가 발생했습니다.</h1><small>요청은 처리 전 상태로 유지됩니다.</small></section>', 502);
   }
+  correctionClaimed = false;
 
   if (kind === "company" && approve) {
     const slug = `pending-${id.replaceAll("-", "").slice(0, 16)}`;

@@ -119,6 +119,8 @@ a:focus-visible {
 .signal-grid,
 .section-heading,
 .data-health,
+.company-search-panel,
+.company-search-title,
 .filter-bar,
 .filter-label,
 .filter-options,
@@ -616,6 +618,10 @@ a:focus-visible {
   line-height: 1.62;
 }
 
+.scope-guard p span + span {
+  margin-left: 5px;
+}
+
 .scope-guard strong {
   color: #26636a;
   font-weight: 750;
@@ -638,6 +644,31 @@ a:focus-visible {
   border-radius: 14px;
   background: #fff;
   box-shadow: 0 10px 26px rgba(43, 64, 92, .035);
+}
+
+/* 협약 유형은 회사 상세 정보로만 남긴다. 대시보드의 탐색 입력은 회사와 단계에
+   집중하도록 회사 검색을 독립된 한 줄로 둔다. */
+.company-search-panel {
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  padding: 11px 13px 11px 15px;
+  border: 1px solid #dfe6ee;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(43, 64, 92, .035);
+}
+
+.company-search-title {
+  flex: 0 0 auto;
+  gap: 7px;
+  color: #53677b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.company-search-panel .company-search {
+  width: min(440px, 58vw);
 }
 
 .filter-main {
@@ -1128,12 +1159,22 @@ a:focus-visible {
   letter-spacing: -0.05em;
 }
 
-.status-spotlight span {
+.status-spotlight > div:not(.spotlight-stage) > span {
   display: block;
   margin-top: 4px;
   color: #587079;
   font-size: 11px;
   line-height: 1.45;
+}
+
+/* 본문용 span 규칙이 단계 배지까지 덮지 않게 하고, 배지 안의 글자는 항상
+   상자의 정확한 세로 중앙에 둔다. */
+.status-spotlight .spotlight-stage .stage-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  line-height: 1;
 }
 
 .detail-meta-grid {
@@ -3328,4 +3369,234 @@ a:focus-visible {
 .fact-source-database {
   color: #177c5d;
   background: #e9f8f1;
+}
+
+/* 모바일은 긴 안내문을 단어 단위로 읽히게 하고, 탐색 컨트롤은 한 카드에 한 기능만
+   배치한다. 가로 단계 축은 잘린 문장 대신 완전한 칩 단위로 스크롤된다. */
+@media (max-width: 720px) {
+  .site-header {
+    display: none;
+  }
+
+  .top-band-inner {
+    gap: 9px;
+    padding: 12px 0;
+  }
+
+  .top-band p {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 18px minmax(0, 1fr);
+    align-items: start;
+    gap: 0 7px;
+    line-height: 1.55;
+    white-space: normal;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .top-band p > svg {
+    margin-top: 3px;
+  }
+
+  .top-band p b {
+    color: #d6e3ec;
+    font-weight: 650;
+  }
+
+  .collection-summary .collection-state {
+    display: inline-flex;
+    grid-column: 2;
+    justify-self: start;
+    margin: 4px 0 0;
+    padding: 3px 9px;
+    line-height: 1.35;
+    white-space: nowrap;
+  }
+
+  .hero-brand {
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .compact-hero {
+    padding: 28px 0 25px;
+  }
+
+  .compact-hero h1 {
+    font-size: clamp(29px, 8.3vw, 35px);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .compact-hero .hero-description,
+  .compact-hero .hero-footnote {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .compact-hero .hero-description {
+    margin-top: 15px;
+    font-size: 16px;
+    line-height: 1.72;
+  }
+
+  .compact-hero .hero-footnote {
+    align-items: flex-start;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  .compact-hero .hero-footnote svg,
+  .scope-guard > svg,
+  .data-health .health-light {
+    flex: 0 0 auto;
+  }
+
+  .dashboard-section {
+    padding: 38px 0 62px;
+  }
+
+  .dashboard-heading {
+    gap: 20px;
+  }
+
+  .dashboard-actions {
+    gap: 10px;
+  }
+
+  .data-health {
+    width: 100%;
+    align-items: flex-start;
+    padding: 12px 13px;
+    border-radius: 14px;
+    line-height: 1.55;
+  }
+
+  .data-health .health-light {
+    margin-top: 6px;
+  }
+
+  .data-health > span:last-child,
+  .scope-guard p,
+  .year-filter-note {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .fact-source {
+    display: inline-flex;
+    margin: 4px 0 0 6px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .scope-guard {
+    gap: 9px;
+    padding: 14px 13px;
+    border-radius: 14px;
+  }
+
+  .scope-guard p {
+    line-height: 1.7;
+  }
+
+  .scope-guard p span {
+    display: block;
+  }
+
+  .scope-guard p span + span {
+    margin: 5px 0 0;
+  }
+
+  .year-filter-bar {
+    padding: 14px 13px;
+    border-radius: 15px;
+  }
+
+  .year-filter-options,
+  .stage-filter-options,
+  .case-list {
+    scroll-snap-type: x proximity;
+    overscroll-behavior-inline: contain;
+  }
+
+  .year-filter-options,
+  .stage-filter-options {
+    padding-bottom: 4px;
+  }
+
+  .year-filter-chip,
+  .stage-filter-chip,
+  .case-card {
+    scroll-snap-align: start;
+  }
+
+  .year-filter-note {
+    font-size: 12.5px;
+    line-height: 1.65;
+  }
+
+  .company-search-panel {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 9px;
+    margin-top: 22px;
+    padding: 13px;
+  }
+
+  .company-search-panel .company-search {
+    width: 100%;
+  }
+
+  .company-search input {
+    min-height: 42px;
+    font-size: 14px;
+  }
+
+  .stage-filter-bar {
+    padding: 13px;
+    border-radius: 15px;
+  }
+
+  .stage-filter-chip {
+    min-height: 36px;
+    padding: 0 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .stage-filter-chip small {
+    font-size: 9px;
+  }
+
+  .case-list {
+    grid-auto-columns: minmax(270px, 88%);
+    gap: 10px;
+  }
+
+  .status-spotlight {
+    align-items: center;
+  }
+
+  .status-spotlight .spotlight-stage .stage-pill {
+    min-height: 36px;
+    padding: 0 11px;
+  }
+}
+
+@media (max-width: 380px) {
+  .container,
+  .footer-inner {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .compact-hero h1 {
+    font-size: 28px;
+  }
+
+  .radar-mark {
+    width: 28px;
+    height: 28px;
+  }
 }

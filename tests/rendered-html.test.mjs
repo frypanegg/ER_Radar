@@ -52,6 +52,8 @@ test("server-renders the collective-bargaining framework dashboard", async () =>
   assert.match(html, /교섭현황 대시보드/);
   assert.match(html, /원청 노조/);
   assert.match(html, /교섭 단계별 조회/);
+  assert.match(html, /회사 검색/);
+  assert.doesNotMatch(html, /협약 범위/);
   assert.match(html, /교섭 경과/);
   assert.match(html, /데이터 수정/);
   assert.match(html, /2026년 현재/);
@@ -250,6 +252,8 @@ test("메일 검토 링크는 서명이 맞아도 GET만으로 DB를 바꾸지 �
   const source = await readFile(new URL("worker/index.ts", templateRoot), "utf8");
   assert.match(source, /bargaining_cases\?select=id/);
   assert.match(source, /status=eq\.PENDING/);
+  assert.match(source, /reviewed_by=is\.null/);
+  assert.match(source, /EMAIL_REVIEW_PROCESSING/);
   assert.match(source, /changedCase/);
   assert.match(source, /status !== "PENDING"/);
 });
