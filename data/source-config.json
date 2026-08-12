@@ -1182,6 +1182,16 @@
         "basis": "editorial_seed",
         "needsReview": true
       },
+      "bargainingCycle": {
+        "wage": "ANNUAL",
+        "cba": {
+          "periodYears": 2,
+          "anchorYear": 2025
+        },
+        "evidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
+        "evidenceQuote": "매년 임금교섭을 통해 임금협약을 체결 / 2년 주기로 단체교섭을 실시하여 단체협약을 체결",
+        "verifiedAt": "2026-08-12"
+      },
       "aliases": [
         "포스코",
         "POSCO",
@@ -1524,6 +1534,16 @@
         },
         "basis": "editorial_seed_t1_direct_employee_only",
         "needsReview": true
+      },
+      "bargainingCycle": {
+        "wage": "ANNUAL",
+        "cba": {
+          "periodYears": 1,
+          "anchorYear": 2025
+        },
+        "evidenceUrl": "https://www.mobis.com/upload/202509011001185950.pdf",
+        "evidenceQuote": "각 노동조합과는 임금 및 복리후생 등에 대해 매년 충분한 협의를 통해 단체교섭을 실시하고 있습니다",
+        "verifiedAt": "2026-08-12"
       },
       "aliases": [
         "현대모비스",
