@@ -24,6 +24,13 @@ const localBindingConfig = {
   // 정책(docs/공유-접근과-검색비노출-정책.md)과 맞지 않는다.
   workers_dev: true,
   preview_urls: false,
+  // 일일 수집을 깨우는 발사대. GitHub의 schedule 이벤트가 나흘 연속 정시에 발화하지
+  // 않아(2026-08-10~13, 그중 이틀은 세 슬롯 전부 누락) 발사대를 여기로 옮겼다.
+  // worker/index.ts의 scheduled()가 GitHub workflow_dispatch를 호출한다.
+  //
+  // 06:20 KST = 21:20 UTC. GitHub cron(06:34 KST)보다 앞에 두어 정상적인 날에는
+  // 이쪽이 먼저 깨우고, GitHub 쪽은 이중화로 남는다. 중복은 워크플로 가드가 막는다.
+  triggers: { crons: ["20 21 * * *"] },
   d1_databases: d1
     ? [
         {

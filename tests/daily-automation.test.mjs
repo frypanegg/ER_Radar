@@ -655,6 +655,37 @@ test("새 사건이 확인되면 시드와 감사 로그가 함께 갱신된다"
   }
 });
 
+test("GitHub schedule이 누락돼도 Cloudflare cron이 일일 수집을 깨운다", async () => {
+  const [worker, viteConfig, workflow] = await Promise.all([
+    readFile(new URL("../worker/index.ts", import.meta.url), "utf8"),
+    readFile(new URL("../vite.config.ts", import.meta.url), "utf8"),
+    readFile(new URL("../.github/workflows/daily-bargaining-update.yml", import.meta.url), "utf8"),
+  ]);
+
+  // 발사대가 실제로 등록돼 있어야 한다. 21:20 UTC = 06:20 KST.
+  assert.match(viteConfig, /triggers:\s*\{\s*crons:\s*\[\s*"20 21 \* \* \*"\s*\]/);
+  assert.match(worker, /async scheduled\(/);
+
+  // 깨우는 대상은 기존 일일 수집 워크플로다. 수집 로직을 워커로 옮기지 않는다.
+  assert.match(worker, /actions\/workflows\/\$\{workflow\}\/dispatches/);
+  assert.match(worker, /daily-bargaining-update\.yml/);
+  assert.match(worker, /"x-github-api-version"/);
+
+  // force를 넘기면 이미 수집한 날에도 다시 수집한다. 그 판단은 워크플로 가드 몫이다.
+  assert.doesNotMatch(worker, /force:\s*true/);
+  assert.match(workflow, /workflow_dispatch:/);
+
+  // 토큰이 없을 때 예외로 죽으면 워커 전체가 영향을 받는다. 경고만 남기고 지나가야 한다.
+  const guard = worker.slice(
+    worker.indexOf("async function dispatchDailyCollection"),
+    worker.indexOf("const worker = {"),
+  );
+  assert.match(guard, /if \(!env\.GITHUB_DISPATCH_TOKEN\)[\s\S]{0,400}?return;/);
+
+  // GitHub cron은 이중화로 남긴다. 한쪽이 죽어도 다른 쪽이 깨운다.
+  assert.match(workflow, /cron: "34 21 \* \* \*"/);
+});
+
 test("일일 자동화 워크플로가 KST 06:30 직후로 등록되어 있다", async () => {
   const workflow = await readFile(
     new URL("../.github/workflows/daily-bargaining-update.yml", import.meta.url),

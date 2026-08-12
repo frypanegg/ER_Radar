@@ -8,6 +8,11 @@ interface Env {
   SUPABASE_URL?: string;
   SUPABASE_SERVICE_ROLE_KEY?: string;
   DASHBOARD_ADMIN_CODE?: string;
+  // 일일 수집 워크플로를 깨우는 데만 쓰는 토큰. actions:write 하나면 된다.
+  GITHUB_DISPATCH_TOKEN?: string;
+  GITHUB_DISPATCH_REPOSITORY?: string;
+  GITHUB_DISPATCH_WORKFLOW?: string;
+  GITHUB_DISPATCH_REF?: string;
   IMAGES: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
@@ -648,7 +653,66 @@ async function handleAdminReviewDecision(request: Request, env: Env) {
 // dangerouslyAllowSVG: true in next.config.js and uncomment below:
 // const imageConfig: ImageConfig = { dangerouslyAllowSVG: true };
 
+const DISPATCH_DEFAULTS = {
+  repository: "frypanegg/ER_Radar",
+  workflow: "daily-bargaining-update.yml",
+  ref: "main",
+};
+
+/**
+ * 일일 수집 워크플로를 GitHub에 직접 요청한다.
+ *
+ * GitHub의 schedule 이벤트는 best-effort라 예고 없이 통째로 누락된다. 2026-08-10부터
+ * 08-13까지 나흘 동안 06:34 KST 예정분이 정시에 발화한 날이 하루도 없었고, 그중 이틀은
+ * 하루 세 슬롯이 모두 발화하지 않았다. 같은 경로에 슬롯을 더 얹어도 그 날은 못 살린다.
+ *
+ * 그래서 발사대를 Cloudflare cron으로 옮긴다. 워크플로 자체는 그대로 두고 깨우는
+ * 경로만 늘리는 것이라, GitHub cron이 살아 있는 날은 둘 다 깨워도 워크플로의 같은
+ * KST 날짜 중복 실행 방지 가드가 한 번만 수집하게 막는다.
+ */
+async function dispatchDailyCollection(env: Env) {
+  if (!env.GITHUB_DISPATCH_TOKEN) {
+    console.warn(
+      "GITHUB_DISPATCH_TOKEN이 없어 일일 수집 요청을 건너뜁니다. " +
+        "npx wrangler secret put GITHUB_DISPATCH_TOKEN 으로 등록하세요.",
+    );
+    return;
+  }
+
+  const repository = env.GITHUB_DISPATCH_REPOSITORY ?? DISPATCH_DEFAULTS.repository;
+  const workflow = env.GITHUB_DISPATCH_WORKFLOW ?? DISPATCH_DEFAULTS.workflow;
+  const ref = env.GITHUB_DISPATCH_REF ?? DISPATCH_DEFAULTS.ref;
+  const endpoint = `https://api.github.com/repos/${repository}/actions/workflows/${workflow}/dispatches`;
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      accept: "application/vnd.github+json",
+      authorization: `Bearer ${env.GITHUB_DISPATCH_TOKEN}`,
+      "content-type": "application/json",
+      "user-agent": "er-radar-scheduler",
+      "x-github-api-version": "2022-11-28",
+    },
+    // force는 넘기지 않는다. 이미 수집한 날 다시 깨우는 판단은 워크플로 가드가 한다.
+    body: JSON.stringify({ ref }),
+  });
+
+  // 204 No Content가 정상 응답이다.
+  if (!response.ok) {
+    const detail = await response.text().catch(() => "");
+    throw new Error(
+      `일일 수집 요청이 실패했습니다: ${response.status} ${detail.slice(0, 300)}`,
+    );
+  }
+  console.log(`일일 수집 워크플로를 요청했습니다: ${repository} ${workflow} (${ref})`);
+}
+
 const worker = {
+  // Cloudflare cron 트리거. vite.config.ts의 triggers.crons가 시각을 정한다.
+  async scheduled(_event: unknown, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(dispatchDailyCollection(env));
+  },
+
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
