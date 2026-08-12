@@ -9,6 +9,7 @@
 // 쓴다(저장소의 수집 정책과 같은 경계).
 
 import { readFile, writeFile } from "node:fs/promises";
+import { createHmac } from "node:crypto";
 
 const root = new URL("../", import.meta.url);
 
@@ -46,6 +47,7 @@ export function buildReport({
   runUrl = null,
   siteUrl = null,
   freshnessProblems = [],
+  pendingReviews = [],
 }) {
   const lines = [];
   const run = audit?.runs?.[0] ?? null;
@@ -138,6 +140,16 @@ export function buildReport({
     }
   }
 
+  if (pendingReviews.length > 0) {
+    lines.push("");
+    lines.push(`■ 관리자 확인 필요 (${pendingReviews.length}건)`);
+    for (const review of pendingReviews) {
+      lines.push(`  · ${review.label}`);
+      lines.push(`    확인: ${review.reviewUrl}`);
+    }
+    lines.push("  링크에서 내용을 다시 확인한 뒤 승인 또는 반려합니다. GET 링크를 여는 것만으로 DB는 바뀌지 않습니다.");
+  }
+
   lines.push("");
   lines.push("■ 링크");
   if (siteUrl) lines.push(`  공개 대시보드: ${siteUrl}`);
@@ -148,13 +160,67 @@ export function buildReport({
   return { subject, text: lines.join("\n") };
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+export function createSignedReviewUrl({ siteUrl, secret, kind, id, expires }) {
+  const signature = createHmac("sha256", secret).update(`${kind}:${id}:${expires}`).digest("hex");
+  const url = new URL("/admin/review", siteUrl);
+  url.searchParams.set("kind", kind);
+  url.searchParams.set("id", id);
+  url.searchParams.set("expires", String(expires));
+  url.searchParams.set("signature", signature);
+  return url.toString();
+}
+
+export function buildHtmlReport({ text, pendingReviews = [] }) {
+  const reviewCards = pendingReviews.map((review) => `
+    <tr><td style="padding:10px 0;border-top:1px solid #dbe7e8">
+      <div style="font-size:14px;font-weight:700;color:#1e4054;margin-bottom:8px">${escapeHtml(review.label)}</div>
+      <a href="${escapeHtml(review.reviewUrl)}" style="display:inline-block;padding:10px 16px;border-radius:9px;background:#158f87;color:#fff;text-decoration:none;font-weight:700">${review.kind === "company" ? "추적 기업 검토" : "수정 요청 검토"}</a>
+    </td></tr>`).join("");
+  const reviewSection = reviewCards ? `
+    <table role="presentation" width="100%" style="margin:20px 0;border-collapse:collapse;background:#f4faf9;border-radius:12px"><tr><td style="padding:16px 16px 6px;color:#147f79;font-weight:800">관리자 확인 필요</td></tr>${reviewCards}</table>` : "";
+  return `<!doctype html><html lang="ko"><body style="margin:0;background:#eef5f5;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;color:#25475a"><table role="presentation" width="100%"><tr><td align="center" style="padding:28px 12px"><table role="presentation" width="100%" style="max-width:680px;background:#fff;border:1px solid #dbe7e8;border-radius:16px"><tr><td style="padding:28px"><div style="font-size:22px;font-weight:800;color:#17394e;margin-bottom:18px">노사교섭 레이더</div><pre style="margin:0;white-space:pre-wrap;font:14px/1.7 -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;color:#36566a">${escapeHtml(text)}</pre>${reviewSection}<div style="margin-top:20px;color:#738896;font-size:12px;line-height:1.6">승인 링크는 48시간 동안 유효합니다. 승인 전에는 공개 데이터가 변경되지 않습니다.</div></td></tr></table></td></tr></table></body></html>`;
+}
+
 /** 한국어 제목이 깨지지 않도록 RFC 2047 encoded-word로 감싼다. */
 export function encodeSubject(subject) {
   return `=?UTF-8?B?${Buffer.from(subject, "utf8").toString("base64")}?=`;
 }
 
 /** curl이 그대로 업로드할 수 있는 RFC 5322 메시지를 만든다. */
-export function buildMimeMessage({ from, to, subject, text, date = new Date() }) {
+export function buildMimeMessage({ from, to, subject, text, html = null, date = new Date() }) {
+  if (html) {
+    const boundary = `er-radar-${date.getTime()}`;
+    return [
+      `From: ${from}`,
+      `To: ${to}`,
+      `Subject: ${encodeSubject(subject)}`,
+      `Date: ${date.toUTCString()}`,
+      "MIME-Version: 1.0",
+      `Content-Type: multipart/alternative; boundary="${boundary}"`,
+      "",
+      `--${boundary}`,
+      "Content-Type: text/plain; charset=UTF-8",
+      "Content-Transfer-Encoding: base64",
+      "",
+      Buffer.from(text, "utf8").toString("base64").replace(/(.{76})/g, "$1\n"),
+      `--${boundary}`,
+      "Content-Type: text/html; charset=UTF-8",
+      "Content-Transfer-Encoding: base64",
+      "",
+      Buffer.from(html, "utf8").toString("base64").replace(/(.{76})/g, "$1\n"),
+      `--${boundary}--`,
+      "",
+    ].join("\r\n");
+  }
   return [
     `From: ${from}`,
     `To: ${to}`,
@@ -168,6 +234,36 @@ export function buildMimeMessage({ from, to, subject, text, date = new Date() })
     Buffer.from(text, "utf8").toString("base64").replace(/(.{76})/g, "$1\n"),
     "",
   ].join("\r\n");
+}
+
+async function fetchPendingReviews({ supabaseUrl, serviceRoleKey, siteUrl, signingSecret }) {
+  if (!supabaseUrl || !serviceRoleKey || !siteUrl || !signingSecret) return [];
+  const base = supabaseUrl.replace(/\/$/, "");
+  const headers = { apikey: serviceRoleKey, authorization: `Bearer ${serviceRoleKey}` };
+  const expires = Math.floor(Date.now() / 1000) + 48 * 60 * 60;
+  try {
+    const [correctionResponse, companyResponse] = await Promise.all([
+      fetch(`${base}/rest/v1/bargaining_record_corrections?select=id,company_legal_name,bargaining_year,field_name&status=eq.PENDING&order=submitted_at.asc&limit=30`, { headers }),
+      fetch(`${base}/rest/v1/company_add_requests?select=id,company_legal_name,industry&status=eq.PENDING&order=requested_at.asc&limit=30`, { headers }),
+    ]);
+    if (!correctionResponse.ok || !companyResponse.ok) return [];
+    const corrections = await correctionResponse.json();
+    const companies = await companyResponse.json();
+    return [
+      ...corrections.map((row) => ({
+        kind: "correction",
+        label: `데이터 수정 · ${row.company_legal_name} · ${row.bargaining_year}년 · ${row.field_name}`,
+        reviewUrl: createSignedReviewUrl({ siteUrl, secret: signingSecret, kind: "correction", id: row.id, expires }),
+      })),
+      ...companies.map((row) => ({
+        kind: "company",
+        label: `추적 기업 추가 · ${row.company_legal_name}${row.industry ? ` · ${row.industry}` : ""}`,
+        reviewUrl: createSignedReviewUrl({ siteUrl, secret: signingSecret, kind: "company", id: row.id, expires }),
+      })),
+    ];
+  } catch {
+    return [];
+  }
 }
 
 async function readJsonIfPresent(relativePath) {
@@ -194,6 +290,13 @@ async function main() {
 
   const todayKstDate = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul" }).format(new Date());
 
+  const pendingReviews = await fetchPendingReviews({
+    supabaseUrl: process.env.SUPABASE_URL ?? process.env.SUPABASE_PJT_URL,
+    serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    siteUrl,
+    signingSecret: process.env.DASHBOARD_ADMIN_CODE,
+  });
+
   const { subject, text } = buildReport({
     mode,
     audit: await readJsonIfPresent("data/daily-update-audit.json"),
@@ -203,11 +306,13 @@ async function main() {
     runUrl,
     siteUrl,
     freshnessProblems: problems ? problems.split("\n").filter(Boolean) : [],
+    pendingReviews,
   });
+  const html = buildHtmlReport({ text, pendingReviews });
 
   await writeFile(
     new URL(outputPath, root),
-    buildMimeMessage({ from, to, subject, text }),
+    buildMimeMessage({ from, to, subject, text, html }),
     "utf8",
   );
 

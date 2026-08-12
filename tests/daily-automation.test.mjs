@@ -660,10 +660,13 @@ test("수집 결과 메일이 성공·실패 양쪽에서 발송된다", async (
   assert.doesNotMatch(workflow, /MAIL_SMTP_PASSWORD\s*:\s*["'][^$]/);
   // 저장소 쓰기 권한이 있는 작업이라 서드파티 액션을 끌어들이지 않는다.
   assert.doesNotMatch(workflow, /uses:\s*(?!actions\/)[a-z0-9-]+\//i);
+  // 메일 안의 승인 버튼을 만들 때도 서버 전용 DB 키와 관리 코드는 시크릿 이름으로만 받는다.
+  assert.match(workflow, /SUPABASE_URL:\s*\$\{\{ secrets\.SUPABASE_URL \}\}/);
+  assert.match(workflow, /DASHBOARD_ADMIN_CODE:\s*\$\{\{ secrets\.DASHBOARD_ADMIN_CODE \}\}/);
 });
 
-test("메일 본문이 감사 로그를 사람이 읽을 형태로 요약한다", async () => {
-  const { buildReport, encodeSubject, buildMimeMessage } = await import(
+test("메일 본문이 감사 로그와 관리자 확인 요청을 사람이 읽을 형태로 요약한다", async () => {
+  const { buildReport, encodeSubject, buildMimeMessage, buildHtmlReport, createSignedReviewUrl } = await import(
     "../scripts/build-daily-report.mjs"
   );
 
@@ -698,13 +701,24 @@ test("메일 본문이 감사 로그를 사람이 읽을 형태로 요약한다"
     ],
   };
 
-  const report = buildReport({ audit, batch, todayKstDate: "2026-08-11", siteUrl: "https://example.test/" });
+  const signedUrl = createSignedReviewUrl({
+    siteUrl: "https://example.test/",
+    secret: "test-secret",
+    kind: "correction",
+    id: "00000000-0000-4000-8000-000000000001",
+    expires: 1_800_000_000,
+  });
+  const pendingReviews = [{ kind: "correction", label: "데이터 수정 · 현대제철 · 2026년", reviewUrl: signedUrl }];
+  const report = buildReport({ audit, batch, todayKstDate: "2026-08-11", siteUrl: "https://example.test/", pendingReviews });
   assert.match(report.subject, /2026-08-11 수집 결과 · 반영 1건/);
   assert.match(report.text, /현대제철 주식회사/);
   assert.match(report.text, /S6 인준·서명 대기 → S7 최종 체결·발효/);
   // 감사 로그에 없는 제목은 후보 목록에서 찾아 붙인다.
   assert.match(report.text, /현대제철 임단협 조인식/);
   assert.match(report.text, /https:\/\/example\.com\/article/);
+  assert.match(report.text, /관리자 확인 필요 \(1건\)/);
+  assert.match(report.text, /\/admin\/review\?/);
+  assert.match(signedUrl, /signature=[0-9a-f]{64}/);
 
   // 반영이 없는 날에도 "왜 안 바뀌었는지"를 알려준다.
   const quiet = buildReport({
@@ -733,10 +747,13 @@ test("메일 본문이 감사 로그를 사람이 읽을 형태로 요약한다"
     to: "receiver@example.com",
     subject: "한글 제목",
     text: "본문",
+    html: buildHtmlReport({ text: report.text, pendingReviews }),
     date: new Date("2026-08-11T00:00:00Z"),
   });
   assert.match(message, /^From: sender@example\.com\r\nTo: receiver@example\.com\r\nSubject: =\?UTF-8\?B\?/);
+  assert.match(message, /Content-Type: multipart\/alternative/);
   assert.match(message, /Content-Type: text\/plain; charset=UTF-8/);
+  assert.match(message, /Content-Type: text\/html; charset=UTF-8/);
   // 기사 본문을 담지 않는 경계는 메일에서도 유지한다.
   assert.match(report.text, /기사 본문은 담지 않습니다/);
 });

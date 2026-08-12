@@ -184,6 +184,9 @@ jobs:
           MAIL_SMTP_PASSWORD: ${{ secrets.MAIL_SMTP_PASSWORD }}
           MAIL_TO: ${{ vars.MAIL_TO || 'fry@kakao.com' }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          DASHBOARD_ADMIN_CODE: ${{ secrets.DASHBOARD_ADMIN_CODE }}
         run: |
           if [ -z "$MAIL_SMTP_USER" ] || [ -z "$MAIL_SMTP_PASSWORD" ]; then
             echo "::warning::MAIL_SMTP_USER·MAIL_SMTP_PASSWORD 시크릿이 없어 메일 발송을 건너뜁니다."

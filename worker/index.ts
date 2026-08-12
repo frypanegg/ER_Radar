@@ -23,6 +23,7 @@ interface ExecutionContext {
 }
 
 const ROBOTS_TAG = "noindex, nofollow, noarchive, nosnippet, noimageindex";
+const REVIEW_KINDS = new Set(["correction", "company"]);
 
 function withRobotsTag(response: Response) {
   const headers = new Headers(response.headers);
@@ -69,6 +70,54 @@ function cleanOptionalText(value: unknown, maximumLength: number) {
   if (typeof value !== "string") return null;
   const text = value.trim();
   return text && text.length <= maximumLength ? text : null;
+}
+
+function supabaseHeaders(env: Env, includeJson = false) {
+  const headers: Record<string, string> = {
+    apikey: env.SUPABASE_SERVICE_ROLE_KEY ?? "",
+    authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY ?? ""}`,
+  };
+  if (includeJson) headers["content-type"] = "application/json";
+  return headers;
+}
+
+function escapeHtml(value: unknown) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+async function reviewSignature(secret: string, kind: string, id: string, expires: string) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const signature = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    new TextEncoder().encode(`${kind}:${id}:${expires}`),
+  );
+  return Array.from(new Uint8Array(signature), (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function validateReviewToken(env: Env, kind: string, id: string, expires: string, signature: string) {
+  if (!env.DASHBOARD_ADMIN_CODE || !REVIEW_KINDS.has(kind) || !/^[0-9a-f-]{36}$/i.test(id)) return false;
+  const expiry = Number(expires);
+  if (!Number.isInteger(expiry) || expiry < Math.floor(Date.now() / 1000)) return false;
+  return hasSameSecret(signature, await reviewSignature(env.DASHBOARD_ADMIN_CODE, kind, id, expires));
+}
+
+function htmlResponse(body: string, status = 200) {
+  return new Response(`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>노사교섭 레이더 관리자 확인</title><style>body{margin:0;background:#f3f8f8;color:#17364a;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}.wrap{max-width:660px;margin:7vh auto;padding:24px}.card{background:#fff;border:1px solid #d7e7e8;border-radius:18px;padding:30px;box-shadow:0 16px 44px #1232}.eyebrow{color:#138a83;font-weight:800;font-size:13px}h1{font-size:28px;margin:8px 0 18px}.detail{background:#f5faf9;border-radius:12px;padding:16px;line-height:1.7}.actions{display:flex;gap:10px;margin-top:22px}.actions form{flex:1}.actions button{width:100%;min-height:46px;border-radius:10px;font-weight:800;cursor:pointer}.approve{border:1px solid #138f87;background:#138f87;color:#fff}.reject{border:1px solid #d3dde2;background:#fff;color:#6d4c45}small{display:block;color:#687e8e;line-height:1.6;margin-top:16px}</style></head><body><main class="wrap">${body}</main></body></html>`, {
+    status,
+    headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" },
+  });
 }
 
 async function handleCompanyAddRequest(request: Request, env: Env) {
@@ -238,10 +287,7 @@ const CORRECTABLE_FIELDS = new Set([
   "eventDate",
   "agreementType",
   "unionName",
-  "title",
   "factSummary",
-  "sourceUrl",
-  "flowEvents",
 ]);
 
 /**
@@ -367,6 +413,189 @@ async function handleRecordCorrectionRequest(request: Request, env: Env) {
   );
 }
 
+type ReviewRequestRow = Record<string, string | number | null>;
+
+async function fetchReviewRequest(env: Env, kind: string, id: string) {
+  const table = kind === "correction" ? "bargaining_record_corrections" : "company_add_requests";
+  const response = await fetch(
+    `${env.SUPABASE_URL?.replace(/\/$/, "")}/rest/v1/${table}?select=*&id=eq.${id}&limit=1`,
+    { headers: supabaseHeaders(env) },
+  );
+  if (!response.ok) return null;
+  const rows = await response.json() as ReviewRequestRow[];
+  return rows[0] ?? null;
+}
+
+function reviewDetail(kind: string, row: ReviewRequestRow) {
+  if (kind === "correction") {
+    return [
+      `<strong>${escapeHtml(row.company_legal_name)} · ${escapeHtml(row.bargaining_year)}년</strong>`,
+      `수정 항목: ${escapeHtml(row.field_name)}`,
+      `기존값: ${escapeHtml(row.previous_value ?? "없음")}`,
+      `수정값: ${escapeHtml(row.proposed_value)}`,
+      `사유: ${escapeHtml(row.reason)}`,
+      `근거: <a href="${escapeHtml(row.evidence_url)}" target="_blank" rel="noreferrer">원문 열기</a>`,
+    ].join("<br>");
+  }
+  return [
+    `<strong>${escapeHtml(row.company_legal_name)}</strong>`,
+    `산업: ${escapeHtml(row.industry ?? "미입력")}`,
+    `추가 사유: ${escapeHtml(row.rationale ?? "미입력")}`,
+    row.website_url ? `참고: <a href="${escapeHtml(row.website_url)}" target="_blank" rel="noreferrer">기업 웹사이트 열기</a>` : "",
+    "승인 시 최근 5개년 기사 후보 수집 작업이 대기열에 등록됩니다.",
+  ].filter(Boolean).join("<br>");
+}
+
+async function handleAdminReviewPage(request: Request, env: Env) {
+  if (request.method !== "GET") return jsonResponse({ error: "GET 방식만 지원" }, 405);
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY || !env.DASHBOARD_ADMIN_CODE) {
+    return htmlResponse('<section class="card"><h1>관리자 검토 기능이 아직 설정되지 않았습니다.</h1></section>', 503);
+  }
+
+  const url = new URL(request.url);
+  const kind = url.searchParams.get("kind") ?? "";
+  const id = url.searchParams.get("id") ?? "";
+  const expires = url.searchParams.get("expires") ?? "";
+  const signature = url.searchParams.get("signature") ?? "";
+  if (!await validateReviewToken(env, kind, id, expires, signature)) {
+    return htmlResponse('<section class="card"><h1>유효하지 않거나 만료된 확인 링크입니다.</h1><small>아침 알림 메일의 최신 링크를 사용해 주세요.</small></section>', 403);
+  }
+
+  const row = await fetchReviewRequest(env, kind, id);
+  if (!row) return htmlResponse('<section class="card"><h1>요청을 찾을 수 없습니다.</h1></section>', 404);
+  const status = String(row.status ?? "");
+  if (status !== "PENDING") {
+    return htmlResponse(`<section class="card"><p class="eyebrow">처리 완료</p><h1>이미 ${escapeHtml(status)} 상태입니다.</h1></section>`);
+  }
+
+  const hidden = `<input type="hidden" name="kind" value="${escapeHtml(kind)}"><input type="hidden" name="id" value="${escapeHtml(id)}"><input type="hidden" name="expires" value="${escapeHtml(expires)}"><input type="hidden" name="signature" value="${escapeHtml(signature)}">`;
+  return htmlResponse(`<section class="card"><p class="eyebrow">관리자 최종 확인</p><h1>${kind === "correction" ? "데이터 수정 요청" : "추적 기업 추가 요청"}</h1><div class="detail">${reviewDetail(kind, row)}</div><div class="actions"><form method="post" action="/api/admin/review">${hidden}<input type="hidden" name="decision" value="reject"><button class="reject" type="submit">반려</button></form><form method="post" action="/api/admin/review">${hidden}<input type="hidden" name="decision" value="approve"><button class="approve" type="submit">확인 후 승인</button></form></div><small>링크는 48시간 동안 유효하며, 한 번 처리된 요청은 다시 적용되지 않습니다. 승인 전에는 공개 데이터가 바뀌지 않습니다.</small></section>`);
+}
+
+async function handleAdminReviewDecision(request: Request, env: Env) {
+  if (request.method !== "POST") return jsonResponse({ error: "POST 방식만 지원" }, 405);
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY || !env.DASHBOARD_ADMIN_CODE) {
+    return htmlResponse('<section class="card"><h1>관리자 검토 기능이 아직 설정되지 않았습니다.</h1></section>', 503);
+  }
+  const form = await request.formData();
+  const kind = String(form.get("kind") ?? "");
+  const id = String(form.get("id") ?? "");
+  const expires = String(form.get("expires") ?? "");
+  const signature = String(form.get("signature") ?? "");
+  const decision = String(form.get("decision") ?? "");
+  if (!await validateReviewToken(env, kind, id, expires, signature) || !["approve", "reject"].includes(decision)) {
+    return htmlResponse('<section class="card"><h1>유효하지 않거나 만료된 요청입니다.</h1></section>', 403);
+  }
+
+  const row = await fetchReviewRequest(env, kind, id);
+  if (!row) return htmlResponse('<section class="card"><h1>요청을 찾을 수 없습니다.</h1></section>', 404);
+  if (String(row.status) !== "PENDING") {
+    return htmlResponse(`<section class="card"><h1>이미 ${escapeHtml(row.status)} 상태입니다.</h1></section>`);
+  }
+
+  const base = env.SUPABASE_URL.replace(/\/$/, "");
+  const now = new Date().toISOString();
+  const approve = decision === "approve";
+  let status = approve ? "APPROVED" : "REJECTED";
+  let changedCase: { id: string; column: string; previous: string | number | null } | null = null;
+
+  if (kind === "correction" && approve) {
+    const companyResponse = await fetch(
+      `${base}/rest/v1/tracked_companies?select=id&slug=eq.${encodeURIComponent(String(row.company_id_key))}&limit=1`,
+      { headers: supabaseHeaders(env) },
+    );
+    const companyRows = companyResponse.ok ? await companyResponse.json() as Array<{ id?: string }> : [];
+    const companyId = companyRows[0]?.id;
+    if (!companyId) return htmlResponse('<section class="card"><h1>수정 대상 회사를 DB에서 찾을 수 없습니다.</h1></section>', 409);
+
+    const fieldMap: Record<string, string> = {
+      stage: "primary_stage",
+      eventDate: "latest_event_on",
+      agreementType: "agreement_type",
+      unionName: "bargaining_unit_name",
+      factSummary: "current_fact_summary",
+    };
+    const column = fieldMap[String(row.field_name)];
+    if (!column) return htmlResponse('<section class="card"><h1>자동 적용할 수 없는 수정 항목입니다.</h1></section>', 409);
+    const proposed = String(row.proposed_value ?? "").trim();
+    if (column === "primary_stage" && !/^(?:U|S[0-8])$/.test(proposed)) return htmlResponse('<section class="card"><h1>올바르지 않은 교섭 단계입니다.</h1></section>', 400);
+    if (column === "latest_event_on" && !/^\d{4}-\d{2}-\d{2}$/.test(proposed)) return htmlResponse('<section class="card"><h1>확인일은 YYYY-MM-DD 형식이어야 합니다.</h1></section>', 400);
+    if (column === "agreement_type" && !["WAGE", "CBA", "INTEGRATED", "SUPPLEMENTAL", "WORKS_COUNCIL"].includes(proposed)) return htmlResponse('<section class="card"><h1>올바르지 않은 협약유형입니다.</h1></section>', 400);
+
+    const caseResponse = await fetch(
+      `${base}/rest/v1/bargaining_cases?select=id,${column}&company_id=eq.${companyId}&bargaining_year=eq.${row.bargaining_year}&order=latest_event_on.desc.nullslast&limit=1`,
+      { headers: supabaseHeaders(env) },
+    );
+    const caseRows = caseResponse.ok ? await caseResponse.json() as Array<Record<string, string | number | null>> : [];
+    const bargainingCase = caseRows[0];
+    if (!bargainingCase?.id) return htmlResponse('<section class="card"><h1>수정할 교섭 기록을 DB에서 찾을 수 없습니다.</h1></section>', 409);
+    const updateResponse = await fetch(`${base}/rest/v1/bargaining_cases?id=eq.${bargainingCase.id}`, {
+      method: "PATCH",
+      headers: { ...supabaseHeaders(env, true), prefer: "return=minimal" },
+      body: JSON.stringify({ [column]: proposed, updated_at: now }),
+    });
+    if (!updateResponse.ok) return htmlResponse('<section class="card"><h1>교섭 기록 수정에 실패했습니다.</h1></section>', 502);
+    changedCase = { id: String(bargainingCase.id), column, previous: bargainingCase[column] ?? null };
+    status = "APPLIED";
+  }
+
+  const table = kind === "correction" ? "bargaining_record_corrections" : "company_add_requests";
+  const requestUpdate: Record<string, string> = kind === "correction"
+    ? { status, review_note: approve ? "아침 알림 메일에서 승인" : "아침 알림 메일에서 반려", reviewed_at: now, reviewed_by: "EMAIL_REVIEW", updated_at: now, ...(approve ? { applied_at: now } : {}) }
+    : { status, review_note: approve ? "아침 알림 메일에서 승인 · 과거자료 수집 대기" : "아침 알림 메일에서 반려", reviewed_at: now, updated_at: now };
+  const response = await fetch(`${base}/rest/v1/${table}?id=eq.${id}&status=eq.PENDING`, {
+    method: "PATCH",
+    headers: { ...supabaseHeaders(env, true), prefer: "return=representation" },
+    body: JSON.stringify(requestUpdate),
+  });
+  const updatedRows = response.ok ? await response.json() as ReviewRequestRow[] : [];
+  if (!response.ok || updatedRows.length !== 1) {
+    if (changedCase) {
+      await fetch(`${base}/rest/v1/bargaining_cases?id=eq.${changedCase.id}`, {
+        method: "PATCH",
+        headers: supabaseHeaders(env, true),
+        body: JSON.stringify({ [changedCase.column]: changedCase.previous, updated_at: now }),
+      });
+    }
+    return htmlResponse('<section class="card"><h1>DB 반영 중 오류가 발생했습니다.</h1><small>요청은 처리 전 상태로 유지됩니다.</small></section>', 502);
+  }
+
+  if (kind === "company" && approve) {
+    const slug = `pending-${id.replaceAll("-", "").slice(0, 16)}`;
+    const companyResponse = await fetch(`${base}/rest/v1/tracked_companies?on_conflict=slug`, {
+      method: "POST",
+      headers: { ...supabaseHeaders(env, true), prefer: "resolution=merge-duplicates,return=minimal" },
+      body: JSON.stringify({
+        slug,
+        legal_name: row.company_legal_name,
+        display_name: row.company_name || row.company_legal_name,
+        industry: row.industry || "검토 중",
+        coverage_tier: "WATCH",
+        tracking_status: "PAUSED",
+        search_aliases: [row.company_legal_name],
+        selection_rationale: row.rationale ? [row.rationale] : [],
+        is_published: false,
+        verification_status: "NEEDS_REVIEW",
+      }),
+    });
+    if (!companyResponse.ok) {
+      await fetch(`${base}/rest/v1/company_add_requests?id=eq.${id}&status=eq.APPROVED`, {
+        method: "PATCH",
+        headers: supabaseHeaders(env, true),
+        body: JSON.stringify({ status: "PENDING", review_note: "비공개 기업 등록 실패 · 재검토 필요", reviewed_at: null, updated_at: now }),
+      });
+      return htmlResponse('<section class="card"><h1>기업의 비공개 등록에 실패했습니다.</h1><small>요청은 검토 대기로 되돌렸습니다.</small></section>', 502);
+    }
+  }
+
+  const next = kind === "company" && decision === "approve"
+    ? "기업을 비공개 검토 목록에 등록했습니다. 자동 작업이 최근 5개년 기사 후보를 수집하며, 원청 직접고용 범위 검토가 끝난 사실만 이후 공개됩니다."
+    : kind === "correction" && decision === "approve"
+      ? "승인된 값이 DB에 반영되었습니다."
+      : "요청을 반려했습니다. 공개 데이터는 변경되지 않았습니다.";
+  return htmlResponse(`<section class="card"><p class="eyebrow">처리 완료 · ${escapeHtml(status)}</p><h1>${escapeHtml(next)}</h1><small><a href="/">대시보드로 돌아가기</a></small></section>`);
+}
+
 // Image security config. SVG sources with .svg extension auto-skip the
 // optimization endpoint on the client side (served directly, no proxy).
 // To route SVGs through the optimizer (with security headers), set
@@ -398,6 +627,14 @@ const worker = {
 
     if (url.pathname === "/api/published-facts") {
       return withRobotsTag(await handlePublishedFacts(env));
+    }
+
+    if (url.pathname === "/admin/review") {
+      return withRobotsTag(await handleAdminReviewPage(request, env));
+    }
+
+    if (url.pathname === "/api/admin/review") {
+      return withRobotsTag(await handleAdminReviewDecision(request, env));
     }
 
     return withRobotsTag(await handler.fetch(request, env, ctx));

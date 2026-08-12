@@ -185,8 +185,10 @@ function getYearLabel(year: number) {
 type PublishedFact = {
   companyId: string;
   bargainingYear: number;
+  agreementType: HistoricalRecord["agreementType"];
   stage: string;
   eventDate: string;
+  unionName: string;
   factSummary: string;
   sourceTier: string;
   confidence: number;
@@ -231,8 +233,10 @@ function applyPublishedFacts(records: HistoricalRecord[], facts: PublishedFact[]
     if (!fact) return record;
     return {
       ...record,
+      agreementType: fact.agreementType || record.agreementType,
       stage: fact.stage || record.stage,
       eventDate: fact.eventDate || record.eventDate,
+      unionName: fact.unionName || record.unionName,
       factSummary: fact.factSummary || record.factSummary,
       sourceTier: (fact.sourceTier as HistoricalRecord["sourceTier"]) || record.sourceTier,
       confidence: typeof fact.confidence === "number" ? fact.confidence : record.confidence,
@@ -441,6 +445,9 @@ export default function Home() {
   const [isSubmittingCompanyRequest, setIsSubmittingCompanyRequest] = useState(false);
   // 크롤링 결과가 실제와 다를 때 사람이 고치는 경로. 접수와 공개는 분리한다.
   const [isCorrectionOpen, setIsCorrectionOpen] = useState(false);
+  const [correctionTargetId, setCorrectionTargetId] = useState("");
+  const [correctionSearch, setCorrectionSearch] = useState("");
+  const [correctionYear, setCorrectionYear] = useState<number | "ALL">("ALL");
   const [correction, setCorrection] = useState({
     fieldName: "stage",
     proposedValue: "",
@@ -491,6 +498,24 @@ export default function Home() {
   const selectedIssues = selectedCase.history ? issueHighlights(selectedCase.history) : [];
   const activeStageIndex = stageMeta.findIndex((stage) => stage.code === selectedCase.stage);
   const displayStages = showAllStages ? stageMeta : stageMeta.slice(0, 6);
+  const correctionTargets = useMemo(() => {
+    const query = correctionSearch.trim().toLocaleLowerCase("ko-KR");
+    return activeRecords
+      .filter((record) => correctionYear === "ALL" || record.bargainingYear === correctionYear)
+      .filter((record) => !query || `${record.companyLegalName} ${record.unionName}`.toLocaleLowerCase("ko-KR").includes(query))
+      .sort((left, right) => right.bargainingYear - left.bargainingYear || left.companyLegalName.localeCompare(right.companyLegalName, "ko"));
+  }, [activeRecords, correctionSearch, correctionYear]);
+  const correctionTarget = activeRecords.find((record) => record.id === correctionTargetId)
+    ?? correctionTargets[0]
+    ?? activeRecords[0];
+
+  function openCorrection(targetId?: string) {
+    setCorrectionTargetId(targetId ?? selectedCase.id);
+    setCorrectionYear(targetId ? selectedYear : "ALL");
+    setCorrectionSearch("");
+    setCorrectionMessage("");
+    setIsCorrectionOpen(true);
+  }
 
   async function submitCompanyRequest(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -527,17 +552,14 @@ export default function Home() {
   // 수정 대상의 기존값을 화면에서 그대로 보여주고 같은 값을 서버로도 보낸다. 이전값을
   // 남겨야 되돌릴 수 있고, 무엇이 어떻게 바뀌는지 검토자가 판단할 수 있다.
   const correctionPreviousValue = (() => {
-    const record = bargainingRecords.find((candidate) => candidate.id === selectedCase.id);
+    const record = correctionTarget;
     if (!record) return "";
     switch (correction.fieldName) {
       case "stage": return record.stage;
       case "eventDate": return record.eventDate;
       case "agreementType": return record.agreementType;
       case "unionName": return record.unionName;
-      case "title": return record.title;
       case "factSummary": return record.factSummary;
-      case "sourceUrl": return record.sourceUrl;
-      case "flowEvents": return `경과 ${record.flowEvents?.length ?? 0}건`;
       default: return "";
     }
   })();
@@ -547,7 +569,11 @@ export default function Home() {
     setIsSubmittingCorrection(true);
     setCorrectionMessage("");
     try {
-      const record = bargainingRecords.find((candidate) => candidate.id === selectedCase.id);
+      const record = correctionTarget;
+      if (!record) {
+        setCorrectionMessage("수정할 기록을 먼저 선택해 주세요.");
+        return;
+      }
       const response = await fetch("/api/record-corrections", {
         method: "POST",
         headers: {
@@ -555,10 +581,10 @@ export default function Home() {
           "x-dashboard-admin-code": correction.adminCode,
         },
         body: JSON.stringify({
-          targetRecordId: selectedCase.id,
-          companyIdKey: record?.companyId ?? "",
-          companyLegalName: selectedCase.name,
-          bargainingYear: record?.bargainingYear ?? selectedYear,
+          targetRecordId: record.id,
+          companyIdKey: record.companyId,
+          companyLegalName: record.companyLegalName,
+          bargainingYear: record.bargainingYear,
           fieldName: correction.fieldName,
           previousValue: correctionPreviousValue,
           proposedValue: correction.proposedValue,
@@ -608,9 +634,14 @@ export default function Home() {
             <a href="#framework">단계 프레임워크</a>
             <a href="#collection">수집 원칙</a>
           </nav>
-          <button className="header-link header-action" type="button" onClick={() => { setCompanyRequestMessage(""); setIsAddCompanyOpen(true); }}>
-            추적 기업 추가 <Plus size={15} />
-          </button>
+          <div className="header-admin-actions">
+            <button className="header-link header-action" type="button" onClick={() => { setCompanyRequestMessage(""); setIsAddCompanyOpen(true); }}>
+              추적 기업 추가 <Plus size={15} />
+            </button>
+            <button className="header-link header-action" type="button" onClick={() => openCorrection()}>
+              데이터 수정 <FileCheck2 size={15} />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -648,6 +679,9 @@ export default function Home() {
               </div>
               <button className="board-add-company" type="button" onClick={() => { setCompanyRequestMessage(""); setIsAddCompanyOpen(true); }}>
                 <Plus size={15} /> 추적 기업 추가
+              </button>
+              <button className="board-edit-data" type="button" onClick={() => openCorrection()}>
+                <FileCheck2 size={15} /> 데이터 수정
               </button>
             </div>
           </div>
@@ -815,7 +849,7 @@ export default function Home() {
                   <button
                     className="record-correction-button"
                     type="button"
-                    onClick={() => { setCorrectionMessage(""); setIsCorrectionOpen(true); }}
+                    onClick={() => openCorrection(selectedCase.id)}
                     disabled={!bargainingRecords.some((candidate) => candidate.id === selectedCase.id)}
                   >
                     <FileCheck2 size={14} /> 기록 수정 요청
@@ -1116,9 +1150,38 @@ export default function Home() {
               <button className="dialog-close" type="button" aria-label="기록 수정 요청 창 닫기" onClick={() => setIsCorrectionOpen(false)}><X size={18} /></button>
             </div>
             <p className="company-request-intro">
-              {selectedCase.name} · {selectedYear}년 기록 · 근거 원문과 수정자를 함께 남기고 검토 후 공개 반영
+              회사와 연도를 찾아 수정할 기록을 선택하세요. 요청은 아침 알림 메일에서 관리자가 승인한 뒤 DB에 반영됩니다.
             </p>
             <form className="company-request-form" onSubmit={submitCorrection}>
+              <div className="correction-finder" aria-label="수정할 교섭 기록 찾기">
+                <label>
+                  <span>회사명 검색</span>
+                  <span className="correction-search-input"><Search size={16} aria-hidden="true" /><input value={correctionSearch} onChange={(event) => setCorrectionSearch(event.target.value)} placeholder="회사명 또는 노조명" /></span>
+                </label>
+                <label>
+                  <span>연도</span>
+                  <select value={correctionYear} onChange={(event) => setCorrectionYear(event.target.value === "ALL" ? "ALL" : Number(event.target.value))}>
+                    <option value="ALL">전체 연도</option>
+                    {availableYears.map((year) => <option key={year} value={year}>{year}년</option>)}
+                  </select>
+                </label>
+              </div>
+              <div className="correction-target-list" role="listbox" aria-label="수정할 기록 선택">
+                {correctionTargets.length > 0 ? correctionTargets.slice(0, 30).map((record) => (
+                  <button
+                    className={correctionTarget?.id === record.id ? "correction-target active" : "correction-target"}
+                    type="button"
+                    role="option"
+                    aria-selected={correctionTarget?.id === record.id}
+                    key={record.id}
+                    onClick={() => { setCorrectionTargetId(record.id); setCorrectionMessage(""); }}
+                  >
+                    <strong>{shortCompanyName(record.companyLegalName)}</strong>
+                    <span>{record.bargainingYear}년 · {agreementLabels[record.agreementType]} · {record.stage}</span>
+                  </button>
+                )) : <p className="correction-empty">조건에 맞는 교섭 기록이 없습니다.</p>}
+              </div>
+              {correctionTarget && <p className="correction-selected"><FileCheck2 size={15} /> 선택: <strong>{correctionTarget.companyLegalName}</strong> · {correctionTarget.bargainingYear}년</p>}
               <label>
                 <span>수정 항목 <b>필수</b></span>
                 <select
@@ -1129,10 +1192,7 @@ export default function Home() {
                   <option value="eventDate">확인일</option>
                   <option value="agreementType">협약유형</option>
                   <option value="unionName">노조명</option>
-                  <option value="title">기록 제목</option>
                   <option value="factSummary">사실 요약</option>
-                  <option value="sourceUrl">원문 URL</option>
-                  <option value="flowEvents">교섭 경과</option>
                 </select>
               </label>
               <label>
@@ -1163,7 +1223,7 @@ export default function Home() {
               {correctionMessage && <p className="company-request-message" role="status">{correctionMessage}</p>}
               <div className="company-request-actions">
                 <button className="dialog-cancel" type="button" onClick={() => setIsCorrectionOpen(false)}>취소</button>
-                <button className="dialog-submit" type="submit" disabled={isSubmittingCorrection}>{isSubmittingCorrection ? "요청 저장 중…" : "수정 요청 보내기"}</button>
+                <button className="dialog-submit" type="submit" disabled={isSubmittingCorrection || !correctionTarget}>{isSubmittingCorrection ? "요청 저장 중…" : "수정 요청 보내기"}</button>
               </div>
             </form>
           </section>

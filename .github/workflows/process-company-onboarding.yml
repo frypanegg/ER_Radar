@@ -1,0 +1,32 @@
+name: 승인 기업 과거자료 수집
+
+# 메일에서 추적 기업 추가를 승인하면 DB 대기열에 작업이 생긴다. 다음 정각을 기다리지
+# 않아도 수동 실행할 수 있으며, 결과는 모두 비공개 검토 후보로만 저장한다.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: company-onboarding
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  collect-historical-candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: 승인 기업 최근 5개년 후보 수집
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/process-company-onboarding.mjs

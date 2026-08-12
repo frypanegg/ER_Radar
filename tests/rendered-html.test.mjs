@@ -53,6 +53,7 @@ test("server-renders the collective-bargaining framework dashboard", async () =>
   assert.match(html, /원청 노조/);
   assert.match(html, /교섭 단계별 조회/);
   assert.match(html, /교섭 경과/);
+  assert.match(html, /데이터 수정/);
   assert.match(html, /2026년 현재/);
   assert.match(html, /2026-08-10.*기준 현황/);
   assert.match(html, /radar-mark/);
@@ -165,6 +166,8 @@ test("keeps scope and source guards in the production-facing implementation", as
   assert.match(page, /교섭 단계별 조회/);
   assert.match(page, /하청·사내협력사·용역·파견/);
   assert.match(page, /추적 기업 추가/);
+  assert.match(page, /데이터 수정/);
+  assert.match(page, /correction-target-list/);
   assert.match(page, /\/api\/company-requests/);
   assert.doesNotMatch(page, /SkeletonPreview/);
   assert.match(layout, /노사교섭 레이더 \| 원청 노조 교섭 현황/);
@@ -217,6 +220,55 @@ test("does not expose unauthenticated company-request writes before the database
   );
   const body = await response.json();
   assert.match(body.error, /데이터베이스 연결/);
+});
+
+test("메일 검토 링크는 서명이 맞아도 GET만으로 DB를 바꾸지 않는다", async () => {
+  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
+  workerUrl.searchParams.set("admin-review", `${process.pid}-${Date.now()}`);
+  const { default: worker } = await import(workerUrl.href);
+  let fetchCount = 0;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => { fetchCount += 1; return new Response("[]", { status: 200 }); };
+  try {
+    const invalid = await worker.fetch(
+      new Request("http://localhost/admin/review?kind=correction&id=00000000-0000-4000-8000-000000000001&expires=1800000000&signature=invalid"),
+      {
+        ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) },
+        SUPABASE_URL: "https://example.supabase.co",
+        SUPABASE_SERVICE_ROLE_KEY: "server-only",
+        DASHBOARD_ADMIN_CODE: "admin-secret",
+      },
+      { waitUntil() {}, passThroughOnException() {} },
+    );
+    assert.equal(invalid.status, 403);
+    assert.equal(fetchCount, 0, "서명이 틀리면 DB 조회도 하지 않아야 한다");
+    assert.equal(invalid.headers.get("x-robots-tag"), "noindex, nofollow, noarchive, nosnippet, noimageindex");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+
+  const source = await readFile(new URL("worker/index.ts", templateRoot), "utf8");
+  assert.match(source, /bargaining_cases\?select=id/);
+  assert.match(source, /status=eq\.PENDING/);
+  assert.match(source, /changedCase/);
+  assert.match(source, /status !== "PENDING"/);
+});
+
+test("승인 기업은 최근 5개년 비공개 후보 수집으로 이어진다", async () => {
+  const [schema, workflow, processor] = await Promise.all([
+    readFile(new URL("../supabase/migrations/20260810_initial_bargaining_dashboard.sql", import.meta.url), "utf8"),
+    readFile(new URL("../.github/workflows/process-company-onboarding.yml", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/process-company-onboarding.mjs", import.meta.url), "utf8"),
+  ]);
+  assert.match(schema, /CREATE TABLE public\.scope_review_audits/);
+  assert.match(schema, /UNKNOWN_REVIEW/);
+  assert.match(schema, /ENABLE ROW LEVEL SECURITY/);
+  assert.match(workflow, /schedule:/);
+  assert.match(workflow, /process-company-onboarding\.mjs/);
+  assert.match(processor, /scope_classification: "UNKNOWN_REVIEW"/);
+  assert.match(processor, /is_published: false/);
+  assert.match(processor, /currentYear - 4/);
+  assert.doesNotMatch(processor, /bargaining_cases\?/);
 });
 
 test("quarantines subcontractor bargaining before a primary-company stage is assigned", async () => {
