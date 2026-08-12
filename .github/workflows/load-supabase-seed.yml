@@ -45,6 +45,23 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: node scripts/load-supabase-seed.mjs
 
+      # 업서트 자연키에 agreement_type이 들어 있어, 협약유형을 정정하면 기존 행이
+      # 수정되지 않고 새 행이 하나 더 생긴다. 적재만으로는 옛 행이 그대로 남아
+      # 화면이 계속 옛 값을 집는다. 지울 대상을 먼저 찍고 나서 지운다.
+      - name: 시드에서 사라진 공개 사건 확인
+        if: inputs.dry_run == false
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/prune-supabase-orphans.mjs --dry-run
+
+      - name: 시드에서 사라진 공개 사건 정리
+        if: inputs.dry_run == false
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/prune-supabase-orphans.mjs
+
       - name: 적재 결과 확인
         if: inputs.dry_run == false
         env:
