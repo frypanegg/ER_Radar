@@ -39,3 +39,8 @@ yarn-error.log*
 /outputs/
 /work/
 /tmp/
+/.video-runtime/
+/artifacts/_raw_capture/
+
+# DART 법인 고유번호 캐시. 매번 받아올 수 있는 파생물이라 커밋하지 않는다.
+data/dart-corp-codes.json

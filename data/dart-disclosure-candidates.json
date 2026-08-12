@@ -1,0 +1,1343 @@
+{
+  "schemaVersion": 1,
+  "purpose": "DART 전자공시의 노사관계 공시 후보. 접수일자가 확정된 1차 근거이며, 사람이 확인한 뒤 historical-flow-events.json으로 옮긴다.",
+  "collectedAt": "2026-08-12T00:09:23.481Z",
+  "range": {
+    "since": "2021-01-01",
+    "until": "2026-08-12"
+  },
+  "unmatchedCompanies": [],
+  "candidateCount": 133,
+  "candidates": [
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-08-07",
+      "receiptNumber": "20260807800600",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260807800600",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-08-07",
+      "receiptNumber": "20260807800490",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260807800490",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "sk-hynix",
+      "companyLegalName": "SK하이닉스 주식회사",
+      "corpName": "SK하이닉스",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-08-05",
+      "receiptNumber": "20260805800806",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260805800806",
+      "filerName": "SK하이닉스"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-07-31",
+      "receiptNumber": "20260731801010",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260731801010",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-07-29",
+      "receiptNumber": "20260729800842",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260729800842",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "생산중단              ",
+      "receivedOn": "2026-07-27",
+      "receiptNumber": "20260727800373",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260727800373",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "생산중단              ",
+      "receivedOn": "2026-07-24",
+      "receiptNumber": "20260724800692",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260724800692",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "samsung-electronics",
+      "companyLegalName": "삼성전자 주식회사",
+      "corpName": "삼성전자",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-07-23",
+      "receiptNumber": "20260723800875",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260723800875",
+      "filerName": "삼성전자"
+    },
+    {
+      "companyId": "sk-hynix",
+      "companyLegalName": "SK하이닉스 주식회사",
+      "corpName": "SK하이닉스",
+      "reportName": "풍문또는보도에대한해명              ",
+      "receivedOn": "2026-07-22",
+      "receiptNumber": "20260722800178",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260722800178",
+      "filerName": "SK하이닉스"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "생산중단              ",
+      "receivedOn": "2026-07-20",
+      "receiptNumber": "20260720800419",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260720800419",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "생산중단              ",
+      "receivedOn": "2026-07-13",
+      "receiptNumber": "20260713800350",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260713800350",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-07-10",
+      "receiptNumber": "20260710800316",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260710800316",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-07-10",
+      "receiptNumber": "20260710800321",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260710800321",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-07-03",
+      "receiptNumber": "20260703801045",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260703801045",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "samsung-electronics",
+      "companyLegalName": "삼성전자 주식회사",
+      "corpName": "삼성전자",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-06-24",
+      "receiptNumber": "20260624801004",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260624801004",
+      "filerName": "삼성전자"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-06-19",
+      "receiptNumber": "20260619800395",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260619800395",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "sk-hynix",
+      "companyLegalName": "SK하이닉스 주식회사",
+      "corpName": "SK하이닉스",
+      "reportName": "풍문또는보도에대한해명              ",
+      "receivedOn": "2026-06-16",
+      "receiptNumber": "20260616800847",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260616800847",
+      "filerName": "SK하이닉스"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-05-22",
+      "receiptNumber": "20260522800243",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260522800243",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-04-30",
+      "receiptNumber": "20260430801200",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260430801200",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "생산중단              ",
+      "receivedOn": "2026-04-15",
+      "receiptNumber": "20260415800016",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260415800016",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-04-02",
+      "receiptNumber": "20260402800224",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260402800224",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-03-18",
+      "receiptNumber": "20260318800949",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260318800949",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "sk-hynix",
+      "companyLegalName": "SK하이닉스 주식회사",
+      "corpName": "SK하이닉스",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2026-01-27",
+      "receiptNumber": "20260127800836",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260127800836",
+      "filerName": "SK하이닉스"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-12-12",
+      "receiptNumber": "20251212800218",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20251212800218",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-12-08",
+      "receiptNumber": "20251208800108",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20251208800108",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "lg-electronics",
+      "companyLegalName": "LG전자 주식회사",
+      "corpName": "LG전자",
+      "reportName": "풍문또는보도에대한해명              ",
+      "receivedOn": "2025-12-05",
+      "receiptNumber": "20251205800095",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20251205800095",
+      "filerName": "LG전자"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-12-04",
+      "receiptNumber": "20251204800389",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20251204800389",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-11-14",
+      "receiptNumber": "20251114801389",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20251114801389",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "생산중단              ",
+      "receivedOn": "2025-10-17",
+      "receiptNumber": "20251017800439",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20251017800439",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-10-17",
+      "receiptNumber": "20251017800099",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20251017800099",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "[기재정정]생산중단              ",
+      "receivedOn": "2025-09-22",
+      "receiptNumber": "20250922800001",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250922800001",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-09-19",
+      "receiptNumber": "20250919800353",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250919800353",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "생산중단              ",
+      "receivedOn": "2025-09-05",
+      "receiptNumber": "20250905800002",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250905800002",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "생산중단              ",
+      "receivedOn": "2025-09-04",
+      "receiptNumber": "20250904800005",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250904800005",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "생산중단              ",
+      "receivedOn": "2025-09-03",
+      "receiptNumber": "20250903800494",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250903800494",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명              ",
+      "receivedOn": "2025-08-27",
+      "receiptNumber": "20250827800122",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250827800122",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "풍문또는보도에대한해명              ",
+      "receivedOn": "2025-08-22",
+      "receiptNumber": "20250822800521",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250822800521",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-08-20",
+      "receiptNumber": "20250820800240",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250820800240",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-08-14",
+      "receiptNumber": "20250814801032",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250814801032",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-07-28",
+      "receiptNumber": "20250728800191",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250728800191",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-07-21",
+      "receiptNumber": "20250721800144",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250721800144",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-07-08",
+      "receiptNumber": "20250708800423",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250708800423",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-06-09",
+      "receiptNumber": "20250609800161",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250609800161",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "[기재정정]풍문또는보도에대한해명              ",
+      "receivedOn": "2025-06-05",
+      "receiptNumber": "20250605800271",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250605800271",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명              ",
+      "receivedOn": "2025-06-05",
+      "receiptNumber": "20250605800156",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250605800156",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-05-15",
+      "receiptNumber": "20250515801000",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250515801000",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-05-07",
+      "receiptNumber": "20250507800677",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250507800677",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-05-07",
+      "receiptNumber": "20250507800616",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250507800616",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-04-24",
+      "receiptNumber": "20250424800749",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250424800749",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-04-16",
+      "receiptNumber": "20250416800104",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250416800104",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명              ",
+      "receivedOn": "2025-04-11",
+      "receiptNumber": "20250411800300",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250411800300",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-03-25",
+      "receiptNumber": "20250325801253",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250325801253",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단              ",
+      "receivedOn": "2025-02-11",
+      "receiptNumber": "20250211800498",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250211800498",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-02-07",
+      "receiptNumber": "20250207800374",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250207800374",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단              ",
+      "receivedOn": "2025-01-21",
+      "receiptNumber": "20250121800291",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250121800291",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2025-01-08",
+      "receiptNumber": "20250108800031",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250108800031",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-12-20",
+      "receiptNumber": "20241220800752",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20241220800752",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "생산중단              ",
+      "receivedOn": "2024-12-05",
+      "receiptNumber": "20241205800169",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20241205800169",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-11-21",
+      "receiptNumber": "20241121800570",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20241121800570",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-11-13",
+      "receiptNumber": "20241113800917",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20241113800917",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-09-26",
+      "receiptNumber": "20240926800515",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240926800515",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-09-25",
+      "receiptNumber": "20240925800687",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240925800687",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명              ",
+      "receivedOn": "2024-09-25",
+      "receiptNumber": "20240925800409",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240925800409",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "생산중단              ",
+      "receivedOn": "2024-09-10",
+      "receiptNumber": "20240910800007",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240910800007",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-08-14",
+      "receiptNumber": "20240814803363",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240814803363",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-08-01",
+      "receiptNumber": "20240801800304",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240801800304",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-07-18",
+      "receiptNumber": "20240718800148",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240718800148",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-06-27",
+      "receiptNumber": "20240627800504",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240627800504",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-06-17",
+      "receiptNumber": "20240617800007",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240617800007",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "풍문또는보도에대한해명              ",
+      "receivedOn": "2024-06-14",
+      "receiptNumber": "20240614800330",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240614800330",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-06-05",
+      "receiptNumber": "20240605800311",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240605800311",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-05-28",
+      "receiptNumber": "20240528800632",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240528800632",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-05-02",
+      "receiptNumber": "20240502800396",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240502800396",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-04-02",
+      "receiptNumber": "20240402800927",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240402800927",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "sk-hynix",
+      "companyLegalName": "SK하이닉스 주식회사",
+      "corpName": "SK하이닉스",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-03-28",
+      "receiptNumber": "20240328800473",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240328800473",
+      "filerName": "SK하이닉스"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-03-06",
+      "receiptNumber": "20240306800649",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240306800649",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-02-28",
+      "receiptNumber": "20240228800605",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240228800605",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "[기재정정]생산중단              ",
+      "receivedOn": "2024-02-13",
+      "receiptNumber": "20240213801020",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240213801020",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "생산중단              ",
+      "receivedOn": "2024-02-13",
+      "receiptNumber": "20240213800363",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240213800363",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "생산중단              ",
+      "receivedOn": "2024-02-13",
+      "receiptNumber": "20240213800303",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240213800303",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-02-08",
+      "receiptNumber": "20240208800924",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240208800924",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "풍문또는보도에대한해명(미확정)              ",
+      "receivedOn": "2024-02-07",
+      "receiptNumber": "20240207801417",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240207801417",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2024-01-29",
+      "receiptNumber": "20240129800277",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240129800277",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "[기재정정]생산중단",
+      "receivedOn": "2024-01-25",
+      "receiptNumber": "20240125800047",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240125800047",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "생산중단",
+      "receivedOn": "2024-01-25",
+      "receiptNumber": "20240125800008",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240125800008",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "생산중단",
+      "receivedOn": "2024-01-15",
+      "receiptNumber": "20240115800499",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240115800499",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명",
+      "receivedOn": "2024-01-08",
+      "receiptNumber": "20240108800156",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240108800156",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "corpName": "현대자동차",
+      "reportName": "생산중단",
+      "receivedOn": "2023-11-27",
+      "receiptNumber": "20231127800507",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20231127800507",
+      "filerName": "현대자동차"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2023-11-10",
+      "receiptNumber": "20231110800499",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20231110800499",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "kia",
+      "companyLegalName": "기아 주식회사",
+      "corpName": "기아",
+      "reportName": "생산중단",
+      "receivedOn": "2023-11-08",
+      "receiptNumber": "20231108800243",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20231108800243",
+      "filerName": "기아"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2023-10-10",
+      "receiptNumber": "20231010800149",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20231010800149",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2023-09-27",
+      "receiptNumber": "20230927800457",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20230927800457",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2023-09-13",
+      "receiptNumber": "20230913800452",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20230913800452",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2023-08-31",
+      "receiptNumber": "20230831800013",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20230831800013",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2023-08-22",
+      "receiptNumber": "20230822800080",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20230822800080",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "kia",
+      "companyLegalName": "기아 주식회사",
+      "corpName": "기아",
+      "reportName": "생산중단",
+      "receivedOn": "2023-05-31",
+      "receiptNumber": "20230531800565",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20230531800565",
+      "filerName": "기아"
+    },
+    {
+      "companyId": "kia",
+      "companyLegalName": "기아 주식회사",
+      "corpName": "기아",
+      "reportName": "풍문또는보도에대한해명",
+      "receivedOn": "2023-05-31",
+      "receiptNumber": "20230531800437",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20230531800437",
+      "filerName": "기아"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2023-05-31",
+      "receiptNumber": "20230531800224",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20230531800224",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "kia",
+      "companyLegalName": "기아 주식회사",
+      "corpName": "기아",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2023-01-05",
+      "receiptNumber": "20230105800443",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20230105800443",
+      "filerName": "기아"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2022-12-13",
+      "receiptNumber": "20221213800269",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20221213800269",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "kia",
+      "companyLegalName": "기아 주식회사",
+      "corpName": "기아",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2022-12-06",
+      "receiptNumber": "20221206800080",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20221206800080",
+      "filerName": "기아"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2022-10-18",
+      "receiptNumber": "20221018800526",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20221018800526",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2022-09-28",
+      "receiptNumber": "20220928800421",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20220928800421",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2022-09-07",
+      "receiptNumber": "20220907800042",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20220907800042",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2022-09-05",
+      "receiptNumber": "20220905800617",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20220905800617",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2022-07-20",
+      "receiptNumber": "20220720800099",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20220720800099",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "생산중단",
+      "receivedOn": "2022-04-27",
+      "receiptNumber": "20220427800005",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20220427800005",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "hd-hyundai-heavy-industries",
+      "companyLegalName": "HD현대중공업 주식회사",
+      "corpName": "HD현대중공업",
+      "reportName": "생산중단",
+      "receivedOn": "2022-04-11",
+      "receiptNumber": "20220411800117",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20220411800117",
+      "filerName": "HD현대중공업"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2022-04-01",
+      "receiptNumber": "20220401800722",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20220401800722",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "lg-electronics",
+      "companyLegalName": "LG전자 주식회사",
+      "corpName": "LG전자",
+      "reportName": "영업정지(자율공시)",
+      "receivedOn": "2022-02-23",
+      "receiptNumber": "20220223800147",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20220223800147",
+      "filerName": "LG전자"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "생산중단",
+      "receivedOn": "2021-12-30",
+      "receiptNumber": "20211230800715",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20211230800715",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "doosan-enerbility",
+      "companyLegalName": "두산에너빌리티 주식회사",
+      "corpName": "두산에너빌리티",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2021-11-04",
+      "receiptNumber": "20211104800164",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20211104800164",
+      "filerName": "두산에너빌리티"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2021-10-20",
+      "receiptNumber": "20211020800500",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20211020800500",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "생산중단",
+      "receivedOn": "2021-09-15",
+      "receiptNumber": "20210915800130",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210915800130",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "생산중단",
+      "receivedOn": "2021-09-09",
+      "receiptNumber": "20210909800063",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210909800063",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2021-07-21",
+      "receiptNumber": "20210721800348",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210721800348",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "생산중단",
+      "receivedOn": "2021-07-12",
+      "receiptNumber": "20210712800560",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210712800560",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2021-07-01",
+      "receiptNumber": "20210701800329",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210701800329",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "생산중단",
+      "receivedOn": "2021-06-16",
+      "receiptNumber": "20210616800059",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210616800059",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "생산중단",
+      "receivedOn": "2021-05-24",
+      "receiptNumber": "20210524800232",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210524800232",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "생산중단",
+      "receivedOn": "2021-04-19",
+      "receiptNumber": "20210419800108",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210419800108",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "생산중단",
+      "receivedOn": "2021-04-12",
+      "receiptNumber": "20210412800189",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210412800189",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "lg-electronics",
+      "companyLegalName": "LG전자 주식회사",
+      "corpName": "LG전자",
+      "reportName": "[첨부정정]주요사항보고서(영업정지)",
+      "receivedOn": "2021-04-12",
+      "receiptNumber": "20210412002896",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210412002896",
+      "filerName": "LG전자"
+    },
+    {
+      "companyId": "lg-electronics",
+      "companyLegalName": "LG전자 주식회사",
+      "corpName": "LG전자",
+      "reportName": "주요사항보고서(영업정지)",
+      "receivedOn": "2021-04-05",
+      "receiptNumber": "20210405000322",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210405000322",
+      "filerName": "LG전자"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2021-04-01",
+      "receiptNumber": "20210401800897",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210401800897",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hanwha-ocean",
+      "companyLegalName": "한화오션 주식회사",
+      "corpName": "한화오션",
+      "reportName": "생산중단",
+      "receivedOn": "2021-03-22",
+      "receiptNumber": "20210322800140",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210322800140",
+      "filerName": "한화오션"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "생산중단",
+      "receivedOn": "2021-03-08",
+      "receiptNumber": "20210308800074",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210308800074",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2021-03-02",
+      "receiptNumber": "20210302800228",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210302800228",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "풍문또는보도에대한해명",
+      "receivedOn": "2021-02-08",
+      "receiptNumber": "20210208800139",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210208800139",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2021-01-13",
+      "receiptNumber": "20210113800465",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210113800465",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2021-01-11",
+      "receiptNumber": "20210111800552",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210111800552",
+      "filerName": "현대제철"
+    },
+    {
+      "companyId": "hyundai-mobis",
+      "companyLegalName": "현대모비스 주식회사",
+      "corpName": "현대모비스",
+      "reportName": "풍문또는보도에대한해명(미확정)",
+      "receivedOn": "2021-01-08",
+      "receiptNumber": "20210108800209",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210108800209",
+      "filerName": "현대모비스"
+    },
+    {
+      "companyId": "hyundai-steel",
+      "companyLegalName": "현대제철 주식회사",
+      "corpName": "현대제철",
+      "reportName": "생산중단",
+      "receivedOn": "2021-01-04",
+      "receiptNumber": "20210104800595",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20210104800595",
+      "filerName": "현대제철"
+    }
+  ]
+}

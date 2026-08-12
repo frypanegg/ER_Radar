@@ -209,6 +209,44 @@ test("하청·복수법인·단계 미확인 기사는 자동 반영하지 않�
   assert.equal(selectCandidate(retain).reason, "retain_main_state");
 });
 
+test("DART 공시 필터가 실제 서식명을 잡는다", async () => {
+  const { isLaborDisclosure, toIsoDate, disclosureViewerUrl, matchCorpCodes } = await import(
+    "../scripts/collect-dart-disclosures.mjs"
+  );
+
+  // 처음에는 파업·쟁의 같은 말을 찾았고 12개 법인 전부 0건이 나왔다. 공시 제목은 표준
+  // 서식명이라 사건을 그대로 쓰지 않는다. 실제로 잡아야 하는 것은 이 서식들이다.
+  assert.equal(isLaborDisclosure("생산중단"), true);
+  assert.equal(isLaborDisclosure("풍문또는보도에대한해명(미확정)"), true);
+  assert.equal(isLaborDisclosure("영업정지"), true);
+  // 무관한 공시는 후보에 넣지 않는다.
+  assert.equal(isLaborDisclosure("임원ㆍ주요주주특정증권등소유상황보고서"), false);
+  assert.equal(isLaborDisclosure("현금ㆍ현물배당결정"), false);
+  assert.equal(isLaborDisclosure(undefined), false);
+
+  // 접수일자는 시드의 date 형식과 맞춰야 병합할 수 있다.
+  assert.equal(toIsoDate("20260724"), "2026-07-24");
+  assert.equal(toIsoDate("2026-07-24"), null);
+  assert.match(disclosureViewerUrl("20260724000123"), /^https:\/\/dart\.fss\.or\.kr\/dsaf001\/main\.do\?rcpNo=/);
+
+  // 법인 매칭은 종목코드를 먼저 본다. 못 찾은 법인은 조용히 버리지 않고 보고한다.
+  const entries = [
+    { corpCode: "00164742", corpName: "현대자동차", stockCode: "005380" },
+    { corpCode: "00999999", corpName: "없는회사", stockCode: "" },
+  ];
+  const { matched, unmatched } = matchCorpCodes(
+    [
+      { id: "hyundai-motor", legalName: "현대자동차 주식회사" },
+      { id: "nowhere", legalName: "존재하지않는 주식회사" },
+    ],
+    entries,
+    { "hyundai-motor": "005380" },
+  );
+  assert.equal(matched.length, 1);
+  assert.equal(matched[0].corpCode, "00164742");
+  assert.deepEqual(unmatched.map((c) => c.slug), ["nowhere"]);
+});
+
 test("과거 교섭 경과는 근거를 갖춘 사건만 병합된다", async () => {
   const { mergeFlowEvents } = await import("../scripts/build-historical-seed.mjs");
   const records = [
