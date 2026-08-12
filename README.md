@@ -24,7 +24,8 @@
 - `.github/workflows/daily-bargaining-update.yml` — 일일 자동화(수집·검증·반영·배포). schedule 유실에 대비해 KST 06:34·09:34·14:34 시도
 - `.github/workflows/collection-staleness-alarm.yml` — 수집·배포가 멈추면 실패로 알림
 - `scripts/check-collection-freshness.mjs` — 실행 흔적과 공개 페이지의 신선도 확인
-- `docs/인수인계-2026-08-11.md` — **현재 상태 스냅샷·미완료 작업·자격증명 현황**
+- `docs/인수인계-2026-08-12.md` — **최신 인계서. 다른 대화에서 이어갈 때 이 파일부터 읽는다**
+- `docs/인수인계-2026-08-11.md` — 이전 스냅샷
 - `docs/data-pipeline.md` — 수집 운영과 안전 장치
 - `docs/supabase-setup.md` — Supabase 테이블·RLS·환경 변수·초기 적재 운영 기준
 - `docs/공유-접근과-검색비노출-정책.md` — 공유 URL 열람과 검색 비노출 정책
