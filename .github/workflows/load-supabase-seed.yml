@@ -1,0 +1,80 @@
+name: 공개 시드 Supabase 적재
+
+# 시드 JSON을 고쳐도 화면은 바뀌지 않는다. 화면이 하이드레이션 뒤 /api/published-facts로
+# DB를 읽어 덮어쓰기 때문이다. 사실 데이터를 정정했으면 이 워크플로로 DB까지 맞춰야
+# 공개 화면에 반영된다.
+#
+# 적재 스크립트는 자연키 기준 멱등이라 여러 번 돌려도 같은 결과가 된다. 그래도 기본값은
+# dry_run이다. 서비스 롤 키로 공개 데이터를 직접 쓰는 작업이라, 실제 쓰기는 매번
+# 사람이 명시적으로 골라서 하게 둔다.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "네트워크 없이 payload만 검증한다. 실제 적재하려면 false로 바꾼다"
+        type: boolean
+        default: true
+
+concurrency:
+  group: supabase-seed-load
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+
+      # 쓰기 전에 payload를 먼저 검증한다. 여기서 걸리면 DB를 건드리지 않는다.
+      - name: payload 검증
+        run: node scripts/load-supabase-seed.mjs --dry-run
+
+      - name: Supabase 적재
+        if: inputs.dry_run == false
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/load-supabase-seed.mjs
+
+      - name: 적재 결과 확인
+        if: inputs.dry_run == false
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          # 공개 API가 시드와 같은 값을 돌려주는지 본다. 적재가 조용히 실패하면
+          # 화면은 옛 값을 계속 보여주므로, 여기서 드러나야 한다.
+          node -e "
+            const seed = require('./data/current-2026-fact-seed.json');
+            const expected = seed.records.find(
+              (record) => record.companyId === 'posco' && record.bargainingYear === 2026,
+            );
+            console.log('시드 기준 포스코 2026:', expected.agreementType);
+          "
+          curl -sS "https://er-radar.er-radar.workers.dev/api/published-facts" \
+            | node -e "
+              let raw = '';
+              process.stdin.on('data', (chunk) => { raw += chunk; });
+              process.stdin.on('end', () => {
+                const payload = JSON.parse(raw);
+                const records = payload.records ?? payload;
+                const posco = records.find(
+                  (record) => record.companyId === 'posco' && record.bargainingYear === 2026,
+                );
+                console.log('공개 API 응답 출처:', payload.source ?? '(미표기)');
+                console.log('공개 API 포스코 2026:', posco?.agreementType);
+                if (posco?.agreementType !== 'WAGE') {
+                  console.error('::error::적재 뒤에도 공개 API가 옛 협약유형을 돌려줍니다.');
+                  process.exit(1);
+                }
+              });
+            "
