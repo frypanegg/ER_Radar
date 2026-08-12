@@ -44,3 +44,7 @@ yarn-error.log*
 
 # DART 법인 고유번호 캐시. 매번 받아올 수 있는 파생물이라 커밋하지 않는다.
 data/dart-corp-codes.json
+
+# PPTX 빌드 임시 폴더. 실행할 때마다 접미사가 바뀌는 중간 산출물이다.
+/.pptx-build-*/
+*.pptx.inspect.ndjson
