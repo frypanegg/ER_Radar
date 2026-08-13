@@ -694,7 +694,11 @@ async function dispatchDailyCollection(env: Env) {
       "x-github-api-version": "2022-11-28",
     },
     // force는 넘기지 않는다. 이미 수집한 날 다시 깨우는 판단은 워크플로 가드가 한다.
-    body: JSON.stringify({ ref }),
+    //
+    // trigger_source로 이 발사대가 깨웠다는 표시를 남긴다. 토큰이 만료되면 여기서
+    // 403이 나는데, 그날 GitHub cron이 살아 있으면 수집은 정상으로 보여 발사대가
+    // 죽은 것을 아무도 모른다. 워크플로가 이 표시를 세어 그 침묵을 깬다.
+    body: JSON.stringify({ ref, inputs: { trigger_source: "cloudflare-cron" } }),
   });
 
   // 204 No Content가 정상 응답이다.

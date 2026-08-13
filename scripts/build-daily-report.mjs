@@ -30,6 +30,13 @@ function stageLabel(stage) {
   return stage ? `${stage} ${STAGE_LABELS[stage] ?? ""}`.trim() : "없음";
 }
 
+const LAUNCHER_LABELS = {
+  "cloudflare-cron": "Cloudflare cron (06:20 KST)",
+  schedule: "GitHub cron (이중화)",
+  manual: "사람이 수동 실행",
+  workflow_dispatch: "수동 실행",
+};
+
 function formatCount(value) {
   return typeof value === "number" ? value.toLocaleString("ko-KR") : "확인 불가";
 }
@@ -88,6 +95,16 @@ export function buildReport({
   } else {
     lines.push("  감사 기록이 없습니다. 수집이 시작되지 못했을 수 있습니다.");
   }
+
+  // 발사대는 이중화라 한쪽이 죽어도 수집은 계속된다. 그래서 매일 눈에 보이게 적는다.
+  // 이 줄이 며칠째 GitHub만 가리키면 Cloudflare 쪽 토큰을 확인할 때다.
+  const launcher = heartbeat?.lastLauncher ?? null;
+  lines.push("");
+  lines.push("■ 발사대");
+  lines.push(`  오늘 깨운 쪽: ${LAUNCHER_LABELS[launcher] ?? launcher ?? "확인 불가"}`);
+  lines.push(
+    `  Cloudflare 마지막 발화: ${heartbeat?.lastCloudflareLaunchKstDate ?? "기록 없음"}`,
+  );
 
   if (appliedCount > 0) {
     // 감사 로그는 제목을 남기지 않는다. 같은 원문 URL을 가진 후보에서 제목을 찾아 붙인다.

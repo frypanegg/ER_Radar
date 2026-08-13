@@ -16,6 +16,9 @@ export function kstDate(instant) {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul" }).format(instant);
 }
 
+/** Cloudflare 발사대가 이 일수 이상 조용하면 고장으로 본다. */
+const LAUNCHER_STALE_DAYS = 3;
+
 function dayDifference(fromKstDate, toKstDate) {
   const from = Date.parse(`${fromKstDate}T00:00:00Z`);
   const to = Date.parse(`${toKstDate}T00:00:00Z`);
@@ -46,6 +49,27 @@ export function evaluateFreshness({ heartbeat, todayKstDate, liveHtml = null }) 
 
   if (heartbeat?.lastRunOutcome && heartbeat.lastRunOutcome !== "success") {
     problems.push(`마지막 실행 결과가 ${heartbeat.lastRunOutcome}입니다.`);
+  }
+
+  // 발사대가 죽어도 그날 GitHub cron이 살아 있으면 수집은 정상으로 보인다. 그러면
+  // 이중화가 한 겹 벗겨진 채로 아무도 모르고, GitHub까지 빠지는 날 한꺼번에 멈춘다.
+  // Cloudflare가 마지막으로 깨운 날짜를 따로 보는 이유다.
+  //
+  // 하루 이틀은 GitHub cron이 06:20보다 먼저 떠서 중복 방지 가드에 걸렸을 수 있다.
+  // 사흘 연속이면 우연으로 보기 어렵다. 토큰 만료가 대표적인 원인이다.
+  //
+  // 기록이 아예 없는 상태는 문제로 보지 않는다. 발사대를 붙이기 전의 흔적이 그렇고,
+  // 그걸 실패로 치면 도입 첫날부터 오경보가 난다. 한 번이라도 깨운 적이 있는데 그
+  // 뒤로 조용해진 경우만 잡는다. 기록이 없다는 사실 자체는 일일 메일에 매일 적힌다.
+  const lastLaunch = heartbeat?.lastCloudflareLaunchKstDate ?? null;
+  if (lastLaunch) {
+    const launchLag = dayDifference(lastLaunch, todayKstDate);
+    if (launchLag !== null && launchLag >= LAUNCHER_STALE_DAYS) {
+      problems.push(
+        `Cloudflare 발사대가 ${lastLaunch} 이후 워크플로를 깨우지 못했습니다(${launchLag}일). ` +
+          "토큰이 만료됐거나 권한이 바뀌었을 수 있습니다: npx wrangler tail er-radar",
+      );
+    }
   }
 
   // 공개 페이지는 배포된 번들에 실행 흔적을 담고 있다. 저장소가 최신인데 페이지가

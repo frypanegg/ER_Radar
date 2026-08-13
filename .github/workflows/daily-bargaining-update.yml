@@ -18,6 +18,10 @@ on:
         description: "같은 KST 날짜에 이미 수집했어도 다시 수집하고 재배포"
         type: boolean
         default: false
+      trigger_source:
+        description: "누가 깨웠는지. Cloudflare cron은 cloudflare-cron을 넘긴다"
+        type: string
+        default: manual
 
 concurrency:
   group: daily-bargaining-update
@@ -95,16 +99,30 @@ jobs:
           RUN_OUTCOME: ${{ job.status }}
           COLLECT_OUTCOME: ${{ steps.collect.outcome }}
           VERIFY_OUTCOME: ${{ steps.verify.outcome }}
+          TRIGGER_SOURCE: ${{ inputs.trigger_source || github.event_name }}
         run: |
           node -e "
-            const { writeFileSync } = require('node:fs');
+            const { readFileSync, writeFileSync } = require('node:fs');
+            const kstToday = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date());
+            const launcher = process.env.TRIGGER_SOURCE;
+
+            // 이전 흔적에서 발사대 기록만 이어받는다. Cloudflare가 깨운 마지막 날짜를
+            // 잃어버리면 발사대가 죽었는지 판정할 근거가 사라진다.
+            let previous = {};
+            try { previous = JSON.parse(readFileSync('data/automation-heartbeat.json', 'utf8')); } catch {}
+
             writeFileSync('data/automation-heartbeat.json', JSON.stringify({
               schemaVersion: 1,
               note: '스케줄 워크플로 자동 비활성화를 막기 위한 실행 흔적',
               lastRunAt: new Date().toISOString(),
-              lastRunKstDate: new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date()),
+              lastRunKstDate: kstToday,
               lastRunId: process.env.GITHUB_RUN_ID,
               lastRunTrigger: process.env.GITHUB_EVENT_NAME,
+              lastLauncher: launcher,
+              lastCloudflareLaunchKstDate:
+                launcher === 'cloudflare-cron'
+                  ? kstToday
+                  : previous.lastCloudflareLaunchKstDate ?? null,
               lastRunOutcome: process.env.RUN_OUTCOME,
               collectOutcome: process.env.COLLECT_OUTCOME,
               verifyOutcome: process.env.VERIFY_OUTCOME

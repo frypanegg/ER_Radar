@@ -655,6 +655,43 @@ test("새 사건이 확인되면 시드와 감사 로그가 함께 갱신된다"
   }
 });
 
+test("발사대가 조용해지면 수집이 도는 날에도 드러난다", async () => {
+  const { evaluateFreshness } = await import("../scripts/check-collection-freshness.mjs");
+
+  // 토큰이 만료되면 Cloudflare 쪽은 403으로 막히지만 GitHub cron이 그날 수집을
+  // 대신 돌린다. 수집 지표만 보면 정상이라 이중화가 벗겨진 걸 아무도 모른다.
+  const masked = evaluateFreshness({
+    heartbeat: {
+      lastRunKstDate: "2026-08-16",
+      lastRunOutcome: "success",
+      lastLauncher: "schedule",
+      lastCloudflareLaunchKstDate: "2026-08-13",
+    },
+    todayKstDate: "2026-08-16",
+  });
+  assert.equal(masked.fresh, false);
+  assert.match(masked.problems.join(" "), /발사대가 2026-08-13 이후/);
+
+  // 하루 이틀은 GitHub cron이 먼저 떠서 가드에 걸렸을 수 있다. 그건 정상으로 둔다.
+  const recent = evaluateFreshness({
+    heartbeat: {
+      lastRunKstDate: "2026-08-15",
+      lastRunOutcome: "success",
+      lastLauncher: "schedule",
+      lastCloudflareLaunchKstDate: "2026-08-14",
+    },
+    todayKstDate: "2026-08-15",
+  });
+  assert.equal(recent.fresh, true);
+
+  // 발사대를 붙이기 전의 흔적에는 기록이 없다. 도입 첫날부터 오경보를 내면 안 된다.
+  const beforeLauncher = evaluateFreshness({
+    heartbeat: { lastRunKstDate: "2026-08-13", lastRunOutcome: "success" },
+    todayKstDate: "2026-08-13",
+  });
+  assert.equal(beforeLauncher.fresh, true);
+});
+
 test("GitHub schedule이 누락돼도 Cloudflare cron이 일일 수집을 깨운다", async () => {
   const [worker, viteConfig, workflow] = await Promise.all([
     readFile(new URL("../worker/index.ts", import.meta.url), "utf8"),
