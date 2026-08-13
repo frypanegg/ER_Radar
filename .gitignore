@@ -48,3 +48,6 @@ data/dart-corp-codes.json
 # PPTX 빌드 임시 폴더. 실행할 때마다 접미사가 바뀌는 중간 산출물이다.
 /.pptx-build-*/
 *.pptx.inspect.ndjson
+
+# tsc --noEmit이 남기는 증분 빌드 캐시
+*.tsbuildinfo
