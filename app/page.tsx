@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useMemo, useState, useSyncExternalStore } from "react";
+import { type FormEvent, useCallback, useMemo, useState, useSyncExternalStore } from "react";
 import {
   Activity,
   ArrowRight,
@@ -460,17 +460,50 @@ export default function Home() {
     [selectedYear, activeRecords],
   );
 
-  const visibleCases = useMemo(
+  // 검색만 적용한 목록. 단계 버튼은 이 목록을 기준으로 동작한다. 단계 필터까지
+  // 걸린 목록을 기준으로 삼으면, 단계를 옮기는 순간 근거가 사라져 버린다.
+  const searchedCases = useMemo(
     () => {
       const normalizedSearch = searchTerm.trim().toLocaleLowerCase("ko-KR");
+      if (!normalizedSearch) return caseExamples;
       return caseExamples.filter((item) => {
-        const matchesStage = stageFocus === "ALL" || item.stage === stageFocus;
         const searchTarget = `${item.name} ${item.subtitle} ${item.yearType} ${item.agreementLabel}`.toLocaleLowerCase("ko-KR");
-        const matchesSearch = !normalizedSearch || searchTarget.includes(normalizedSearch);
-        return matchesStage && matchesSearch;
+        return searchTarget.includes(normalizedSearch);
       });
     },
-    [caseExamples, searchTerm, stageFocus],
+    [caseExamples, searchTerm],
+  );
+
+  const visibleCases = useMemo(
+    () => searchedCases.filter((item) => stageFocus === "ALL" || item.stage === stageFocus),
+    [searchedCases, stageFocus],
+  );
+
+  // 단계별 건수. 0건인 단계는 눌러도 보여 줄 것이 없으므로 버튼을 잠근다. 잠그지
+  // 않으면 목록은 "없음"인데 아래 상세는 다른 회사를 띄우는 상태가 만들어진다.
+  const caseCountByStage = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const item of searchedCases) {
+      counts.set(item.stage, (counts.get(item.stage) ?? 0) + 1);
+    }
+    return counts;
+  }, [searchedCases]);
+
+  // 단계 레일과 상단 필터 칩이 같은 상태를 조작하므로 동작도 같아야 한다. 레일만
+  // 토글이고 칩은 아니어서, 같은 단계를 두 번 눌렀을 때 한쪽은 필터가 풀리고
+  // 다른 쪽은 그대로였다. 둘 다 "선택"으로 맞추고 해제는 전체 버튼으로만 한다.
+  const focusStage = useCallback(
+    (code: string) => {
+      if ((caseCountByStage.get(code) ?? 0) === 0) return;
+      setStageFocus(code);
+      setSelectedId((currentId) => {
+        const current = searchedCases.find((item) => item.id === currentId);
+        // 이미 그 단계를 보고 있으면 선택을 흔들지 않는다.
+        if (current?.stage === code) return currentId;
+        return searchedCases.find((item) => item.stage === code)?.id ?? currentId;
+      });
+    },
+    [caseCountByStage, searchedCases],
   );
 
   const selectedCase =
@@ -727,22 +760,24 @@ export default function Home() {
               >
                 전체
               </button>
-              {stageMeta.map((stage) => (
+              {stageMeta.map((stage) => {
+                const count = caseCountByStage.get(stage.code) ?? 0;
+                return (
                 <button
                   className={stageFocus === stage.code ? "stage-filter-chip active" : "stage-filter-chip"}
                   key={stage.code}
                   type="button"
                   role="tab"
                   aria-selected={stageFocus === stage.code}
-                  onClick={() => {
-                    setStageFocus(stage.code);
-                    const next = caseExamples.find((item) => item.stage === stage.code);
-                    if (next) setSelectedId(next.id);
-                  }}
+                  disabled={count === 0}
+                  aria-label={`${stage.label} ${count}건`}
+                  title={count === 0 ? `${stage.label} 단계의 교섭현황 없음` : undefined}
+                  onClick={() => focusStage(stage.code)}
                 >
                   <small>{stage.code}</small> {stage.shortLabel}
                 </button>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -789,6 +824,10 @@ export default function Home() {
               })}
             </div>
 
+            {/* 목록이 비었는데 상세만 남으면, 목록은 "없음"이라고 하는데 아래에는
+                조건에 맞지도 않는 회사가 펼쳐진다. 검색어로 아무것도 안 걸릴 때
+                실제로 그렇게 보였다. */}
+            {visibleCases.length > 0 && (
             <article className="case-detail" aria-live="polite">
               <div className="case-detail-header">
                 <div>
@@ -961,6 +1000,7 @@ export default function Home() {
                 ))}
               </section>
             </article>
+            )}
           </div>
         </div>
       </section>
@@ -991,20 +1031,22 @@ export default function Home() {
                 const isCurrent = stage.code === selectedCase.stage;
                 const isPast = activeStageIndex > index && stage.code !== "U";
                 const isFocused = stageFocus === stage.code;
+                const count = caseCountByStage.get(stage.code) ?? 0;
                 return (
                   <li
-                    className={`stage-point ${isCurrent ? "current" : ""} ${isPast ? "contextual" : ""} ${isFocused ? "focused" : ""}`}
+                    className={`stage-point ${isCurrent ? "current" : ""} ${isPast ? "contextual" : ""} ${isFocused ? "focused" : ""} ${count === 0 ? "empty" : ""}`}
                     key={stage.code}
                   >
                     <button
                       type="button"
-                      onClick={() => {
-                        setStageFocus((current) => current === stage.code ? "ALL" : stage.code);
-                        const next = caseExamples.find((item) => item.stage === stage.code);
-                        if (next) setSelectedId(next.id);
-                      }}
+                      onClick={() => focusStage(stage.code)}
+                      disabled={count === 0}
                       aria-pressed={isFocused}
-                      aria-label={`${stage.label} 단계로 교섭현황 보기`}
+                      aria-label={
+                        count === 0
+                          ? `${stage.label} 단계의 교섭현황 없음`
+                          : `${stage.label} 단계로 교섭현황 보기 ${count}건`
+                      }
                     >
                       <span className="stage-dot" aria-hidden="true" />
                       <span className="stage-code">{stage.code}</span>

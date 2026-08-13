@@ -831,6 +831,17 @@ a:focus-visible {
   color: #15958b;
 }
 
+/* 해당 단계에 볼 교섭현황이 없으면 잠근다. 눌러도 빈 목록만 나오던 자리다. */
+.stage-filter-chip:disabled {
+  background: transparent;
+  color: #c3ccd5;
+  cursor: not-allowed;
+}
+
+.stage-filter-chip:disabled small {
+  color: #d2d9e0;
+}
+
 .case-layout {
   display: grid;
   grid-template-columns: 356px minmax(0, 1fr);
@@ -1775,10 +1786,22 @@ a:focus-visible {
   cursor: pointer;
 }
 
-.stage-point button:hover .stage-dot,
+.stage-point button:hover:not(:disabled) .stage-dot,
 .stage-point.focused .stage-dot {
   background: #47bdb3;
   box-shadow: 0 0 0 2px rgba(57, 189, 179, .2);
+}
+
+/* 그 단계에 교섭현황이 없는 경우. 단계 축 자체는 모델 설명이라 계속 보여 주되,
+   누를 수 있는 것처럼 보이지는 않게 한다. */
+.stage-point.empty button {
+  cursor: not-allowed;
+}
+
+.stage-point.empty .stage-code,
+.stage-point.empty strong,
+.stage-point.empty small {
+  color: #c3ccd5;
 }
 
 .stage-point.focused .stage-code,

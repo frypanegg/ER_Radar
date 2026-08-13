@@ -152,6 +152,35 @@ test("교섭 경과와 종결·이월 상태를 함께 보여준다", async () =
   assert.match(html, /hero-brand/);
 });
 
+test("교섭현황이 없는 단계 버튼은 눌리지 않는다", async () => {
+  // 단계 버튼을 누를 때마다 반응이 달랐다. 사례가 있는 단계는 목록이 좁혀지고 상세가
+  // 따라왔지만, 없는 단계는 목록이 0건이 되면서 상세에는 조건과 무관한 회사가 그대로
+  // 남았다. 같은 버튼처럼 생겼는데 결과가 갈리는 상태였다.
+  const html = await (await render()).text();
+  const source = await readFile(new URL("app/page.tsx", templateRoot), "utf8");
+
+  // 2026년 기준으로 S0·S2·S5·S8에는 공개 교섭현황이 없다. 잠금 표시가 실제로 나가야 한다.
+  assert.match(html, /class="[^"]*stage-point[^"]*empty[^"]*"/, "빈 단계에 empty 표시가 있어야 한다");
+  assert.match(html, /stage-filter-chip[^>]*disabled/, "빈 단계 필터 칩은 잠겨야 한다");
+
+  // 단계 레일과 상단 필터 칩은 같은 stageFocus를 조작한다. 한쪽만 토글이면 같은 단계를
+  // 두 번 눌렀을 때 한쪽은 필터가 풀리고 다른 쪽은 그대로여서 반응이 갈린다.
+  assert.match(source, /onClick=\{\(\) => focusStage\(stage\.code\)\}/);
+  assert.equal(
+    source.match(/focusStage\(stage\.code\)/g)?.length,
+    2,
+    "레일과 칩이 같은 핸들러를 써야 한다",
+  );
+  assert.doesNotMatch(
+    source,
+    /setStageFocus\(\(current\) => current === stage\.code/,
+    "한쪽만 토글로 동작하면 안 된다",
+  );
+
+  // 목록이 비었는데 상세만 남으면, 목록은 "없음"인데 아래에는 다른 회사가 펼쳐진다.
+  assert.match(source, /\{visibleCases\.length > 0 && \(\s*<article className="case-detail"/);
+});
+
 test("keeps scope and source guards in the production-facing implementation", async () => {
   const [page, layout, config, framework, pipeline, historicalSeed, currentSeed] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
