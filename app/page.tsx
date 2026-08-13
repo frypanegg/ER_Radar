@@ -412,7 +412,6 @@ function RadarMark({ compact = false }: { compact?: boolean }) {
 export default function Home() {
   const [selectedYear, setSelectedYear] = useState(defaultYear);
   const [selectedId, setSelectedId] = useState(() => getBargainingCases(defaultYear)[0]?.id ?? "");
-  const [showAllStages, setShowAllStages] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [stageFocus, setStageFocus] = useState("ALL");
   const [isAddCompanyOpen, setIsAddCompanyOpen] = useState(false);
@@ -510,8 +509,6 @@ export default function Home() {
     visibleCases.find((item) => item.id === selectedId) ?? visibleCases[0] ?? caseExamples[0];
   const selectedStage = stageByCode.get(selectedCase.stage) ?? stageMeta[0];
   const selectedIssues = selectedCase.history ? issueHighlights(selectedCase.history) : [];
-  const activeStageIndex = stageMeta.findIndex((stage) => stage.code === selectedCase.stage);
-  const displayStages = showAllStages ? stageMeta : stageMeta.slice(0, 6);
   const correctionTargets = useMemo(() => {
     const query = correctionSearch.trim().toLocaleLowerCase("ko-KR");
     return activeRecords
@@ -645,7 +642,6 @@ export default function Home() {
         <div className="container header-inner header-inner-left">
           <nav className="header-nav" aria-label="주요 섹션">
             <a href="#board">교섭현황</a>
-            <a href="#framework">단계 프레임워크</a>
             <a href="#collection">수집 원칙</a>
           </nav>
           <div className="header-admin-actions">
@@ -671,6 +667,40 @@ export default function Home() {
             </p>
             <p className="hero-footnote"><CircleAlert size={15} /> 교섭 단계 · 완료율 아닌 기사 원문으로 확인한 현재 좌표</p>
           </div>
+
+          {/* 통상적인 교섭 단계 모델. 특정 회사의 좌표가 아니라 이 화면이 쓰는 축을
+              읽는 자리라 고정 표시다. 회사별 현재 단계는 아래 목록과 상세가 맡는다.
+              별도 섹션으로 두기에는 내용이 얇아 제목 옆으로 붙였다. */}
+          <aside className="hero-stage-model" aria-labelledby="hero-stage-model-title">
+            <div className="hero-stage-model-head">
+              <p id="hero-stage-model-title">교섭 단계 모델</p>
+              <span>정렬 좌표 · 진행률 아님</span>
+            </div>
+            <ol className="hero-stage-track">
+              {stageMeta.map((stage) => (
+                <li key={stage.code}>
+                  <span className="hero-stage-dot" aria-hidden="true" />
+                  <span className="hero-stage-code">{stage.code}</span>
+                  <strong>{stage.shortLabel}</strong>
+                </li>
+              ))}
+            </ol>
+            <details className="hero-stage-glossary">
+              <summary>단계 설명 보기</summary>
+              <dl>
+                {stageMeta.map((stage) => (
+                  <div key={stage.code}>
+                    <dt><span className="hero-stage-code">{stage.code}</span> {stage.label}</dt>
+                    <dd>{stage.description}</dd>
+                  </div>
+                ))}
+              </dl>
+            </details>
+            <p className="hero-stage-note">
+              <span aria-hidden="true">≠</span>
+              예외 경로 허용 · 조정 후 재교섭, 잠정합의 부결 후 교착, 인준 뒤 서명 대기는 각각 다른 상태
+            </p>
+          </aside>
         </div>
       </section>
 
@@ -1002,80 +1032,6 @@ export default function Home() {
             </article>
             )}
           </div>
-        </div>
-      </section>
-
-      <section className="framework-section" id="framework">
-        <div className="container">
-          <div className="section-heading framework-heading">
-            <div>
-              <p className="section-kicker">상태 모델</p>
-              <h2>단계는 정렬 좌표,<br />진행률 아님</h2>
-            </div>
-            <div className="framework-note">
-              <span className="note-symbol">≠</span>
-              <p><strong>예외 경로 허용</strong> · 조정 후 재교섭, 잠정합의 부결 후 교착, 인준 뒤 서명 대기 = 각각 다른 상태</p>
-            </div>
-          </div>
-
-          <div className="stage-board" aria-label="주 단계 모델">
-            <div className="stage-board-intro">
-              <div><span className="small-label">선택 교섭현황의 현재 좌표</span><strong><StagePill stage={selectedCase.stage} /> {selectedStage.label}</strong></div>
-              <div className="axis-controls">
-                <span className="no-progress-label">단계 축으로 교섭현황 탐색 · 완료율 없음</span>
-                {stageFocus !== "ALL" && <button type="button" onClick={() => setStageFocus("ALL")}>전체 단계 보기</button>}
-              </div>
-            </div>
-            <ol className="stage-track" aria-label="주 단계로 교섭현황 좁혀 보기">
-              {stageMeta.map((stage, index) => {
-                const isCurrent = stage.code === selectedCase.stage;
-                const isPast = activeStageIndex > index && stage.code !== "U";
-                const isFocused = stageFocus === stage.code;
-                const count = caseCountByStage.get(stage.code) ?? 0;
-                return (
-                  <li
-                    className={`stage-point ${isCurrent ? "current" : ""} ${isPast ? "contextual" : ""} ${isFocused ? "focused" : ""} ${count === 0 ? "empty" : ""}`}
-                    key={stage.code}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => focusStage(stage.code)}
-                      disabled={count === 0}
-                      aria-pressed={isFocused}
-                      aria-label={
-                        count === 0
-                          ? `${stage.label} 단계의 교섭현황 없음`
-                          : `${stage.label} 단계로 교섭현황 보기 ${count}건`
-                      }
-                    >
-                      <span className="stage-dot" aria-hidden="true" />
-                      <span className="stage-code">{stage.code}</span>
-                      <strong>{stage.shortLabel}</strong>
-                      <small>{stage.code === "U" ? "근거 대기" : stage.code === "S4" ? "재교섭 가능" : stage.code === "S6" ? "부결 시 되돌아감" : ""}</small>
-                    </button>
-                  </li>
-                );
-              })}
-            </ol>
-            <div className="stage-caption">
-              <Activity size={16} />
-              <p>현재 단계 기준 = <strong>가장 최근의 고신뢰 발생 이벤트</strong> · 예정 일정은 주 단계 미확정</p>
-            </div>
-          </div>
-
-          <div className="stage-dictionary">
-            {displayStages.map((stage) => (
-              <article className="dictionary-card" key={stage.code}>
-                <span className="dictionary-code">{stage.code}</span>
-                <h3>{stage.label}</h3>
-                <p>{stage.description}</p>
-              </article>
-            ))}
-          </div>
-          <button className="show-stages-button" type="button" onClick={() => setShowAllStages((current) => !current)}>
-            {showAllStages ? "단계 요약하기" : "나머지 단계 4개 보기"}
-            <ChevronRight className={showAllStages ? "rotated" : ""} size={17} aria-hidden="true" />
-          </button>
         </div>
       </section>
 

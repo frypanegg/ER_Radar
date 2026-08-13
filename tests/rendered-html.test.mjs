@@ -152,6 +152,31 @@ test("교섭 경과와 종결·이월 상태를 함께 보여준다", async () =
   assert.match(html, /hero-brand/);
 });
 
+test("교섭 단계 모델은 제목 옆에 두고 별도 섹션으로 두지 않는다", async () => {
+  // 단계 축은 특정 회사의 좌표가 아니라 이 화면이 쓰는 축을 읽는 자리다. 그것만으로
+  // 한 섹션과 메뉴 항목을 차지할 만큼의 내용이 아니어서 제목 옆으로 옮겼다.
+  const html = await (await render()).text();
+
+  assert.match(html, /hero-stage-model/, "단계 모델이 히어로에 있어야 한다");
+  assert.match(html, /hero-stage-track/);
+
+  // 10개 단계가 순서대로 다 나와야 축으로 읽힌다.
+  for (const code of ["U", "S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"]) {
+    assert.match(html, new RegExp(`hero-stage-code">${code}<`), `${code}가 있어야 한다`);
+  }
+
+  // 설명은 기본으로 접어 둔다. 펼치지 않아도 읽히면 섹션을 옮긴 뜻이 없어진다.
+  assert.match(html, /<details class="hero-stage-glossary"(?![^>]*\bopen\b)/);
+  assert.match(html, /단계 설명 보기/);
+
+  // 옛 섹션과 메뉴 항목은 남지 않아야 한다.
+  assert.doesNotMatch(html, /framework-section/);
+  assert.doesNotMatch(html, /id="framework"/);
+  assert.doesNotMatch(html, /단계 프레임워크/);
+  assert.doesNotMatch(html, /stage-dictionary/);
+  assert.doesNotMatch(html, /단계는 정렬 좌표/);
+});
+
 test("교섭현황이 없는 단계 버튼은 눌리지 않는다", async () => {
   // 단계 버튼을 누를 때마다 반응이 달랐다. 사례가 있는 단계는 목록이 좁혀지고 상세가
   // 따라왔지만, 없는 단계는 목록이 0건이 되면서 상세에는 조건과 무관한 회사가 그대로
@@ -160,21 +185,20 @@ test("교섭현황이 없는 단계 버튼은 눌리지 않는다", async () => 
   const source = await readFile(new URL("app/page.tsx", templateRoot), "utf8");
 
   // 2026년 기준으로 S0·S2·S5·S8에는 공개 교섭현황이 없다. 잠금 표시가 실제로 나가야 한다.
-  assert.match(html, /class="[^"]*stage-point[^"]*empty[^"]*"/, "빈 단계에 empty 표시가 있어야 한다");
   assert.match(html, /stage-filter-chip[^>]*disabled/, "빈 단계 필터 칩은 잠겨야 한다");
 
-  // 단계 레일과 상단 필터 칩은 같은 stageFocus를 조작한다. 한쪽만 토글이면 같은 단계를
-  // 두 번 눌렀을 때 한쪽은 필터가 풀리고 다른 쪽은 그대로여서 반응이 갈린다.
+  // 단계를 고르는 입구는 목록 위 필터 칩 하나로 모았다. 같은 stageFocus를 조작하는
+  // 컨트롤이 둘이면 한쪽만 토글이 되어 같은 단계를 두 번 눌렀을 때 반응이 갈린다.
   assert.match(source, /onClick=\{\(\) => focusStage\(stage\.code\)\}/);
   assert.equal(
     source.match(/focusStage\(stage\.code\)/g)?.length,
-    2,
-    "레일과 칩이 같은 핸들러를 써야 한다",
+    1,
+    "단계를 고르는 컨트롤은 하나여야 한다",
   );
   assert.doesNotMatch(
     source,
     /setStageFocus\(\(current\) => current === stage\.code/,
-    "한쪽만 토글로 동작하면 안 된다",
+    "토글로 동작하면 안 된다",
   );
 
   // 목록이 비었는데 상세만 남으면, 목록은 "없음"인데 아래에는 다른 회사가 펼쳐진다.
