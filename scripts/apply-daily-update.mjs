@@ -194,6 +194,13 @@ function applyArticleToRecord(record, article, eventDate) {
     ...record,
     stage: article.classification.statusCode,
     eventDate,
+    // 협약유형을 정한 근거는 덮어쓰기 전 문장에 있다. 아래에서 title·factSummary를
+    // 새 기사로 갈아치우면 그 근거가 사라지고, "임금협상" 레코드에 "교섭 재개" 같은
+    // 진행 제목만 남아 유형이 근거 없는 상태가 된다. 처음 자동 갱신되는 순간 원래
+    // 문장을 고정해 두고, 그 뒤로는 건드리지 않는다.
+    agreementTypeEvidence:
+      record.agreementTypeEvidence ??
+      `${record.title ?? ""} ${record.factSummary ?? ""}`.trim(),
     title: article.title,
     factSummary: `${article.media} 보도 제목 기준 ${
       article.classification.statusLabel ?? article.classification.statusName

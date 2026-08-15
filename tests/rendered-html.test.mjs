@@ -2,6 +2,9 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { classifyArticle, validateConfiguration } from "../scripts/collect-news.mjs";
+import { resolveCurrentAsOf } from "../lib/collection-freshness.mjs";
+import automationHeartbeat from "../data/automation-heartbeat.json" with { type: "json" };
+import currentSeed from "../data/current-2026-fact-seed.json" with { type: "json" };
 
 const templateRoot = new URL("../", import.meta.url);
 
@@ -57,7 +60,15 @@ test("server-renders the collective-bargaining framework dashboard", async () =>
   assert.match(html, /교섭 경과/);
   assert.match(html, /데이터 수정/);
   assert.match(html, /2026년 현재/);
-  assert.match(html, /2026-08-10.*기준 현황/);
+
+  // 기준일을 문자열로 박아 두면 사실이 실제로 반영되는 날 이 테스트가 깨진다.
+  // 2026-08-15에 그 일이 났고, 회귀 검증 실패로 그날 수집분 전체가 되돌려졌다.
+  // 화면과 같은 함수로 기대값을 계산해 규칙이 어긋날 때만 실패하게 한다.
+  const expectedAsOf = resolveCurrentAsOf({
+    seedAsOf: currentSeed.asOf,
+    heartbeat: automationHeartbeat,
+  });
+  assert.match(html, new RegExp(`${expectedAsOf}.*기준 현황`));
   assert.match(html, /radar-mark/);
   assert.match(html, /삼성전자 주식회사/);
   assert.match(html, /HD현대중공업 주식회사/);

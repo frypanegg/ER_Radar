@@ -22,6 +22,7 @@ import framework from "../data/negotiation-framework.json";
 import historicalSeed from "../data/historical-fact-seed.json";
 import currentSeed from "../data/current-2026-fact-seed.json";
 import automationHeartbeat from "../data/automation-heartbeat.json";
+import { describeCollectionLag, resolveCurrentAsOf } from "../lib/collection-freshness.mjs";
 import {
   compareEventsAscending,
   deriveCaseHistory,
@@ -115,16 +116,13 @@ const currentRecords = currentSeed.records as HistoricalRecord[];
 const bargainingRecords = [...historicalRecords, ...currentRecords];
 const trackingCompanies = historicalSeed.trackingCompanies as TrackingCompany[];
 const lastCollectionKstDate = automationHeartbeat.lastRunKstDate ?? null;
-const lastCollectionOutcome = automationHeartbeat.lastRunOutcome ?? null;
 
-// 시드의 기준일은 사실을 마지막으로 검증한 날이고, 수집 흔적은 마지막으로 확인한 날이다.
-// 둘을 나란히 쓰면 한 화면에 다른 날짜가 두 개 보인다. 수집이 성공한 날은 그날까지 사실이
-// 확인된 것이므로, 수집일이 더 늦으면 그것을 기준일로 쓴다.
-const seedAsOf = currentSeed.asOf ?? "2026-08-10";
-const currentAsOf =
-  lastCollectionOutcome === "success" && lastCollectionKstDate && lastCollectionKstDate > seedAsOf
-    ? lastCollectionKstDate
-    : seedAsOf;
+// 기준일 규칙과 지연 문구는 lib/collection-freshness.mjs가 갖는다. 회귀 테스트가
+// 화면과 같은 함수를 부르게 해서, 날짜가 바뀔 때 테스트만 따로 깨지지 않게 한다.
+const currentAsOf = resolveCurrentAsOf({
+  seedAsOf: currentSeed.asOf,
+  heartbeat: automationHeartbeat,
+});
 const currentYear = Number(currentAsOf.slice(0, 4));
 const availableYears = Array.from(
   new Set([...bargainingRecords.map((record) => record.bargainingYear), currentYear]),
@@ -150,24 +148,6 @@ const emptySubscribe = () => () => {};
 
 function readTodayKstDate() {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul" }).format(new Date());
-}
-
-// 수집이 멈춰도 화면이 그대로면 사람은 멈춘 걸 알 수 없다. 마지막 수집일을 보는
-// 시점의 KST 날짜와 비교해 지연을 드러낸다.
-function describeCollectionLag(lastKstDate: string | null, todayKstDate: string) {
-  if (!lastKstDate) return { tone: "stale" as const, text: "수집 기록 없음" };
-
-  const lagDays = Math.round(
-    (Date.parse(`${todayKstDate}T00:00:00Z`) - Date.parse(`${lastKstDate}T00:00:00Z`)) / 86_400_000,
-  );
-
-  if (Number.isNaN(lagDays)) return { tone: "stale" as const, text: "수집 기록 확인 불가" };
-  if (lastCollectionOutcome && lastCollectionOutcome !== "success") {
-    return { tone: "stale" as const, text: `마지막 수집 실패 (${lastKstDate})` };
-  }
-  if (lagDays <= 0) return { tone: "fresh" as const, text: `오늘 수집 완료 (${lastKstDate} KST)` };
-  if (lagDays === 1) return { tone: "warn" as const, text: `마지막 수집 ${lastKstDate} · 1일 지연` };
-  return { tone: "stale" as const, text: `마지막 수집 ${lastKstDate} · ${lagDays}일 지연` };
 }
 
 function getYearLabel(year: number) {
@@ -441,7 +421,8 @@ export default function Home() {
   const [isSubmittingCorrection, setIsSubmittingCorrection] = useState(false);
   const todayKstDate = useSyncExternalStore(emptySubscribe, readTodayKstDate, () => null);
   const collectionLag = useMemo(
-    () => (todayKstDate ? describeCollectionLag(lastCollectionKstDate, todayKstDate) : null),
+    () =>
+      todayKstDate ? describeCollectionLag({ heartbeat: automationHeartbeat, todayKstDate }) : null,
     [todayKstDate],
   );
   // DB 공개 행이 도착하면 그것으로 갈아탄다. 서버 스냅샷은 시드이므로 하이드레이션이 어긋나지 않는다.
