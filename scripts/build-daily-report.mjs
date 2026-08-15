@@ -81,15 +81,35 @@ export function buildReport({
     ? `[노사교섭 레이더] 수집 실패 · ${todayKstDate}`
     : `[노사교섭 레이더] ${todayKstDate} 수집 결과 · 반영 ${appliedCount}건`;
 
+  // "수집 또는 검증이 실패" 한 줄로는 사람이 어디를 봐야 할지 알 수 없다. 기사를 못
+  // 모은 날과, 다 모아 놓고 회귀 검증에 막힌 날은 손댈 곳이 다르다. 실행 흔적이
+  // 두 단계 결과를 따로 갖고 있으므로 그대로 구분해 적는다.
+  const collectBroke = heartbeat?.collectOutcome && heartbeat.collectOutcome !== "success";
+  const verifyBroke = heartbeat?.verifyOutcome && heartbeat.verifyOutcome !== "success";
+  const blockedByVerify = failed && !collectBroke && verifyBroke;
+
   if (failed) {
-    lines.push("수집 또는 회귀 검증이 실패했습니다. 공개 데이터는 바뀌지 않았습니다.");
+    if (collectBroke) {
+      lines.push("기사 수집 단계가 실패했습니다. 공개 데이터는 바뀌지 않았습니다.");
+    } else if (blockedByVerify) {
+      lines.push(
+        "기사 수집은 끝났지만 회귀 검증이 실패해, 오늘 반영하려던 사실을 되돌렸습니다.",
+      );
+      lines.push("공개 데이터는 직전 상태 그대로입니다. 아래 '되돌린 교섭'과 실행 로그를 보세요.");
+    } else {
+      lines.push("수집 또는 회귀 검증이 실패했습니다. 공개 데이터는 바뀌지 않았습니다.");
+    }
     lines.push("");
   }
 
   lines.push(`■ 오늘 요약 (${todayKstDate} KST)`);
   if (run) {
     lines.push(`  검토한 기사: ${formatCount(run.consideredArticles)}건`);
-    lines.push(`  공개 시드 반영: ${formatCount(run.appliedCount)}건`);
+    lines.push(
+      blockedByVerify
+        ? `  반영하려다 되돌린 사실: ${formatCount(run.appliedCount)}건 (공개 시드 반영 0건)`
+        : `  공개 시드 반영: ${formatCount(run.appliedCount)}건`,
+    );
     lines.push(`  보류: ${formatCount(run.skippedCount)}건`);
     lines.push(`  주 수집원: ${run.primarySource ?? "확인 불가"}`);
   } else {
@@ -115,7 +135,7 @@ export function buildReport({
     );
 
     lines.push("");
-    lines.push("■ 상태가 바뀐 교섭");
+    lines.push(blockedByVerify ? "■ 검증에 막혀 되돌린 교섭" : "■ 상태가 바뀐 교섭");
     for (const item of run.applied) {
       lines.push(`  · ${item.companyLegalName ?? item.companyId ?? "법인 미확인"}`);
       lines.push(`    단계: ${stageLabel(item.previousStage)} → ${stageLabel(item.nextStage)}`);
@@ -304,6 +324,9 @@ async function main() {
   const runUrl = argValue("--run-url");
   const siteUrl = argValue("--site-url");
   const problems = argValue("--problems", "");
+  // 되돌린 날에는 저장소 파일이 어제 것이라, 워크플로가 떠 둔 사본을 대신 받는다.
+  const auditPath = argValue("--audit", "data/daily-update-audit.json");
+  const candidatesPath = argValue("--candidates", "public/data/news-candidates.json");
 
   const todayKstDate = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul" }).format(new Date());
 
@@ -316,8 +339,8 @@ async function main() {
 
   const { subject, text } = buildReport({
     mode,
-    audit: await readJsonIfPresent("data/daily-update-audit.json"),
-    batch: await readJsonIfPresent("public/data/news-candidates.json"),
+    audit: await readJsonIfPresent(auditPath),
+    batch: await readJsonIfPresent(candidatesPath),
     heartbeat: await readJsonIfPresent("data/automation-heartbeat.json"),
     todayKstDate,
     runUrl,

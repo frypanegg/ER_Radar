@@ -139,6 +139,14 @@ jobs:
           # 회귀 검증을 통과하지 못했으면 사실 데이터는 되돌리고 실행 흔적만 남긴다.
           if [ "${{ steps.verify.outcome }}" != "success" ]; then
             echo "::warning::회귀 검증을 통과하지 못해 사실 데이터를 반영하지 않습니다. 실행 흔적만 기록합니다."
+
+            # 되돌리기 전에 오늘 실제로 무엇을 반영하려 했는지 따로 떠 둔다. 이게 없으면
+            # 메일이 되돌려진 어제 파일을 읽어 "반영 0건"만 적고, 막힌 사실이 무엇이었는지
+            # 아무 데도 남지 않는다. 2026-08-15에 현대자동차 S4→S3이 그렇게 사라졌다.
+            mkdir -p tmp
+            cp data/daily-update-audit.json tmp/blocked-audit.json 2>/dev/null || true
+            cp public/data/news-candidates.json tmp/blocked-candidates.json 2>/dev/null || true
+
             git checkout -- \
               public/data/news-candidates.json \
               data/current-2026-fact-seed.json \
@@ -169,10 +177,26 @@ jobs:
           git pull --rebase --autostash origin main
           git push
 
+      # 검증이 깨진 날에도 화면은 "n일 지연"만 보여 준다. 배포가 검증 성공에만 걸려
+      # 있어서 그날의 실행 흔적이 공개 페이지에 닿지 못하기 때문이다. 사람 눈에는
+      # 수집이 아예 안 돈 날과 구분되지 않고, 실제로 2026-08-15에 그렇게 읽혔다.
+      #
+      # 되돌린 상태로 검증을 한 번 더 돌린다. 여기서 통과하면 검증을 깨뜨린 것은
+      # 코드가 아니라 그날 수집한 데이터이고, 되돌린 상태는 직전 배포와 같은 사실이므로
+      # 내보내도 공개 데이터가 바뀌지 않는다. 여기서도 실패하면 코드가 깨진 것이니
+      # 배포하지 않는다 — 그게 회귀 검증을 배포 앞에 둔 이유다.
+      - name: 되돌린 상태 재검증
+        id: verify_reverted
+        if: always() && steps.guard.outputs.needed == 'true' && steps.verify.outcome != 'success'
+        continue-on-error: true
+        run: npm test
+
       # 배포는 Cloudflare Workers(워커 이름 er-radar)로 나간다. 자격증명이 없는
       # 복제·포크에서도 데이터 갱신은 계속되도록 토큰이 없으면 경고만 남기고 넘어간다.
       - name: 배포
-        if: steps.guard.outputs.needed == 'true' && steps.verify.outcome == 'success'
+        if: >-
+          always() && steps.guard.outputs.needed == 'true' &&
+          (steps.verify.outcome == 'success' || steps.verify_reverted.outcome == 'success')
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -217,9 +241,20 @@ jobs:
             mode=failure
           fi
 
+          # 되돌린 날은 저장소 파일이 어제 것이다. 커밋 단계가 떠 둔 사본이 있으면
+          # 그걸 읽어서, 막힌 사실이 무엇이었는지를 메일에 그대로 적는다.
+          audit=data/daily-update-audit.json
+          candidates=public/data/news-candidates.json
+          if [ -f tmp/blocked-audit.json ]; then
+            audit=tmp/blocked-audit.json
+            candidates=tmp/blocked-candidates.json
+          fi
+
           node scripts/build-daily-report.mjs \
             --mode "$mode" \
             --out tmp/daily-report.eml \
+            --audit "$audit" \
+            --candidates "$candidates" \
             --from "$MAIL_SMTP_USER" \
             --to "$MAIL_TO" \
             --run-url "$RUN_URL" \

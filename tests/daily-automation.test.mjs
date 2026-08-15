@@ -898,13 +898,15 @@ test("회귀 검증에 실패하면 사실 데이터를 커밋하지 않는다",
   // 검증 실패 시 사실 파일을 되돌린 뒤 실행 흔적만 남긴다.
   assert.match(
     workflow,
-    /steps\.verify\.outcome[^\n]*!=[^\n]*success[\s\S]{0,400}git checkout --/,
+    /steps\.verify\.outcome[^\n]*!=[^\n]*success[\s\S]{0,800}git checkout --/,
   );
-  // 배포는 회귀 검증 통과가 전제다.
+  // 배포는 여전히 검증 통과가 전제다. 다만 그날의 데이터가 검증을 깨뜨렸을 때는,
+  // 되돌린 상태를 다시 검증해 통과한 경우에 한해 실행 흔적만 내보낸다.
   assert.match(
     workflow,
-    /steps\.guard\.outputs\.needed == 'true' && steps\.verify\.outcome == 'success'/,
+    /steps\.verify\.outcome == 'success' \|\| steps\.verify_reverted\.outcome == 'success'/,
   );
+  assert.doesNotMatch(workflow, /배포\n\s*if:[^\n]*\n[^\n]*steps\.verify\.outcome != 'success'/);
   // 화면이 마지막 수집 시각을 표시하므로, 흔적을 기록한 뒤 다시 빌드해서 배포한다.
   assert.match(workflow, /npm run build\s*\n\s*npx wrangler deploy/);
   // 배포 자격증명이 없는 복제·포크에서는 데이터만 갱신하고 배포를 건너뛴다.
@@ -949,4 +951,184 @@ test("실행 흔적 신선도 판정이 지연·실패·배포 중단을 구분�
 
   // 한 번도 실행되지 않은 상태도 실패로 본다.
   assert.equal(evaluateFreshness({ heartbeat: {}, todayKstDate: "2026-08-11" }).fresh, false);
+});
+
+test("일일 갱신이 협약유형 근거를 지우지 않는다", async () => {
+  const { applyArticleToRecord } = await import("../scripts/apply-daily-update.mjs");
+  const { assessAgreementTypeEvidence } = await import("../scripts/build-current-2026-seed.mjs");
+
+  // 2026-08-15 실제 사례. 임금협상 레코드에 진행 기사 제목이 붙으면서 "임금" 근거가
+  // 사라졌고, 그 한 건이 협약유형 검증을 깨뜨려 그날 수집분 전체가 되돌려졌다.
+  const record = {
+    companyId: "hyundai-motor",
+    bargainingYear: 2026,
+    agreementType: "WAGE",
+    stage: "S4",
+    eventDate: "2026-07-29",
+    title: "현대자동차 2026년 임금협상 3차 부분파업",
+    factSummary: "임금협상 쟁점이 풀리지 않은 가운데 부분파업에 들어갔다고 보도됐다.",
+    flowEvents: [],
+  };
+  assert.equal(assessAgreementTypeEvidence(record).supported, true);
+
+  const article = {
+    title: "현대차 노사, 한 달여 만에 교섭 재개…노조 18일 파업 일정 유보",
+    media: "인더스트리뉴스",
+    originalUrl: "https://industrynews.co.kr/news/articleView.html?idxno=84506",
+    classification: {
+      statusCode: "S3",
+      statusLabel: "본교섭 진행",
+      confidence: 0.7,
+      annotations: { sourceTier: "C" },
+    },
+  };
+
+  const updated = applyArticleToRecord(record, article, "2026-08-14");
+  // 제목은 새 기사로 갈아탄다. 그래도 유형을 정한 문장은 남아 있어야 한다.
+  assert.equal(updated.title, article.title);
+  assert.doesNotMatch(updated.title, /임금/);
+  assert.match(updated.agreementTypeEvidence, /임금협상/);
+  assert.equal(assessAgreementTypeEvidence(updated).supported, true);
+
+  // 두 번째 갱신에서도 처음 고정한 근거를 덮어쓰지 않는다.
+  const again = applyArticleToRecord(
+    updated,
+    { ...article, title: "현대차 노사 교섭 이어가" },
+    "2026-08-15",
+  );
+  assert.equal(again.agreementTypeEvidence, updated.agreementTypeEvidence);
+  assert.equal(assessAgreementTypeEvidence(again).supported, true);
+});
+
+test("기준일과 수집 상태 문구를 화면·테스트가 같은 규칙으로 읽는다", async () => {
+  const { resolveCurrentAsOf, describeCollectionLag } = await import(
+    "../lib/collection-freshness.mjs"
+  );
+
+  // 수집이 성공한 날은 그날까지 사실이 확인된 것이므로 기준일이 올라간다.
+  assert.equal(
+    resolveCurrentAsOf({
+      seedAsOf: "2026-08-10",
+      heartbeat: { lastRunKstDate: "2026-08-14", lastRunOutcome: "success" },
+    }),
+    "2026-08-14",
+  );
+
+  // 검증에 막혀 되돌린 날은 공개 사실이 그대로이므로 기준일도 그대로다.
+  assert.equal(
+    resolveCurrentAsOf({
+      seedAsOf: "2026-08-10",
+      heartbeat: { lastRunKstDate: "2026-08-15", lastRunOutcome: "failure" },
+    }),
+    "2026-08-10",
+  );
+
+  assert.equal(
+    describeCollectionLag({
+      heartbeat: { lastRunKstDate: "2026-08-15", lastRunOutcome: "success" },
+      todayKstDate: "2026-08-15",
+    }).tone,
+    "fresh",
+  );
+
+  const lagging = describeCollectionLag({
+    heartbeat: { lastRunKstDate: "2026-08-14", lastRunOutcome: "success" },
+    todayKstDate: "2026-08-15",
+  });
+  assert.equal(lagging.tone, "warn");
+  assert.match(lagging.text, /1일 지연/);
+
+  // 기사를 다 모으고 회귀 검증에 막힌 날을 "지연"으로 읽으면 사람이 수집기를 뒤진다.
+  // 봐야 하는 것은 그날 되돌린 사실이므로 문구에서 구분한다.
+  const blocked = describeCollectionLag({
+    heartbeat: {
+      lastRunKstDate: "2026-08-15",
+      lastRunOutcome: "failure",
+      collectOutcome: "success",
+      verifyOutcome: "failure",
+    },
+    todayKstDate: "2026-08-15",
+  });
+  assert.equal(blocked.tone, "stale");
+  assert.match(blocked.text, /수집됨 · 검증에 막혀 미반영/);
+  assert.doesNotMatch(blocked.text, /지연/);
+
+  // 기사 자체를 못 모은 날은 다른 문구여야 한다.
+  const collectFailed = describeCollectionLag({
+    heartbeat: {
+      lastRunKstDate: "2026-08-15",
+      lastRunOutcome: "failure",
+      collectOutcome: "failure",
+    },
+    todayKstDate: "2026-08-15",
+  });
+  assert.match(collectFailed.text, /마지막 수집 실패/);
+});
+
+test("검증에 막힌 날도 실행 흔적이 공개 페이지까지 간다", async () => {
+  const workflow = await readFile(
+    new URL("../.github/workflows/daily-bargaining-update.yml", import.meta.url),
+    "utf8",
+  );
+
+  // 되돌린 상태로 다시 검증한다. 통과하면 깨뜨린 것은 코드가 아니라 그날의 데이터다.
+  assert.match(workflow, /되돌린 상태 재검증[\s\S]{0,400}continue-on-error: true[\s\S]{0,80}npm test/);
+  // 그때만 배포가 나간다. 코드가 깨진 날은 여전히 배포하지 않는다.
+  assert.match(
+    workflow,
+    /steps\.verify\.outcome == 'success' \|\| steps\.verify_reverted\.outcome == 'success'/,
+  );
+  // 메일이 되돌려진 어제 파일을 읽지 않도록, 되돌리기 전에 사본을 떠 둔다.
+  assert.match(workflow, /cp data\/daily-update-audit\.json tmp\/blocked-audit\.json/);
+  assert.match(workflow, /--audit "\$audit"/);
+});
+
+test("검증에 막힌 날 메일이 무엇이 되돌려졌는지 말한다", async () => {
+  const { buildReport } = await import("../scripts/build-daily-report.mjs");
+
+  const report = buildReport({
+    mode: "failure",
+    todayKstDate: "2026-08-15",
+    heartbeat: {
+      lastRunKstDate: "2026-08-15",
+      lastRunOutcome: "failure",
+      collectOutcome: "success",
+      verifyOutcome: "failure",
+    },
+    audit: {
+      runs: [
+        {
+          consideredArticles: 323,
+          appliedCount: 1,
+          skippedCount: 317,
+          primarySource: "google",
+          applied: [
+            {
+              companyLegalName: "현대자동차 주식회사",
+              previousStage: "S4",
+              nextStage: "S3",
+              previousEventDate: "2026-07-29",
+              nextEventDate: "2026-08-14",
+              sourceName: "인더스트리뉴스",
+              sourceUrl: "https://industrynews.co.kr/news/articleView.html?idxno=84506",
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  // 수집이 실패한 것으로 읽히면 안 된다.
+  assert.match(report.text, /기사 수집은 끝났지만 회귀 검증이 실패/);
+  assert.match(report.text, /되돌린 사실: 1건 \(공개 시드 반영 0건\)/);
+  assert.match(report.text, /■ 검증에 막혀 되돌린 교섭/);
+  assert.match(report.text, /현대자동차 주식회사/);
+
+  // 수집 단계가 깨진 날은 다른 문장이어야 한다.
+  const collectFailed = buildReport({
+    mode: "failure",
+    todayKstDate: "2026-08-15",
+    heartbeat: { lastRunKstDate: "2026-08-15", lastRunOutcome: "failure", collectOutcome: "failure" },
+  });
+  assert.match(collectFailed.text, /기사 수집 단계가 실패/);
 });

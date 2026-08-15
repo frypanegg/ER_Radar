@@ -62,9 +62,18 @@ function validDate(value) {
  * 못한다.
  *
  * 판정은 제목·요약 텍스트만 본다. 새 사실을 만들지 않고, 근거가 없으면 없다고 말한다.
+ *
+ * 보는 텍스트는 "유형을 정한 근거"이지 "가장 최근 기사"가 아니다. 협약유형은 그 해
+ * 교섭 라운드의 성격이라 한 번 정해지면 바뀌지 않는데, 레코드의 title·factSummary는
+ * 일일 수집이 새 기사로 매일 덮어쓴다. 진행 기사 제목은 유형을 다시 말해 주지 않는다.
+ * 실제로 2026-08-15에 현대자동차 임금협상 레코드가 "현대차 노사, 한 달여 만에 교섭
+ * 재개"라는 제목으로 갱신되면서 임금 근거가 사라졌고, 그 하나 때문에 그날 수집분
+ * 전체가 되돌려졌다. 그래서 유형을 정한 시점의 문장을 agreementTypeEvidence에 고정해
+ * 두고, 있으면 그것을 본다. 없는 레코드(사람이 쓴 기존 시드)는 제목·요약으로 본다.
  */
 export function assessAgreementTypeEvidence(record) {
-  const evidence = `${record.title ?? ""} ${record.factSummary ?? ""}`;
+  const evidence =
+    record.agreementTypeEvidence ?? `${record.title ?? ""} ${record.factSummary ?? ""}`;
   const hasWageTerm = /임금\s*(?:협약|협상|교섭|인상)/.test(evidence);
   const hasCollectiveTerm = /단체\s*(?:협약|교섭)/.test(evidence);
   const hasIntegrated =
@@ -109,6 +118,9 @@ export function validateCurrentRecord(record, index, companyIds) {
   assert(record.directEmployerId === record.companyId, `records[${index}]의 직접사용자 법인 ID가 대상 법인과 일치해야 합니다.`);
   assert(record.coveredWorkerRelation === "DIRECT", `records[${index}]의 적용 근로자 관계는 DIRECT여야 합니다.`);
   assert(typeof record.directEmploymentEvidence === "string" && record.directEmploymentEvidence.trim().length >= 12, `records[${index}]에는 직접고용 범위 근거가 필요합니다.`);
+  // 고정된 협약유형 근거는 선택 항목이지만, 있다면 빈 문자열이어서는 안 된다.
+  // 빈 값이 들어가면 제목·요약으로 되돌아가지 않고 근거가 없는 것으로 판정된다.
+  assert(record.agreementTypeEvidence === undefined || (typeof record.agreementTypeEvidence === "string" && record.agreementTypeEvidence.trim()), `records[${index}]의 agreementTypeEvidence는 비어 있지 않은 문자열이어야 합니다.`);
   assert(Number.isFinite(record.confidence) && record.confidence >= 0 && record.confidence <= 1, `records[${index}]의 confidence는 0~1이어야 합니다.`);
   assert(Array.isArray(record.flowEvents) && record.flowEvents.length > 0, `records[${index}]에는 하나 이상의 교섭 경과가 필요합니다.`);
 
