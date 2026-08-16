@@ -9,14 +9,13 @@
     "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext dev",
     "build": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext build",
     "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",
-    "test": "npm run build && node --test \"tests/**/*.test.mjs\"",
+    "test": "npm run build && npx tsc --noEmit && node --test \"tests/**/*.test.mjs\"",
     "collect": "node scripts/collect-news.mjs --source auto",
     "apply-update": "node scripts/apply-daily-update.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
-    "db:generate": "drizzle-kit generate"
+    "types": "npm run build && wrangler types --config dist/server/wrangler.json"
   },
   "dependencies": {
-    "drizzle-orm": "0.45.2",
     "fast-xml-parser": "^5.10.1",
     "lucide-react": "^1.31.0",
     "react": "19.2.6",
@@ -33,7 +32,6 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
     "@vitejs/plugin-rsc": "0.5.26",
-    "drizzle-kit": "0.31.10",
     "eslint": "9.39.4",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.5",

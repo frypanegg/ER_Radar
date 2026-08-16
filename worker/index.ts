@@ -1,10 +1,12 @@
-/** Cloudflare Worker entry point for the vinext-starter template. */
+/** 노사교섭 레이더의 Cloudflare Worker 진입점. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
 
+// 실제 배포에 붙어 있는 바인딩은 ASSETS 하나뿐이다. 나머지는 wrangler secret으로
+// 넣는 값이라 없을 수 있다. 예전에는 여기에 D1 바인딩(DB)도 선언돼 있었지만
+// 배포 설정에 D1이 없어서 런타임에는 존재한 적이 없다. 선언을 지웠다.
 interface Env {
   ASSETS: Fetcher;
-  DB: D1Database;
   SUPABASE_URL?: string;
   SUPABASE_SERVICE_ROLE_KEY?: string;
   DASHBOARD_ADMIN_CODE?: string;

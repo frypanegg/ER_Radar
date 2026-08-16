@@ -14,6 +14,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // wrangler가 만드는 런타임 타입 선언. 우리가 고칠 파일이 아니고, 안에 든
+    // eslint-disable 주석 때문에 "쓰이지 않은 지시문" 경고만 쌓인다.
+    "worker-configuration.d.ts",
   ]),
   eslint.configs.recommended,
   ...tseslint.configs.recommended,

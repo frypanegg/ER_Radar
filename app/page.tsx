@@ -183,14 +183,40 @@ let factSnapshot: FactSource = { source: "seed", facts: null };
 let factFetchStarted = false;
 const factListeners = new Set<() => void>();
 
+/**
+ * 네트워크에서 온 JSON은 모양이 보장되지 않는다. 화면이 통째로 갈아타는 데이터라
+ * 최소한 records가 배열인지까지는 확인하고 받는다. 여기서 통과하지 못하면 정적
+ * 시드로 계속 그린다.
+ */
+function readFactsPayload(payload: unknown): FactSource | null {
+  if (typeof payload !== "object" || payload === null) return null;
+  const { source, records } = payload as { source?: unknown; records?: unknown };
+  if (!Array.isArray(records) || records.length === 0) return null;
+  return {
+    source: typeof source === "string" ? source : "database",
+    facts: records as PublishedFact[],
+  };
+}
+
+/**
+ * 접수 API가 돌려주는 안내 문구를 꺼낸다. 사용자에게 그대로 띄우는 값이므로
+ * 문자열일 때만 쓰고, 아니면 호출부가 가진 기본 문구로 넘긴다.
+ */
+function readMessageField(payload: unknown, field: "error" | "message") {
+  if (typeof payload !== "object" || payload === null) return null;
+  const value = (payload as Record<string, unknown>)[field];
+  return typeof value === "string" && value.trim() ? value : null;
+}
+
 function loadPublishedFacts() {
   if (factFetchStarted) return;
   factFetchStarted = true;
   fetch("/api/published-facts")
     .then((response) => (response.ok ? response.json() : null))
     .then((payload) => {
-      if (!payload || !Array.isArray(payload.records) || payload.records.length === 0) return;
-      factSnapshot = { source: payload.source ?? "database", facts: payload.records };
+      const next = readFactsPayload(payload);
+      if (!next) return;
+      factSnapshot = next;
       for (const listener of factListeners) listener();
     })
     .catch(() => {
@@ -556,12 +582,16 @@ export default function Home() {
           rationale: companyRequest.rationale,
         }),
       });
-      const result = await response.json().catch(() => ({}));
+      const result: unknown = await response.json().catch(() => ({}));
       if (!response.ok) {
-        setCompanyRequestMessage(result.error ?? "요청 접수 실패 · 입력값 확인 필요");
+        setCompanyRequestMessage(
+          readMessageField(result, "error") ?? "요청 접수 실패 · 입력값 확인 필요",
+        );
         return;
       }
-      setCompanyRequestMessage(result.message ?? "추적 기업 추가 요청 접수 완료");
+      setCompanyRequestMessage(
+        readMessageField(result, "message") ?? "추적 기업 추가 요청 접수 완료",
+      );
       setCompanyRequest((current) => ({ ...current, companyLegalName: "", industry: "", websiteUrl: "", rationale: "", adminCode: "" }));
     } catch {
       setCompanyRequestMessage("네트워크 오류 발생 · 잠시 후 재시도");
@@ -614,12 +644,14 @@ export default function Home() {
           editorName: correction.editorName,
         }),
       });
-      const result = await response.json().catch(() => ({}));
+      const result: unknown = await response.json().catch(() => ({}));
       if (!response.ok) {
-        setCorrectionMessage(result.error ?? "수정 요청 접수 실패 · 입력값 확인 필요");
+        setCorrectionMessage(
+          readMessageField(result, "error") ?? "수정 요청 접수 실패 · 입력값 확인 필요",
+        );
         return;
       }
-      setCorrectionMessage(result.message ?? "기록 수정 요청 접수 완료");
+      setCorrectionMessage(readMessageField(result, "message") ?? "기록 수정 요청 접수 완료");
       setCorrection((current) => ({ ...current, proposedValue: "", evidenceUrl: "", reason: "", adminCode: "" }));
     } catch {
       setCorrectionMessage("네트워크 오류 발생 · 잠시 후 재시도");
