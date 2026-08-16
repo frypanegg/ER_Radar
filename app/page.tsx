@@ -99,6 +99,9 @@ type CaseExample = {
   sourceAnnotations: { event: string; sourceUrl: string; note: string }[];
   flowEvents: BargainingFlowEvent[];
   next: string;
+  // 이 법인에서 마지막으로 확인된 사실의 날짜. 목록 정렬 기준이며, 공개할 사실이
+  // 하나도 없는 법인은 null이다.
+  lastUpdatedOn: string | null;
 };
 
 const stageMeta = framework.enums.primary_stage.map((stage) => ({
@@ -242,11 +245,20 @@ function shortCompanyName(legalName: string) {
 
 // 서술형 한 덩어리는 읽히지 않는다. 문장과 " · " 구분자를 기준으로 끊어 글머리 기호로
 // 보여준다. 원문 문장을 다시 쓰지 않고 그대로 나누기만 한다.
+// 그 법인에서 마지막으로 확인된 사실의 날짜. 대표 사건(eventDate)만 보면 경과에
+// 더 늦은 사건이 들어온 법인이 뒤로 밀린다. 경과까지 훑어 가장 늦은 날을 고른다.
+function findLastUpdatedOn(record: HistoricalRecord): string {
+  return (record.flowEvents ?? []).reduce(
+    (latest, event) => (event.date > latest ? event.date : latest),
+    record.eventDate,
+  );
+}
+
 function getBargainingCases(
   year: number,
   records: HistoricalRecord[] = bargainingRecords,
 ): CaseExample[] {
-  return trackingCompanies.map((company) => {
+  const cases = trackingCompanies.map((company) => {
     const record = records
       .filter((candidate) => candidate.companyId === company.id && candidate.bargainingYear === year)
       .sort((left, right) => right.eventDate.localeCompare(left.eventDate))[0];
@@ -278,6 +290,7 @@ function getBargainingCases(
         sourceAnnotations: [],
         flowEvents: [],
         next: "법인명·원청 노조 적용범위·교섭 사실·원문 URL 동시 확인 전까지 상태 변경 없음",
+        lastUpdatedOn: null,
       };
     }
 
@@ -330,7 +343,21 @@ function getBargainingCases(
             sourceUrl: record.sourceUrl,
           }],
       next: "다음 일일 수집 · 원문 추가 확인, 조합원 수·대표성, 쟁점·최종안 변경 분리 검증",
+      lastUpdatedOn: findLastUpdatedOn(record),
     };
+  });
+
+  // 목록 순서를 시드의 법인 나열 순서로 고정해 두면, 오늘 뭔가 움직인 회사가 어디에
+  // 있는지 매번 훑어야 한다. 마지막으로 확인된 사실이 최근인 법인부터 보여준다.
+  // 공개할 사실이 없는 법인은 비교할 날짜가 없으므로 맨 뒤로 보낸다. 날짜가 같으면
+  // 법인명 순으로 고정해, 같은 화면을 다시 열었을 때 순서가 흔들리지 않게 한다.
+  return cases.sort((left, right) => {
+    if (left.lastUpdatedOn !== right.lastUpdatedOn) {
+      if (!left.lastUpdatedOn) return 1;
+      if (!right.lastUpdatedOn) return -1;
+      return right.lastUpdatedOn.localeCompare(left.lastUpdatedOn);
+    }
+    return left.name.localeCompare(right.name, "ko");
   });
 }
 

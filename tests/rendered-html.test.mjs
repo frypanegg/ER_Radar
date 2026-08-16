@@ -391,3 +391,53 @@ test("quarantines subcontractor bargaining before a primary-company stage is ass
     true,
   );
 });
+
+test("기업 목록이 최근 확인된 순서로 나온다", async () => {
+  const html = await (await render()).text();
+
+  // 카드 순서는 렌더된 법인명으로 읽는다. 카드는 법적 실명을 title 속성에 남긴다.
+  const rendered = [...html.matchAll(/class="case-card[^"]*"[\s\S]*?<strong title="([^"]+)"/g)].map(
+    (match) => match[1],
+  );
+  assert.ok(rendered.length > 1, "카드가 두 개 이상 렌더돼야 순서를 검증할 수 있다");
+
+  // 화면과 같은 규칙으로 기대 순서를 만든다. 대표 사건과 경과 중 가장 늦은 날짜가
+  // 그 법인의 최신 확인일이고, 공개할 사실이 없는 법인은 비교 대상이 없어 맨 뒤다.
+  const historicalSeed = JSON.parse(
+    await readFile(new URL("../data/historical-fact-seed.json", import.meta.url), "utf8"),
+  );
+  const year = Math.max(
+    ...[...currentSeed.records, ...historicalSeed.records].map((record) => record.bargainingYear),
+  );
+  const lastUpdatedByName = new Map();
+  for (const record of [...currentSeed.records, ...historicalSeed.records]) {
+    if (record.bargainingYear !== year) continue;
+    const latest = (record.flowEvents ?? []).reduce(
+      (newest, event) => (event.date > newest ? event.date : newest),
+      record.eventDate,
+    );
+    const previous = lastUpdatedByName.get(record.companyLegalName);
+    if (!previous || latest > previous) lastUpdatedByName.set(record.companyLegalName, latest);
+  }
+
+  const renderedDates = rendered.map((name) => lastUpdatedByName.get(name) ?? null);
+  for (let index = 1; index < renderedDates.length; index += 1) {
+    const previous = renderedDates[index - 1];
+    const current = renderedDates[index];
+    if (current === null) continue; // 사실이 없는 법인은 뒤쪽에 몰려 있다.
+    assert.ok(
+      previous !== null,
+      `사실이 없는 법인이 ${rendered[index]}(${current})보다 앞에 있다`,
+    );
+    assert.ok(
+      previous >= current,
+      `순서가 최신순이 아니다: ${rendered[index - 1]}(${previous}) → ${rendered[index]}(${current})`,
+    );
+  }
+
+  // 고정 순서로 되돌아가면 이 단언이 먼저 깨진다.
+  const newest = [...lastUpdatedByName.entries()].sort((left, right) =>
+    right[1].localeCompare(left[1]),
+  )[0];
+  assert.equal(rendered[0], newest[0]);
+});
