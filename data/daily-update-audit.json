@@ -2,6 +2,23 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-08-16T21:26:10.948Z",
+      "kstDate": "2026-08-17",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-08-17",
+      "primarySource": "google",
+      "consideredArticles": 321,
+      "appliedCount": 0,
+      "skippedCount": 316,
+      "applied": [],
+      "skippedReasonCounts": {
+        "scope_excluded": 131,
+        "not_eligible_for_status_aggregation": 167,
+        "stage_unknown": 16,
+        "not_newer_than_recorded_event": 2
+      }
+    },
+    {
       "runAt": "2026-08-15T21:27:07.911Z",
       "kstDate": "2026-08-16",
       "ruleVersion": "1.0.0",
