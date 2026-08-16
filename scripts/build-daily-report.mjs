@@ -23,7 +23,6 @@ const STAGE_LABELS = {
   S5: "잠정합의",
   S6: "인준·서명 대기",
   S7: "최종 체결·발효",
-  S8: "이행·분쟁",
 };
 
 function stageLabel(stage) {

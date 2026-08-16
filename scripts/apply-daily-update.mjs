@@ -105,10 +105,10 @@ function stageRanks(framework) {
 
 /**
  * 검증된 사실 기록을 추론 등급 기사로 되돌리지 않기 위한 게이트.
- * 체결·이행이 확인된 연도 기록은 같은 등급의 근거가 있을 때만 바뀐다.
+ * 체결이 확인된 연도 기록은 같은 등급의 근거가 있을 때만 바뀐다.
  */
 function blocksSettledRecord(existing, nextStage) {
-  const settled = new Set(["S7", "S8"]);
+  const settled = new Set(["S7"]);
   return (
     settled.has(existing.stage) &&
     existing.factualStatus === "VERIFIED_SOURCE" &&

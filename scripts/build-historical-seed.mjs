@@ -29,9 +29,9 @@ const REQUIRED_RECORD_FIELDS = [
   "annotation",
 ];
 
-const STAGE_CODES = new Set(["U", "S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"]);
+const STAGE_CODES = new Set(["U", "S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]);
 
-/** U는 좌표 미확인이라 가장 앞, S0~S8은 숫자 순서를 그대로 쓴다. */
+/** U는 좌표 미확인이라 가장 앞, S0~S7은 숫자 순서를 그대로 쓴다. */
 function stageRank(stage) {
   if (!stage || stage === "U") return -1;
   const rank = Number.parseInt(stage.slice(1), 10);

@@ -524,7 +524,7 @@ test("원문까지 확인된 기사는 미확인 기사와 같은 근거 등급�
 test("사람이 검증한 체결 기록을 제목 추론 기사로 되돌리지 않는다", () => {
   const settled = seedRecord({ stage: "S7", factualStatus: "VERIFIED_SOURCE" });
   assert.equal(blocksSettledRecord(settled, "S4"), true);
-  assert.equal(blocksSettledRecord(settled, "S8"), false);
+  assert.equal(blocksSettledRecord(settled, "S7"), false);
 
   // 자동 수집으로 올라간 체결 기록은 같은 등급끼리의 정정을 허용한다.
   const autoSettled = seedRecord({

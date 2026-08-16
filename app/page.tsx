@@ -258,7 +258,9 @@ function getBargainingCases(
   year: number,
   records: HistoricalRecord[] = bargainingRecords,
 ): CaseExample[] {
-  const cases = trackingCompanies.map((company) => {
+  // 반환값을 바로 map하지 않고 변수에 받으므로, 문맥 타입이 붙지 않는다. 명시하지
+  // 않으면 "UNKNOWN" 같은 리터럴이 string으로 넓어져 CaseExample과 어긋난다.
+  const cases: CaseExample[] = trackingCompanies.map((company) => {
     const record = records
       .filter((candidate) => candidate.companyId === company.id && candidate.bargainingYear === year)
       .sort((left, right) => right.eventDate.localeCompare(left.eventDate))[0];

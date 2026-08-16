@@ -35,7 +35,7 @@ function publicationState(record) {
 }
 
 // 주 단계에서 사건 상태를 옮긴다. 체결은 합의, 이행은 이행 중, 나머지는 진행 중이다.
-const CASE_STATUS_BY_STAGE = { S7: "AGREED", S8: "IMPLEMENTING" };
+const CASE_STATUS_BY_STAGE = { S7: "AGREED" };
 
 /**
  * 같은 값이 환경에 따라 다른 이름으로 들어온다. 수집기가 NAVER 자격증명에서 쓰는 방식과

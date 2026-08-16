@@ -196,7 +196,7 @@ ORDER BY status;
 
 - `recordId`가 과거 시드의 기록과 일치해야 한다.
 - `date`는 `YYYY-MM-DD`이고 교섭연도보다 이르면 안 된다. 이듬해로 넘어가는 것은 이월이므로 허용한다.
-- `stage`는 `U`, `S0`–`S8` 중 하나다.
+- `stage`는 `U`, `S0`–`S7` 중 하나다.
 - `sourceUrl`이 없으면 받지 않는다. 근거 없는 경과는 넣지 않는다.
 - 같은 `recordId` 안에서 같은 `sourceUrl`은 하나만 남는다.
 

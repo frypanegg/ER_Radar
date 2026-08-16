@@ -172,7 +172,7 @@ test("교섭 단계 모델은 제목 옆에 두고 별도 섹션으로 두지 �
   assert.match(html, /hero-stage-track/);
 
   // 10개 단계가 순서대로 다 나와야 축으로 읽힌다.
-  for (const code of ["U", "S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"]) {
+  for (const code of ["U", "S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]) {
     assert.match(html, new RegExp(`hero-stage-code">${code}<`), `${code}가 있어야 한다`);
   }
 
@@ -195,7 +195,7 @@ test("교섭현황이 없는 단계 버튼은 눌리지 않는다", async () => 
   const html = await (await render()).text();
   const source = await readFile(new URL("app/page.tsx", templateRoot), "utf8");
 
-  // 2026년 기준으로 S0·S2·S5·S8에는 공개 교섭현황이 없다. 잠금 표시가 실제로 나가야 한다.
+  // 2026년 기준으로 S0·S2·S5에는 공개 교섭현황이 없다. 잠금 표시가 실제로 나가야 한다.
   assert.match(html, /stage-filter-chip[^>]*disabled/, "빈 단계 필터 칩은 잠겨야 한다");
 
   // 단계를 고르는 입구는 목록 위 필터 칩 하나로 모았다. 같은 stageFocus를 조작하는
@@ -242,7 +242,8 @@ test("keeps scope and source guards in the production-facing implementation", as
   assert.doesNotMatch(layout, /openGraph/);
   assert.doesNotMatch(layout, /twitter/);
   assert.match(framework, /"S0"/);
-  assert.match(framework, /"S8"/);
+  // S8(이행·사후관리)은 단계 축에서 없앴다. 되살아나면 화면에 누를 수 없는 칩이 다시 생긴다.
+  assert.doesNotMatch(framework, /"S8"/);
   assert.match(config, /"scopeReviewAgent"/);
   assert.match(config, /"primary-union-scope-review"/);
   assert.match(config, /"authentication": "api-hub"/);

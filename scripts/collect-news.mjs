@@ -326,7 +326,6 @@ function validateConfiguration(config) {
     "S5",
     "S6",
     "S7",
-    "S8",
   ]);
   const frameworkCodes = new Set(
     (framework?.states ?? []).map((state) => state.code),
@@ -1103,7 +1102,7 @@ function deriveFrameworkClassification(
 
   if (
     agreementState.code === "REPORTED" &&
-    !new Set(["S5", "S6", "S7", "S8"]).has(statusCode)
+    !new Set(["S5", "S6", "S7"]).has(statusCode)
   ) {
     statusCode = "U";
     statusBasis = "ambiguous_agreement_report";

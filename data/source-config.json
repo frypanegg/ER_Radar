@@ -454,11 +454,6 @@
           "code": "S7",
           "name": "signed_effective",
           "label": "최종 체결·발효"
-        },
-        {
-          "code": "S8",
-          "name": "implementation",
-          "label": "이행·사후관리"
         }
       ],
       "eventStates": [
@@ -485,13 +480,6 @@
         "manual_review": "U"
       },
       "explicitStateSignals": [
-        {
-          "code": "S8",
-          "patterns": [
-            "(?:합의사항|협약|임금\\s*인상분).{0,10}(?:이행|시행|적용|반영)",
-            "(?:소급분|인상분).{0,8}(?:지급|반영)"
-          ]
-        },
         {
           "code": "S7",
           "patterns": [

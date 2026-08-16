@@ -108,7 +108,7 @@ export type HistoryInput = {
   flowEvents?: FlowEvent[];
 };
 
-/** U는 좌표 미확인이라 가장 앞, S0~S8은 숫자 순서를 그대로 쓴다. */
+/** U는 좌표 미확인이라 가장 앞, S0~S7은 숫자 순서를 그대로 쓴다. */
 export function stageRankOf(stage: string) {
   if (!stage || stage === "U") return -1;
   const rank = Number.parseInt(stage.slice(1), 10);
@@ -128,7 +128,7 @@ export function deriveCaseHistory(record: HistoryInput): CaseHistory {
   const timeline = [...(record.flowEvents ?? [])].sort(compareEventsAscending);
   const text = textOf(record);
   const eventYear = Number.parseInt(record.eventDate.slice(0, 4), 10);
-  const settled = record.stage === "S7" || record.stage === "S8";
+  const settled = record.stage === "S7";
   const spannedIntoYear =
     Number.isFinite(eventYear) && eventYear > record.bargainingYear ? eventYear : null;
 

@@ -305,7 +305,8 @@ $primary-union-scope-review에 보관한다. 스킬은 직접고용 게이트를
 | `S5` | `tentative` | 잠정합의 도출 |
 | `S6` | `ratification` | 조합원 찬반투표·인준 |
 | `S7` | `signed_effective` | 협약 체결·발효·최종 타결 |
-| `S8` | `implementation` | 합의 이행·임금 반영 |
+
+`S7`이 마지막 단계다. 합의 이행·소급 지급 보도는 단계를 옮기지 않는다.
 
 각 분류에는 `eventState`가 함께 붙는다. 허용값은 `planned`, `occurred`,
 `cancelled`, `corrected`, `disputed`다. 예정·취소·정정·분쟁 보도는
@@ -586,7 +587,7 @@ node scripts/collect-news.mjs --dry-run --source google --max-per-query 3
 법인은 반영하지 않으며, 새 법인 추가는 사람의 범위 검토를 거친다.
 
 자동 반영된 기록은 `factualStatus = "AUTO_COLLECTED_TITLE_BASIS"`로 표시해 사람이
-검증한 `VERIFIED_SOURCE` 기록과 구분한다. 사람이 검증한 `S7`·`S8` 체결 기록은 같은
+검증한 `VERIFIED_SOURCE` 기록과 구분한다. 사람이 검증한 `S7` 체결 기록은 같은
 등급의 근거 없이 하위 단계로 되돌아가지 않는다.
 
 모든 실행 결과는 `data/daily-update-audit.json`에 최근 60회까지 남는다. 반영된 항목은
