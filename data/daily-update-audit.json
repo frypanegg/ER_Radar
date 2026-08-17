@@ -2,6 +2,35 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-08-17T21:26:25.790Z",
+      "kstDate": "2026-08-18",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-08-18",
+      "primarySource": "google",
+      "consideredArticles": 327,
+      "appliedCount": 1,
+      "skippedCount": 321,
+      "applied": [
+        {
+          "companyId": "hyundai-motor",
+          "companyLegalName": "현대자동차 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-08-14",
+          "nextStage": "S3",
+          "nextEventDate": "2026-08-16",
+          "sourceUrl": "https://usmbc.co.kr/NewsArticle/856917",
+          "sourceName": "usmbc.co.kr",
+          "confidence": 0.91
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 168,
+        "scope_excluded": 134,
+        "stage_unknown": 18,
+        "not_newer_than_recorded_event": 1
+      }
+    },
+    {
       "runAt": "2026-08-16T21:26:10.948Z",
       "kstDate": "2026-08-17",
       "ruleVersion": "1.0.0",
