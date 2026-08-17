@@ -149,7 +149,8 @@ button:focus-visible,
   border-bottom: 1px solid #e4e9ef;
 }
 .header-inner {
-  min-height: 73px;
+  /* 상단 바는 메뉴만 담는 얇은 줄이라 높이를 73px에서 80%로 낮췄다. */
+  min-height: 58px;
   justify-content: space-between;
   gap: 28px;
 }
@@ -1697,8 +1698,6 @@ button:focus-visible,
 .footer-meta {
   font-size: 13px;
 }
-.header-nav,
-.header-link,
 .button,
   .section-heading > div > p:not(.section-kicker),
 .company-search input,
@@ -1708,6 +1707,13 @@ button:focus-visible,
 .site-footer p {
   font-size: 14px;
 }
+/* 상단 바는 줄 자체를 얇게 줄이는 대신, 그 안의 메뉴와 버튼은 오히려 키워
+   누르기 쉽게 한다. 14px에서 120% 올린 값이다. */
+.header-nav,
+.header-link {
+  font-size: 17px;
+}
+
 .hero-description,
   .collection-copy p:not(.section-kicker) {
   font-size: 18px;
@@ -2196,7 +2202,7 @@ button:focus-visible,
     white-space: normal;
   }
 .header-inner {
-    min-height: 62px;
+    min-height: 50px;
   }
 .header-nav,
 .header-link {

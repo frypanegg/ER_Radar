@@ -688,10 +688,10 @@ export default function Home() {
           </nav>
           <div className="header-admin-actions">
             <button className="header-link header-action" type="button" onClick={() => { setCompanyRequestMessage(""); setIsAddCompanyOpen(true); }}>
-              추적 기업 추가 <Plus size={15} />
+              추적 기업 추가 <Plus size={18} />
             </button>
             <button className="header-link header-action" type="button" onClick={() => openCorrection()}>
-              데이터 수정 <FileCheck2 size={15} />
+              데이터 수정 <FileCheck2 size={18} />
             </button>
           </div>
         </div>
