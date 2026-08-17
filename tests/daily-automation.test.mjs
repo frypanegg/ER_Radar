@@ -908,7 +908,7 @@ test("회귀 검증에 실패하면 사실 데이터를 커밋하지 않는다",
   );
   assert.doesNotMatch(workflow, /배포\n\s*if:[^\n]*\n[^\n]*steps\.verify\.outcome != 'success'/);
   // 화면이 마지막 수집 시각을 표시하므로, 흔적을 기록한 뒤 다시 빌드해서 배포한다.
-  assert.match(workflow, /npm run build\s*\n\s*npx wrangler deploy/);
+  assert.match(workflow, /npm run build[\s\S]{0,200}npx wrangler deploy/);
   // 배포 자격증명이 없는 복제·포크에서는 데이터만 갱신하고 배포를 건너뛴다.
   assert.match(workflow, /if \[ -z "\$CLOUDFLARE_API_TOKEN" \]/);
   // 배포 토큰도 이름으로만 참조하고 로그로 내보내지 않는다.
@@ -1131,4 +1131,24 @@ test("검증에 막힌 날 메일이 무엇이 되돌려졌는지 말한다", as
     heartbeat: { lastRunKstDate: "2026-08-15", lastRunOutcome: "failure", collectOutcome: "failure" },
   });
   assert.match(collectFailed.text, /기사 수집 단계가 실패/);
+});
+
+test("배포 예외는 이메일 인증 오류 하나만, 업로드가 끝난 경우에만 눈감아 준다", async () => {
+  const workflow = await readFile(
+    new URL("../.github/workflows/daily-bargaining-update.yml", import.meta.url),
+    "utf8",
+  );
+
+  // 예외를 넓히면 진짜 배포 실패가 초록으로 지나간다. 두 조건이 함께 걸려 있어야 한다.
+  assert.match(
+    workflow,
+    /grep -q "10034"[\s\S]{0,120}grep -q "Uploaded er-radar"/,
+    "오류 코드와 업로드 성공 흔적을 함께 확인해야 한다",
+  );
+  // 그 외의 실패는 원래 종료 코드로 그대로 실패해야 한다.
+  assert.match(workflow, /exit "\$deploy_status"/);
+  // 예외가 살아 있는 동안 매일 눈에 보여야 한다. 조용해지면 걷어낼 시점을 놓친다.
+  assert.match(workflow, /::warning::Cloudflare 이메일 인증 대기 중/);
+  // wrangler를 무조건 통과시키는 형태(|| true, continue-on-error)로 바뀌면 안 된다.
+  assert.doesNotMatch(workflow, /wrangler deploy[^\n]*\|\|\s*true/);
 });

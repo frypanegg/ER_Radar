@@ -212,7 +212,41 @@ jobs:
           # 화면이 읽는 데이터는 빌드 시점에 번들로 들어간다. 회귀 검증 단계의 빌드는
           # 실행 흔적 기록보다 앞서므로, 흔적을 담으려면 여기서 다시 빌드해야 한다.
           npm run build
-          npx wrangler deploy
+
+          mkdir -p tmp
+          set +e
+          npx wrangler deploy > tmp/wrangler-deploy.log 2>&1
+          deploy_status=$?
+          set -e
+          cat tmp/wrangler-deploy.log
+
+          if [ "$deploy_status" -eq 0 ]; then
+            exit 0
+          fi
+
+          # ── 한시적 예외: Cloudflare 이메일 인증 대기 ────────────────────────
+          #
+          # 이 계정은 2026-08-10에 프로젝트 시작 도구가 자동으로 만들었고, 그래서 정상
+          # 가입 절차를 거치지 않아 이메일이 미인증 상태로 남아 있다. wrangler는 워커를
+          # 다 올린 뒤 workers.dev 서브도메인 설정을 확인하는데, 그 호출만 code 10034로
+          # 거부당한다. 배포 자체는 매번 성공하고 공개 화면도 최신이다.
+          #
+          # 그런데 스텝이 exit 1로 끝나니 매일 실행이 빨갛게 남는다. 그게 며칠 이어지면
+          # 진짜 배포 실패가 났을 때 아무도 구분하지 못한다. 그 하나만 눈감아 준다.
+          #
+          # 눈감아 주는 조건을 좁게 잡는다. 오류 코드가 10034이고, 워커 업로드가 실제로
+          # 끝났다는 흔적이 로그에 있어야 한다. 둘 중 하나라도 없으면 그대로 실패시킨다.
+          #
+          # 대시보드에 재발송 버튼이 없고 같은 주소로 다시 넣는 것도 거부되어, 사람이
+          # Cloudflare 지원으로 풀어야 한다. 인증이 풀리면 이 블록을 통째로 지운다.
+          # 남아 있는 동안은 매일 경고 한 줄로 존재를 드러낸다.
+          if grep -q "10034" tmp/wrangler-deploy.log \
+            && grep -q "Uploaded er-radar" tmp/wrangler-deploy.log; then
+            echo "::warning::Cloudflare 이메일 인증 대기 중이라 서브도메인 확인만 건너뜁니다(code 10034). 워커는 업로드됐고 공개 화면은 최신입니다. 인증이 풀리면 이 예외를 지우세요: .github/workflows/daily-bargaining-update.yml"
+            exit 0
+          fi
+
+          exit "$deploy_status"
 
       # 수집 결과를 메일로 보낸다. 성공한 날뿐 아니라 실패한 날도 보내야 "메일이
       # 안 왔다"가 곧 "자동화가 멈췄다"로 읽힌다. SMTP 자격증명이 없으면 건너뛴다.
