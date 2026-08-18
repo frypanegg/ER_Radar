@@ -2,6 +2,35 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-08-18T21:27:59.870Z",
+      "kstDate": "2026-08-19",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-08-19",
+      "primarySource": "google",
+      "consideredArticles": 337,
+      "appliedCount": 1,
+      "skippedCount": 330,
+      "applied": [
+        {
+          "companyId": "hyundai-motor",
+          "companyLegalName": "현대자동차 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-08-16",
+          "nextStage": "S3",
+          "nextEventDate": "2026-08-18",
+          "sourceUrl": "https://v.daum.net/v/QEjdxVrNhw",
+          "sourceName": "v.daum.net",
+          "confidence": 0.8
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 133,
+        "not_eligible_for_status_aggregation": 178,
+        "stage_unknown": 18,
+        "not_newer_than_recorded_event": 1
+      }
+    },
+    {
       "runAt": "2026-08-17T21:26:25.790Z",
       "kstDate": "2026-08-18",
       "ruleVersion": "1.0.0",
