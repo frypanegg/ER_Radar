@@ -2,6 +2,35 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-08-22T21:27:54.214Z",
+      "kstDate": "2026-08-23",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-08-23",
+      "primarySource": "google",
+      "consideredArticles": 339,
+      "appliedCount": 1,
+      "skippedCount": 329,
+      "applied": [
+        {
+          "companyId": "hyundai-motor",
+          "companyLegalName": "현대자동차 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-08-18",
+          "nextStage": "S3",
+          "nextEventDate": "2026-08-20",
+          "sourceUrl": "https://labortoday.co.kr/news/articleView.html?idxno=236288",
+          "sourceName": "매일노동뉴스",
+          "confidence": 0.91
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 147,
+        "not_eligible_for_status_aggregation": 175,
+        "stage_unknown": 6,
+        "not_newer_than_recorded_event": 1
+      }
+    },
+    {
       "runAt": "2026-08-21T21:29:01.670Z",
       "kstDate": "2026-08-22",
       "ruleVersion": "1.0.0",
