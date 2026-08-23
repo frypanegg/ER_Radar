@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "초기 추적 12개사 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-08-23",
+  "asOf": "2026-08-24",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -108,21 +108,21 @@
       "bargainingYear": 2026,
       "agreementType": "WAGE",
       "stage": "S3",
-      "eventDate": "2026-08-20",
-      "title": "현대차 노사, 41일 만에 교섭 재개에도 합의점 못 찾아",
-      "factSummary": "매일노동뉴스 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-08-23",
+      "title": "현대차, 24일 부분 파업 유보...노사 교섭 재개 영향",
+      "factSummary": "아주경제 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 현대자동차지부",
       "directEmployerId": "hyundai-motor",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "현대자동차 지속가능성보고서는 국내 인력을 '직접 고용인원 수 기준'으로 공시하고 같은 국내 기준의 노동조합 가입 현황 및 현대자동차지부 조합원 4만4천명을 적시한다. 최신 사건 원문은 그 현대차지부를 현대자동차 임금협상·부분파업 주체로 명시한다.",
       "scopeEvidenceUrl": "https://org1.hyundai.com/content/hyundai/ww/data/csr/data/0000000052/attach/korean/hmc-2024-sustainability-report-ko-v6.pdf",
-      "sourceUrl": "https://labortoday.co.kr/news/articleView.html?idxno=236288",
-      "sourceName": "매일노동뉴스",
+      "sourceUrl": "https://ajunews.com/amp/20260823102403436",
+      "sourceName": "아주경제",
       "sourceTier": "B",
       "confidence": 0.91,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-08-23 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-08-24 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-12",
@@ -172,14 +172,21 @@
           "label": "본교섭 진행",
           "summary": "매일노동뉴스 보도 제목 기준 확인: 현대차 노사, 41일 만에 교섭 재개에도 합의점 못 찾아",
           "sourceUrl": "https://labortoday.co.kr/news/articleView.html?idxno=236288"
+        },
+        {
+          "date": "2026-08-23",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "아주경제 보도 제목 기준 확인: 현대차, 24일 부분 파업 유보...노사 교섭 재개 영향",
+          "sourceUrl": "https://ajunews.com/amp/20260823102403436"
         }
       ],
       "id": "hyundai-motor:2026:WAGE:2026-07-29",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://labortoday.co.kr/news/articleView.html?idxno=236288",
+      "originalUrl": "https://ajunews.com/amp/20260823102403436",
       "agreementTypeEvidence": "현대자동차 2026년 임금협상 3차 부분파업 금속노조 현대차지부가 임금협상 쟁점이 풀리지 않은 가운데 7월 29일부터 31일까지 주·야간조 각 4시간의 3차 부분파업에 들어갔다고 보도됐다. 기사상 쟁점에는 기본급·성과급, 해고자 복직, 정년 연장이 포함됐다.",
-      "autoUpdatedAt": "2026-08-22T21:27:54.214Z"
+      "autoUpdatedAt": "2026-08-23T21:59:34.999Z"
     },
     {
       "recordId": "gm-korea-2026-integrated-ratification",

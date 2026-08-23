@@ -2,6 +2,35 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-08-23T21:59:34.999Z",
+      "kstDate": "2026-08-24",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-08-24",
+      "primarySource": "google",
+      "consideredArticles": 349,
+      "appliedCount": 1,
+      "skippedCount": 341,
+      "applied": [
+        {
+          "companyId": "hyundai-motor",
+          "companyLegalName": "현대자동차 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-08-20",
+          "nextStage": "S3",
+          "nextEventDate": "2026-08-23",
+          "sourceUrl": "https://ajunews.com/amp/20260823102403436",
+          "sourceName": "아주경제",
+          "confidence": 0.91
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 187,
+        "scope_excluded": 145,
+        "stage_unknown": 8,
+        "not_newer_than_recorded_event": 1
+      }
+    },
+    {
       "runAt": "2026-08-22T21:27:54.214Z",
       "kstDate": "2026-08-23",
       "ruleVersion": "1.0.0",
