@@ -625,6 +625,33 @@ node scripts/apply-daily-update.mjs --dry-run
 node scripts/apply-daily-update.mjs --candidates /tmp/c.json --seed /tmp/s.json --audit /tmp/a.json
 ```
 
+### 시드와 DB 중 무엇으로 그리는가 (2026-08-24 정리)
+
+공개 화면에는 사실이 두 갈래로 들어온다.
+
+| 경로 | 무엇이 쓰나 | 언제 바뀌나 |
+| --- | --- | --- |
+| `data/current-2026-fact-seed.json` | 일일 수집 (`apply-daily-update.mjs`) | 매일 자동 |
+| Supabase `bargaining_cases` | 화면의 "데이터 수정" 승인, `load-supabase-seed.yml` | 사람이 할 때만 |
+
+화면은 하이드레이션 뒤 `/api/published-facts`를 읽어 같은 법인·연도의 시드 레코드를
+덮어쓴다. **DB가 항상 이기게 두면 일일 수집 결과가 화면에 닿지 못한다.** 실제로
+2026-08-19에 멈춘 현대차 DB 행이 08-20·08-23 수집분을 나흘 동안 가렸고, 그동안
+수집 워크플로는 매일 성공했으며 신선도 배너도 "오늘 수집 완료"로 떴다. 배너가
+데이터가 아니라 실행 흔적(`automation-heartbeat.json`)을 읽기 때문이다.
+
+그래서 `lib/fact-reconciliation.mjs`가 **더 최근에 확인된 쪽**을 고른다.
+
+- 최신 여부는 대표 사건(`eventDate`)이 아니라 `flowEvents`까지 훑어 정한다. 정정이
+  기록 자체의 날짜보다 늦은 사건을 남길 수 있다.
+- 시드가 더 최근이면 시드로 그린다. 그렇지 않으면 DB로 덮어쓴다.
+- **예외**: `AUTO_COLLECTED_TITLE_BASIS` 기록은 날짜가 더 최근이어도 사람이 검증한
+  DB 단계를 뒤로 돌리지 못한다. 파업·집회 보도는 교섭 진행 신호를 함께 담아서,
+  잠정합의(S5)가 확인된 교섭에 본교섭(S3) 제목이 하루 늦게 붙는 일이 생긴다.
+
+정정의 정본은 여전히 DB다. 시드에는 정정이 되돌아가지 않으므로, `load-supabase-seed.yml`을
+그냥 돌리면 DB에만 있는 정정이 시드 값으로 되돌아간다. 워크플로 주석의 경고를 보라.
+
 ### 자동화가 보수적으로 동작하는 이유
 
 제목만으로 단계를 올릴 수 없는 신호가 많다. 파업 찬반투표 가결, 파업권 확보,
