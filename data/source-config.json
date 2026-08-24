@@ -60,7 +60,7 @@
     "maxRetries": 3,
     "freshnessHalfLifeDays": 30,
     "freshnessReviewDays": 120,
-    "maxUrlResolutions": 150
+    "maxUrlResolutions": 300
   },
   "scopePolicy": {
     "primaryScope": "selected_legal_entity_directly_employed_union_only",
@@ -1610,6 +1610,852 @@
         "두산에너빌리티 노사교섭",
         "두산에너빌리티 노동조합 교섭",
         "두산에너빌리티 잠정합의"
+      ]
+    },
+    {
+      "id": "samsung-biologics",
+      "name": "삼성바이오로직스",
+      "selection": {
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "삼성바이오로직스",
+        "삼성바이오",
+        "Samsung Biologics"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "representative-union",
+          "name": "삼성바이오로직스 노동조합",
+          "aliases": [
+            "삼성바이오로직스 노동조합",
+            "삼성바이오로직스노조",
+            "삼바 노조"
+          ]
+        }
+      ],
+      "queries": [
+        "삼성바이오로직스 임금협상",
+        "삼성바이오로직스 임단협",
+        "삼성바이오로직스 노사교섭",
+        "삼성바이오로직스 노조 파업",
+        "삼성바이오로직스 잠정합의"
+      ]
+    },
+    {
+      "id": "korean-air",
+      "name": "대한항공",
+      "selection": {
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "대한항공",
+        "Korean Air"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "general-union",
+          "name": "대한항공 노동조합",
+          "aliases": [
+            "대한항공 노동조합",
+            "대한항공노조"
+          ]
+        },
+        {
+          "id": "pilots-union",
+          "name": "대한항공 조종사노동조합",
+          "aliases": [
+            "대한항공 조종사노동조합",
+            "조종사노조",
+            "KAPU"
+          ]
+        }
+      ],
+      "queries": [
+        "대한항공 임금협상",
+        "대한항공 임단협",
+        "대한항공 노사교섭",
+        "대한항공 노조 파업",
+        "대한항공 잠정합의"
+      ]
+    },
+    {
+      "id": "kb-kookmin-bank",
+      "name": "국민은행",
+      "selection": {
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "국민은행",
+        "KB국민은행",
+        "KB Kookmin Bank"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "industry-union-branch",
+          "name": "전국금융산업노동조합 KB국민은행지부",
+          "aliases": [
+            "KB국민은행지부",
+            "국민은행 노조",
+            "금융노조 국민은행지부"
+          ]
+        }
+      ],
+      "queries": [
+        "국민은행 임금협상",
+        "국민은행 임단협",
+        "국민은행 노사교섭",
+        "국민은행 노조 파업",
+        "국민은행 잠정합의"
+      ]
+    },
+    {
+      "id": "shinhan-bank",
+      "name": "신한은행",
+      "selection": {
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "신한은행",
+        "Shinhan Bank"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "industry-union-branch",
+          "name": "전국금융산업노동조합 신한은행지부",
+          "aliases": [
+            "신한은행지부",
+            "신한은행 노조",
+            "금융노조 신한은행지부"
+          ]
+        }
+      ],
+      "queries": [
+        "신한은행 임금협상",
+        "신한은행 임단협",
+        "신한은행 노사교섭",
+        "신한은행 노조 파업",
+        "신한은행 잠정합의"
+      ]
+    },
+    {
+      "id": "coupang",
+      "name": "쿠팡",
+      "selection": {
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "쿠팡",
+        "Coupang"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "representative-union",
+          "name": "전국화학섬유식품산업노동조합 쿠팡지회",
+          "aliases": [
+            "쿠팡지회",
+            "쿠니언",
+            "쿠팡 노조"
+          ]
+        }
+      ],
+      "queries": [
+        "쿠팡 임금협상",
+        "쿠팡 임단협",
+        "쿠팡 노사교섭",
+        "쿠팡 노조 파업",
+        "쿠팡 잠정합의"
+      ]
+    },
+    {
+      "id": "kakao",
+      "name": "카카오",
+      "selection": {
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "카카오",
+        "Kakao"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "representative-union",
+          "name": "전국화학섬유식품산업노동조합 카카오지회",
+          "aliases": [
+            "카카오지회",
+            "크루유니언",
+            "카카오 노조"
+          ]
+        }
+      ],
+      "queries": [
+        "카카오 임금협상",
+        "카카오 임단협",
+        "카카오 노사교섭",
+        "카카오 노조 파업",
+        "카카오 잠정합의"
+      ]
+    },
+    {
+      "id": "korail",
+      "name": "한국철도공사",
+      "selection": {
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "한국철도공사",
+        "코레일",
+        "KORAIL"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "representative-union",
+          "name": "전국철도노동조합",
+          "aliases": [
+            "전국철도노동조합",
+            "철도노조"
+          ]
+        }
+      ],
+      "queries": [
+        "한국철도공사 임금협상",
+        "한국철도공사 임단협",
+        "한국철도공사 노사교섭",
+        "한국철도공사 노조 파업",
+        "한국철도공사 잠정합의"
+      ]
+    },
+    {
+      "id": "lg-uplus",
+      "name": "LG유플러스",
+      "selection": {
+        "scale": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "LG유플러스",
+        "엘지유플러스",
+        "LGU+",
+        "LG Uplus"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "joint-bargaining",
+          "name": "LG유플러스 공동교섭단",
+          "aliases": [
+            "민주유플러스지부",
+            "한마음지부",
+            "LG유플러스 노조"
+          ]
+        }
+      ],
+      "queries": [
+        "LG유플러스 임금협상",
+        "LG유플러스 임단협",
+        "LG유플러스 노사교섭",
+        "LG유플러스 노조 파업",
+        "LG유플러스 잠정합의"
+      ]
+    },
+    {
+      "id": "lg-chem",
+      "name": "LG화학",
+      "selection": {
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "LG화학",
+        "엘지화학",
+        "LG Chem"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "representative-union",
+          "name": "전국화학섬유식품산업노동조합 LG화학지회",
+          "aliases": [
+            "LG화학지회",
+            "청주지회",
+            "LG화학 노조"
+          ]
+        }
+      ],
+      "queries": [
+        "LG화학 임금협상",
+        "LG화학 임단협",
+        "LG화학 노사교섭",
+        "LG화학 노조 파업",
+        "LG화학 잠정합의"
+      ]
+    },
+    {
+      "id": "kumho-tire",
+      "name": "금호타이어",
+      "selection": {
+        "scale": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "금호타이어",
+        "Kumho Tire"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "representative-union",
+          "name": "전국금속노동조합 광주전남지부 금호타이어지회",
+          "aliases": [
+            "금호타이어지회",
+            "금호타이어 노조"
+          ]
+        }
+      ],
+      "queries": [
+        "금호타이어 임금협상",
+        "금호타이어 임단협",
+        "금호타이어 노사교섭",
+        "금호타이어 노조 파업",
+        "금호타이어 잠정합의"
+      ]
+    },
+    {
+      "id": "seoul-metro",
+      "name": "서울교통공사",
+      "selection": {
+        "scale": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "HIGH",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "서울교통공사",
+        "서울지하철"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "first-union",
+          "name": "서울교통공사 노동조합",
+          "aliases": [
+            "서울교통공사노동조합",
+            "서교공 1노조"
+          ]
+        },
+        {
+          "id": "second-union",
+          "name": "서울교통공사 통합노동조합",
+          "aliases": [
+            "서울교통공사통합노동조합",
+            "통합노조"
+          ]
+        }
+      ],
+      "queries": [
+        "서울교통공사 임금협상",
+        "서울교통공사 임단협",
+        "서울교통공사 노사교섭",
+        "서울교통공사 노조 파업",
+        "서울교통공사 잠정합의"
+      ]
+    },
+    {
+      "id": "lg-display",
+      "name": "LG디스플레이",
+      "selection": {
+        "scale": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "LOW",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "LG디스플레이",
+        "엘지디스플레이",
+        "LG Display"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "representative-union",
+          "name": "LG디스플레이 노동조합",
+          "aliases": [
+            "LG디스플레이 노동조합",
+            "LG디스플레이 노조"
+          ]
+        }
+      ],
+      "queries": [
+        "LG디스플레이 임금협상",
+        "LG디스플레이 임단협",
+        "LG디스플레이 노사교섭",
+        "LG디스플레이 노조 파업",
+        "LG디스플레이 잠정합의"
+      ]
+    },
+    {
+      "id": "sk-telecom",
+      "name": "SK텔레콤",
+      "selection": {
+        "scale": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "LOW",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "SK텔레콤",
+        "에스케이텔레콤",
+        "SKT",
+        "SK Telecom"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "representative-union",
+          "name": "SK텔레콤 노동조합",
+          "aliases": [
+            "SK텔레콤 노동조합",
+            "SKT 노조"
+          ]
+        }
+      ],
+      "queries": [
+        "SK텔레콤 임금협상",
+        "SK텔레콤 임단협",
+        "SK텔레콤 노사교섭",
+        "SK텔레콤 노조 파업",
+        "SK텔레콤 잠정합의"
+      ]
+    },
+    {
+      "id": "posco-enc",
+      "name": "포스코이앤씨",
+      "selection": {
+        "scale": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "industryImpact": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "mediaExposure": {
+          "rating": "MEDIUM",
+          "verifiedAt": null
+        },
+        "majorityUnion": {
+          "status": "UNKNOWN",
+          "numerator": null,
+          "denominator": null,
+          "calculationBasis": null,
+          "evidenceDate": null,
+          "evidenceUrl": null,
+          "verifiedAt": null
+        },
+        "representativeBargainingUnion": {
+          "status": "UNKNOWN",
+          "verifiedAt": null
+        },
+        "directEmploymentUnionizationRate": {
+          "value": null,
+          "verifiedAt": null
+        },
+        "basis": "editorial_seed",
+        "needsReview": true
+      },
+      "aliases": [
+        "포스코이앤씨",
+        "포스코건설",
+        "POSCO E&C"
+      ],
+      "bargainingUnits": [
+        {
+          "id": "representative-union",
+          "name": "포스코이앤씨 노동조합",
+          "aliases": [
+            "포스코이앤씨 노동조합",
+            "포스코이앤씨 노조"
+          ]
+        }
+      ],
+      "queries": [
+        "포스코이앤씨 임금협상",
+        "포스코이앤씨 임단협",
+        "포스코이앤씨 노사교섭",
+        "포스코이앤씨 노조 파업",
+        "포스코이앤씨 잠정합의"
       ]
     }
   ]

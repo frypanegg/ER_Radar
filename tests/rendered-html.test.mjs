@@ -511,3 +511,19 @@ test("확장 법인의 과거 연도 교섭 완료 시점이 시드에 들어 �
   const signed = seed.records.filter((record) => record.stage === "S7");
   assert.ok(signed.every((record) => /조인|서명|체결|발효/.test(`${record.title} ${record.factSummary} ${record.annotation}`)));
 });
+
+// 추적 목록에 넣어도 수집기 설정에 없으면 그 법인은 영원히 갱신되지 않는다. 수집기는
+// company-universe가 아니라 source-config를 읽기 때문이다. 두 목록이 갈라지면
+// 화면에는 카드가 보이는데 내용은 처음 심은 값에서 멈춘다.
+test("추적 목록과 수집기 설정이 같은 법인을 가리킨다", async () => {
+  const [universe, config] = await Promise.all([
+    readFile(new URL("../data/company-universe.json", import.meta.url), "utf8"),
+    readFile(new URL("../data/source-config.json", import.meta.url), "utf8"),
+  ]);
+
+  const tracked = JSON.parse(universe).initialPublicTracking.map((company) => company.id);
+  const collected = new Set(JSON.parse(config).companies.map((company) => company.id));
+
+  const missing = tracked.filter((id) => !collected.has(id));
+  assert.deepEqual(missing, [], `수집기 설정에 없는 추적 법인: ${missing.join(", ")}`);
+});
