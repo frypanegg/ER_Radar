@@ -26,6 +26,7 @@ import {
   selectCandidate,
   stageRanks,
 } from "../scripts/apply-daily-update.mjs";
+import { decideFactSource, latestEvidenceDate } from "../lib/fact-reconciliation.mjs";
 import { classifyArticle, validateConfiguration } from "../scripts/collect-news.mjs";
 
 /** 제목 하나를 실제 설정으로 분류한다. 원문 검증까지 통과한 기사로 취급한다. */
@@ -1151,4 +1152,96 @@ test("배포 예외는 이메일 인증 오류 하나만, 업로드가 끝난 �
   assert.match(workflow, /::warning::Cloudflare 이메일 인증 대기 중/);
   // wrangler를 무조건 통과시키는 형태(|| true, continue-on-error)로 바뀌면 안 된다.
   assert.doesNotMatch(workflow, /wrangler deploy[^\n]*\|\|\s*true/);
+});
+
+// 수집은 매일 성공하는데 화면은 며칠째 그대로였다. 화면이 하이드레이션 뒤 DB로
+// 시드를 덮어쓰는데, 일일 수집은 시드에만 쓰고 DB는 사람이 정정을 승인할 때만
+// 바뀌기 때문이다. 2026-08-19에 멈춘 DB 행이 08-20·08-23 수집분을 계속 가렸다.
+test("DB가 시드보다 낡았으면 수집 결과가 화면까지 간다", () => {
+  const seed = {
+    companyId: "hyundai-motor",
+    stage: "S3",
+    eventDate: "2026-08-23",
+    factualStatus: "AUTO_COLLECTED_TITLE_BASIS",
+    flowEvents: [{ date: "2026-08-23", stage: "S3" }],
+  };
+  const fact = {
+    companyId: "hyundai-motor",
+    stage: "S3",
+    eventDate: "2026-08-19",
+    flowEvents: [{ date: "2026-08-19", stage: "S3" }],
+  };
+
+  const decision = decideFactSource({ seed, fact });
+  assert.equal(decision.use, "seed");
+  assert.equal(decision.reason, "seed_has_newer_evidence");
+});
+
+// 반대 방향도 지켜야 한다. sk하이닉스 S5·포스코·기아의 최신 사건은 사람이 화면에서
+// 정정해 DB에만 있고 시드에는 없다. 시드가 이기면 그 정정이 사라진다.
+test("사람이 DB에만 남긴 정정은 낡은 시드에 덮이지 않는다", () => {
+  const seed = {
+    companyId: "sk-hynix",
+    stage: "S3",
+    eventDate: "2026-07-30",
+    factualStatus: "VERIFIED_SOURCE",
+    flowEvents: [{ date: "2026-07-30", stage: "S3" }],
+  };
+  const fact = {
+    companyId: "sk-hynix",
+    stage: "S5",
+    eventDate: "2026-08-19",
+    flowEvents: [{ date: "2026-08-19", stage: "S5" }],
+  };
+
+  assert.equal(decideFactSource({ seed, fact }).use, "db");
+});
+
+// 제목 기반 수집이 사람이 확인한 단계를 뒤로 돌리게 두면 안 된다. 파업·집회 보도는
+// 교섭 진행 신호를 함께 담아서, 잠정합의가 확인된 교섭에 본교섭 제목이 하루 늦게
+// 붙는 일이 실제로 생긴다.
+test("제목 기반 수집은 날짜가 더 최근이어도 검증된 단계를 내리지 못한다", () => {
+  const seed = {
+    companyId: "sk-hynix",
+    stage: "S3",
+    eventDate: "2026-08-25",
+    factualStatus: "AUTO_COLLECTED_TITLE_BASIS",
+    flowEvents: [{ date: "2026-08-25", stage: "S3" }],
+  };
+  const fact = {
+    companyId: "sk-hynix",
+    stage: "S5",
+    eventDate: "2026-08-19",
+    flowEvents: [{ date: "2026-08-19", stage: "S5" }],
+  };
+
+  const decision = decideFactSource({ seed, fact });
+  assert.equal(decision.use, "db");
+  assert.equal(decision.reason, "title_basis_cannot_lower_verified_stage");
+
+  // 같은 날짜라도 단계를 올리는 쪽이면 시드가 이긴다.
+  const promoting = decideFactSource({
+    seed: { ...seed, stage: "S6" },
+    fact,
+  });
+  assert.equal(promoting.use, "seed");
+});
+
+// 대표 사건만 보면 경과에 더 늦은 사건이 들어온 쪽이 낡은 것으로 잘못 판정된다.
+test("최신 여부는 대표 사건이 아니라 경과까지 훑어 정한다", () => {
+  const seed = {
+    stage: "S3",
+    eventDate: "2026-08-01",
+    factualStatus: "VERIFIED_SOURCE",
+    flowEvents: [{ date: "2026-08-27", stage: "S3" }],
+  };
+  const fact = { stage: "S3", eventDate: "2026-08-19", flowEvents: [] };
+
+  assert.equal(latestEvidenceDate(seed), "2026-08-27");
+  assert.equal(decideFactSource({ seed, fact }).use, "seed");
+});
+
+// DB에 행이 아예 없는 연도는 예전부터 시드로 그렸다. 그 동작은 그대로여야 한다.
+test("DB에 없는 법인·연도는 시드로 계속 그린다", () => {
+  assert.equal(decideFactSource({ seed: { eventDate: "2026-01-01" }, fact: null }).use, "seed");
 });

@@ -23,6 +23,7 @@ import historicalSeed from "../data/historical-fact-seed.json";
 import currentSeed from "../data/current-2026-fact-seed.json";
 import automationHeartbeat from "../data/automation-heartbeat.json";
 import { describeCollectionLag, resolveCurrentAsOf } from "../lib/collection-freshness.mjs";
+import { decideFactSource } from "../lib/fact-reconciliation.mjs";
 import {
   compareEventsAscending,
   deriveCaseHistory,
@@ -62,6 +63,9 @@ type HistoricalRecord = {
   coveredWorkerRelation: "DIRECT";
   includeInPrimaryDashboard: true;
   annotation: string;
+  // 사람이 검증한 기록과 제목 기반 자동 수집 기록을 구분한다. DB 행과 시드 중
+  // 무엇으로 그릴지 고를 때 쓴다.
+  factualStatus?: string;
   flowEvents?: BargainingFlowEvent[];
 };
 type TrackingCompany = {
@@ -232,13 +236,20 @@ function subscribeFacts(onChange: () => void) {
 
 const seedFactSnapshot: FactSource = { source: "seed", facts: null };
 
-/** 같은 법인·연도의 DB 값으로 시드 레코드를 덮어쓴다. 없는 연도는 시드 그대로 둔다. */
+/**
+ * 같은 법인·연도의 DB 값으로 시드 레코드를 덮어쓴다. 없는 연도는 시드 그대로 둔다.
+ *
+ * 무조건 덮어쓰지는 않는다. 일일 수집은 시드에만 쓰고 DB는 사람이 정정을 승인할 때만
+ * 바뀌어서, 항상 DB가 이기면 수집 결과가 화면에 닿지 못한다. 어느 쪽이 더 최근에
+ * 확인됐는지로 고른다. 판단 규칙은 lib/fact-reconciliation.mjs가 갖는다.
+ */
 function applyPublishedFacts(records: HistoricalRecord[], facts: PublishedFact[] | null) {
   if (!facts || facts.length === 0) return records;
   const byKey = new Map(facts.map((fact) => [`${fact.companyId}:${fact.bargainingYear}`, fact]));
   return records.map((record) => {
     const fact = byKey.get(`${record.companyId}:${record.bargainingYear}`);
     if (!fact) return record;
+    if (decideFactSource({ seed: record, fact }).use === "seed") return record;
     return {
       ...record,
       agreementType: fact.agreementType || record.agreementType,
