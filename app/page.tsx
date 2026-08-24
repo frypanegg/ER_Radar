@@ -677,7 +677,7 @@ export default function Home() {
         <div className="container top-band-inner">
           {/* 기준일은 같은 행 오른쪽의 마지막 수집 표시가 이미 담당한다. 여기서 한 번 더
               쓰면 같은 줄에 날짜가 두 번 나온다. */}
-          <p><Sparkles size={14} aria-hidden="true" /><span>대한민국 주요 제조업의 단체교섭 현황을 모니터링합니다 · <b>원청 노조 교섭만 수록</b></span></p>
+          <p><Sparkles size={14} aria-hidden="true" /><span>대한민국 주요 기업의 단체교섭 현황을 모니터링합니다 · <b>원청 노조 교섭만 수록</b></span></p>
           <p className="collection-summary">
             <Clock3 size={14} aria-hidden="true" /><span>수집 예정: 매일 06:30 KST · 법인별 1회</span>
             {lastCollectionKstDate ? (

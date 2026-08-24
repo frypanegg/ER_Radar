@@ -208,6 +208,156 @@
         "교섭·노동위원회 조정 사건열",
         "에너지·기계 산업 영향"
       ]
+    },
+    {
+      "id": "samsung-biologics",
+      "legalName": "삼성바이오로직스 주식회사",
+      "tier": "T1",
+      "industry": "바이오·제약",
+      "selectionRationale": [
+        "창사 첫 전면파업과 준법투쟁",
+        "성과급·기본급 인상률 쟁점",
+        "교섭 장기화와 사후조정"
+      ]
+    },
+    {
+      "id": "korean-air",
+      "legalName": "주식회사 대한항공",
+      "tier": "T1",
+      "industry": "항공운송",
+      "selectionRationale": [
+        "아시아나 통합에 따른 교섭 구조 변화",
+        "일반직 조인과 조종사노조 쟁의의 분리",
+        "복수노조 교섭 사례"
+      ]
+    },
+    {
+      "id": "kb-kookmin-bank",
+      "legalName": "주식회사 국민은행",
+      "tier": "T1",
+      "industry": "금융",
+      "selectionRationale": [
+        "산별 교섭과 총파업 절차",
+        "주 4.5일제·성과급 쟁점",
+        "금융권 교섭 비교군"
+      ]
+    },
+    {
+      "id": "shinhan-bank",
+      "legalName": "주식회사 신한은행",
+      "tier": "T2",
+      "industry": "금융",
+      "selectionRationale": [
+        "산별 교섭 참여",
+        "금융권 교섭 비교군"
+      ]
+    },
+    {
+      "id": "coupang",
+      "legalName": "쿠팡 주식회사",
+      "tier": "T1",
+      "industry": "유통·물류",
+      "selectionRationale": [
+        "첫 단체협약 교섭",
+        "플랫폼·물류 고용 구조",
+        "원청 직접고용 노조 교섭 사례"
+      ]
+    },
+    {
+      "id": "kakao",
+      "legalName": "주식회사 카카오",
+      "tier": "T1",
+      "industry": "플랫폼·IT",
+      "selectionRationale": [
+        "창사 첫 파업",
+        "성과급 보상제도 쟁점",
+        "플랫폼 업계 교섭 확산의 기준점"
+      ]
+    },
+    {
+      "id": "korail",
+      "legalName": "한국철도공사",
+      "tier": "T1",
+      "industry": "철도운송",
+      "selectionRationale": [
+        "총파업 예고와 유보의 반복",
+        "공공기관 경영평가 성과급 쟁점",
+        "국민 생활 파급력"
+      ]
+    },
+    {
+      "id": "lg-uplus",
+      "legalName": "주식회사 엘지유플러스",
+      "tier": "T2",
+      "industry": "통신",
+      "selectionRationale": [
+        "복수노조 공동교섭",
+        "영업이익 연동 성과급 쟁점",
+        "AI 전환에 따른 고용안정 요구"
+      ]
+    },
+    {
+      "id": "lg-chem",
+      "legalName": "주식회사 엘지화학",
+      "tier": "T2",
+      "industry": "화학",
+      "selectionRationale": [
+        "자회사 배당 연계 성과급 요구",
+        "석유화학 업황과 고용안정",
+        "화학업 교섭 비교군"
+      ]
+    },
+    {
+      "id": "kumho-tire",
+      "legalName": "금호타이어 주식회사",
+      "tier": "T2",
+      "industry": "타이어",
+      "selectionRationale": [
+        "조인식까지 확인되는 교섭 사건열",
+        "화재 이후 경영 정상화 교섭",
+        "타이어업 비교군"
+      ]
+    },
+    {
+      "id": "seoul-metro",
+      "legalName": "서울교통공사",
+      "tier": "T2",
+      "industry": "도시철도",
+      "selectionRationale": [
+        "복수노조 공동 교섭단",
+        "파업 예고와 막판 타결의 반복",
+        "지방공기업 교섭 사례"
+      ]
+    },
+    {
+      "id": "lg-display",
+      "legalName": "엘지디스플레이 주식회사",
+      "tier": "T3",
+      "industry": "디스플레이",
+      "selectionRationale": [
+        "디스플레이업 교섭 비교군",
+        "직접고용 교섭 근거 축적 중"
+      ]
+    },
+    {
+      "id": "sk-telecom",
+      "legalName": "에스케이텔레콤 주식회사",
+      "tier": "T3",
+      "industry": "통신",
+      "selectionRationale": [
+        "통신업 교섭 비교군",
+        "직접고용 교섭 근거 축적 중"
+      ]
+    },
+    {
+      "id": "posco-enc",
+      "legalName": "포스코이앤씨 주식회사",
+      "tier": "T3",
+      "industry": "건설",
+      "selectionRationale": [
+        "중대재해 반복에 따른 노사 현안",
+        "건설업 교섭 근거 축적 중"
+      ]
     }
   ],
   "verificationQueue": [

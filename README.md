@@ -15,7 +15,7 @@
 - `app/` — 법인 검색·교섭 단계 조회·연도별 교섭 경과 상세·추적 기업 추가 요청 화면
 - `docs/negotiation-framework.md` — 법률·연구 근거, 단계 모델, 데이터 규칙
 - `data/company-universe.json` — 초기 추적 후보와 선정 점수 기준
-- `data/historical-fact-seed.json` — 12개사 2021–2025 초기 사실 데이터. 원청 직접고용·원문 URL이 함께 확인된 행만 공개 후보로 포함
+- `data/historical-fact-seed.json` — 추적 법인의 2021–2025 사실 데이터. 원청 직접고용·원문 URL이 함께 확인된 행만 공개 후보로 포함
 - `data/current-2026-fact-seed.json` — 2026년 기준 현황. 최신 기사와 직접고용 범위 근거가 함께 확인된 교섭 기록만 포함
 - `scripts/build-historical-seed.mjs` — 조사 결과를 공개 가능한 초기 사실 데이터로 병합·검증
 - `scripts/collect-news.mjs` — KST 매일 06:30 기준 뉴스 후보 수집·범위 분류기

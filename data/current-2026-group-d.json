@@ -1,0 +1,247 @@
+{
+  "metadata": {
+    "group": "d",
+    "purpose": "2026-08-25 확장 추적 법인의 2026년 교섭 현황",
+    "rules": [
+      "기사 원문에서 확인한 날짜·단계만 적는다.",
+      "조인·서명 근거가 확인된 건만 S7로 올린다.",
+      "2026년 사건을 확인하지 못한 법인은 레코드를 만들지 않는다. 화면에는 근거 미확인으로 남고 일일 수집이 이후 채운다."
+    ]
+  },
+  "records": [
+    {
+      "companyId": "samsung-biologics",
+      "companyLegalName": "삼성바이오로직스 주식회사",
+      "directEmployerId": "samsung-biologics",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S4",
+      "eventDate": "2026-05-06",
+      "title": "삼성바이오로직스 2026년 임금 및 단체협약 교섭, 전면파업 뒤 준법투쟁 전환",
+      "factSummary": "닷새간의 전면파업이 합의 없이 끝난 뒤 조합원들이 현장에 복귀하면서 연장·휴일근로를 거부하는 준법투쟁으로 전환했다고 보도됐다.",
+      "unionName": "삼성바이오로직스 노동조합",
+      "agreementTypeEvidence": "삼성바이오로직스 2026년 임금 및 단체협약 교섭에서 노조는 기본급 인상률과 성과급 재원 배분을 요구했고, 임단협 쟁점이 풀리지 않아 파업과 준법투쟁으로 이어졌다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 삼성바이오로직스 소속 조합원 약 2천800명이 참여한 파업과 그 노동조합을 회사의 교섭 상대로 적시한다.",
+      "sourceUrl": "https://www.joongangenews.com/news/articleView.html?idxno=516835",
+      "sourceName": "중앙이코노미뉴스",
+      "sourceTier": "B",
+      "confidence": 0.85,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "창사 첫 전면파업 이후 준법투쟁이 이어지는 교착 국면이다. 잠정합의 근거를 확인하지 못해 S4로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-04-28",
+          "stage": "S4",
+          "label": "부분파업 개시",
+          "summary": "노조가 부분파업에 들어갔다고 보도됐다.",
+          "sourceUrl": "https://www.joongangenews.com/news/articleView.html?idxno=516835"
+        },
+        {
+          "date": "2026-05-01",
+          "stage": "S4",
+          "label": "전면파업 개시",
+          "summary": "5월 1일부터 5일까지 닷새간 전면파업이 진행됐고 조합원 약 2천800명이 참여했다고 보도됐다.",
+          "sourceUrl": "https://www.kukinews.com/article/view/kuk202605060169"
+        },
+        {
+          "date": "2026-05-06",
+          "stage": "S4",
+          "label": "준법투쟁 전환",
+          "summary": "전면파업이 합의 없이 끝나 조합원이 복귀했고 연장·휴일근로를 거부하는 준법투쟁으로 전환했다고 보도됐다.",
+          "sourceUrl": "https://www.joongangenews.com/news/articleView.html?idxno=516835"
+        }
+      ]
+    },
+    {
+      "companyId": "korean-air",
+      "companyLegalName": "주식회사 대한항공",
+      "directEmployerId": "korean-air",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S7",
+      "eventDate": "2026-07-07",
+      "title": "대한항공 2026년 임금 및 단체협약 조인",
+      "factSummary": "서울 강서구 본사에서 조인식이 열려 일반직·기술직·객실승무직의 기본급을 임금총액 2.5% 범위에서 인상하는 내용에 노사가 서명했다고 보도됐다.",
+      "unionName": "대한항공 노동조합",
+      "directEmploymentEvidence": "원문은 대한항공 부회장과 대한항공 노동조합 위원장을 조인식에 참석한 교섭 당사자로 적시하고, 적용 대상을 일반직·기술직·객실승무직으로 특정한다.",
+      "sourceUrl": "https://www.fnnews.com/news/202607071815250217",
+      "sourceName": "파이낸셜뉴스",
+      "sourceTier": "B",
+      "confidence": 0.9,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "조인식과 서명이 원문에 명시돼 S7로 표기한다. 조종사노동조합은 별도 교섭 단위로 같은 해 교섭이 결렬돼 쟁의 절차에 있으며, 이 행에 포함하지 않는다.",
+      "flowEvents": [
+        {
+          "date": "2026-07-07",
+          "stage": "S7",
+          "label": "임단협 조인식",
+          "summary": "본사에서 조인식이 열려 노사 대표가 합의 내용에 서명했다고 보도됐다.",
+          "sourceUrl": "https://www.fnnews.com/news/202607071815250217"
+        }
+      ]
+    },
+    {
+      "companyId": "kakao",
+      "companyLegalName": "주식회사 카카오",
+      "directEmployerId": "kakao",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "WAGE",
+      "stage": "S5",
+      "eventDate": "2026-07-30",
+      "title": "카카오 2026년 임금협상 잠정합의",
+      "factSummary": "두 차례 파업을 거친 뒤 노사가 임금협상 잠정합의안을 도출했다고 보도됐다. 조합원 찬반투표 결과는 원문에서 확인되지 않는다.",
+      "unionName": "전국화학섬유식품산업노동조합 카카오지회",
+      "directEmploymentEvidence": "원문은 카카오와 화섬식품노조 카카오지회를 임금협상 당사자로 적시하고, 판교 본사에서 카카오 소속 직원이 참여한 파업을 같은 교섭의 경과로 기술한다.",
+      "sourceUrl": "https://biz.heraldcorp.com/article/10825344",
+      "sourceName": "헤럴드경제",
+      "sourceTier": "B",
+      "confidence": 0.86,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "잠정합의까지 확인된다. 찬반투표 결과를 확인하지 못해 S5로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-06-10",
+          "stage": "S4",
+          "label": "창사 첫 파업",
+          "summary": "판교 본사에서 창사 이후 첫 부분파업이 열렸고 약 1천500명이 참여했다고 보도됐다.",
+          "sourceUrl": "https://zdnet.co.kr/view/?no=20260610162159"
+        },
+        {
+          "date": "2026-07-30",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "노사가 잠정합의안을 도출해 봉합 수순에 들어갔다고 보도됐다.",
+          "sourceUrl": "https://biz.heraldcorp.com/article/10825344"
+        }
+      ]
+    },
+    {
+      "companyId": "coupang",
+      "companyLegalName": "쿠팡 주식회사",
+      "directEmployerId": "coupang",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "CBA",
+      "stage": "S4",
+      "eventDate": "2026-08-13",
+      "title": "쿠팡 2026년 단체협약 교섭 결렬 선언",
+      "factSummary": "상견례 이후 약 10개월 동안 17차례 본교섭이 열렸으나 합의에 이르지 못해 노조가 결렬을 선언하고 노동위원회 조정 신청과 후속 절차에 들어간다고 보도됐다.",
+      "unionName": "전국화학섬유식품산업노동조합 쿠팡지회",
+      "directEmploymentEvidence": "원문은 쿠팡과 화섬식품노조 쿠팡지회를 본교섭 당사자로 적시한다. 별도 법인인 쿠팡풀필먼트서비스 소속 노조의 교섭은 이 행에 포함하지 않는다.",
+      "sourceUrl": "https://zdnet.co.kr/view/?no=20260813143103",
+      "sourceName": "ZDNet Korea",
+      "sourceTier": "B",
+      "confidence": 0.85,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "결렬 선언과 조정 신청 예고까지 확인된다. 조정 결과는 확인하지 못했다.",
+      "flowEvents": [
+        {
+          "date": "2026-08-13",
+          "stage": "S4",
+          "label": "단체협약 교섭 결렬 선언",
+          "summary": "17차례 본교섭 끝에 노조가 결렬을 선언했다고 보도됐다.",
+          "sourceUrl": "https://zdnet.co.kr/view/?no=20260813143103"
+        }
+      ]
+    },
+    {
+      "companyId": "lg-uplus",
+      "companyLegalName": "주식회사 엘지유플러스",
+      "directEmployerId": "lg-uplus",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S3",
+      "eventDate": "2026-07-02",
+      "title": "LG유플러스 2026년 임금 및 단체협약 7차 본교섭",
+      "factSummary": "7차 본교섭에서 회사가 평가등급분을 포함한 임금총액 3.6% 인상안을 제시했으나 노조가 물가 상승을 이유로 반대해 입장차가 남았다고 보도됐다.",
+      "unionName": "LG유플러스 공동교섭단(민주유플러스지부·한마음지부)",
+      "directEmploymentEvidence": "원문은 LG유플러스와 두 개 노조로 구성된 공동교섭단을 본교섭 당사자로 적시한다.",
+      "sourceUrl": "https://www.sisajournal-e.com/news/articleView.html?idxno=422271",
+      "sourceName": "시사저널e",
+      "sourceTier": "B",
+      "confidence": 0.8,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "본교섭이 이어지는 단계다. 결렬 선언이나 조정 신청 근거는 확인하지 못해 S3으로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-07-02",
+          "stage": "S3",
+          "label": "7차 본교섭",
+          "summary": "회사가 임금총액 3.6% 인상안을 제시했고 노조가 이를 받아들이지 않았다고 보도됐다.",
+          "sourceUrl": "https://www.sisajournal-e.com/news/articleView.html?idxno=422271"
+        }
+      ]
+    },
+    {
+      "companyId": "kb-kookmin-bank",
+      "companyLegalName": "주식회사 국민은행",
+      "directEmployerId": "kb-kookmin-bank",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S4",
+      "eventDate": "2026-08-13",
+      "title": "국민은행 2026년 임금 및 단체협약 산별교섭 쟁의행위 가결",
+      "factSummary": "산별교섭 쟁의행위 찬반투표에 조합원 6만8천878명이 참여해 6만6천154명(96.1%)이 찬성했고, 9월 4일 총파업이 예고됐다고 보도됐다.",
+      "unionName": "전국금융산업노동조합 KB국민은행지부",
+      "directEmploymentEvidence": "원문은 국민은행 소속 직원으로 구성된 지부가 속한 금융산업노동조합을 교섭 주체로 적시한다.",
+      "sourceUrl": "https://www.mt.co.kr/finance/2026/08/13/2026081317031155668",
+      "sourceName": "머니투데이",
+      "sourceTier": "B",
+      "confidence": 0.78,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "2026년 교섭은 개별 기업이 아니라 금융산업노동조합과 사용자협의회의 산별교섭으로 진행된다. 쟁의행위 가결까지 확인돼 S4로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-08-13",
+          "stage": "S4",
+          "label": "쟁의행위 찬반투표 가결",
+          "summary": "찬성률 96.1%로 쟁의행위가 가결되고 9월 4일 총파업이 예고됐다고 보도됐다.",
+          "sourceUrl": "https://www.mt.co.kr/finance/2026/08/13/2026081317031155668"
+        }
+      ]
+    },
+    {
+      "companyId": "shinhan-bank",
+      "companyLegalName": "주식회사 신한은행",
+      "directEmployerId": "shinhan-bank",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S4",
+      "eventDate": "2026-08-13",
+      "title": "신한은행 2026년 임금 및 단체협약 산별교섭 쟁의행위 가결",
+      "factSummary": "산별교섭 쟁의행위 찬반투표가 찬성률 96.1%로 가결되고 9월 4일 총파업이 예고됐으며, 노사 임금 인상률 격차가 3%포인트 이상 남았다고 보도됐다.",
+      "unionName": "전국금융산업노동조합 신한은행지부",
+      "directEmploymentEvidence": "원문은 신한은행 소속 직원으로 구성된 지부가 속한 금융산업노동조합을 교섭 주체로 적시한다.",
+      "sourceUrl": "https://www.mt.co.kr/finance/2026/08/13/2026081317031155668",
+      "sourceName": "머니투데이",
+      "sourceTier": "B",
+      "confidence": 0.76,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "2026년 교섭은 금융산업노동조합과 사용자협의회의 산별교섭으로 진행된다. 쟁의행위 가결까지 확인돼 S4로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-08-13",
+          "stage": "S4",
+          "label": "쟁의행위 찬반투표 가결",
+          "summary": "찬성률 96.1%로 쟁의행위가 가결되고 9월 4일 총파업이 예고됐다고 보도됐다.",
+          "sourceUrl": "https://www.mt.co.kr/finance/2026/08/13/2026081317031155668"
+        }
+      ]
+    }
+  ],
+  "auditRecords": [],
+  "withheldRecords": []
+}

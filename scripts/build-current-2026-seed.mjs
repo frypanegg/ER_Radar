@@ -169,7 +169,7 @@ export function buildCurrentSeed({ companyUniverse, groupResults, asOf }) {
 
   return {
     schemaVersion: 1,
-    title: "초기 추적 12개사 2026년 교섭현황",
+    title: "추적 법인 2026년 교섭현황",
     locale: "ko-KR",
     asOf,
     coverageYear: CURRENT_YEAR,
@@ -200,6 +200,7 @@ async function main() {
     "data/current-2026-group-a.json",
     "data/current-2026-group-b.json",
     "data/current-2026-group-c.json",
+    "data/current-2026-group-d.json",
   ].map((path) => resolve(PROJECT_ROOT, path));
   const [companyUniverse, ...groupResults] = await Promise.all([
     readJson(resolve(PROJECT_ROOT, "data/company-universe.json")),

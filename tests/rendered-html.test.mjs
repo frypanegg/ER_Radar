@@ -253,8 +253,11 @@ test("keeps scope and source guards in the production-facing implementation", as
 
   const seed = JSON.parse(historicalSeed);
   const current = JSON.parse(currentSeed);
-  assert.equal(seed.trackingCompanies.length, 12);
-  assert.equal(seed.coverage.length, 12);
+  // 추적 목록은 늘어난다. 굳은 숫자를 박아 두면 법인을 추가할 때마다 데이터가 아니라
+  // 테스트가 깨진다. 지켜야 할 것은 개수가 아니라 두 목록이 같은 법인 집합을 가리키고
+  // 초기 12개사 아래로 줄지 않는다는 점이다.
+  assert.ok(seed.trackingCompanies.length >= 12);
+  assert.equal(seed.coverage.length, seed.trackingCompanies.length);
   assert.ok(seed.records.length >= 44);
   assert.ok(seed.records.every((record) => record.scopeClassification === "PRIMARY_DIRECT_UNION"));
   assert.ok(seed.records.every((record) => record.includeInPrimaryDashboard === true));
@@ -263,7 +266,10 @@ test("keeps scope and source guards in the production-facing implementation", as
   // 일일 자동 반영이 기준일을 앞으로 밀기 때문에 고정 날짜 대신 형식과 하한을 본다.
   assert.match(current.asOf, /^\d{4}-\d{2}-\d{2}$/);
   assert.ok(current.asOf >= "2026-08-10");
-  assert.equal(current.records.length, 12);
+  // 2026년 레코드는 추적 법인 수와 같지 않다. 그해 사건을 아직 원문으로 확인하지 못한
+  // 법인은 레코드 없이 "근거 미확인"으로 남기는 것이 이 프로젝트의 규칙이다.
+  assert.ok(current.records.length >= 12);
+  assert.ok(current.records.length <= seed.trackingCompanies.length);
   assert.ok(current.records.every((record) => record.bargainingYear === 2026));
   assert.ok(current.records.every((record) => record.scopeClassification === "PRIMARY_DIRECT_UNION"));
   assert.ok(current.records.every((record) => record.coveredWorkerRelation === "DIRECT"));
@@ -441,4 +447,67 @@ test("기업 목록이 최근 확인된 순서로 나온다", async () => {
     right[1].localeCompare(left[1]),
   )[0];
   assert.equal(rendered[0], newest[0]);
+});
+
+// 추적 대상을 제조업 밖으로 넓혔다. 항공·금융·플랫폼·철도가 들어오면서 화면 문구의
+// "제조업"이 사실과 어긋나게 됐고, 굳어 있던 12개사 가정도 함께 풀었다.
+test("추적 대상이 제조업을 넘어선 주요 기업으로 넓혀져 있다", async () => {
+  const [page, universe, historicalSeed, currentSeed] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../data/company-universe.json", import.meta.url), "utf8"),
+    readFile(new URL("../data/historical-fact-seed.json", import.meta.url), "utf8"),
+    readFile(new URL("../data/current-2026-fact-seed.json", import.meta.url), "utf8"),
+  ]);
+
+  // 화면 안내 문구가 다시 제조업으로 좁아지면 추적 목록과 어긋난다.
+  assert.match(page, /대한민국 주요 기업의 단체교섭 현황을 모니터링합니다/);
+  assert.doesNotMatch(page, /주요 제조업/);
+
+  const tracked = new Set(
+    JSON.parse(universe).initialPublicTracking.map((company) => company.id),
+  );
+  for (const id of ["korean-air", "kb-kookmin-bank", "kakao", "korail", "coupang"]) {
+    assert.ok(tracked.has(id), `${id}가 추적 목록에 없다`);
+  }
+
+  // 확장 법인도 기존과 같은 원청 직접고용 게이트를 통과해야 한다.
+  const seed = JSON.parse(historicalSeed);
+  const current = JSON.parse(currentSeed);
+  const added = [...seed.records, ...current.records].filter((record) =>
+    tracked.has(record.companyId),
+  );
+  assert.ok(added.every((record) => record.scopeClassification === "PRIMARY_DIRECT_UNION"));
+  assert.ok(added.every((record) => record.directEmployerId === record.companyId));
+  assert.ok(added.every((record) => /^https?:\/\//.test(record.sourceUrl)));
+});
+
+// 사용자가 보려는 것은 "그 해 교섭이 언제 끝났는가"다. 과거 연도 레코드가 완료 시점을
+// 담고 있는지 확인한다. 확인하지 못한 연도를 채우지 않는 것은 규칙이지만, 확인한 것을
+// 빠뜨리면 화면이 비어 보인다.
+test("확장 법인의 과거 연도 교섭 완료 시점이 시드에 들어 있다", async () => {
+  const seed = JSON.parse(
+    await readFile(new URL("../data/historical-fact-seed.json", import.meta.url), "utf8"),
+  );
+  const settledStages = new Set(["S5", "S6", "S7"]);
+  const expected = [
+    ["kumho-tire", 2025, "S7"],
+    ["seoul-metro", 2024, "S6"],
+    ["seoul-metro", 2025, "S6"],
+    ["korail", 2025, "S5"],
+    ["kb-kookmin-bank", 2025, "S6"],
+  ];
+
+  for (const [companyId, year, stage] of expected) {
+    const record = seed.records.find(
+      (candidate) => candidate.companyId === companyId && candidate.bargainingYear === year,
+    );
+    assert.ok(record, `${companyId} ${year} 기록이 없다`);
+    assert.equal(record.stage, stage);
+    assert.ok(settledStages.has(record.stage));
+    assert.match(record.eventDate, /^\d{4}-\d{2}-\d{2}$/);
+  }
+
+  // 조인·서명 근거 없이 S7로 올린 행이 섞이면 안 된다.
+  const signed = seed.records.filter((record) => record.stage === "S7");
+  assert.ok(signed.every((record) => /조인|서명|체결|발효/.test(`${record.title} ${record.factSummary} ${record.annotation}`)));
 });

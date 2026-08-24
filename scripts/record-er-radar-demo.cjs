@@ -243,8 +243,8 @@ async function main() {
   await overlay("cover", {
     kicker: "PRODUCT DEMO",
     title: "노사교섭 <b>레이더</b>",
-    sub: "대한민국 주요 제조업의 임금협상·단체교섭 현황을<br>기사 원문과 교섭 단계로 읽는 대시보드",
-    meta: "12개사 · 2021–2026 · 매일 1회 갱신",
+    sub: "대한민국 주요 기업의 임금협상·단체교섭 현황을<br>기사 원문과 교섭 단계로 읽는 대시보드",
+    meta: "주요 기업 · 2021–2026 · 매일 1회 갱신",
     current: 0,
     total: 7,
   });

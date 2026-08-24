@@ -44,6 +44,7 @@ function readArgs(argv) {
     inputPaths: [
       resolve(PROJECT_ROOT, "data/historical-research-group-a.json"),
       resolve(PROJECT_ROOT, "data/historical-research-group-b.json"),
+      resolve(PROJECT_ROOT, "data/historical-research-group-c.json"),
     ],
     outputPath: resolve(PROJECT_ROOT, "data/historical-fact-seed.json"),
     asOf: "2026-08-10",
@@ -172,7 +173,7 @@ export function buildSeed({ companyUniverse, groupResults, asOf }) {
 
   return {
     schemaVersion: 1,
-    title: "초기 추적 12개사 과거 교섭 사실 데이터",
+    title: "추적 법인 과거 교섭 사실 데이터",
     locale: "ko-KR",
     asOf,
     coveragePeriod: { startYear: START_YEAR, endYear: END_YEAR },
