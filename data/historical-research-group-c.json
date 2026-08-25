@@ -177,6 +177,73 @@
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "annotation": "해당 교섭연도는 2025년이고 타결 보도는 이듬해 초다. 조인·서명 근거는 확인하지 않아 S6으로 둔다."
+    },
+    {
+      "companyId": "kia",
+      "companyLegalName": "기아 주식회사",
+      "directEmployerId": "kia",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2022,
+      "agreementType": "INTEGRATED",
+      "stage": "S5",
+      "eventDate": "2022-08-30",
+      "title": "기아 2022년 임금·단체협상 잠정합의안 도출",
+      "factSummary": "6월 상견례 이후 10차 본교섭에서 기본급 9만8천원 인상을 담은 잠정합의안이 나왔고, 2년 연속 무분규 도출로 보도됐다. 조합원 찬반투표는 9월 2일로 예고됐다.",
+      "unionName": "전국금속노동조합 기아자동차지부",
+      "directEmploymentEvidence": "원문은 기아와 금속노조 기아차지부를 본교섭 당사자로 적시하고, 오토랜드 광명에서 열린 교섭으로 특정한다.",
+      "sourceUrl": "http://www.seoulfn.com/news/articleView.html?idxno=465678",
+      "sourceName": "서울파이낸스",
+      "sourceTier": "B",
+      "confidence": 0.84,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "잠정합의 도출까지 확인된다. 찬반투표 결과는 이 원문에서 확인하지 않아 S5로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2022-08-30",
+          "stage": "S5",
+          "label": "10차 본교섭 잠정합의",
+          "summary": "기본급 9만8천원 인상을 담은 잠정합의안이 10차 본교섭에서 나왔다고 보도됐다.",
+          "sourceUrl": "http://www.seoulfn.com/news/articleView.html?idxno=465678"
+        }
+      ]
+    },
+    {
+      "companyId": "kia",
+      "companyLegalName": "기아 주식회사",
+      "directEmployerId": "kia",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2025,
+      "agreementType": "INTEGRATED",
+      "stage": "S6",
+      "eventDate": "2025-09-30",
+      "title": "기아 2025년 임금·단체협상 잠정합의안 가결",
+      "factSummary": "조합원 찬반투표에서 1만5천601명이 찬성해 찬성률 73.1%로 가결됐고, 5년 연속 무파업 타결로 보도됐다.",
+      "unionName": "전국금속노동조합 기아자동차지부",
+      "directEmploymentEvidence": "원문은 기아 조합원의 찬반투표 결과와 금속노조 기아차지부를 교섭 당사자로 적시한다.",
+      "sourceUrl": "https://www.koreadaily.com/article/20250930013125231",
+      "sourceName": "미주중앙일보",
+      "sourceTier": "B",
+      "confidence": 0.82,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "조합원 가결까지 확인된다. 조인·서명 근거는 확인하지 않아 S6으로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2025-09-25",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "노사가 2025년 잠정합의안을 도출했다고 보도됐다.",
+          "sourceUrl": "https://www.koreadaily.com/article/20250930013125231"
+        },
+        {
+          "date": "2025-09-30",
+          "stage": "S6",
+          "label": "찬반투표 가결",
+          "summary": "찬성률 73.1%로 잠정합의안이 최종 가결됐다고 보도됐다.",
+          "sourceUrl": "https://www.koreadaily.com/article/20250930013125231"
+        }
+      ]
     }
   ],
   "auditRecords": []
