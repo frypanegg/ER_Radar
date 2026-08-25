@@ -2,6 +2,48 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-08-25T14:49:50.065Z",
+      "kstDate": "2026-08-25",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-08-25",
+      "primarySource": "google",
+      "consideredArticles": 595,
+      "appliedCount": 2,
+      "skippedCount": 556,
+      "applied": [
+        {
+          "companyId": "kia",
+          "companyLegalName": "기아 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-08-24",
+          "nextStage": "S5",
+          "nextEventDate": "2026-08-25",
+          "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405971",
+          "sourceName": "매일일보",
+          "confidence": 0.8
+        },
+        {
+          "companyId": "kakao",
+          "companyLegalName": "주식회사 카카오",
+          "previousStage": "S5",
+          "previousEventDate": "2026-07-30",
+          "nextStage": "S5",
+          "nextEventDate": "2026-07-31",
+          "sourceUrl": "https://v.daum.net/v/20260731114922048?f=p",
+          "sourceName": "v.daum.net",
+          "confidence": 0.8
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 280,
+        "scope_excluded": 257,
+        "retain_main_state": 1,
+        "stage_unknown": 14,
+        "not_newer_than_recorded_event": 3,
+        "stage_downgrade_without_explicit_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-08-25T01:11:14.875Z",
       "kstDate": "2026-08-25",
       "ruleVersion": "1.0.0",

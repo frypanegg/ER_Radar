@@ -130,19 +130,19 @@
       "companyLegalName": "기아 주식회사",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-08-24",
-      "title": "기아, 6년 만의 부분 파업 피할까...노사 25일 교섭 재개",
-      "factSummary": "매일일보 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S5",
+      "eventDate": "2026-08-25",
+      "title": "기아 노사, 임단협 잠정합의...파업 하루 전 '맞손'",
+      "factSummary": "매일일보 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 기아자동차지부",
       "directEmployerId": "kia",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "기아자동차지부 판매지회의 공식 운영규칙은 조합원 자격을 '기아(주)에 입사와 동시에 자동으로 가입'하는 자로 규정한다. 최신 사건 원문은 같은 전국금속노조 기아자동차지부가 전 조합원을 대상으로 2026년 임단협 쟁의행위 투표를 실시했다고 명시한다.",
       "scopeEvidenceUrl": "https://kmpan.com/home/intro/rules/2th/",
-      "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405443",
+      "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405971",
       "sourceName": "매일일보",
       "sourceTier": "B",
-      "confidence": 0.91,
+      "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
@@ -174,14 +174,21 @@
           "label": "본교섭 진행",
           "summary": "매일일보 보도 제목 기준 확인: 기아, 6년 만의 부분 파업 피할까...노사 25일 교섭 재개",
           "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405443"
+        },
+        {
+          "date": "2026-08-25",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "매일일보 보도 제목 기준 확인: 기아 노사, 임단협 잠정합의...파업 하루 전 '맞손'",
+          "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405971"
         }
       ],
       "id": "kia:2026:INTEGRATED:2026-07-24",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://m-i.kr/news/articleView.html?idxno=1405443",
+      "originalUrl": "https://m-i.kr/news/articleView.html?idxno=1405971",
       "agreementTypeEvidence": "기아 2026년 임금·단체협약 쟁의행위 찬반투표 가결 전국금속노조 기아자동차지부의 2026년 임금·단체협약 쟁의행위 찬반투표가 7월 23일 실시돼 투표자 기준 92.5% 찬성으로 가결됐다고 보도됐다. 7월 15일까지 6차례 본교섭을 했으나 핵심 요구안의 견해차를 좁히지 못했다.",
-      "autoUpdatedAt": "2026-08-25T01:11:14.875Z"
+      "autoUpdatedAt": "2026-08-25T14:49:50.064Z"
     },
     {
       "companyId": "kumho-tire",
@@ -452,18 +459,18 @@
       "bargainingYear": 2026,
       "agreementType": "WAGE",
       "stage": "S5",
-      "eventDate": "2026-07-30",
-      "title": "카카오 2026년 임금협상 잠정합의",
-      "factSummary": "두 차례 파업을 거친 뒤 노사가 임금협상 잠정합의안을 도출했다고 보도됐다. 조합원 찬반투표 결과는 원문에서 확인되지 않는다.",
+      "eventDate": "2026-07-31",
+      "title": "카카오뱅크 인뱅 첫 전일파업...카카오노사는 잠정합의",
+      "factSummary": "v.daum.net 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국화학섬유식품산업노동조합 카카오지회",
       "directEmploymentEvidence": "원문은 카카오와 화섬식품노조 카카오지회를 임금협상 당사자로 적시하고, 판교 본사에서 카카오 소속 직원이 참여한 파업을 같은 교섭의 경과로 기술한다.",
-      "sourceUrl": "https://biz.heraldcorp.com/article/10825344",
-      "sourceName": "헤럴드경제",
+      "sourceUrl": "https://v.daum.net/v/20260731114922048?f=p",
+      "sourceName": "v.daum.net",
       "sourceTier": "B",
-      "confidence": 0.86,
+      "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "잠정합의까지 확인된다. 찬반투표 결과를 확인하지 못해 S5로 둔다.",
+      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-10",
@@ -478,12 +485,21 @@
           "label": "잠정합의",
           "summary": "노사가 잠정합의안을 도출해 봉합 수순에 들어갔다고 보도됐다.",
           "sourceUrl": "https://biz.heraldcorp.com/article/10825344"
+        },
+        {
+          "date": "2026-07-31",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "v.daum.net 보도 제목 기준 확인: 카카오뱅크 인뱅 첫 전일파업...카카오노사는 잠정합의",
+          "sourceUrl": "https://v.daum.net/v/20260731114922048?f=p"
         }
       ],
       "id": "kakao:2026:WAGE:2026-07-30",
-      "factualStatus": "VERIFIED_SOURCE",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://biz.heraldcorp.com/article/10825344"
+      "originalUrl": "https://v.daum.net/v/20260731114922048?f=p",
+      "agreementTypeEvidence": "카카오 2026년 임금협상 잠정합의 두 차례 파업을 거친 뒤 노사가 임금협상 잠정합의안을 도출했다고 보도됐다. 조합원 찬반투표 결과는 원문에서 확인되지 않는다.",
+      "autoUpdatedAt": "2026-08-25T14:49:50.065Z"
     },
     {
       "recordId": "gm-korea-2026-integrated-ratification",
