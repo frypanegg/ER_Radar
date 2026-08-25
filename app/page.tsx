@@ -25,6 +25,7 @@ import automationHeartbeat from "../data/automation-heartbeat.json";
 import { describeCollectionLag, resolveCurrentAsOf } from "../lib/collection-freshness.mjs";
 import { decideFactSource } from "../lib/fact-reconciliation.mjs";
 import {
+  buildStageTimeline,
   compareEventsAscending,
   deriveCaseHistory,
   INDUSTRIAL_ACTION_LABELS,
@@ -556,6 +557,13 @@ export default function Home() {
     visibleCases.find((item) => item.id === selectedId) ?? visibleCases[0] ?? caseExamples[0];
   const selectedStage = stageByCode.get(selectedCase.stage) ?? stageMeta[0];
   const selectedIssues = selectedCase.history ? issueHighlights(selectedCase.history) : [];
+  // 진행 중인 교섭은 오늘까지가 마지막 구간이고, 지난 연도는 그해 말이 끝이다.
+  // 기준일을 연도와 무관하게 currentAsOf로 두면 2021년 교섭이 5년째 이어지는 것처럼 보인다.
+  const selectedTimeline = useMemo(() => {
+    const asOf =
+      selectedYear === currentYear ? currentAsOf : `${selectedYear}-12-31`;
+    return buildStageTimeline(selectedCase.flowEvents, { asOf });
+  }, [selectedCase.flowEvents, selectedYear]);
   const correctionTargets = useMemo(() => {
     const query = correctionSearch.trim().toLocaleLowerCase("ko-KR");
     return activeRecords
@@ -956,7 +964,7 @@ export default function Home() {
               </div>
 
               <section className="bargaining-flow" aria-label="교섭 경과">
-                <div className="subsection-title"><span>교섭 경과</span><small>기사 원문에서 확인된 발생·확인 순서</small></div>
+                <div className="subsection-title"><span>단계 타임테이블</span><small>단계별 머문 기간과 전환일 · 근거는 구간 안에</small></div>
                 {/* 경과가 몇 건이든 먼저 누적 지표를 보여준다. 단계 하나만 남은 과거
                     기록에서는 "무엇이 없는지"가 그 자체로 정보다. */}
                 {selectedCase.history && (
@@ -969,26 +977,86 @@ export default function Home() {
                     <span>{selectedCase.history.settlement.label}</span>
                   </div>
                 )}
-                {/* 목록은 최신 일정이 위로 온다. 지금 어디까지 왔는지가 먼저 읽혀야 한다.
-                    누적 지표는 위의 flow-rollup이 담으므로 순서를 뒤집어도 셈은 그대로다. */}
-                {selectedCase.flowEvents.length === 0 ? (
+                {/* 사건을 한 줄씩 나열하면 같은 단계를 확인한 기사가 계속 쌓여 "본교섭 진행"만
+                    다섯 줄이 된다. 정작 알고 싶은 것은 어느 단계에 얼마나 머물렀고 언제
+                    넘어갔는지다. 연속된 같은 단계를 한 구간으로 접어 기간 막대로 그리고,
+                    근거 기사는 그 구간 안에 접어 넣는다. */}
+                {selectedTimeline === null ? (
                   <p className="flow-empty">해당 연도 교섭 경과 표시에 필요한 원청 노조 근거 미확보</p>
                 ) : (
-                  <ol className="flow-list">
-                    {[...selectedCase.flowEvents]
-                      .sort((left, right) => compareEventsAscending(right, left))
-                      .map((flow, index) => (
-                      <li className="flow-item" key={`${flow.date}-${flow.label}-${index}`}>
-                        <time>{formatDate(flow.date)}</time>
-                        <span className="flow-dot" aria-hidden="true" />
-                        <div>
-                          <div className="flow-title"><StagePill stage={flow.stage} /><strong>{flow.label}</strong></div>
-                          <p>{flow.summary}</p>
-                          {flow.sourceUrl && <a href={flow.sourceUrl} target="_blank" rel="noreferrer">원문 보기</a>}
+                  <div className="stage-timeline">
+                    <div className="timeline-span">
+                      <span>{formatDate(selectedTimeline.startDate)}</span>
+                      <span className="timeline-span-total">{selectedTimeline.totalDays}일간</span>
+                      <span>{formatDate(selectedTimeline.endDate)}</span>
+                    </div>
+
+                    {/* 막대는 그림이라 스크린리더가 읽지 못한다. 같은 내용을 아래 구간
+                        목록이 글로 담고 있으므로 막대 자체는 숨긴다. */}
+                    <div className="timeline-bar" aria-hidden="true">
+                      {selectedTimeline.segments.map((segment, index) => (
+                        <div
+                          key={`${segment.stage}-${segment.startDate}-${index}`}
+                          className={`timeline-seg stage-${segment.stage.toLowerCase()}${segment.isCurrent ? " timeline-seg-current" : ""}`}
+                          style={{ flexGrow: segment.days }}
+                          title={`${stageByCode.get(segment.stage)?.label ?? segment.stage} · ${formatDate(segment.startDate)} ~ ${formatDate(segment.endDate)} · ${segment.days}일`}
+                        >
+                          <span className="timeline-seg-label">
+                            {stageByCode.get(segment.stage)?.shortLabel ?? segment.stage}
+                          </span>
+                          <span className="timeline-seg-days">{segment.days}일</span>
                         </div>
-                      </li>
-                    ))}
-                  </ol>
+                      ))}
+                    </div>
+
+                    {/* 전환 날짜는 구간 경계에만 찍는다. 첫 구간의 시작은 위의 기간 줄이 담는다. */}
+                    <ol className="timeline-shifts">
+                      {selectedTimeline.segments.slice(1).map((segment, index) => (
+                        <li key={`shift-${segment.startDate}-${index}`}>
+                          <time>{formatDate(segment.startDate)}</time>
+                          <span aria-hidden="true">→</span>
+                          <StagePill stage={segment.stage} />
+                        </li>
+                      ))}
+                      {selectedTimeline.segments.length === 1 && (
+                        <li className="timeline-shift-none">단계 전환 기록 없음</li>
+                      )}
+                    </ol>
+
+                    <ol className="timeline-detail">
+                      {[...selectedTimeline.segments].reverse().map((segment, index) => (
+                        <li
+                          key={`detail-${segment.stage}-${segment.startDate}-${index}`}
+                          className={segment.isCurrent ? "timeline-detail-current" : undefined}
+                        >
+                          <div className="timeline-detail-head">
+                            <StagePill stage={segment.stage} />
+                            <strong>{stageByCode.get(segment.stage)?.label ?? segment.stage}</strong>
+                            {segment.isCurrent && <span className="timeline-now">현재</span>}
+                            <span className="timeline-detail-range">
+                              {formatDate(segment.startDate)} ~ {formatDate(segment.endDate)} · {segment.days}일
+                            </span>
+                          </div>
+                          <ul className="timeline-events">
+                            {[...segment.events]
+                              .sort((left, right) => compareEventsAscending(right, left))
+                              .map((flow, eventIndex) => (
+                                <li key={`${flow.date}-${flow.label}-${eventIndex}`}>
+                                  <time>{formatDate(flow.date)}</time>
+                                  <div>
+                                    <strong>{flow.label}</strong>
+                                    <p>{flow.summary}</p>
+                                    {flow.sourceUrl && (
+                                      <a href={flow.sourceUrl} target="_blank" rel="noreferrer">원문 보기</a>
+                                    )}
+                                  </div>
+                                </li>
+                              ))}
+                          </ul>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
                 )}
                 {selectedCase.history?.settlement.status === "CONTINUED_PAST_YEAR" && (
                   <p className="flow-carryover-note">

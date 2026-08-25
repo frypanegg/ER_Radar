@@ -187,3 +187,93 @@ export function issueHighlights(history: CaseHistory): string[] {
   if (history.bargainingRoundCount > 0) items.push(`본교섭 기록 ${history.bargainingRoundCount}회`);
   return items;
 }
+
+/**
+ * 단계 구간 하나. 같은 단계가 이어진 동안을 한 덩어리로 묶는다.
+ */
+export type StageSegment = {
+  stage: string;
+  /** 이 단계로 넘어온 날. 앞 구간의 끝이기도 하다. */
+  startDate: string;
+  /** 다음 단계로 넘어간 날. 마지막 구간은 기준일이 끝이다. */
+  endDate: string;
+  /** 구간 길이(일). 같은 날 전환한 구간도 차트에서 사라지지 않도록 최소 1이다. */
+  days: number;
+  /** 전체 기간에서 이 구간이 차지하는 비율(%). */
+  share: number;
+  /** 이 구간에 묶인 사건들. 근거 링크는 여기서 꺼낸다. */
+  events: FlowEvent[];
+  /** 지금 머무르는 구간인지. 화면의 "현재" 표시가 이 값을 쓴다. */
+  isCurrent: boolean;
+};
+
+export type StageTimeline = {
+  segments: StageSegment[];
+  startDate: string;
+  endDate: string;
+  totalDays: number;
+};
+
+function daysBetween(from: string, to: string) {
+  const start = Date.parse(`${from}T00:00:00Z`);
+  const end = Date.parse(`${to}T00:00:00Z`);
+  if (Number.isNaN(start) || Number.isNaN(end)) return 0;
+  return Math.round((end - start) / 86_400_000);
+}
+
+/**
+ * 사건 목록을 단계 구간으로 접는다.
+ *
+ * 지금까지 상세 화면은 사건을 한 줄씩 그대로 나열했다. 같은 단계를 확인한 기사가
+ * 며칠 간격으로 계속 들어오기 때문에 "본교섭 진행"만 다섯 줄씩 쌓였고, 정작 알고 싶은
+ * 것 — 어느 단계에 얼마나 머물렀고 언제 넘어갔는지 — 은 그 사이에 묻혔다.
+ *
+ * 그래서 연속된 같은 단계를 한 구간으로 묶는다. 되돌아간 단계는 합치지 않고 새 구간을
+ * 연다. 기아 2026년처럼 S3에서 S4로 갔다가 다시 S3으로 돌아온 교섭은 세 구간이 되고,
+ * 그 왕복 자체가 읽혀야 하는 사실이다.
+ *
+ * asOf는 마지막 구간의 끝이다. 진행 중인 교섭은 오늘까지, 끝난 연도는 마지막 사건까지다.
+ */
+export function buildStageTimeline(
+  events: FlowEvent[] | undefined,
+  { asOf }: { asOf: string },
+): StageTimeline | null {
+  const sorted = [...(events ?? [])].sort(compareEventsAscending);
+  if (sorted.length === 0) return null;
+
+  const grouped: { stage: string; events: FlowEvent[] }[] = [];
+  for (const event of sorted) {
+    const last = grouped[grouped.length - 1];
+    if (last && last.stage === event.stage) last.events.push(event);
+    else grouped.push({ stage: event.stage, events: [event] });
+  }
+
+  const startDate = sorted[0].date;
+  // 마지막 사건이 기준일보다 뒤일 수 있다. 그때는 사건 날짜가 끝이다. 기준일을 그냥
+  // 믿으면 길이가 음수가 된다.
+  const lastEventDate = sorted[sorted.length - 1].date;
+  const endDate = asOf > lastEventDate ? asOf : lastEventDate;
+
+  const bounds = grouped.map((group, index) => {
+    const from = group.events[0].date;
+    const to = index + 1 < grouped.length ? grouped[index + 1].events[0].date : endDate;
+    return { ...group, from, to, days: Math.max(1, daysBetween(from, to)) };
+  });
+
+  const totalDays = bounds.reduce((sum, bound) => sum + bound.days, 0);
+
+  return {
+    segments: bounds.map((bound, index) => ({
+      stage: bound.stage,
+      startDate: bound.from,
+      endDate: bound.to,
+      days: bound.days,
+      share: totalDays > 0 ? (bound.days / totalDays) * 100 : 0,
+      events: bound.events,
+      isCurrent: index === bounds.length - 1,
+    })),
+    startDate,
+    endDate,
+    totalDays: Math.max(1, daysBetween(startDate, endDate)),
+  };
+}

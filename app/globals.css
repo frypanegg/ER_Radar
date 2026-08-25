@@ -2782,62 +2782,8 @@ button:focus-visible,
   border-radius: 12px;
   background: linear-gradient(120deg, #f6fcfb, #fbfdfd);
 }
-.flow-list {
-  position: relative;
-  display: grid;
-  gap: 12px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
 
-.flow-list::before {
-  position: absolute;
-  top: 10px;
-  bottom: 10px;
-  left: 83px;
-  width: 1px;
-  background: #bfe0dc;
-  content: "";
-}
-.flow-item {
-  position: relative;
-  display: grid;
-  grid-template-columns: 72px 22px minmax(0, 1fr);
-  gap: 0;
-  align-items: flex-start;
-}
-.flow-item time {
-  padding-top: 4px;
-  color: #618087;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 11px;
-  letter-spacing: -.03em;
-}
-.flow-dot {
-  position: relative;
-  z-index: 1;
-  width: 10px;
-  height: 10px;
-  margin-top: 7px;
-  margin-left: 6px;
-  border: 2px solid #72c8bf;
-  border-radius: 50%;
-  background: #f7fffe;
-  box-shadow: 0 0 0 3px rgba(107, 209, 197, .12);
-}
-.flow-title {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 7px;
-}
-.flow-title strong {
-  color: #315668;
-  font-size: 13px;
-  font-weight: 740;
-}
-.flow-item p,
+.timeline-events p,
 .flow-empty,
 .flow-coverage-note {
   margin: 4px 0 0;
@@ -2845,15 +2791,7 @@ button:focus-visible,
   font-size: 12px;
   line-height: 1.55;
 }
-.flow-item a {
-  display: inline-block;
-  margin-top: 4px;
-  color: #108f86;
-  font-size: 11px;
-  font-weight: 720;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
+
 .flow-empty {
   margin-bottom: 2px;
 }
@@ -3100,5 +3038,185 @@ button:focus-visible,
 .radar-mark {
     width: 28px;
     height: 28px;
+  }
+}
+
+/* 단계 타임테이블.
+   사건을 한 줄씩 나열하던 목록을 대신한다. 같은 단계를 확인한 기사가 계속 들어와
+   같은 줄이 반복됐고, 어느 단계에 얼마나 머물렀는지가 그 사이에 묻혔다. 구간 막대는
+   기간 비례로 그리고, 근거 기사는 구간 안에 접어 넣는다. */
+.stage-timeline {
+  display: grid;
+  gap: 12px;
+}
+.timeline-span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #618087;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11px;
+  letter-spacing: -.03em;
+}
+.timeline-span-total {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #eef6f5;
+  color: #2f6f68;
+  font-weight: 700;
+}
+.timeline-bar {
+  display: flex;
+  overflow: hidden;
+  gap: 2px;
+  border-radius: 8px;
+}
+.timeline-seg {
+  /* flexGrow가 기간을 담는다. 아주 짧은 구간도 눌려 사라지지 않도록 하한을 둔다. */
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: center;
+  min-width: 46px;
+  padding: 9px 8px;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 11px;
+  line-height: 1.25;
+  text-align: center;
+}
+.timeline-seg-label {
+  overflow: hidden;
+  font-weight: 760;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.timeline-seg-days {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10px;
+  opacity: .72;
+}
+.timeline-seg-current {
+  outline: 2px solid #14867d;
+  outline-offset: 1px;
+}
+.timeline-shifts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.timeline-shifts li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #637a87;
+  font-size: 11px;
+}
+.timeline-shifts time {
+  color: #41707a;
+  font-family: var(--font-geist-mono), monospace;
+  letter-spacing: -.03em;
+}
+.timeline-shift-none {
+  color: #8a9aa4;
+}
+.timeline-detail {
+  display: grid;
+  gap: 10px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.timeline-detail > li {
+  padding: 10px 12px;
+  border: 1px solid #e2ecef;
+  border-radius: 10px;
+  background: #fbfdfd;
+}
+.timeline-detail-current {
+  border-color: #b6ded8;
+  background: #f5fcfb;
+}
+.timeline-detail-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+.timeline-detail-head strong {
+  color: #315668;
+  font-size: 13px;
+  font-weight: 740;
+}
+.timeline-now {
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #14867d;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 760;
+}
+.timeline-detail-range {
+  margin-left: auto;
+  color: #6b8189;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: -.03em;
+}
+.timeline-events {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.timeline-events > li {
+  display: grid;
+  grid-template-columns: 66px minmax(0, 1fr);
+  gap: 8px;
+  align-items: flex-start;
+}
+.timeline-events time {
+  padding-top: 2px;
+  color: #618087;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11px;
+  letter-spacing: -.03em;
+}
+.timeline-events strong {
+  color: #37606f;
+  font-size: 12px;
+  font-weight: 720;
+}
+.timeline-events a {
+  display: inline-block;
+  margin-top: 4px;
+  color: #108f86;
+  font-size: 11px;
+  font-weight: 720;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  /* 좁은 화면에서는 막대가 글씨를 담지 못한다. 기간만 남기고 단계 이름은 아래
+     구간 목록이 담당한다. */
+  .timeline-seg {
+    min-width: 34px;
+    padding: 8px 4px;
+  }
+  .timeline-seg-label {
+    display: none;
+  }
+  .timeline-detail-range {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+  .timeline-events > li {
+    grid-template-columns: 58px minmax(0, 1fr);
   }
 }
