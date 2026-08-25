@@ -338,26 +338,6 @@
         "디스플레이업 교섭 비교군",
         "직접고용 교섭 근거 축적 중"
       ]
-    },
-    {
-      "id": "sk-telecom",
-      "legalName": "에스케이텔레콤 주식회사",
-      "tier": "T3",
-      "industry": "통신",
-      "selectionRationale": [
-        "통신업 교섭 비교군",
-        "직접고용 교섭 근거 축적 중"
-      ]
-    },
-    {
-      "id": "posco-enc",
-      "legalName": "포스코이앤씨 주식회사",
-      "tier": "T3",
-      "industry": "건설",
-      "selectionRationale": [
-        "중대재해 반복에 따른 노사 현안",
-        "건설업 교섭 근거 축적 중"
-      ]
     }
   ],
   "verificationQueue": [

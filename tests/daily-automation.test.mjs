@@ -1301,3 +1301,52 @@ test("자동 수집이 올린 체결 표기는 서명·조인 근거를 동반�
     );
   }
 });
+
+test("라틴 약칭과 한글 음차를 같은 회사로 읽는다", async () => {
+  const { matchingAliases } = await import("../scripts/collect-news.mjs");
+
+  // 기사 제목은 같은 회사를 "LG화학"과 "엘지화학"으로 섞어 쓴다. 별칭 목록에 두 표기를
+  // 적어 두는 것만으로는 적어 두지 않은 조합을 계속 놓친다.
+  assert.deepEqual(matchingAliases("엘지화학 노사, 임단협 12차 교섭", ["LG화학"]), ["LG화학"]);
+  assert.deepEqual(matchingAliases("㈜엘지디스플레이 임금·단체협상 타결", ["LG디스플레이"]), [
+    "LG디스플레이",
+  ]);
+  assert.deepEqual(matchingAliases("에스케이하이닉스 임단협 잠정합의", ["SK하이닉스"]), [
+    "SK하이닉스",
+  ]);
+  // 접는 방향은 한쪽이면 된다. 별칭이 음차이고 제목이 약칭인 경우도 같은 함수를 지난다.
+  assert.deepEqual(matchingAliases("LG유플러스 노조 4차 교섭 결렬", ["엘지유플러스"]), [
+    "엘지유플러스",
+  ]);
+  assert.deepEqual(matchingAliases("한국지엠 노사 임단협 조인", ["한국GM"]), ["한국GM"]);
+
+  // 다른 회사까지 끌어오면 안 된다.
+  assert.deepEqual(matchingAliases("삼성전자 노조 총파업", ["LG전자"]), []);
+});
+
+test("수집기 설정의 모든 법인이 음차 표기로도 잡힌다", async () => {
+  const { matchingAliases } = await import("../scripts/collect-news.mjs");
+  const config = JSON.parse(
+    await readFile(new URL("../data/source-config.json", import.meta.url), "utf8"),
+  );
+
+  const transliterations = [
+    ["LG", "엘지"],
+    ["SK", "에스케이"],
+    ["KB", "케이비"],
+    ["GM", "지엠"],
+    ["HD", "에이치디"],
+  ];
+
+  const missed = [];
+  for (const company of config.companies) {
+    for (const [latin, hangul] of transliterations) {
+      if (!company.name.includes(latin)) continue;
+      const spelledOut = company.name.replaceAll(latin, hangul);
+      if (matchingAliases(`${spelledOut} 노사 임단협 타결`, company.aliases).length === 0) {
+        missed.push(`${company.id}: ${spelledOut}`);
+      }
+    }
+  }
+  assert.deepEqual(missed, [], `음차 표기로 잡히지 않는 법인: ${missed.join(", ")}`);
+});

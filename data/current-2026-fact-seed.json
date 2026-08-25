@@ -11,6 +11,213 @@
   },
   "records": [
     {
+      "companyId": "hyundai-motor",
+      "companyLegalName": "현대자동차 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "WAGE",
+      "stage": "S5",
+      "eventDate": "2026-08-25",
+      "title": "현대차 노사 임단협 잠정합의...10년 만의 전면파업에 2조3000억 손실",
+      "factSummary": "주간조선 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "unionName": "전국금속노동조합 현대자동차지부",
+      "directEmployerId": "hyundai-motor",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "현대자동차 지속가능성보고서는 국내 인력을 '직접 고용인원 수 기준'으로 공시하고 같은 국내 기준의 노동조합 가입 현황 및 현대자동차지부 조합원 4만4천명을 적시한다. 최신 사건 원문은 그 현대차지부를 현대자동차 임금협상·부분파업 주체로 명시한다.",
+      "scopeEvidenceUrl": "https://org1.hyundai.com/content/hyundai/ww/data/csr/data/0000000052/attach/korean/hmc-2024-sustainability-report-ko-v6.pdf",
+      "sourceUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624",
+      "sourceName": "주간조선",
+      "sourceTier": "B",
+      "confidence": 0.8,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "flowEvents": [
+        {
+          "date": "2026-06-12",
+          "stage": "S4",
+          "label": "교섭 결렬 선언",
+          "summary": "11차례 교섭 뒤 노조가 교섭 결렬을 선언했다고 보도됐다.",
+          "sourceUrl": "https://www.yna.co.kr/view/AKR20260625128451057"
+        },
+        {
+          "date": "2026-06-25",
+          "stage": "S4",
+          "label": "중노위 조정 불성립·파업권 확보",
+          "summary": "중노위가 조정을 종료했고 현대차지부가 합법적 파업권을 확보했다.",
+          "sourceUrl": "https://www.yna.co.kr/view/AKR20260625128451057"
+        },
+        {
+          "date": "2026-07-29",
+          "stage": "S4",
+          "label": "3차 부분파업 개시",
+          "summary": "주·야간조 각 4시간씩 사흘간 부분파업이 시작됐다.",
+          "sourceUrl": "https://www.mt.co.kr/amp/industry/2026/07/29/2026072909265516118"
+        },
+        {
+          "date": "2026-08-25",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "주간조선 보도 제목 기준 확인: 현대차 노사 임단협 잠정합의...10년 만의 전면파업에 2조3000억 손실",
+          "sourceUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624"
+        }
+      ],
+      "id": "hyundai-motor:2026:WAGE:2026-07-29",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624",
+      "agreementTypeEvidence": "현대자동차 2026년 임금협상 3차 부분파업 금속노조 현대차지부가 임금협상 쟁점이 풀리지 않은 가운데 7월 29일부터 31일까지 주·야간조 각 4시간의 3차 부분파업에 들어갔다고 보도됐다. 기사상 쟁점에는 기본급·성과급, 해고자 복직, 정년 연장이 포함됐다.",
+      "autoUpdatedAt": "2026-08-25T01:11:14.875Z"
+    },
+    {
+      "companyId": "sk-hynix",
+      "companyLegalName": "SK하이닉스 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S5",
+      "eventDate": "2026-08-25",
+      "title": "SK하이닉스 2026년 임금·단체협약 잠정합의안 생산직 노조 부결",
+      "factSummary": "8월 19일 마련한 임금·단체협약 잠정합의안이 24일부터의 찬반투표에서 기술사무직 노조 66% 찬성으로 가결됐으나, 생산직 노조에서 반대 50.08%로 부결돼 재협상에 들어갔다고 보도됐다.",
+      "unionName": "SK하이닉스 복수노조(기술사무직·청주노동조합·이천노동조합; 4차 교섭의 개별 참여 노조명은 원문 미제시)",
+      "directEmployerId": "sk-hynix",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "SK하이닉스 발행 공시문서는 회사에 3개 노동조합이 있고 모두 회사와 단체협약을 맺었으며, 두 최대 노조의 조합원이 회사 직원 15,079명이라고 명시한다. 2026년 회사 뉴스룸도 기술사무직지회·청주노동조합·이천노동조합 대표를 SK하이닉스 임원과 함께 식별한다.",
+      "scopeEvidenceUrl": "https://links.sgx.com/FileOpen/SK%20hynix%20Inc._2025%20-%20Final%20Offering%20Circular%20%289.4.25%29.ashx?App=Prospectus&FileID=67332",
+      "sourceUrl": "https://www.hankookilbo.com/news/article/A2026082514390004921",
+      "sourceName": "한국일보",
+      "sourceTier": "B",
+      "confidence": 0.88,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "성과급 자사주 지급 비중을 둘러싸고 두 노조의 투표 결과가 갈렸다. 잠정합의는 확인되나 인준이 완료되지 않아 S5에 둔다. 25표 차 부결로 재협상 중이다.",
+      "flowEvents": [
+        {
+          "date": "2026-06-17",
+          "stage": "S1",
+          "label": "요구안 초안·상견례 예고",
+          "summary": "노조 요구안 초안에 주 4.5일제와 정년 연장 등이 거론됐고, 노사가 이달 상견례를 시작으로 임금·단체협약 협상에 들어갈 예정이라고 보도됐다.",
+          "sourceUrl": "https://mobile.inews24.com/v/mtl/1977402"
+        },
+        {
+          "date": "2026-07-30",
+          "stage": "S3",
+          "label": "4차 본교섭 진행",
+          "summary": "4차 본교섭과 앞선 집중 실무교섭에서 성과급 지급 방식 및 적자 시 임금 조정안의 이견이 해소되지 않았다.",
+          "sourceUrl": "https://biz.chosun.com/it-science/ict/2026/07/31/T747JP46Z5D7XDUYNFT5LCDNVE/?outputType=amp"
+        },
+        {
+          "date": "2026-08-19",
+          "stage": "S5",
+          "label": "임단협 잠정합의",
+          "summary": "마라톤 교섭 끝에 임금 인상과 성과급 지급 방식을 담은 잠정합의안을 마련했다고 보도됐다.",
+          "sourceUrl": "https://www.newsis.com/view/NISX20260819_0003753588"
+        },
+        {
+          "date": "2026-08-25",
+          "stage": "S5",
+          "label": "생산직 노조 부결·재협상",
+          "summary": "24일부터 진행한 찬반투표에서 기술사무직 노조는 66% 찬성으로 가결했으나 생산직 노조는 50.08% 반대로 부결해 재협상에 들어갔다고 보도됐다.",
+          "sourceUrl": "https://www.hankookilbo.com/news/article/A2026082514390004921"
+        }
+      ],
+      "id": "sk-hynix:2026:INTEGRATED:2026-08-25",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.hankookilbo.com/news/article/A2026082514390004921",
+      "agreementTypeEvidence": "SK하이닉스 노사가 2026년 임금·단체협약 잠정합의안을 마련했고 성과급 지급 방식을 두고 조합원 투표가 갈렸다고 보도됐다."
+    },
+    {
+      "companyId": "kia",
+      "companyLegalName": "기아 주식회사",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S3",
+      "eventDate": "2026-08-24",
+      "title": "기아, 6년 만의 부분 파업 피할까...노사 25일 교섭 재개",
+      "factSummary": "매일일보 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "unionName": "전국금속노동조합 기아자동차지부",
+      "directEmployerId": "kia",
+      "coveredWorkerRelation": "DIRECT",
+      "directEmploymentEvidence": "기아자동차지부 판매지회의 공식 운영규칙은 조합원 자격을 '기아(주)에 입사와 동시에 자동으로 가입'하는 자로 규정한다. 최신 사건 원문은 같은 전국금속노조 기아자동차지부가 전 조합원을 대상으로 2026년 임단협 쟁의행위 투표를 실시했다고 명시한다.",
+      "scopeEvidenceUrl": "https://kmpan.com/home/intro/rules/2th/",
+      "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405443",
+      "sourceName": "매일일보",
+      "sourceTier": "B",
+      "confidence": 0.91,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "flowEvents": [
+        {
+          "date": "2026-07-15",
+          "stage": "S3",
+          "label": "6차 본교섭까지 진행",
+          "summary": "6차례 본교섭에서도 핵심 쟁점의 입장차를 좁히지 못한 것으로 보도됐다.",
+          "sourceUrl": "https://www.edaily.co.kr/News/Read?newsId=03142246645517800"
+        },
+        {
+          "date": "2026-07-20",
+          "stage": "S4",
+          "label": "결렬 선언·쟁의행위 투표 공고",
+          "summary": "노조가 회사 제시안 부재를 이유로 결렬을 선언하고 7월 23일 투표를 공고했다.",
+          "sourceUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02909366645516488"
+        },
+        {
+          "date": "2026-07-23",
+          "stage": "S4",
+          "label": "쟁의행위 찬반투표 가결",
+          "summary": "투표자 기준 92.5%가 찬성했다.",
+          "sourceUrl": "https://www.edaily.co.kr/News/Read?newsId=03142246645517800"
+        },
+        {
+          "date": "2026-08-24",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "매일일보 보도 제목 기준 확인: 기아, 6년 만의 부분 파업 피할까...노사 25일 교섭 재개",
+          "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405443"
+        }
+      ],
+      "id": "kia:2026:INTEGRATED:2026-07-24",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://m-i.kr/news/articleView.html?idxno=1405443",
+      "agreementTypeEvidence": "기아 2026년 임금·단체협약 쟁의행위 찬반투표 가결 전국금속노조 기아자동차지부의 2026년 임금·단체협약 쟁의행위 찬반투표가 7월 23일 실시돼 투표자 기준 92.5% 찬성으로 가결됐다고 보도됐다. 7월 15일까지 6차례 본교섭을 했으나 핵심 요구안의 견해차를 좁히지 못했다.",
+      "autoUpdatedAt": "2026-08-25T01:11:14.875Z"
+    },
+    {
+      "companyId": "kumho-tire",
+      "companyLegalName": "금호타이어 주식회사",
+      "directEmployerId": "kumho-tire",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S5",
+      "eventDate": "2026-08-21",
+      "title": "금호타이어 2026년 임금 및 단체협약 잠정합의",
+      "factSummary": "기본급 3% 인상과 경영성과 격려금 550만원 등을 담은 잠정합의안을 노사가 마련했다고 보도됐다. 조합원 찬반투표는 8월 23~24일로 예고됐다.",
+      "unionName": "전국금속노동조합 광주전남지부 금호타이어지회",
+      "directEmploymentEvidence": "원문은 금호타이어와 금속노조 금호타이어지회를 잠정합의안의 교섭 당사자로 적시한다.",
+      "sourceUrl": "https://www.ajunews.com/view/20260821165806489",
+      "sourceName": "아주경제",
+      "sourceTier": "B",
+      "confidence": 0.86,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "잠정합의까지 확인된다. 찬반투표 결과와 조인 근거는 확인하지 못해 S5로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-08-21",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "기본급 3% 인상 등을 담은 잠정합의안을 노사가 마련했다고 보도됐다.",
+          "sourceUrl": "https://www.ajunews.com/view/20260821165806489"
+        }
+      ],
+      "id": "kumho-tire:2026:INTEGRATED:2026-08-21",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.ajunews.com/view/20260821165806489"
+    },
+    {
       "companyId": "kb-kookmin-bank",
       "companyLegalName": "주식회사 국민은행",
       "directEmployerId": "kb-kookmin-bank",
@@ -77,6 +284,40 @@
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
       "originalUrl": "https://www.mt.co.kr/finance/2026/08/13/2026081317031155668"
+    },
+    {
+      "companyId": "lg-chem",
+      "companyLegalName": "주식회사 엘지화학",
+      "directEmployerId": "lg-chem",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S3",
+      "eventDate": "2026-08-13",
+      "title": "LG화학 2026년 임금 및 단체협약 12차 교섭",
+      "factSummary": "지회 공고에 2026년 임금 및 단체협약 12차 교섭 개최가 올라왔고, 같은 날 천막농성 돌입 투쟁지침이 함께 공고됐다.",
+      "unionName": "전국화학섬유식품산업노동조합 대전충북지부 LG화학 청주지회",
+      "directEmploymentEvidence": "노동조합 공식 홈페이지의 지회 공고는 LG화학 청주사업장 소속 조합원으로 구성된 청주지회를 회사와의 임단협 교섭 당사자로 적시한다.",
+      "sourceUrl": "https://www.lgchemnodongcj.or.kr/post/4227",
+      "sourceName": "전국화학섬유식품산업노동조합 LG화학 청주지회",
+      "sourceTier": "A",
+      "confidence": 0.74,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "같은 주 지회공고에 \"2026년 LG화학 임.단협 체결식 건\"이 함께 올라와 교섭 단위가 갈릴 가능성이 있다. 체결 근거로 보지 않고 12차 교섭이 열린 사실까지만 기록한다. 이 행은 청주지회 교섭이며 LG화학 전 사업장을 대표하지 않는다.",
+      "flowEvents": [
+        {
+          "date": "2026-08-13",
+          "stage": "S3",
+          "label": "12차 교섭·천막농성",
+          "summary": "12차 교섭 개최 공고와 천막농성 돌입 투쟁지침이 같은 날 공고됐다.",
+          "sourceUrl": "https://www.lgchemnodongcj.or.kr/post/4227"
+        }
+      ],
+      "id": "lg-chem:2026:INTEGRATED:2026-08-13",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.lgchemnodongcj.or.kr/post/4227"
     },
     {
       "companyId": "coupang",
@@ -163,6 +404,47 @@
       "originalUrl": "https://www.hdsmu.com/bbs/board.php?bo_table=board21&wr_id=1797"
     },
     {
+      "companyId": "korail",
+      "companyLegalName": "한국철도공사",
+      "directEmployerId": "korail",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S3",
+      "eventDate": "2026-08-04",
+      "title": "한국철도공사 2026년 임금 및 단체협약 제1차 본교섭",
+      "factSummary": "2026년 임금 및 단체협약 제1차 본교섭이 8월 4일 서울본부에서 열렸다고 노동조합이 게시했다. 7월 14일 임금교섭을 시작으로 실무교섭이 각각 세 차례 진행됐다.",
+      "unionName": "전국철도노동조합",
+      "directEmploymentEvidence": "노동조합 공식 게시물은 철도공사를 교섭 상대로 적시하고, 승진제도·임금 등 철도공사 소속 직원의 근로조건을 교섭 의제로 기술한다.",
+      "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774",
+      "sourceName": "전국철도노동조합",
+      "sourceTier": "A",
+      "confidence": 0.8,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "상견례를 겸한 제1차 본교섭까지 확인된다. 결렬·조정 근거는 확인하지 않아 S3으로 둔다. 같은 노조가 국가철도공단과 별도로 벌이는 교섭은 이 행에 포함하지 않는다.",
+      "flowEvents": [
+        {
+          "date": "2026-07-14",
+          "stage": "S3",
+          "label": "임금교섭 개시",
+          "summary": "7월 14일 임금교섭을 시작으로 임금·단협 실무교섭이 각각 세 차례 진행됐다고 게시됐다.",
+          "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
+        },
+        {
+          "date": "2026-08-04",
+          "stage": "S3",
+          "label": "제1차 본교섭",
+          "summary": "제1차 본교섭에서 상견례와 함께 승진제도·임금 등 주요 의제를 논의했다고 게시됐다.",
+          "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
+        }
+      ],
+      "id": "korail:2026:INTEGRATED:2026-08-04",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
+    },
+    {
       "companyId": "kakao",
       "companyLegalName": "주식회사 카카오",
       "directEmployerId": "kakao",
@@ -202,106 +484,6 @@
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
       "originalUrl": "https://biz.heraldcorp.com/article/10825344"
-    },
-    {
-      "companyId": "sk-hynix",
-      "companyLegalName": "SK하이닉스 주식회사",
-      "bargainingYear": 2026,
-      "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-07-30",
-      "title": "SK하이닉스 2026년 임금·단체협약 4차 본교섭",
-      "factSummary": "SK하이닉스 노사는 7월 30일 2026년 임금·단체협약 4차 본교섭을 열었다. 초과이익분배금(PS)의 일부 자사주 지급과 적자 시 임금 조정 제안을 두고 이견이 이어졌으며, 기사 기준 합의안은 확인되지 않았다.",
-      "unionName": "SK하이닉스 복수노조(기술사무직·청주노동조합·이천노동조합; 4차 교섭의 개별 참여 노조명은 원문 미제시)",
-      "directEmployerId": "sk-hynix",
-      "coveredWorkerRelation": "DIRECT",
-      "directEmploymentEvidence": "SK하이닉스 발행 공시문서는 회사에 3개 노동조합이 있고 모두 회사와 단체협약을 맺었으며, 두 최대 노조의 조합원이 회사 직원 15,079명이라고 명시한다. 2026년 회사 뉴스룸도 기술사무직지회·청주노동조합·이천노동조합 대표를 SK하이닉스 임원과 함께 식별한다.",
-      "scopeEvidenceUrl": "https://links.sgx.com/FileOpen/SK%20hynix%20Inc._2025%20-%20Final%20Offering%20Circular%20%289.4.25%29.ashx?App=Prospectus&FileID=67332",
-      "sourceUrl": "https://biz.chosun.com/it-science/ict/2026/07/31/T747JP46Z5D7XDUYNFT5LCDNVE/?outputType=amp",
-      "sourceName": "조선비즈",
-      "sourceTier": "B",
-      "confidence": 0.91,
-      "scopeClassification": "PRIMARY_DIRECT_UNION",
-      "includeInPrimaryDashboard": true,
-      "annotation": "4차 본교섭 원문은 복수노조 가운데 어느 노조가 해당 회의에 참여했는지 개별 명칭을 적지 않아, 노조명을 복수노조 구조로 보수적으로 표기했다. 원문이 예고한 8월 4일 5차 본교섭의 실제 결과나 잠정합의·인준·조인 원문은 이 조사 스냅샷에서 확인하지 못했으므로 S3를 유지한다.",
-      "flowEvents": [
-        {
-          "date": "2026-06-17",
-          "stage": "S1",
-          "label": "요구안 초안·상견례 예고",
-          "summary": "노조 요구안 초안에 주 4.5일제와 정년 연장 등이 거론됐고, 노사가 이달 상견례를 시작으로 임금·단체협약 협상에 들어갈 예정이라고 보도됐다.",
-          "sourceUrl": "https://mobile.inews24.com/v/mtl/1977402"
-        },
-        {
-          "date": "2026-07-30",
-          "stage": "S3",
-          "label": "4차 본교섭 진행",
-          "summary": "4차 본교섭과 앞선 집중 실무교섭에서 성과급 지급 방식 및 적자 시 임금 조정안의 이견이 해소되지 않았다.",
-          "sourceUrl": "https://biz.chosun.com/it-science/ict/2026/07/31/T747JP46Z5D7XDUYNFT5LCDNVE/?outputType=amp"
-        }
-      ],
-      "id": "sk-hynix:2026:INTEGRATED:2026-07-30",
-      "factualStatus": "VERIFIED_SOURCE",
-      "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://biz.chosun.com/it-science/ict/2026/07/31/T747JP46Z5D7XDUYNFT5LCDNVE/?outputType=amp"
-    },
-    {
-      "companyId": "hyundai-motor",
-      "companyLegalName": "현대자동차 주식회사",
-      "bargainingYear": 2026,
-      "agreementType": "WAGE",
-      "stage": "S5",
-      "eventDate": "2026-08-25",
-      "title": "현대차 노사 임단협 잠정합의...10년 만의 전면파업에 2조3000억 손실",
-      "factSummary": "주간조선 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
-      "unionName": "전국금속노동조합 현대자동차지부",
-      "directEmployerId": "hyundai-motor",
-      "coveredWorkerRelation": "DIRECT",
-      "directEmploymentEvidence": "현대자동차 지속가능성보고서는 국내 인력을 '직접 고용인원 수 기준'으로 공시하고 같은 국내 기준의 노동조합 가입 현황 및 현대자동차지부 조합원 4만4천명을 적시한다. 최신 사건 원문은 그 현대차지부를 현대자동차 임금협상·부분파업 주체로 명시한다.",
-      "scopeEvidenceUrl": "https://org1.hyundai.com/content/hyundai/ww/data/csr/data/0000000052/attach/korean/hmc-2024-sustainability-report-ko-v6.pdf",
-      "sourceUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624",
-      "sourceName": "주간조선",
-      "sourceTier": "B",
-      "confidence": 0.8,
-      "scopeClassification": "PRIMARY_DIRECT_UNION",
-      "includeInPrimaryDashboard": true,
-      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
-      "flowEvents": [
-        {
-          "date": "2026-06-12",
-          "stage": "S4",
-          "label": "교섭 결렬 선언",
-          "summary": "11차례 교섭 뒤 노조가 교섭 결렬을 선언했다고 보도됐다.",
-          "sourceUrl": "https://www.yna.co.kr/view/AKR20260625128451057"
-        },
-        {
-          "date": "2026-06-25",
-          "stage": "S4",
-          "label": "중노위 조정 불성립·파업권 확보",
-          "summary": "중노위가 조정을 종료했고 현대차지부가 합법적 파업권을 확보했다.",
-          "sourceUrl": "https://www.yna.co.kr/view/AKR20260625128451057"
-        },
-        {
-          "date": "2026-07-29",
-          "stage": "S4",
-          "label": "3차 부분파업 개시",
-          "summary": "주·야간조 각 4시간씩 사흘간 부분파업이 시작됐다.",
-          "sourceUrl": "https://www.mt.co.kr/amp/industry/2026/07/29/2026072909265516118"
-        },
-        {
-          "date": "2026-08-25",
-          "stage": "S5",
-          "label": "잠정합의",
-          "summary": "주간조선 보도 제목 기준 확인: 현대차 노사 임단협 잠정합의...10년 만의 전면파업에 2조3000억 손실",
-          "sourceUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624"
-        }
-      ],
-      "id": "hyundai-motor:2026:WAGE:2026-07-29",
-      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
-      "scopeRuleVersion": "1.1.0",
-      "originalUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624",
-      "agreementTypeEvidence": "현대자동차 2026년 임금협상 3차 부분파업 금속노조 현대차지부가 임금협상 쟁점이 풀리지 않은 가운데 7월 29일부터 31일까지 주·야간조 각 4시간의 3차 부분파업에 들어갔다고 보도됐다. 기사상 쟁점에는 기본급·성과급, 해고자 복직, 정년 연장이 포함됐다.",
-      "autoUpdatedAt": "2026-08-25T01:11:14.875Z"
     },
     {
       "recordId": "gm-korea-2026-integrated-ratification",
@@ -410,64 +592,6 @@
       "originalUrl": "https://www.etoday.co.kr/news/view/2607990?trc=main_list_news"
     },
     {
-      "companyId": "kia",
-      "companyLegalName": "기아 주식회사",
-      "bargainingYear": 2026,
-      "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-08-24",
-      "title": "기아, 6년 만의 부분 파업 피할까...노사 25일 교섭 재개",
-      "factSummary": "매일일보 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
-      "unionName": "전국금속노동조합 기아자동차지부",
-      "directEmployerId": "kia",
-      "coveredWorkerRelation": "DIRECT",
-      "directEmploymentEvidence": "기아자동차지부 판매지회의 공식 운영규칙은 조합원 자격을 '기아(주)에 입사와 동시에 자동으로 가입'하는 자로 규정한다. 최신 사건 원문은 같은 전국금속노조 기아자동차지부가 전 조합원을 대상으로 2026년 임단협 쟁의행위 투표를 실시했다고 명시한다.",
-      "scopeEvidenceUrl": "https://kmpan.com/home/intro/rules/2th/",
-      "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405443",
-      "sourceName": "매일일보",
-      "sourceTier": "B",
-      "confidence": 0.91,
-      "scopeClassification": "PRIMARY_DIRECT_UNION",
-      "includeInPrimaryDashboard": true,
-      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
-      "flowEvents": [
-        {
-          "date": "2026-07-15",
-          "stage": "S3",
-          "label": "6차 본교섭까지 진행",
-          "summary": "6차례 본교섭에서도 핵심 쟁점의 입장차를 좁히지 못한 것으로 보도됐다.",
-          "sourceUrl": "https://www.edaily.co.kr/News/Read?newsId=03142246645517800"
-        },
-        {
-          "date": "2026-07-20",
-          "stage": "S4",
-          "label": "결렬 선언·쟁의행위 투표 공고",
-          "summary": "노조가 회사 제시안 부재를 이유로 결렬을 선언하고 7월 23일 투표를 공고했다.",
-          "sourceUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02909366645516488"
-        },
-        {
-          "date": "2026-07-23",
-          "stage": "S4",
-          "label": "쟁의행위 찬반투표 가결",
-          "summary": "투표자 기준 92.5%가 찬성했다.",
-          "sourceUrl": "https://www.edaily.co.kr/News/Read?newsId=03142246645517800"
-        },
-        {
-          "date": "2026-08-24",
-          "stage": "S3",
-          "label": "본교섭 진행",
-          "summary": "매일일보 보도 제목 기준 확인: 기아, 6년 만의 부분 파업 피할까...노사 25일 교섭 재개",
-          "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405443"
-        }
-      ],
-      "id": "kia:2026:INTEGRATED:2026-07-24",
-      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
-      "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://m-i.kr/news/articleView.html?idxno=1405443",
-      "agreementTypeEvidence": "기아 2026년 임금·단체협약 쟁의행위 찬반투표 가결 전국금속노조 기아자동차지부의 2026년 임금·단체협약 쟁의행위 찬반투표가 7월 23일 실시돼 투표자 기준 92.5% 찬성으로 가결됐다고 보도됐다. 7월 15일까지 6차례 본교섭을 했으나 핵심 요구안의 견해차를 좁히지 못했다.",
-      "autoUpdatedAt": "2026-08-25T01:11:14.875Z"
-    },
-    {
       "companyId": "hanwha-ocean",
       "companyLegalName": "한화오션 주식회사",
       "bargainingYear": 2026,
@@ -508,6 +632,40 @@
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
       "originalUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202607231339525930271"
+    },
+    {
+      "companyLegalName": "서울교통공사",
+      "directEmployerId": "seoul-metro",
+      "coveredWorkerRelation": "DIRECT",
+      "companyId": "seoul-metro",
+      "unionName": "서울교통공사 노동조합",
+      "directEmploymentEvidence": "노동조합 공식 소식지는 서울교통공사 소속 직원으로 구성된 노동조합을 회사와의 교섭 당사자로 적시한다.",
+      "sourceName": "서울교통공사 노동조합",
+      "sourceTier": "A",
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S1",
+      "eventDate": "2026-07-15",
+      "title": "서울교통공사 2026년 임금 및 단체협약 요구안 확정",
+      "factSummary": "노동조합 소식지에 2026년 임금 및 단체협약 요구안과 중앙노사협의회 의결이 게시됐다.",
+      "sourceUrl": "http://www.stlu.kr/content/news/news_read.php?id=5398",
+      "confidence": 0.74,
+      "annotation": "요구안 게시까지 확인된다. 본교섭 개시·결렬 근거는 확인하지 않아 S1으로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-07-15",
+          "stage": "S1",
+          "label": "요구안·중앙노사협의회 의결",
+          "summary": "노동조합 소식지에 2026년 임단협 요구안과 중앙노사협의회 의결이 게시됐다.",
+          "sourceUrl": "http://www.stlu.kr/content/news/news_read.php?id=5398"
+        }
+      ],
+      "id": "seoul-metro:2026:INTEGRATED:2026-07-15",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "http://www.stlu.kr/content/news/news_read.php?id=5398"
     },
     {
       "companyId": "korean-air",
@@ -564,6 +722,13 @@
       "includeInPrimaryDashboard": true,
       "annotation": "본교섭이 이어지는 단계다. 결렬 선언이나 조정 신청 근거는 확인하지 못해 S3으로 둔다.",
       "flowEvents": [
+        {
+          "date": "2026-05-21",
+          "stage": "S4",
+          "label": "4차 교섭 결렬",
+          "summary": "민주유플러스노조가 참여한 4차 교섭이 결렬됐고 노조가 투쟁을 예고했다고 보도됐다.",
+          "sourceUrl": "https://www.ajunews.com/view/20260527144027337"
+        },
         {
           "date": "2026-07-02",
           "stage": "S3",
@@ -810,6 +975,41 @@
       "originalUrl": "https://www.joongangenews.com/news/articleView.html?idxno=516835"
     },
     {
+      "companyId": "lg-display",
+      "companyLegalName": "엘지디스플레이 주식회사",
+      "directEmployerId": "lg-display",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S6",
+      "eventDate": "2026-04-08",
+      "title": "LG디스플레이 2026년 임금·단체협상 결정사항 공지",
+      "factSummary": "회사가 4월 8일 오후 평균 3.7% 임금 인상과 복지제도 개편을 담은 임금·단체협상 결정 사항을 사내에 공지했다고 보도됐다. 같은 날 노동조합과 합의한 희망퇴직도 함께 시행됐다.",
+      "unionName": "LG디스플레이 노동조합",
+      "agreementTypeEvidence": "LG디스플레이가 평균 3.7% 임금 인상을 비롯해 복지제도 개편 등 임금·단체협상 결정 사항을 공지했다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 LG디스플레이가 노동조합과 합의해 자사 기능직·사무직 직원을 대상으로 조치를 시행한다고 적시한다.",
+      "sourceUrl": "https://www.newsway.co.kr/news/view?ud=2026040815331800378",
+      "sourceName": "뉴스웨이",
+      "sourceTier": "B",
+      "confidence": 0.82,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "원문은 임금·단체협상 결정 사항의 사내 공지를 적시할 뿐 조인·서명 절차를 적지 않아 S6에 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-04-08",
+          "stage": "S6",
+          "label": "임단협 결정사항 공지",
+          "summary": "평균 3.7% 임금 인상과 복지제도 개편을 담은 임금·단체협상 결정 사항이 사내에 공지됐다고 보도됐다.",
+          "sourceUrl": "https://www.newsway.co.kr/news/view?ud=2026040815331800378"
+        }
+      ],
+      "id": "lg-display:2026:INTEGRATED:2026-04-08",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.newsway.co.kr/news/view?ud=2026040815331800378"
+    },
+    {
       "recordId": "lg-electronics-2026-integrated-effective-agreement",
       "companyId": "lg-electronics",
       "companyLegalName": "LG전자 주식회사",
@@ -844,149 +1044,6 @@
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
       "originalUrl": "https://www.yna.co.kr/view/AKR20260401157900003"
-    },
-    {
-      "companyId": "kumho-tire",
-      "companyLegalName": "금호타이어 주식회사",
-      "directEmployerId": "kumho-tire",
-      "coveredWorkerRelation": "DIRECT",
-      "bargainingYear": 2026,
-      "agreementType": "INTEGRATED",
-      "stage": "S5",
-      "eventDate": "2026-08-21",
-      "title": "금호타이어 2026년 임금 및 단체협약 잠정합의",
-      "factSummary": "기본급 3% 인상과 경영성과 격려금 550만원 등을 담은 잠정합의안을 노사가 마련했다고 보도됐다. 조합원 찬반투표는 8월 23~24일로 예고됐다.",
-      "unionName": "전국금속노동조합 광주전남지부 금호타이어지회",
-      "directEmploymentEvidence": "원문은 금호타이어와 금속노조 금호타이어지회를 잠정합의안의 교섭 당사자로 적시한다.",
-      "sourceUrl": "https://www.ajunews.com/view/20260821165806489",
-      "sourceName": "아주경제",
-      "sourceTier": "B",
-      "confidence": 0.86,
-      "scopeClassification": "PRIMARY_DIRECT_UNION",
-      "includeInPrimaryDashboard": true,
-      "annotation": "잠정합의까지 확인된다. 찬반투표 결과와 조인 근거는 확인하지 못해 S5로 둔다.",
-      "flowEvents": [
-        {
-          "date": "2026-08-21",
-          "stage": "S5",
-          "label": "잠정합의",
-          "summary": "기본급 3% 인상 등을 담은 잠정합의안을 노사가 마련했다고 보도됐다.",
-          "sourceUrl": "https://www.ajunews.com/view/20260821165806489"
-        }
-      ],
-      "id": "kumho-tire:2026:INTEGRATED:2026-08-21",
-      "factualStatus": "VERIFIED_SOURCE",
-      "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.ajunews.com/view/20260821165806489"
-    },
-    {
-      "companyId": "lg-chem",
-      "companyLegalName": "주식회사 엘지화학",
-      "directEmployerId": "lg-chem",
-      "coveredWorkerRelation": "DIRECT",
-      "bargainingYear": 2026,
-      "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-08-13",
-      "title": "LG화학 2026년 임금 및 단체협약 12차 교섭",
-      "factSummary": "지회 공고에 2026년 임금 및 단체협약 12차 교섭 개최가 올라왔고, 같은 날 천막농성 돌입 투쟁지침이 함께 공고됐다.",
-      "unionName": "전국화학섬유식품산업노동조합 대전충북지부 LG화학 청주지회",
-      "directEmploymentEvidence": "노동조합 공식 홈페이지의 지회 공고는 LG화학 청주사업장 소속 조합원으로 구성된 청주지회를 회사와의 임단협 교섭 당사자로 적시한다.",
-      "sourceUrl": "https://www.lgchemnodongcj.or.kr/post/4227",
-      "sourceName": "전국화학섬유식품산업노동조합 LG화학 청주지회",
-      "sourceTier": "A",
-      "confidence": 0.74,
-      "scopeClassification": "PRIMARY_DIRECT_UNION",
-      "includeInPrimaryDashboard": true,
-      "annotation": "같은 주 지회공고에 \"2026년 LG화학 임.단협 체결식 건\"이 함께 올라와 교섭 단위가 갈릴 가능성이 있다. 체결 근거로 보지 않고 12차 교섭이 열린 사실까지만 기록한다. 이 행은 청주지회 교섭이며 LG화학 전 사업장을 대표하지 않는다.",
-      "flowEvents": [
-        {
-          "date": "2026-08-13",
-          "stage": "S3",
-          "label": "12차 교섭·천막농성",
-          "summary": "12차 교섭 개최 공고와 천막농성 돌입 투쟁지침이 같은 날 공고됐다.",
-          "sourceUrl": "https://www.lgchemnodongcj.or.kr/post/4227"
-        }
-      ],
-      "id": "lg-chem:2026:INTEGRATED:2026-08-13",
-      "factualStatus": "VERIFIED_SOURCE",
-      "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.lgchemnodongcj.or.kr/post/4227"
-    },
-    {
-      "companyLegalName": "서울교통공사",
-      "directEmployerId": "seoul-metro",
-      "coveredWorkerRelation": "DIRECT",
-      "companyId": "seoul-metro",
-      "unionName": "서울교통공사 노동조합",
-      "directEmploymentEvidence": "노동조합 공식 소식지는 서울교통공사 소속 직원으로 구성된 노동조합을 회사와의 교섭 당사자로 적시한다.",
-      "sourceName": "서울교통공사 노동조합",
-      "sourceTier": "A",
-      "scopeClassification": "PRIMARY_DIRECT_UNION",
-      "includeInPrimaryDashboard": true,
-      "bargainingYear": 2026,
-      "agreementType": "INTEGRATED",
-      "stage": "S1",
-      "eventDate": "2026-07-15",
-      "title": "서울교통공사 2026년 임금 및 단체협약 요구안 확정",
-      "factSummary": "노동조합 소식지에 2026년 임금 및 단체협약 요구안과 중앙노사협의회 의결이 게시됐다.",
-      "sourceUrl": "http://www.stlu.kr/content/news/news_read.php?id=5398",
-      "confidence": 0.74,
-      "annotation": "요구안 게시까지 확인된다. 본교섭 개시·결렬 근거는 확인하지 않아 S1으로 둔다.",
-      "flowEvents": [
-        {
-          "date": "2026-07-15",
-          "stage": "S1",
-          "label": "요구안·중앙노사협의회 의결",
-          "summary": "노동조합 소식지에 2026년 임단협 요구안과 중앙노사협의회 의결이 게시됐다.",
-          "sourceUrl": "http://www.stlu.kr/content/news/news_read.php?id=5398"
-        }
-      ],
-      "id": "seoul-metro:2026:INTEGRATED:2026-07-15",
-      "factualStatus": "VERIFIED_SOURCE",
-      "scopeRuleVersion": "1.1.0",
-      "originalUrl": "http://www.stlu.kr/content/news/news_read.php?id=5398"
-    },
-    {
-      "companyId": "korail",
-      "companyLegalName": "한국철도공사",
-      "directEmployerId": "korail",
-      "coveredWorkerRelation": "DIRECT",
-      "bargainingYear": 2026,
-      "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-08-04",
-      "title": "한국철도공사 2026년 임금 및 단체협약 제1차 본교섭",
-      "factSummary": "2026년 임금 및 단체협약 제1차 본교섭이 8월 4일 서울본부에서 열렸다고 노동조합이 게시했다. 7월 14일 임금교섭을 시작으로 실무교섭이 각각 세 차례 진행됐다.",
-      "unionName": "전국철도노동조합",
-      "directEmploymentEvidence": "노동조합 공식 게시물은 철도공사를 교섭 상대로 적시하고, 승진제도·임금 등 철도공사 소속 직원의 근로조건을 교섭 의제로 기술한다.",
-      "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774",
-      "sourceName": "전국철도노동조합",
-      "sourceTier": "A",
-      "confidence": 0.8,
-      "scopeClassification": "PRIMARY_DIRECT_UNION",
-      "includeInPrimaryDashboard": true,
-      "annotation": "상견례를 겸한 제1차 본교섭까지 확인된다. 결렬·조정 근거는 확인하지 않아 S3으로 둔다. 같은 노조가 국가철도공단과 별도로 벌이는 교섭은 이 행에 포함하지 않는다.",
-      "flowEvents": [
-        {
-          "date": "2026-07-14",
-          "stage": "S3",
-          "label": "임금교섭 개시",
-          "summary": "7월 14일 임금교섭을 시작으로 임금·단협 실무교섭이 각각 세 차례 진행됐다고 게시됐다.",
-          "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
-        },
-        {
-          "date": "2026-08-04",
-          "stage": "S3",
-          "label": "제1차 본교섭",
-          "summary": "제1차 본교섭에서 상견례와 함께 승진제도·임금 등 주요 의제를 논의했다고 게시됐다.",
-          "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
-        }
-      ],
-      "id": "korail:2026:INTEGRATED:2026-08-04",
-      "factualStatus": "VERIFIED_SOURCE",
-      "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
     }
   ],
   "withheld": [],
@@ -1269,7 +1326,7 @@
     {
       "companyId": "korail",
       "companyLegalName": "한국철도공사",
-      "status": "WITHHELD_OR_UNVERIFIED"
+      "status": "VERIFIED_CURRENT"
     },
     {
       "companyId": "lg-uplus",
@@ -1279,37 +1336,27 @@
     {
       "companyId": "lg-chem",
       "companyLegalName": "주식회사 엘지화학",
-      "status": "WITHHELD_OR_UNVERIFIED"
+      "status": "VERIFIED_CURRENT"
     },
     {
       "companyId": "kumho-tire",
       "companyLegalName": "금호타이어 주식회사",
-      "status": "WITHHELD_OR_UNVERIFIED"
+      "status": "VERIFIED_CURRENT"
     },
     {
       "companyId": "seoul-metro",
       "companyLegalName": "서울교통공사",
-      "status": "WITHHELD_OR_UNVERIFIED"
+      "status": "VERIFIED_CURRENT"
     },
     {
       "companyId": "lg-display",
       "companyLegalName": "엘지디스플레이 주식회사",
-      "status": "WITHHELD_OR_UNVERIFIED"
-    },
-    {
-      "companyId": "sk-telecom",
-      "companyLegalName": "에스케이텔레콤 주식회사",
-      "status": "WITHHELD_OR_UNVERIFIED"
-    },
-    {
-      "companyId": "posco-enc",
-      "companyLegalName": "포스코이앤씨 주식회사",
-      "status": "WITHHELD_OR_UNVERIFIED"
+      "status": "VERIFIED_CURRENT"
     }
   ],
   "researchSummary": {
-    "trackedCompanyCount": 26,
-    "publishedPrimaryDirectUnionRecords": 19,
+    "trackedCompanyCount": 24,
+    "publishedPrimaryDirectUnionRecords": 24,
     "withheldForScopeOrEvidenceReview": 0,
     "quarantinedIndirectOrMixedCandidates": 9
   }

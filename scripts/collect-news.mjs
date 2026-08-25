@@ -434,8 +434,33 @@ function cleanText(value) {
     .trim();
 }
 
+/**
+ * 같은 회사를 라틴 약칭과 한글 음차로 함께 부른다. 기사 제목은 "LG화학"과 "엘지화학",
+ * "SK하이닉스"와 "에스케이하이닉스"를 섞어 쓰는데, 별칭 목록에 두 표기를 모두 적어 두는
+ * 것만으로는 적어 두지 않은 조합("㈜엘지디스플레이" 같은)을 계속 놓친다. 그래서 비교
+ * 단계에서 음차를 약칭으로 접어 한 표기로 만든다. 제목과 별칭이 같은 함수를 지나므로
+ * 접는 방향은 한쪽만 정하면 된다.
+ */
+const BRAND_TRANSLITERATIONS = [
+  ["에이치디", "hd"],
+  ["에스케이", "sk"],
+  ["엘지", "lg"],
+  ["케이비", "kb"],
+  ["지엠", "gm"],
+];
+
+function foldBrandTransliterations(value) {
+  let folded = value;
+  for (const [hangul, latin] of BRAND_TRANSLITERATIONS) {
+    folded = folded.split(hangul).join(latin);
+  }
+  return folded;
+}
+
 function comparableText(value) {
-  return cleanText(value).toLocaleLowerCase("ko-KR").replace(/[^\p{L}\p{N}]/gu, "");
+  return foldBrandTransliterations(
+    cleanText(value).toLocaleLowerCase("ko-KR").replace(/[^\p{L}\p{N}]/gu, ""),
+  );
 }
 
 function normalizedTitleKey(value) {
@@ -2298,4 +2323,4 @@ if (process.argv[1] && resolve(process.argv[1]) === SCRIPT_PATH) {
   });
 }
 
-export { classifyArticle, classifyStage, validateConfiguration };
+export { classifyArticle, classifyStage, validateConfiguration, matchingAliases };

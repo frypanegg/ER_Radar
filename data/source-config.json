@@ -1596,7 +1596,8 @@
       "aliases": [
         "두산에너빌리티",
         "두산에너빌리티㈜",
-        "Doosan Enerbility"
+        "Doosan Enerbility",
+        "두산중공업"
       ],
       "bargainingUnits": [
         {
@@ -2340,125 +2341,6 @@
         "LG디스플레이 노사교섭",
         "LG디스플레이 노조 파업",
         "LG디스플레이 잠정합의"
-      ]
-    },
-    {
-      "id": "sk-telecom",
-      "name": "SK텔레콤",
-      "selection": {
-        "scale": {
-          "rating": "MEDIUM",
-          "verifiedAt": null
-        },
-        "industryImpact": {
-          "rating": "MEDIUM",
-          "verifiedAt": null
-        },
-        "mediaExposure": {
-          "rating": "LOW",
-          "verifiedAt": null
-        },
-        "majorityUnion": {
-          "status": "UNKNOWN",
-          "numerator": null,
-          "denominator": null,
-          "calculationBasis": null,
-          "evidenceDate": null,
-          "evidenceUrl": null,
-          "verifiedAt": null
-        },
-        "representativeBargainingUnion": {
-          "status": "UNKNOWN",
-          "verifiedAt": null
-        },
-        "directEmploymentUnionizationRate": {
-          "value": null,
-          "verifiedAt": null
-        },
-        "basis": "editorial_seed",
-        "needsReview": true
-      },
-      "aliases": [
-        "SK텔레콤",
-        "에스케이텔레콤",
-        "SKT",
-        "SK Telecom"
-      ],
-      "bargainingUnits": [
-        {
-          "id": "representative-union",
-          "name": "SK텔레콤 노동조합",
-          "aliases": [
-            "SK텔레콤 노동조합",
-            "SKT 노조"
-          ]
-        }
-      ],
-      "queries": [
-        "SK텔레콤 임금협상",
-        "SK텔레콤 임단협",
-        "SK텔레콤 노사교섭",
-        "SK텔레콤 노조 파업",
-        "SK텔레콤 잠정합의"
-      ]
-    },
-    {
-      "id": "posco-enc",
-      "name": "포스코이앤씨",
-      "selection": {
-        "scale": {
-          "rating": "MEDIUM",
-          "verifiedAt": null
-        },
-        "industryImpact": {
-          "rating": "MEDIUM",
-          "verifiedAt": null
-        },
-        "mediaExposure": {
-          "rating": "MEDIUM",
-          "verifiedAt": null
-        },
-        "majorityUnion": {
-          "status": "UNKNOWN",
-          "numerator": null,
-          "denominator": null,
-          "calculationBasis": null,
-          "evidenceDate": null,
-          "evidenceUrl": null,
-          "verifiedAt": null
-        },
-        "representativeBargainingUnion": {
-          "status": "UNKNOWN",
-          "verifiedAt": null
-        },
-        "directEmploymentUnionizationRate": {
-          "value": null,
-          "verifiedAt": null
-        },
-        "basis": "editorial_seed",
-        "needsReview": true
-      },
-      "aliases": [
-        "포스코이앤씨",
-        "포스코건설",
-        "POSCO E&C"
-      ],
-      "bargainingUnits": [
-        {
-          "id": "representative-union",
-          "name": "포스코이앤씨 노동조합",
-          "aliases": [
-            "포스코이앤씨 노동조합",
-            "포스코이앤씨 노조"
-          ]
-        }
-      ],
-      "queries": [
-        "포스코이앤씨 임금협상",
-        "포스코이앤씨 임단협",
-        "포스코이앤씨 노사교섭",
-        "포스코이앤씨 노조 파업",
-        "포스코이앤씨 잠정합의"
       ]
     }
   ]

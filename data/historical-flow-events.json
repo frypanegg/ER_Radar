@@ -70,6 +70,12 @@
       "researchedOn": "2026-08-12",
       "scope": "HD현대중공업 2021·2022, 한국지엠 2021·2023, 현대자동차 2021·2022, 한화오션 2021·2022, 현대모비스 2023·2024, 현대제철 2023·2025",
       "note": "2021~2022년은 뉴스 검색이 최근 기사만 돌려줘, DART 생산중단 공시로 HD현대중공업 2021년 임금협상 부분파업 날짜를 확정했다. 공시 사유란에 '2021년도 임금협상 관련 부분파업'이 그대로 적혀 있다. 반대로 현대제철 2021·2022년 생산중단은 협력사(하청) 파업이라 공개 데이터에서 제외했다."
+    },
+    {
+      "batch": 11,
+      "researchedOn": "2026-08-25",
+      "scope": "한국철도공사 2021-2024, 대한항공 2023·2025, 서울교통공사 2022, 금호타이어 2023-2024",
+      "note": "철도노조 공식 연혁과 회사 보도자료를 우선 근거로 썼다. 예정으로만 적힌 조인식·조정신청은 넣지 않았다."
     }
   ],
   "events": [
@@ -656,6 +662,294 @@
       "label": "잠정합의",
       "summary": "노사가 10월 30일 임금 8만원 인상·성과급 300%+500만원을 담은 잠정합의안을 마련했다.",
       "sourceUrl": "https://www.newspim.com/news/view/20251104001419"
+    },
+    {
+      "recordId": "korail:2021:INTEGRATED:2021-12-17:https://archive.krwu.or.kr/chronology/2021",
+      "date": "2021-09-29",
+      "stage": "S3",
+      "label": "2021년 임단협 1차 본교섭",
+      "summary": "노사가 2021년 임금 및 단체협약 제1차 본교섭을 열었다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2021"
+    },
+    {
+      "recordId": "korail:2021:INTEGRATED:2021-12-17:https://archive.krwu.or.kr/chronology/2021",
+      "date": "2021-11-05",
+      "stage": "S4",
+      "label": "3차 교섭 결렬 선언",
+      "summary": "3차 임단협 교섭이 미합의로 끝나 노조가 결렬을 선언했다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2021"
+    },
+    {
+      "recordId": "korail:2021:INTEGRATED:2021-12-17:https://archive.krwu.or.kr/chronology/2021",
+      "date": "2021-11-18",
+      "stage": "S4",
+      "label": "쟁의행위 찬반투표 가결",
+      "summary": "조합원 쟁의행위 찬반투표가 67.21% 찬성으로 가결됐다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2021"
+    },
+    {
+      "recordId": "korail:2021:INTEGRATED:2021-12-17:https://archive.krwu.or.kr/chronology/2021",
+      "date": "2021-12-08",
+      "stage": "S5",
+      "label": "4차 본교섭 잠정합의",
+      "summary": "4차 본교섭에서 임금교섭 잠정합의에 이르렀다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2021"
+    },
+    {
+      "recordId": "korail:2021:INTEGRATED:2021-12-17:https://archive.krwu.or.kr/chronology/2021",
+      "date": "2021-12-17",
+      "stage": "S6",
+      "label": "잠정합의안 가결",
+      "summary": "조합원 찬반투표가 90.5% 찬성으로 가결됐다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2021"
+    },
+    {
+      "recordId": "korail:2022:INTEGRATED:2022-12-15:https://archive.krwu.or.kr/chronology/2022",
+      "date": "2022-04-21",
+      "stage": "S3",
+      "label": "단체협약 본교섭 재개",
+      "summary": "노사가 단체협약 본교섭을 재개했다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+    },
+    {
+      "recordId": "korail:2022:INTEGRATED:2022-12-15:https://archive.krwu.or.kr/chronology/2022",
+      "date": "2022-09-14",
+      "stage": "S3",
+      "label": "제3차 임단협 본교섭",
+      "summary": "제3차 임단협 본교섭을 열었으나 합의에 이르지 못했다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+    },
+    {
+      "recordId": "korail:2022:INTEGRATED:2022-12-15:https://archive.krwu.or.kr/chronology/2022",
+      "date": "2022-10-04",
+      "stage": "S4",
+      "label": "제4차 교섭 결렬 선언",
+      "summary": "제4차 임단협 교섭에서 노조가 결렬을 선언했다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+    },
+    {
+      "recordId": "korail:2022:INTEGRATED:2022-12-15:https://archive.krwu.or.kr/chronology/2022",
+      "date": "2022-10-12",
+      "stage": "S4",
+      "label": "중앙노동위원회 조정 신청",
+      "summary": "임시대의원대회에서 쟁의발생을 결의하고 중앙노동위원회에 조정을 신청했다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+    },
+    {
+      "recordId": "korail:2022:INTEGRATED:2022-12-15:https://archive.krwu.or.kr/chronology/2022",
+      "date": "2022-10-28",
+      "stage": "S4",
+      "label": "쟁의조정 중지",
+      "summary": "중앙노동위원회가 쟁의조정을 중지했다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+    },
+    {
+      "recordId": "korail:2022:INTEGRATED:2022-12-15:https://archive.krwu.or.kr/chronology/2022",
+      "date": "2022-11-24",
+      "stage": "S4",
+      "label": "준법투쟁 돌입",
+      "summary": "노조가 준법투쟁에 들어갔다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+    },
+    {
+      "recordId": "korail:2022:INTEGRATED:2022-12-15:https://archive.krwu.or.kr/chronology/2022",
+      "date": "2022-12-02",
+      "stage": "S5",
+      "label": "임금·단체협상 잠정합의",
+      "summary": "새벽 교섭에서 임금·단체협상 잠정합의안을 마련하고 파업을 철회했다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+    },
+    {
+      "recordId": "korail:2022:INTEGRATED:2022-12-15:https://archive.krwu.or.kr/chronology/2022",
+      "date": "2022-12-15",
+      "stage": "S6",
+      "label": "잠정합의안 가결",
+      "summary": "조합원 찬반투표가 72.53% 찬성으로 가결됐다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+    },
+    {
+      "recordId": "korail:2023:WAGE:2023-12-21:https://archive.krwu.or.kr/chronology/2023",
+      "date": "2023-08-16",
+      "stage": "S4",
+      "label": "임금교섭 결렬",
+      "summary": "월 평균임금 기준 8.8% 인상을 요구한 임금교섭이 결렬됐다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+    },
+    {
+      "recordId": "korail:2023:WAGE:2023-12-21:https://archive.krwu.or.kr/chronology/2023",
+      "date": "2023-08-17",
+      "stage": "S4",
+      "label": "중앙노동위원회 조정 신청",
+      "summary": "중앙노동위원회에 쟁의 조정을 신청했다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+    },
+    {
+      "recordId": "korail:2023:WAGE:2023-12-21:https://archive.krwu.or.kr/chronology/2023",
+      "date": "2023-09-13",
+      "stage": "S4",
+      "label": "교섭 최종 결렬",
+      "summary": "막판 교섭이 3시간여 만에 최종 결렬됐다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+    },
+    {
+      "recordId": "korail:2023:WAGE:2023-12-21:https://archive.krwu.or.kr/chronology/2023",
+      "date": "2023-09-14",
+      "stage": "S4",
+      "label": "1차 경고파업 돌입",
+      "summary": "9월 14일 오전 9시부터 18일 오전 9시까지 1차 경고파업에 들어갔다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+    },
+    {
+      "recordId": "korail:2023:WAGE:2023-12-21:https://archive.krwu.or.kr/chronology/2023",
+      "date": "2023-11-16",
+      "stage": "S3",
+      "label": "임금교섭 본교섭 재개",
+      "summary": "임금교섭 본교섭을 열었으나 소득 없이 끝났다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+    },
+    {
+      "recordId": "korail:2023:WAGE:2023-12-21:https://archive.krwu.or.kr/chronology/2023",
+      "date": "2023-12-11",
+      "stage": "S5",
+      "label": "임금교섭 잠정합의",
+      "summary": "기본급 월 8만3천원 인상으로 잠정합의에 이르렀다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+    },
+    {
+      "recordId": "korail:2023:WAGE:2023-12-21:https://archive.krwu.or.kr/chronology/2023",
+      "date": "2023-12-21",
+      "stage": "S6",
+      "label": "잠정합의안 가결",
+      "summary": "조합원 찬반투표가 87.86% 찬성으로 가결됐다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+    },
+    {
+      "recordId": "korail:2024:WAGE:2024-12-20:https://archive.krwu.or.kr/chronology/2024",
+      "date": "2024-08-23",
+      "stage": "S3",
+      "label": "임금교섭 1차 본교섭",
+      "summary": "2024년 임금교섭 1차 본교섭을 열었다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+    },
+    {
+      "recordId": "korail:2024:WAGE:2024-12-20:https://archive.krwu.or.kr/chronology/2024",
+      "date": "2024-09-27",
+      "stage": "S4",
+      "label": "임금교섭 결렬 선언",
+      "summary": "노조가 임금교섭 결렬을 선언했다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+    },
+    {
+      "recordId": "korail:2024:WAGE:2024-12-20:https://archive.krwu.or.kr/chronology/2024",
+      "date": "2024-10-18",
+      "stage": "S4",
+      "label": "쟁의행위 찬반투표 가결",
+      "summary": "10월 15일부터 18일까지 진행한 쟁의행위 찬반투표가 투표인 대비 76.59% 찬성으로 가결됐다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+    },
+    {
+      "recordId": "korail:2024:WAGE:2024-12-20:https://archive.krwu.or.kr/chronology/2024",
+      "date": "2024-12-04",
+      "stage": "S4",
+      "label": "교섭 최종 결렬",
+      "summary": "재개한 교섭이 최종 결렬됐다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+    },
+    {
+      "recordId": "korail:2024:WAGE:2024-12-20:https://archive.krwu.or.kr/chronology/2024",
+      "date": "2024-12-05",
+      "stage": "S4",
+      "label": "전면파업 돌입",
+      "summary": "필수유지인력을 제외한 조합원이 전면파업에 들어갔다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+    },
+    {
+      "recordId": "korail:2024:WAGE:2024-12-20:https://archive.krwu.or.kr/chronology/2024",
+      "date": "2024-12-11",
+      "stage": "S5",
+      "label": "임금교섭 잠정합의",
+      "summary": "30시간 교섭 끝에 임금교섭 잠정합의에 이르러 파업을 중단했다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+    },
+    {
+      "recordId": "korail:2024:WAGE:2024-12-20:https://archive.krwu.or.kr/chronology/2024",
+      "date": "2024-12-20",
+      "stage": "S6",
+      "label": "잠정합의안 가결",
+      "summary": "조합원 찬반투표가 87.54% 찬성으로 가결됐다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+    },
+    {
+      "recordId": "korean-air:2023:WAGE:2023-07-18:https://www.newswire.co.kr/newsRead.php?no=970801",
+      "date": "2023-07-17",
+      "stage": "S6",
+      "label": "찬반투표 가결",
+      "summary": "7월 13일부터 17일까지 진행한 찬반투표가 참여 조합원 52.57% 찬성으로 가결됐다.",
+      "sourceUrl": "https://www.newswire.co.kr/newsRead.php?no=970801"
+    },
+    {
+      "recordId": "korean-air:2023:WAGE:2023-07-18:https://www.newswire.co.kr/newsRead.php?no=970801",
+      "date": "2023-07-18",
+      "stage": "S7",
+      "label": "임금교섭 조인식",
+      "summary": "서울 본사에서 2023년 임금교섭 조인식을 열었다.",
+      "sourceUrl": "https://www.newswire.co.kr/newsRead.php?no=970801"
+    },
+    {
+      "recordId": "korean-air:2025:WAGE:2025-06-26:https://www.kyeonggi.com/article/20250626580171",
+      "date": "2025-06-26",
+      "stage": "S7",
+      "label": "임금교섭 조인식",
+      "summary": "찬반투표 가결 당일 임금 총액 2.7% 인상을 담은 조인식을 열었다.",
+      "sourceUrl": "https://www.kyeonggi.com/article/20250626580171"
+    },
+    {
+      "recordId": "seoul-metro:2022:INTEGRATED:2022-12-01:https://www.munhwa.com/article/11331085",
+      "date": "2022-11-30",
+      "stage": "S4",
+      "label": "총파업 돌입",
+      "summary": "양대 노조 연합교섭단이 하루 총파업에 들어갔다.",
+      "sourceUrl": "https://www.munhwa.com/article/11331085"
+    },
+    {
+      "recordId": "seoul-metro:2022:INTEGRATED:2022-12-01:https://www.munhwa.com/article/11331085",
+      "date": "2022-12-01",
+      "stage": "S6",
+      "label": "임단협 타결",
+      "summary": "자정을 넘긴 본교섭에서 강제적 구조조정을 하지 않기로 하며 타결했다.",
+      "sourceUrl": "https://www.munhwa.com/article/11331085"
+    },
+    {
+      "recordId": "kumho-tire:2023:INTEGRATED:2023-09-26:https://ilyo.co.kr/?ac=article_view&entry_id=459760",
+      "date": "2023-09-21",
+      "stage": "S5",
+      "label": "잠정합의안 마련",
+      "summary": "노사가 기본급 2% 인상을 담은 잠정합의안을 마련했다.",
+      "sourceUrl": "https://ilyo.co.kr/?ac=article_view&entry_id=459760"
+    },
+    {
+      "recordId": "kumho-tire:2023:INTEGRATED:2023-09-26:https://ilyo.co.kr/?ac=article_view&entry_id=459760",
+      "date": "2023-09-25",
+      "stage": "S6",
+      "label": "찬반투표 가결",
+      "summary": "9월 24일부터 25일까지 진행한 투표에서 3천184명이 참여해 59.5% 찬성으로 가결됐다.",
+      "sourceUrl": "https://ilyo.co.kr/?ac=article_view&entry_id=459760"
+    },
+    {
+      "recordId": "kumho-tire:2023:INTEGRATED:2023-09-26:https://ilyo.co.kr/?ac=article_view&entry_id=459760",
+      "date": "2023-09-26",
+      "stage": "S7",
+      "label": "조인식",
+      "summary": "노사가 조인식을 열었다.",
+      "sourceUrl": "https://ilyo.co.kr/?ac=article_view&entry_id=459760"
+    },
+    {
+      "recordId": "kumho-tire:2024:INTEGRATED:2024-09-02:https://www.newsis.com/view/NISX20240902_0002871805",
+      "date": "2024-09-02",
+      "stage": "S5",
+      "label": "잠정합의안 마련",
+      "summary": "기본급 3% 인상과 격려금 500만원을 담은 잠정합의안을 마련해 다음 날 총파업을 유보했다.",
+      "sourceUrl": "https://www.newsis.com/view/NISX20240902_0002871805"
     }
   ]
 }

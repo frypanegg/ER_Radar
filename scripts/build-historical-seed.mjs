@@ -45,6 +45,7 @@ function readArgs(argv) {
       resolve(PROJECT_ROOT, "data/historical-research-group-a.json"),
       resolve(PROJECT_ROOT, "data/historical-research-group-b.json"),
       resolve(PROJECT_ROOT, "data/historical-research-group-c.json"),
+      resolve(PROJECT_ROOT, "data/historical-research-group-d.json"),
     ],
     outputPath: resolve(PROJECT_ROOT, "data/historical-fact-seed.json"),
     asOf: "2026-08-10",

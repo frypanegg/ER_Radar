@@ -201,6 +201,7 @@ async function main() {
     "data/current-2026-group-b.json",
     "data/current-2026-group-c.json",
     "data/current-2026-group-d.json",
+    "data/current-2026-group-e.json",
   ].map((path) => resolve(PROJECT_ROOT, path));
   const [companyUniverse, ...groupResults] = await Promise.all([
     readJson(resolve(PROJECT_ROOT, "data/company-universe.json")),

@@ -50,22 +50,22 @@
       "companyLegalName": "SK하이닉스 주식회사",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-07-30",
-      "title": "SK하이닉스 2026년 임금·단체협약 4차 본교섭",
-      "factSummary": "SK하이닉스 노사는 7월 30일 2026년 임금·단체협약 4차 본교섭을 열었다. 초과이익분배금(PS)의 일부 자사주 지급과 적자 시 임금 조정 제안을 두고 이견이 이어졌으며, 기사 기준 합의안은 확인되지 않았다.",
+      "stage": "S5",
+      "eventDate": "2026-08-25",
+      "title": "SK하이닉스 2026년 임금·단체협약 잠정합의안 생산직 노조 부결",
+      "factSummary": "8월 19일 마련한 임금·단체협약 잠정합의안이 24일부터의 찬반투표에서 기술사무직 노조 66% 찬성으로 가결됐으나, 생산직 노조에서 반대 50.08%로 부결돼 재협상에 들어갔다고 보도됐다.",
       "unionName": "SK하이닉스 복수노조(기술사무직·청주노동조합·이천노동조합; 4차 교섭의 개별 참여 노조명은 원문 미제시)",
       "directEmployerId": "sk-hynix",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "SK하이닉스 발행 공시문서는 회사에 3개 노동조합이 있고 모두 회사와 단체협약을 맺었으며, 두 최대 노조의 조합원이 회사 직원 15,079명이라고 명시한다. 2026년 회사 뉴스룸도 기술사무직지회·청주노동조합·이천노동조합 대표를 SK하이닉스 임원과 함께 식별한다.",
       "scopeEvidenceUrl": "https://links.sgx.com/FileOpen/SK%20hynix%20Inc._2025%20-%20Final%20Offering%20Circular%20%289.4.25%29.ashx?App=Prospectus&FileID=67332",
-      "sourceUrl": "https://biz.chosun.com/it-science/ict/2026/07/31/T747JP46Z5D7XDUYNFT5LCDNVE/?outputType=amp",
-      "sourceName": "조선비즈",
+      "sourceUrl": "https://www.hankookilbo.com/news/article/A2026082514390004921",
+      "sourceName": "한국일보",
       "sourceTier": "B",
-      "confidence": 0.91,
+      "confidence": 0.88,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "4차 본교섭 원문은 복수노조 가운데 어느 노조가 해당 회의에 참여했는지 개별 명칭을 적지 않아, 노조명을 복수노조 구조로 보수적으로 표기했다. 원문이 예고한 8월 4일 5차 본교섭의 실제 결과나 잠정합의·인준·조인 원문은 이 조사 스냅샷에서 확인하지 못했으므로 S3를 유지한다.",
+      "annotation": "성과급 자사주 지급 비중을 둘러싸고 두 노조의 투표 결과가 갈렸다. 잠정합의는 확인되나 인준이 완료되지 않아 S5에 둔다. 25표 차 부결로 재협상 중이다.",
       "flowEvents": [
         {
           "date": "2026-06-17",
@@ -80,8 +80,23 @@
           "label": "4차 본교섭 진행",
           "summary": "4차 본교섭과 앞선 집중 실무교섭에서 성과급 지급 방식 및 적자 시 임금 조정안의 이견이 해소되지 않았다.",
           "sourceUrl": "https://biz.chosun.com/it-science/ict/2026/07/31/T747JP46Z5D7XDUYNFT5LCDNVE/?outputType=amp"
+        },
+        {
+          "date": "2026-08-19",
+          "stage": "S5",
+          "label": "임단협 잠정합의",
+          "summary": "마라톤 교섭 끝에 임금 인상과 성과급 지급 방식을 담은 잠정합의안을 마련했다고 보도됐다.",
+          "sourceUrl": "https://www.newsis.com/view/NISX20260819_0003753588"
+        },
+        {
+          "date": "2026-08-25",
+          "stage": "S5",
+          "label": "생산직 노조 부결·재협상",
+          "summary": "24일부터 진행한 찬반투표에서 기술사무직 노조는 66% 찬성으로 가결했으나 생산직 노조는 50.08% 반대로 부결해 재협상에 들어갔다고 보도됐다.",
+          "sourceUrl": "https://www.hankookilbo.com/news/article/A2026082514390004921"
         }
-      ]
+      ],
+      "agreementTypeEvidence": "SK하이닉스 노사가 2026년 임금·단체협약 잠정합의안을 마련했고 성과급 지급 방식을 두고 조합원 투표가 갈렸다고 보도됐다."
     },
     {
       "companyId": "hyundai-mobis",

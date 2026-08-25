@@ -264,26 +264,6 @@
         "디스플레이업 교섭 비교군",
         "직접고용 교섭 근거 축적 중"
       ]
-    },
-    {
-      "id": "sk-telecom",
-      "legalName": "에스케이텔레콤 주식회사",
-      "tier": "T3",
-      "industry": "통신",
-      "selectionRationale": [
-        "통신업 교섭 비교군",
-        "직접고용 교섭 근거 축적 중"
-      ]
-    },
-    {
-      "id": "posco-enc",
-      "legalName": "포스코이앤씨 주식회사",
-      "tier": "T3",
-      "industry": "건설",
-      "selectionRationale": [
-        "중대재해 반복에 따른 노사 현안",
-        "건설업 교섭 근거 축적 중"
-      ]
     }
   ],
   "records": [
@@ -814,6 +794,41 @@
       ]
     },
     {
+      "companyId": "korean-air",
+      "companyLegalName": "주식회사 대한항공",
+      "directEmployerId": "korean-air",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2025,
+      "agreementType": "WAGE",
+      "stage": "S7",
+      "eventDate": "2025-06-26",
+      "title": "대한항공 2025년 임금교섭 조인",
+      "factSummary": "조합원 9천552명 가운데 3천448명이 투표해 2천62표(59.8%) 찬성으로 가결됐고, 같은 날 임금 총액 2.7% 인상을 담은 2025년 임금교섭 조인식을 열었다고 보도됐다.",
+      "unionName": "대한항공 노동조합",
+      "agreementTypeEvidence": "대한항공 노사가 2025년 임금교섭 조인식을 열고 임금 총액 2.7% 인상에 합의했다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 대한항공 부회장과 대한항공 노동조합 위원장을 조인식 당사자로 적시한다.",
+      "sourceUrl": "https://www.kyeonggi.com/article/20250626580171",
+      "sourceName": "경기일보",
+      "sourceTier": "B",
+      "confidence": 0.9,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "일반직 교섭단위의 임금교섭이다. 통상임금 개편이 함께 합의됐다.",
+      "id": "korean-air:2025:WAGE:2025-06-26:https://www.kyeonggi.com/article/20250626580171",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.kyeonggi.com/article/20250626580171",
+      "flowEvents": [
+        {
+          "date": "2025-06-26",
+          "stage": "S7",
+          "label": "임금교섭 조인식",
+          "summary": "찬반투표 가결 당일 임금 총액 2.7% 인상을 담은 조인식을 열었다.",
+          "sourceUrl": "https://www.kyeonggi.com/article/20250626580171"
+        }
+      ]
+    },
+    {
       "recordId": "hyundai-steel-2024-integrated-ratification",
       "companyId": "hyundai-steel",
       "companyLegalName": "현대제철 주식회사",
@@ -1050,24 +1065,76 @@
       "directEmployerId": "korail",
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2024,
-      "agreementType": "INTEGRATED",
-      "stage": "S5",
-      "eventDate": "2024-12-11",
-      "title": "한국철도공사 2024년 임금·단체협약 잠정합의",
-      "factSummary": "노사가 임단협 잠정합의에 이르러 총파업이 종료되고 열차 운행이 정상화된다고 보도됐다.",
+      "agreementType": "WAGE",
+      "stage": "S6",
+      "eventDate": "2024-12-20",
+      "title": "한국철도공사 2024년 임금협약 잠정합의안 가결",
+      "factSummary": "12월 5일 전면파업에 들어갔다가 12월 11일 임금교섭 잠정합의로 파업을 중단했고, 12월 20일 조합원 찬반투표에서 87.54% 찬성으로 가결됐다.",
       "unionName": "전국철도노동조합",
       "directEmploymentEvidence": "원문은 한국철도공사와 그 소속 직원으로 구성된 전국철도노동조합을 교섭 당사자로 적시한다.",
-      "sourceUrl": "https://news.nate.com/view/20241211n29665",
-      "sourceName": "연합뉴스",
-      "sourceTier": "B",
-      "confidence": 0.8,
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2024",
+      "sourceName": "전국철도노동조합 아카이브 연혁",
+      "sourceTier": "A",
+      "confidence": 0.9,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "잠정합의까지만 확인된다. 조합원 찬반투표 결과는 이 행에서 확인하지 않아 S5로 둔다.",
-      "id": "korail:2024:INTEGRATED:2024-12-11:https://news.nate.com/view/20241211n29665",
+      "annotation": "연합뉴스는 이 교섭을 임단협으로 적었으나 노조 공식 연혁은 임금교섭·임금협약으로 적어, 당사자 기록을 따른다. 조인·서명 근거는 확인하지 않아 S6에 둔다.",
+      "agreementTypeEvidence": "2024년 임금교섭 1차 본교섭이 8월 23일 열렸고, 12월 11일 임금교섭 잠정합의를 거쳐 12월 20일 임금협약 잠정합의안이 가결됐다.",
+      "id": "korail:2024:WAGE:2024-12-20:https://archive.krwu.or.kr/chronology/2024",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://news.nate.com/view/20241211n29665"
+      "originalUrl": "https://archive.krwu.or.kr/chronology/2024",
+      "flowEvents": [
+        {
+          "date": "2024-08-23",
+          "stage": "S3",
+          "label": "임금교섭 1차 본교섭",
+          "summary": "2024년 임금교섭 1차 본교섭을 열었다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+        },
+        {
+          "date": "2024-09-27",
+          "stage": "S4",
+          "label": "임금교섭 결렬 선언",
+          "summary": "노조가 임금교섭 결렬을 선언했다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+        },
+        {
+          "date": "2024-10-18",
+          "stage": "S4",
+          "label": "쟁의행위 찬반투표 가결",
+          "summary": "10월 15일부터 18일까지 진행한 쟁의행위 찬반투표가 투표인 대비 76.59% 찬성으로 가결됐다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+        },
+        {
+          "date": "2024-12-04",
+          "stage": "S4",
+          "label": "교섭 최종 결렬",
+          "summary": "재개한 교섭이 최종 결렬됐다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+        },
+        {
+          "date": "2024-12-05",
+          "stage": "S4",
+          "label": "전면파업 돌입",
+          "summary": "필수유지인력을 제외한 조합원이 전면파업에 들어갔다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+        },
+        {
+          "date": "2024-12-11",
+          "stage": "S5",
+          "label": "임금교섭 잠정합의",
+          "summary": "30시간 교섭 끝에 임금교섭 잠정합의에 이르러 파업을 중단했다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+        },
+        {
+          "date": "2024-12-20",
+          "stage": "S6",
+          "label": "잠정합의안 가결",
+          "summary": "조합원 찬반투표가 87.54% 찬성으로 가결됐다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2024"
+        }
+      ]
     },
     {
       "companyId": "seoul-metro",
@@ -1309,6 +1376,67 @@
       ]
     },
     {
+      "companyId": "kumho-tire",
+      "companyLegalName": "금호타이어 주식회사",
+      "directEmployerId": "kumho-tire",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2024,
+      "agreementType": "INTEGRATED",
+      "stage": "S5",
+      "eventDate": "2024-09-02",
+      "title": "금호타이어 2024년 임단협 잠정합의",
+      "factSummary": "9월 2일 오전 기본급 3% 인상과 격려금 500만원을 담은 잠정합의안을 마련해 9월 3일 예고했던 총파업을 유보했다고 보도됐다.",
+      "unionName": "전국금속노동조합 금호타이어지회",
+      "agreementTypeEvidence": "금호타이어와 전국금속노조 금호타이어지회가 2024년 임단협 잠정 합의에 이르렀다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 금호타이어와 전국금속노조 금호타이어지회를 교섭 당사자로 적시하며, 조합원은 금호타이어 소속 생산직이다.",
+      "sourceUrl": "https://www.newsis.com/view/NISX20240902_0002871805",
+      "sourceName": "뉴시스",
+      "sourceTier": "B",
+      "confidence": 0.88,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "9월 5~6일 조합원 투표 결과는 원문에 없어 S5에 둔다.",
+      "id": "kumho-tire:2024:INTEGRATED:2024-09-02:https://www.newsis.com/view/NISX20240902_0002871805",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.newsis.com/view/NISX20240902_0002871805",
+      "flowEvents": [
+        {
+          "date": "2024-09-02",
+          "stage": "S5",
+          "label": "잠정합의안 마련",
+          "summary": "기본급 3% 인상과 격려금 500만원을 담은 잠정합의안을 마련해 다음 날 총파업을 유보했다.",
+          "sourceUrl": "https://www.newsis.com/view/NISX20240902_0002871805"
+        }
+      ]
+    },
+    {
+      "companyId": "korean-air",
+      "companyLegalName": "주식회사 대한항공",
+      "directEmployerId": "korean-air",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2024,
+      "agreementType": "WAGE",
+      "stage": "S5",
+      "eventDate": "2024-08-09",
+      "title": "대한항공 2024년 조종사 임금협상 잠정합의",
+      "factSummary": "회사와 조종사노동조합이 기본급과 비행수당을 각각 3% 올리는 2024년 임금협상 잠정합의안을 마련했다고 보도됐다.",
+      "unionName": "대한항공조종사노동조합",
+      "agreementTypeEvidence": "대한항공이 조종사노동조합과 2024년 임금협상 잠정 합의에 이르렀다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 대한항공과 그 소속 조종사로 구성된 조종사노동조합을 임금협상 당사자로 적시한다.",
+      "sourceUrl": "https://www.kdfnews.com/news/articleView.html?idxno=137441",
+      "sourceName": "한국면세뉴스",
+      "sourceTier": "B",
+      "confidence": 0.8,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "조종사 교섭단위 결과다. 인준·조인 근거를 확인하지 못해 S5에 둔다. 같은 해 일반직 교섭 결과는 확인하지 못했다.",
+      "id": "korean-air:2024:WAGE:2024-08-09:https://www.kdfnews.com/news/articleView.html?idxno=137441",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.kdfnews.com/news/articleView.html?idxno=137441"
+    },
+    {
       "companyId": "hyundai-motor",
       "companyLegalName": "현대자동차 주식회사",
       "bargainingYear": 2024,
@@ -1460,6 +1588,83 @@
       ]
     },
     {
+      "companyId": "korail",
+      "companyLegalName": "한국철도공사",
+      "directEmployerId": "korail",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2023,
+      "agreementType": "WAGE",
+      "stage": "S6",
+      "eventDate": "2023-12-21",
+      "title": "한국철도공사 2023년 임금교섭 잠정합의안 가결",
+      "factSummary": "12월 11일 기본급 월 8만3천원 인상으로 2023년 임금교섭 잠정합의에 이르렀고, 12월 21일 조합원 찬반투표에서 87.86% 찬성으로 가결됐다.",
+      "unionName": "전국철도노동조합",
+      "agreementTypeEvidence": "2023년 임금교섭이 8월 16일 결렬된 뒤 12월 11일 임금 1.7% 이내 인상으로 잠정합의에 이르렀다.",
+      "directEmploymentEvidence": "전국철도노동조합은 한국철도공사 소속 직원으로 구성된 노조이며, 노조 연혁은 공사와의 임금교섭과 찬반투표를 적시한다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2023",
+      "sourceName": "전국철도노동조합 아카이브 연혁",
+      "sourceTier": "A",
+      "confidence": 0.9,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "9월 14일부터 18일까지 1차 경고파업이 있었던 해다. 조인·서명 근거는 확인하지 않아 S6에 둔다.",
+      "id": "korail:2023:WAGE:2023-12-21:https://archive.krwu.or.kr/chronology/2023",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://archive.krwu.or.kr/chronology/2023",
+      "flowEvents": [
+        {
+          "date": "2023-08-16",
+          "stage": "S4",
+          "label": "임금교섭 결렬",
+          "summary": "월 평균임금 기준 8.8% 인상을 요구한 임금교섭이 결렬됐다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+        },
+        {
+          "date": "2023-08-17",
+          "stage": "S4",
+          "label": "중앙노동위원회 조정 신청",
+          "summary": "중앙노동위원회에 쟁의 조정을 신청했다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+        },
+        {
+          "date": "2023-09-13",
+          "stage": "S4",
+          "label": "교섭 최종 결렬",
+          "summary": "막판 교섭이 3시간여 만에 최종 결렬됐다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+        },
+        {
+          "date": "2023-09-14",
+          "stage": "S4",
+          "label": "1차 경고파업 돌입",
+          "summary": "9월 14일 오전 9시부터 18일 오전 9시까지 1차 경고파업에 들어갔다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+        },
+        {
+          "date": "2023-11-16",
+          "stage": "S3",
+          "label": "임금교섭 본교섭 재개",
+          "summary": "임금교섭 본교섭을 열었으나 소득 없이 끝났다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+        },
+        {
+          "date": "2023-12-11",
+          "stage": "S5",
+          "label": "임금교섭 잠정합의",
+          "summary": "기본급 월 8만3천원 인상으로 잠정합의에 이르렀다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+        },
+        {
+          "date": "2023-12-21",
+          "stage": "S6",
+          "label": "잠정합의안 가결",
+          "summary": "조합원 찬반투표가 87.86% 찬성으로 가결됐다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2023"
+        }
+      ]
+    },
+    {
       "companyLegalName": "서울교통공사",
       "directEmployerId": "seoul-metro",
       "coveredWorkerRelation": "DIRECT",
@@ -1558,6 +1763,55 @@
           "label": "조합원 찬반투표",
           "summary": "10월 20일 잠정합의안에 대한 조합원 찬반투표가 진행됐다.",
           "sourceUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02876566635774888"
+        }
+      ]
+    },
+    {
+      "companyId": "kumho-tire",
+      "companyLegalName": "금호타이어 주식회사",
+      "directEmployerId": "kumho-tire",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2023,
+      "agreementType": "INTEGRATED",
+      "stage": "S7",
+      "eventDate": "2023-09-26",
+      "title": "금호타이어 2023년 임단협 조인",
+      "factSummary": "9월 21일 잠정합의안을 마련해 24일부터 25일까지 찬반투표를 했고, 조합원 3천526명 중 3천184명이 참여해 1천895명(59.5%) 찬성으로 가결된 뒤 9월 26일 조인식을 열었다고 보도됐다.",
+      "unionName": "전국금속노동조합 금호타이어지회",
+      "agreementTypeEvidence": "금호타이어 노사가 2023년 임단협을 타결하고 조인식을 열었다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 금호타이어와 그 소속 조합원 3천526명이 참여한 찬반투표를 적시하며, 교섭 상대는 금호타이어 생산직 노조다.",
+      "sourceUrl": "https://ilyo.co.kr/?ac=article_view&entry_id=459760",
+      "sourceName": "일요신문",
+      "sourceTier": "B",
+      "confidence": 0.88,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "원문이 노조 정식 명칭을 적지 않아, 같은 지회를 명시한 2024년 뉴시스 보도의 명칭을 쓴다.",
+      "id": "kumho-tire:2023:INTEGRATED:2023-09-26:https://ilyo.co.kr/?ac=article_view&entry_id=459760",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://ilyo.co.kr/?ac=article_view&entry_id=459760",
+      "flowEvents": [
+        {
+          "date": "2023-09-21",
+          "stage": "S5",
+          "label": "잠정합의안 마련",
+          "summary": "노사가 기본급 2% 인상을 담은 잠정합의안을 마련했다.",
+          "sourceUrl": "https://ilyo.co.kr/?ac=article_view&entry_id=459760"
+        },
+        {
+          "date": "2023-09-25",
+          "stage": "S6",
+          "label": "찬반투표 가결",
+          "summary": "9월 24일부터 25일까지 진행한 투표에서 3천184명이 참여해 59.5% 찬성으로 가결됐다.",
+          "sourceUrl": "https://ilyo.co.kr/?ac=article_view&entry_id=459760"
+        },
+        {
+          "date": "2023-09-26",
+          "stage": "S7",
+          "label": "조인식",
+          "summary": "노사가 조인식을 열었다.",
+          "sourceUrl": "https://ilyo.co.kr/?ac=article_view&entry_id=459760"
         }
       ]
     },
@@ -1804,6 +2058,48 @@
       "originalUrl": "https://www.yna.co.kr/amp/view/AKR20230803040500003"
     },
     {
+      "companyId": "korean-air",
+      "companyLegalName": "주식회사 대한항공",
+      "directEmployerId": "korean-air",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2023,
+      "agreementType": "WAGE",
+      "stage": "S7",
+      "eventDate": "2023-07-18",
+      "title": "대한항공 2023년 임금교섭 조인",
+      "factSummary": "7월 13일부터 17일까지 진행한 찬반투표에서 투표에 참여한 조합원 52.57%의 찬성으로 가결됐고, 7월 18일 서울 본사에서 임금 3.5% 인상을 담은 2023년 임금교섭 조인식을 열었다.",
+      "unionName": "대한항공 노동조합",
+      "agreementTypeEvidence": "대한항공 노사가 2023년 임금교섭 조인식을 열고 임금 3.5% 인상에 서명했다.",
+      "directEmploymentEvidence": "회사가 낸 보도자료로, 대한항공과 그 소속 직원으로 구성된 노동조합을 임금교섭 당사자로 적시한다.",
+      "sourceUrl": "https://www.newswire.co.kr/newsRead.php?no=970801",
+      "sourceName": "뉴스와이어 · 대한항공 보도자료",
+      "sourceTier": "A",
+      "confidence": 0.95,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "일반직 교섭단위의 임금교섭이다. 원문은 노조를 '일반노조'로 부른다.",
+      "id": "korean-air:2023:WAGE:2023-07-18:https://www.newswire.co.kr/newsRead.php?no=970801",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.newswire.co.kr/newsRead.php?no=970801",
+      "flowEvents": [
+        {
+          "date": "2023-07-17",
+          "stage": "S6",
+          "label": "찬반투표 가결",
+          "summary": "7월 13일부터 17일까지 진행한 찬반투표가 참여 조합원 52.57% 찬성으로 가결됐다.",
+          "sourceUrl": "https://www.newswire.co.kr/newsRead.php?no=970801"
+        },
+        {
+          "date": "2023-07-18",
+          "stage": "S7",
+          "label": "임금교섭 조인식",
+          "summary": "서울 본사에서 2023년 임금교섭 조인식을 열었다.",
+          "sourceUrl": "https://www.newswire.co.kr/newsRead.php?no=970801"
+        }
+      ]
+    },
+    {
       "recordId": "hd-hyundai-heavy-industries-2022-wage-signing",
       "companyId": "hd-hyundai-heavy-industries",
       "companyLegalName": "HD현대중공업 주식회사",
@@ -1844,6 +2140,90 @@
           "label": "1차 잠정합의안 부결",
           "summary": "12월 8일 찬반투표에서 투표율 93.02%에 찬성 49.94%(3,093표)·반대 49.69%(3,078표)로 부결됐다.",
           "sourceUrl": "https://www.labortoday.co.kr/news/articleView.html?idxno=212406"
+        }
+      ]
+    },
+    {
+      "companyId": "korail",
+      "companyLegalName": "한국철도공사",
+      "directEmployerId": "korail",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2022,
+      "agreementType": "INTEGRATED",
+      "stage": "S6",
+      "eventDate": "2022-12-15",
+      "title": "한국철도공사 2022년 임금·단체협상 잠정합의안 가결",
+      "factSummary": "12월 2일 새벽 임금·단체협상 잠정합의안을 마련해 파업을 철회했고, 12월 15일 조합원 찬반투표에서 72.53% 찬성으로 가결됐다.",
+      "unionName": "전국철도노동조합",
+      "agreementTypeEvidence": "2022년 제3차·제4차 임단협 본교섭을 거쳐 12월 2일 임금·단체협상 잠정합의안을 마련했다.",
+      "directEmploymentEvidence": "전국철도노동조합은 한국철도공사 소속 직원으로 구성된 노조이며, 노조 연혁은 공사와의 임단협 본교섭과 찬반투표를 적시한다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2022",
+      "sourceName": "전국철도노동조합 아카이브 연혁",
+      "sourceTier": "A",
+      "confidence": 0.9,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "노조 공식 연혁이 근거다. 조인·서명 근거는 확인하지 않아 S6에 둔다.",
+      "id": "korail:2022:INTEGRATED:2022-12-15:https://archive.krwu.or.kr/chronology/2022",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://archive.krwu.or.kr/chronology/2022",
+      "flowEvents": [
+        {
+          "date": "2022-04-21",
+          "stage": "S3",
+          "label": "단체협약 본교섭 재개",
+          "summary": "노사가 단체협약 본교섭을 재개했다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+        },
+        {
+          "date": "2022-09-14",
+          "stage": "S3",
+          "label": "제3차 임단협 본교섭",
+          "summary": "제3차 임단협 본교섭을 열었으나 합의에 이르지 못했다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+        },
+        {
+          "date": "2022-10-04",
+          "stage": "S4",
+          "label": "제4차 교섭 결렬 선언",
+          "summary": "제4차 임단협 교섭에서 노조가 결렬을 선언했다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+        },
+        {
+          "date": "2022-10-12",
+          "stage": "S4",
+          "label": "중앙노동위원회 조정 신청",
+          "summary": "임시대의원대회에서 쟁의발생을 결의하고 중앙노동위원회에 조정을 신청했다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+        },
+        {
+          "date": "2022-10-28",
+          "stage": "S4",
+          "label": "쟁의조정 중지",
+          "summary": "중앙노동위원회가 쟁의조정을 중지했다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+        },
+        {
+          "date": "2022-11-24",
+          "stage": "S4",
+          "label": "준법투쟁 돌입",
+          "summary": "노조가 준법투쟁에 들어갔다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+        },
+        {
+          "date": "2022-12-02",
+          "stage": "S5",
+          "label": "임금·단체협상 잠정합의",
+          "summary": "새벽 교섭에서 임금·단체협상 잠정합의안을 마련하고 파업을 철회했다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
+        },
+        {
+          "date": "2022-12-15",
+          "stage": "S6",
+          "label": "잠정합의안 가결",
+          "summary": "조합원 찬반투표가 72.53% 찬성으로 가결됐다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2022"
         }
       ]
     },
@@ -1890,6 +2270,74 @@
           "sourceUrl": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02794566632556552"
         }
       ]
+    },
+    {
+      "companyId": "seoul-metro",
+      "companyLegalName": "서울교통공사",
+      "directEmployerId": "seoul-metro",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2022,
+      "agreementType": "INTEGRATED",
+      "stage": "S6",
+      "eventDate": "2022-12-01",
+      "title": "서울교통공사 2022년 임단협 타결",
+      "factSummary": "11월 30일 하루 파업 뒤 자정을 넘겨 노사가 임단협 본교섭을 타결했고, 강제적 구조조정을 하지 않기로 하며 2021년 9월 노사특별합의를 유지하기로 했다고 보도됐다.",
+      "unionName": "서울교통공사노조",
+      "agreementTypeEvidence": "민주노총 서울교통공사노조와 한국노총 통합노조로 구성된 연합교섭단이 사측과 임단협 본교섭을 재개해 타결했다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 서울교통공사와 그 소속 직원으로 구성된 양대 노조의 연합교섭단을 교섭 당사자로 적시한다.",
+      "sourceUrl": "https://www.munhwa.com/article/11331085",
+      "sourceName": "문화일보",
+      "sourceTier": "B",
+      "confidence": 0.85,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "원문이 타결 시점을 '11월 30일 자정 경과'로 적어 12월 1일을 기준일로 둔다. 조인·서명 근거는 확인하지 않아 S6에 둔다.",
+      "id": "seoul-metro:2022:INTEGRATED:2022-12-01:https://www.munhwa.com/article/11331085",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.munhwa.com/article/11331085",
+      "flowEvents": [
+        {
+          "date": "2022-11-30",
+          "stage": "S4",
+          "label": "총파업 돌입",
+          "summary": "양대 노조 연합교섭단이 하루 총파업에 들어갔다.",
+          "sourceUrl": "https://www.munhwa.com/article/11331085"
+        },
+        {
+          "date": "2022-12-01",
+          "stage": "S6",
+          "label": "임단협 타결",
+          "summary": "자정을 넘긴 본교섭에서 강제적 구조조정을 하지 않기로 하며 타결했다.",
+          "sourceUrl": "https://www.munhwa.com/article/11331085"
+        }
+      ]
+    },
+    {
+      "companyId": "korean-air",
+      "companyLegalName": "주식회사 대한항공",
+      "directEmployerId": "korean-air",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2022,
+      "agreementType": "INTEGRATED",
+      "stage": "S7",
+      "eventDate": "2022-11-04",
+      "title": "대한항공 2022년 임단협 조인",
+      "factSummary": "우기홍 사장과 조종사노동조합 위원장이 참석한 조인식에서 임금 10% 인상과 미주노선 휴식시간 확대를 담은 2022년 임단협에 서명했다고 보도됐다.",
+      "unionName": "대한항공조종사노동조합",
+      "agreementTypeEvidence": "대한항공이 조종사노동조합과 2022년 임단협 조인식을 열고 임금 10% 인상에 서명했다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 대한항공 사장과 대한항공조종사노동조합 위원장을 조인식 당사자로 적시하고, 조합원은 대한항공 소속 조종사다.",
+      "sourceUrl": "https://www.4th.kr/news/articleView.html?idxno=2027851",
+      "sourceName": "포쓰저널",
+      "sourceTier": "B",
+      "confidence": 0.88,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "조종사 교섭단위의 임단협이다. 같은 해 일반직 교섭단위의 결과는 확인하지 못했으므로 이 기록이 대한항공 전체를 대표하지 않는다.",
+      "id": "korean-air:2022:INTEGRATED:2022-11-04:https://www.4th.kr/news/articleView.html?idxno=2027851",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.4th.kr/news/articleView.html?idxno=2027851"
     },
     {
       "companyId": "kumho-tire",
@@ -2142,6 +2590,95 @@
       ]
     },
     {
+      "companyId": "korail",
+      "companyLegalName": "한국철도공사",
+      "directEmployerId": "korail",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2021,
+      "agreementType": "INTEGRATED",
+      "stage": "S6",
+      "eventDate": "2021-12-17",
+      "title": "한국철도공사 2021년 임금 및 단체협약 잠정합의안 가결",
+      "factSummary": "12월 8일 4차 본교섭에서 임금교섭 잠정합의에 이르렀고, 12월 17일 조합원 찬반투표에서 90.5% 찬성으로 가결됐다.",
+      "unionName": "전국철도노동조합",
+      "agreementTypeEvidence": "2021년 임금 및 단체협약 제1차 본교섭이 9월 29일 열렸고, 12월 8일 4차 본교섭에서 임금교섭 잠정합의에 이르렀다.",
+      "directEmploymentEvidence": "전국철도노동조합은 한국철도공사 소속 직원으로 구성된 노조이며, 노조 연혁은 공사와의 본교섭·찬반투표를 적시한다.",
+      "sourceUrl": "https://archive.krwu.or.kr/chronology/2021",
+      "sourceName": "전국철도노동조합 아카이브 연혁",
+      "sourceTier": "A",
+      "confidence": 0.9,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "노조 공식 연혁이 근거다. 조인·서명 근거는 확인하지 않아 S6에 둔다.",
+      "id": "korail:2021:INTEGRATED:2021-12-17:https://archive.krwu.or.kr/chronology/2021",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://archive.krwu.or.kr/chronology/2021",
+      "flowEvents": [
+        {
+          "date": "2021-09-29",
+          "stage": "S3",
+          "label": "2021년 임단협 1차 본교섭",
+          "summary": "노사가 2021년 임금 및 단체협약 제1차 본교섭을 열었다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2021"
+        },
+        {
+          "date": "2021-11-05",
+          "stage": "S4",
+          "label": "3차 교섭 결렬 선언",
+          "summary": "3차 임단협 교섭이 미합의로 끝나 노조가 결렬을 선언했다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2021"
+        },
+        {
+          "date": "2021-11-18",
+          "stage": "S4",
+          "label": "쟁의행위 찬반투표 가결",
+          "summary": "조합원 쟁의행위 찬반투표가 67.21% 찬성으로 가결됐다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2021"
+        },
+        {
+          "date": "2021-12-08",
+          "stage": "S5",
+          "label": "4차 본교섭 잠정합의",
+          "summary": "4차 본교섭에서 임금교섭 잠정합의에 이르렀다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2021"
+        },
+        {
+          "date": "2021-12-17",
+          "stage": "S6",
+          "label": "잠정합의안 가결",
+          "summary": "조합원 찬반투표가 90.5% 찬성으로 가결됐다.",
+          "sourceUrl": "https://archive.krwu.or.kr/chronology/2021"
+        }
+      ]
+    },
+    {
+      "companyId": "seoul-metro",
+      "companyLegalName": "서울교통공사",
+      "directEmployerId": "seoul-metro",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2021,
+      "agreementType": "INTEGRATED",
+      "stage": "S6",
+      "eventDate": "2021-09-13",
+      "title": "서울교통공사 2021년 임금·단체협약 합의",
+      "factSummary": "노사가 재정위기 극복을 위한 노사특별합의서에서 강제적 구조조정을 하지 않기로 하고 예고했던 파업을 철회하면서 임금·단체협약에 합의했다고 보도됐다.",
+      "unionName": "서울교통공사노조",
+      "agreementTypeEvidence": "서울교통공사 노사가 재정위기 극복을 위한 노사특별합의서를 쓰고 임금·단체협약에 합의했다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 서울교통공사와 그 소속 직원으로 구성된 노조를 교섭 당사자로 적시하고, 합의 내용도 공사 직원의 구조조정 여부다.",
+      "sourceUrl": "https://www.labortoday.co.kr/news/articleView.html?idxno=204979",
+      "sourceName": "매일노동뉴스",
+      "sourceTier": "B",
+      "confidence": 0.85,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "원문이 합의일을 9월 13일 또는 14일로 적어, 이듬해 보도가 특정한 9월 13일을 기준일로 둔다. 조인·서명 근거는 확인하지 않아 S6에 둔다.",
+      "id": "seoul-metro:2021:INTEGRATED:2021-09-13:https://www.labortoday.co.kr/news/articleView.html?idxno=204979",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.labortoday.co.kr/news/articleView.html?idxno=204979"
+    },
+    {
       "companyId": "kia",
       "companyLegalName": "기아 주식회사",
       "bargainingYear": 2021,
@@ -2327,6 +2864,32 @@
       "originalUrl": "https://www.yna.co.kr/view/AKR20210611061100003"
     },
     {
+      "companyId": "lg-display",
+      "companyLegalName": "엘지디스플레이 주식회사",
+      "directEmployerId": "lg-display",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2021,
+      "agreementType": "INTEGRATED",
+      "stage": "S6",
+      "eventDate": "2021-03-18",
+      "title": "LG디스플레이 2021년 임금단체협상 임금 인상 합의",
+      "factSummary": "노사가 임금단체협상에서 기능직 기준 임금을 평균 6.5~7% 인상하기로 했다고 보도됐다. 합의 날짜와 조인 절차는 원문에 없다.",
+      "unionName": "LG디스플레이 노동조합",
+      "agreementTypeEvidence": "LG디스플레이 노사가 임금단체협상(임단협)을 통해 기능직 임금을 평균 6.5~7% 인상하기로 했다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 LG디스플레이 노사의 임금단체협상과 그 회사 기능직 직원의 임금 인상을 적시한다.",
+      "sourceUrl": "https://www.edaily.co.kr/news/read?newsId=03345606628984632&mediaCodeNo=257",
+      "sourceName": "이데일리",
+      "sourceTier": "B",
+      "confidence": 0.7,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "원문이 합의 날짜를 적지 않아 보도일을 기준일로 둔다. 원문은 교섭 상대를 '노사'로만 적었고, 노동조합의 존재는 LG디스플레이 뉴스룸의 노동조합 태그 게시물에서 확인했다. 조인·서명 근거가 없어 S6에 둔다.",
+      "id": "lg-display:2021:INTEGRATED:2021-03-18:https://www.edaily.co.kr/news/read?newsId=03345606628984632&mediaCodeNo=257",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.edaily.co.kr/news/read?newsId=03345606628984632&mediaCodeNo=257"
+    },
+    {
       "companyId": "lg-electronics",
       "companyLegalName": "LG전자 주식회사",
       "bargainingYear": 2021,
@@ -2354,10 +2917,10 @@
     }
   ],
   "researchSummary": {
-    "totalCompanyYearSlots": 130,
-    "sourceRecordsReviewed": 63,
-    "publishedPrimaryDirectUnionRecords": 55,
-    "withheldForScopeOrEvidenceReview": 75,
+    "totalCompanyYearSlots": 120,
+    "sourceRecordsReviewed": 75,
+    "publishedPrimaryDirectUnionRecords": 67,
+    "withheldForScopeOrEvidenceReview": 53,
     "quarantinedIndirectOrMixedCandidates": 6
   },
   "coverage": [
@@ -2538,15 +3101,16 @@
     {
       "companyId": "korean-air",
       "companyLegalName": "주식회사 대한항공",
-      "verifiedYears": [],
-      "unverifiedYears": [
-        2021,
+      "verifiedYears": [
         2022,
         2023,
         2024,
         2025
       ],
-      "verifiedEventCount": 0
+      "unverifiedYears": [
+        2021
+      ],
+      "verifiedEventCount": 4
     },
     {
       "companyId": "kb-kookmin-bank",
@@ -2606,15 +3170,14 @@
       "companyId": "korail",
       "companyLegalName": "한국철도공사",
       "verifiedYears": [
+        2021,
+        2022,
+        2023,
         2024,
         2025
       ],
-      "unverifiedYears": [
-        2021,
-        2022,
-        2023
-      ],
-      "verifiedEventCount": 2
+      "unverifiedYears": [],
+      "verifiedEventCount": 5
     },
     {
       "companyId": "lg-uplus",
@@ -2647,72 +3210,46 @@
       "companyLegalName": "금호타이어 주식회사",
       "verifiedYears": [
         2022,
+        2023,
+        2024,
         2025
       ],
       "unverifiedYears": [
-        2021,
-        2023,
-        2024
+        2021
       ],
-      "verifiedEventCount": 2
+      "verifiedEventCount": 4
     },
     {
       "companyId": "seoul-metro",
       "companyLegalName": "서울교통공사",
       "verifiedYears": [
+        2021,
+        2022,
         2023,
         2024,
         2025
       ],
-      "unverifiedYears": [
-        2021,
-        2022
-      ],
-      "verifiedEventCount": 3
+      "unverifiedYears": [],
+      "verifiedEventCount": 5
     },
     {
       "companyId": "lg-display",
       "companyLegalName": "엘지디스플레이 주식회사",
-      "verifiedYears": [],
+      "verifiedYears": [
+        2021
+      ],
       "unverifiedYears": [
-        2021,
         2022,
         2023,
         2024,
         2025
       ],
-      "verifiedEventCount": 0
-    },
-    {
-      "companyId": "sk-telecom",
-      "companyLegalName": "에스케이텔레콤 주식회사",
-      "verifiedYears": [],
-      "unverifiedYears": [
-        2021,
-        2022,
-        2023,
-        2024,
-        2025
-      ],
-      "verifiedEventCount": 0
-    },
-    {
-      "companyId": "posco-enc",
-      "companyLegalName": "포스코이앤씨 주식회사",
-      "verifiedYears": [],
-      "unverifiedYears": [
-        2021,
-        2022,
-        2023,
-        2024,
-        2025
-      ],
-      "verifiedEventCount": 0
+      "verifiedEventCount": 1
     }
   ],
   "timelineCoverage": {
-    "recordsWithTimeline": 35,
-    "recordsResultOnly": 20,
-    "eventsMerged": 73
+    "recordsWithTimeline": 44,
+    "recordsResultOnly": 23,
+    "eventsMerged": 109
   }
 }

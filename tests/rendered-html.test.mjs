@@ -537,4 +537,31 @@ test("추적 목록과 수집기 설정이 같은 법인을 가리킨다", async
 
   const missing = tracked.filter((id) => !collected.has(id));
   assert.deepEqual(missing, [], `수집기 설정에 없는 추적 법인: ${missing.join(", ")}`);
+
+  // 추적을 그만둔 법인이 수집기 설정에 남으면 매일 헛수집을 한다. 삭제는 두 파일에서
+  // 함께 이뤄져야 한다.
+  const trackedIds = new Set(tracked);
+  const orphans = [...collected].filter((id) => !trackedIds.has(id));
+  assert.deepEqual(orphans, [], `추적 목록에 없는 수집기 설정 법인: ${orphans.join(", ")}`);
+});
+
+test("추적 법인은 모두 2021년 이후 확인된 교섭 기록을 하나 이상 가진다", async () => {
+  // 2021년까지 거슬러 아무 교섭도 확인되지 않는 법인은 추적 대상에서 뺀다. 근거가 한 건도
+  // 없는 법인을 남겨 두면 화면이 '미확인'으로만 채워지고, 그 미확인이 '아직 못 찾았다'인지
+  // '애초에 교섭 노출이 없다'인지 구분되지 않는다.
+  const [universe, historical, current] = await Promise.all([
+    readFile(new URL("../data/company-universe.json", import.meta.url), "utf8"),
+    readFile(new URL("../data/historical-fact-seed.json", import.meta.url), "utf8"),
+    readFile(new URL("../data/current-2026-fact-seed.json", import.meta.url), "utf8"),
+  ]);
+
+  const withRecords = new Set([
+    ...JSON.parse(historical).records.map((record) => record.companyId),
+    ...JSON.parse(current).records.map((record) => record.companyId),
+  ]);
+
+  const empty = JSON.parse(universe)
+    .initialPublicTracking.map((company) => company.id)
+    .filter((id) => !withRecords.has(id));
+  assert.deepEqual(empty, [], `2021년 이후 근거가 한 건도 없는 추적 법인: ${empty.join(", ")}`);
 });
