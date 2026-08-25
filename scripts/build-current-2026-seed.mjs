@@ -54,6 +54,16 @@ function validDate(value) {
 }
 
 /**
+ * 교섭 경과는 교섭연도보다 이르게 시작할 수 있다. 쿠팡 2026년 단체협약 교섭은 2025년
+ * 10월 29일 상견례로 시작해 이듬해 8월에 결렬됐다. 경과 날짜를 2026년으로만 받으면
+ * 이런 교섭은 시작점을 잃고 결렬 하루짜리 구간으로 그려진다. 대표 사건일(eventDate)은
+ * 그대로 교섭연도 안에 둔다.
+ */
+function validFlowDate(value) {
+  return /^2026-\d{2}-\d{2}$/.test(value) || /^2025-\d{2}-\d{2}$/.test(value);
+}
+
+/**
  * 협약유형이 그 레코드의 근거로 뒷받침되는지 판정한다.
  *
  * 협약유형은 화면 필터의 축인데 지금까지 근거 검증 없이 값만 채워져 있었다. 실제로
@@ -125,7 +135,7 @@ export function validateCurrentRecord(record, index, companyIds) {
   assert(Array.isArray(record.flowEvents) && record.flowEvents.length > 0, `records[${index}]에는 하나 이상의 교섭 경과가 필요합니다.`);
 
   record.flowEvents.forEach((flow, flowIndex) => {
-    assert(validDate(flow.date), `records[${index}].flowEvents[${flowIndex}]의 date는 2026년 YYYY-MM-DD여야 합니다.`);
+    assert(validFlowDate(flow.date), `records[${index}].flowEvents[${flowIndex}]의 date는 2025~2026년 YYYY-MM-DD여야 합니다.`);
     assert(STAGE_CODES.has(flow.stage), `records[${index}].flowEvents[${flowIndex}]의 stage가 허용되지 않습니다.`);
     assert(typeof flow.label === "string" && flow.label.trim(), `records[${index}].flowEvents[${flowIndex}]의 label이 필요합니다.`);
     assert(typeof flow.summary === "string" && flow.summary.trim(), `records[${index}].flowEvents[${flowIndex}]의 summary가 필요합니다.`);

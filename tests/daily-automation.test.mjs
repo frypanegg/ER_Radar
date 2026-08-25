@@ -1350,3 +1350,39 @@ test("수집기 설정의 모든 법인이 음차 표기로도 잡힌다", async
   }
   assert.deepEqual(missed, [], `음차 표기로 잡히지 않는 법인: ${missed.join(", ")}`);
 });
+
+test("수집 예정 시각이 실제 스케줄과 어긋나지 않는다", async () => {
+  // 화면과 설정은 06:30이라고 적어 두고 워크플로는 06:34에 걸려 있었다. 사람이 보는
+  // 시각과 실제 발화 시각이 다르면 "왜 안 돌았지"를 엉뚱한 데서 찾게 된다.
+  const [config, workflow, page] = await Promise.all([
+    readFile(new URL("../data/source-config.json", import.meta.url), "utf8"),
+    readFile(
+      new URL("../.github/workflows/daily-bargaining-update.yml", import.meta.url),
+      "utf8",
+    ),
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+  ]);
+
+  const policy = JSON.parse(config).collectionPolicy;
+  // UTC cron을 KST로 되돌린다. 한국은 일광절약시간을 쓰지 않아 항상 +9다.
+  const scheduled = [...workflow.matchAll(/- cron: "(\d+) (\d+) \* \* \*"/g)].map(([, minute, hour]) => {
+    const kstHour = (Number(hour) + 9) % 24;
+    return `${String(kstHour).padStart(2, "0")}:${minute.padStart(2, "0")}`;
+  });
+  assert.ok(scheduled.length > 0, "워크플로에 schedule cron이 있어야 한다");
+
+  assert.equal(
+    scheduled[0],
+    policy.recommendedRunTime,
+    `설정의 수집 시각(${policy.recommendedRunTime})이 첫 스케줄(${scheduled[0]})과 다르다`,
+  );
+  assert.deepEqual(
+    policy.retryRunTimes ?? [],
+    scheduled.slice(1),
+    "설정의 재시도 시각이 워크플로 예비 스케줄과 다르다",
+  );
+  assert.ok(
+    page.includes(`매일 ${policy.recommendedRunTime} KST`),
+    `화면 문구가 ${policy.recommendedRunTime} KST를 가리켜야 한다`,
+  );
+});

@@ -85,9 +85,17 @@ test("화면이 마지막 수집 시각을 보여준다", async () => {
   const heartbeat = JSON.parse(
     await readFile(new URL("data/automation-heartbeat.json", templateRoot), "utf8"),
   );
+  // 예정 시각은 설정에서 읽는다. 여기에 시각을 박아 두면 스케줄을 옮길 때 화면·설정·
+  // 워크플로 가운데 하나만 바뀌어도 어느 쪽이 맞는지 알 수 없게 된다.
+  const { collectionPolicy } = JSON.parse(
+    await readFile(new URL("data/source-config.json", templateRoot), "utf8"),
+  );
   const html = await (await render()).text();
 
-  assert.match(html, /수집 예정: 매일 06:30 KST/);
+  assert.ok(
+    html.includes(`수집 예정: 매일 ${collectionPolicy.recommendedRunTime} KST`),
+    `화면이 수집 예정 시각 ${collectionPolicy.recommendedRunTime} KST를 보여줘야 한다`,
+  );
   assert.match(
     html,
     new RegExp(heartbeat.lastRunKstDate.replaceAll("-", "\\-")),

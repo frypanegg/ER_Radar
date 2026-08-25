@@ -129,9 +129,9 @@
       "bargainingYear": 2026,
       "agreementType": "CBA",
       "stage": "S4",
-      "eventDate": "2026-08-13",
+      "eventDate": "2026-08-11",
       "title": "쿠팡 2026년 단체협약 교섭 결렬 선언",
-      "factSummary": "상견례 이후 약 10개월 동안 17차례 본교섭이 열렸으나 합의에 이르지 못해 노조가 결렬을 선언하고 노동위원회 조정 신청과 후속 절차에 들어간다고 보도됐다.",
+      "factSummary": "2025년 10월 29일 상견례 뒤 약 10개월 동안 17차례 본교섭이 열렸으나, 성과평가 최저등급 강제할당 중단과 이의제기 절차 신설을 놓고 좁혀지지 않아 노조가 8월 11일 사측에 결렬을 통보했다고 보도됐다.",
       "unionName": "전국화학섬유식품산업노동조합 쿠팡지회",
       "directEmploymentEvidence": "원문은 쿠팡과 화섬식품노조 쿠팡지회를 본교섭 당사자로 적시한다. 별도 법인인 쿠팡풀필먼트서비스 소속 노조의 교섭은 이 행에 포함하지 않는다.",
       "sourceUrl": "https://zdnet.co.kr/view/?no=20260813143103",
@@ -140,13 +140,20 @@
       "confidence": 0.85,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "결렬 선언과 조정 신청 예고까지 확인된다. 조정 결과는 확인하지 못했다.",
+      "annotation": "노조가 노동위원회 조정을 신청하겠다고 밝혔으나 신청 사실은 확인되지 않아 넣지 않는다. 결렬 통보일은 8월 11일이고 보도일은 8월 13일이다. 교섭은 2025년 10월에 시작해 이듬해까지 이어진 첫 단체협약 교섭이다.",
       "flowEvents": [
         {
-          "date": "2026-08-13",
+          "date": "2025-10-29",
+          "stage": "S3",
+          "label": "상견례·단체협약 교섭 개시",
+          "summary": "쿠팡과 화섬식품노조 쿠팡지회가 상견례를 열고 첫 단체협약 교섭을 시작했다고 보도됐다.",
+          "sourceUrl": "https://zdnet.co.kr/view/?no=20260813143103"
+        },
+        {
+          "date": "2026-08-11",
           "stage": "S4",
-          "label": "단체협약 교섭 결렬 선언",
-          "summary": "17차례 본교섭 끝에 노조가 결렬을 선언했다고 보도됐다.",
+          "label": "17차 교섭 끝 결렬 통보",
+          "summary": "17차례 본교섭에도 성과평가·이의제기 절차 쟁점이 좁혀지지 않아 노조가 사측에 교섭 결렬을 통보했다고 보도됐다.",
           "sourceUrl": "https://zdnet.co.kr/view/?no=20260813143103"
         }
       ]
@@ -269,6 +276,13 @@
       "includeInPrimaryDashboard": true,
       "annotation": "잠정합의까지 확인된다. 찬반투표 결과와 조인 근거는 확인하지 못해 S5로 둔다.",
       "flowEvents": [
+        {
+          "date": "2026-08-10",
+          "stage": "S4",
+          "label": "쟁의행위 찬반투표 가결",
+          "summary": "조합원 3천310명 중 3천32명이 투표해 2천815명(92.8%)이 파업에 찬성했다고 보도됐다.",
+          "sourceUrl": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003258223&PAGE_CD=N0002&BLCK_NO=&CMPT_CD=M0147"
+        },
         {
           "date": "2026-08-21",
           "stage": "S5",

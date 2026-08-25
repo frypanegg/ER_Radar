@@ -51,8 +51,8 @@
   "collectionPolicy": {
     "frequency": "daily",
     "timezone": "Asia/Seoul",
-    "recommendedRunTime": "06:30",
-    "cron": "30 6 * * *",
+    "recommendedRunTime": "06:34",
+    "cron": "34 6 * * *",
     "targetWindow": "calendar_year",
     "maxItemsPerQuery": 30,
     "requestDelayMs": 300,
@@ -60,7 +60,12 @@
     "maxRetries": 3,
     "freshnessHalfLifeDays": 30,
     "freshnessReviewDays": 120,
-    "maxUrlResolutions": 300
+    "maxUrlResolutions": 300,
+    "retryRunTimes": [
+      "09:34",
+      "14:34"
+    ],
+    "scheduleNote": "정시·30분 경계는 스케줄러 부하가 몰려 유실된 적이 있어 4분을 비켜 건다. 첫 시도가 성공하면 나머지 두 번은 판단 단계에서 끝난다."
   },
   "scopePolicy": {
     "primaryScope": "selected_legal_entity_directly_employed_union_only",

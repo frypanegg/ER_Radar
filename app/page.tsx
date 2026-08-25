@@ -687,7 +687,7 @@ export default function Home() {
               쓰면 같은 줄에 날짜가 두 번 나온다. */}
           <p><Sparkles size={14} aria-hidden="true" /><span>대한민국 주요 기업의 단체교섭 현황을 모니터링합니다 · <b>원청 노조 교섭만 수록</b></span></p>
           <p className="collection-summary">
-            <Clock3 size={14} aria-hidden="true" /><span>수집 예정: 매일 06:30 KST · 법인별 1회</span>
+            <Clock3 size={14} aria-hidden="true" /><span>수집 예정: 매일 06:34 KST · 법인별 1회</span>
             {lastCollectionKstDate ? (
               <span className={`collection-state collection-state-${collectionLag?.tone ?? "idle"}`}>
                 {collectionLag?.text ?? `마지막 수집 ${lastCollectionKstDate} KST`}
@@ -908,7 +908,7 @@ export default function Home() {
                     <span className="case-card-subtitle">{item.subtitle}</span>
                     <span className="case-card-footer">
                       <span>{meta?.label ?? "단계 미확인"}</span>
-                      <span>검증 {item.verifiedAt}</span>
+                      <span>업데이트 확인 {item.verifiedAt}</span>
                     </span>
                   </button>
                 );
@@ -985,10 +985,25 @@ export default function Home() {
                   <p className="flow-empty">해당 연도 교섭 경과 표시에 필요한 원청 노조 근거 미확보</p>
                 ) : (
                   <div className="stage-timeline">
+                    {/* 시작일·총기간·전환일·종료일을 한 줄에 둔다. 전환일만 막대 아래
+                        따로 있던 때에는 정작 가장 중요한 날짜가 다른 날짜들과 떨어져
+                        눈에 늦게 들어왔다. */}
                     <div className="timeline-span">
-                      <span>{formatDate(selectedTimeline.startDate)}</span>
+                      <span className="timeline-span-edge">{formatDate(selectedTimeline.startDate)}</span>
                       <span className="timeline-span-total">{selectedTimeline.totalDays}일간</span>
-                      <span>{formatDate(selectedTimeline.endDate)}</span>
+                      <ol className="timeline-shifts">
+                        {selectedTimeline.segments.slice(1).map((segment, index) => (
+                          <li key={`shift-${segment.startDate}-${index}`}>
+                            <time>{formatDate(segment.startDate)}</time>
+                            <span aria-hidden="true">→</span>
+                            <StagePill stage={segment.stage} />
+                          </li>
+                        ))}
+                        {selectedTimeline.segments.length === 1 && (
+                          <li className="timeline-shift-none">단계 전환 없음</li>
+                        )}
+                      </ol>
+                      <span className="timeline-span-edge">{formatDate(selectedTimeline.endDate)}</span>
                     </div>
 
                     {/* 막대는 그림이라 스크린리더가 읽지 못한다. 같은 내용을 아래 구간
@@ -1008,20 +1023,6 @@ export default function Home() {
                         </div>
                       ))}
                     </div>
-
-                    {/* 전환 날짜는 구간 경계에만 찍는다. 첫 구간의 시작은 위의 기간 줄이 담는다. */}
-                    <ol className="timeline-shifts">
-                      {selectedTimeline.segments.slice(1).map((segment, index) => (
-                        <li key={`shift-${segment.startDate}-${index}`}>
-                          <time>{formatDate(segment.startDate)}</time>
-                          <span aria-hidden="true">→</span>
-                          <StagePill stage={segment.stage} />
-                        </li>
-                      ))}
-                      {selectedTimeline.segments.length === 1 && (
-                        <li className="timeline-shift-none">단계 전환 기록 없음</li>
-                      )}
-                    </ol>
 
                     <ol className="timeline-detail">
                       {[...selectedTimeline.segments].reverse().map((segment, index) => (
@@ -1166,7 +1167,7 @@ export default function Home() {
             </p>
             <div className="collection-timing">
               <CalendarDays size={20} aria-hidden="true" />
-              <div><strong>매일 06:30 KST</strong><span>법인별 1회 · 실패 시 이전 확정 상태 보존</span></div>
+              <div><strong>매일 06:34 KST</strong><span>법인별 1회 · 유실 시 09:34·14:34 재시도 · 실패 시 이전 확정 상태 보존</span></div>
             </div>
           </div>
           <div className="pipeline" aria-label="일일 수집 처리 흐름">

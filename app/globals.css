@@ -3049,15 +3049,21 @@ button:focus-visible,
   display: grid;
   gap: 12px;
 }
+/* 한 줄에 시작일 · 총기간 · 단계 전환일 · 종료일을 모두 담는다. 전환 항목이 늘어나면
+   가운데에서 줄바꿈하고, 양 끝 날짜는 줄 끝에 붙어 막대의 시작·끝과 눈높이를 맞춘다. */
 .timeline-span {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px 10px;
   color: #618087;
   font-family: var(--font-geist-mono), monospace;
   font-size: 11px;
   letter-spacing: -.03em;
+}
+.timeline-span-edge {
+  flex: 0 0 auto;
 }
 .timeline-span-total {
   padding: 2px 8px;
@@ -3103,7 +3109,9 @@ button:focus-visible,
 }
 .timeline-shifts {
   display: flex;
+  flex: 1 1 auto;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 6px 12px;
   margin: 0;
   padding: 0;
