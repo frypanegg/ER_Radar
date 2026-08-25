@@ -837,6 +837,40 @@
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
       "originalUrl": "https://www.yna.co.kr/view/AKR20260401157900003"
+    },
+    {
+      "companyId": "kumho-tire",
+      "companyLegalName": "금호타이어 주식회사",
+      "directEmployerId": "kumho-tire",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S5",
+      "eventDate": "2026-08-21",
+      "title": "금호타이어 2026년 임금 및 단체협약 잠정합의",
+      "factSummary": "기본급 3% 인상과 경영성과 격려금 550만원 등을 담은 잠정합의안을 노사가 마련했다고 보도됐다. 조합원 찬반투표는 8월 23~24일로 예고됐다.",
+      "unionName": "전국금속노동조합 광주전남지부 금호타이어지회",
+      "directEmploymentEvidence": "원문은 금호타이어와 금속노조 금호타이어지회를 잠정합의안의 교섭 당사자로 적시한다.",
+      "sourceUrl": "https://www.ajunews.com/view/20260821165806489",
+      "sourceName": "아주경제",
+      "sourceTier": "B",
+      "confidence": 0.86,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "잠정합의까지 확인된다. 찬반투표 결과와 조인 근거는 확인하지 못해 S5로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-08-21",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "기본급 3% 인상 등을 담은 잠정합의안을 노사가 마련했다고 보도됐다.",
+          "sourceUrl": "https://www.ajunews.com/view/20260821165806489"
+        }
+      ],
+      "id": "kumho-tire:2026:INTEGRATED:2026-08-21",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.ajunews.com/view/20260821165806489"
     }
   ],
   "withheld": [],
