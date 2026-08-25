@@ -1245,3 +1245,59 @@ test("최신 여부는 대표 사건이 아니라 경과까지 훑어 정한다"
 test("DB에 없는 법인·연도는 시드로 계속 그린다", () => {
   assert.equal(decideFactSource({ seed: { eventDate: "2026-01-01" }, fact: null }).use, "seed");
 });
+
+// 2026-08-25 수집이 카카오를 S7(최종 체결·발효)로 올렸다. 근거 제목은
+// "임금협상 잠정합의...최종타결 '눈앞'"이었다. 아직 타결되지 않았다는 뜻인데,
+// final_agreement 가드가 예정·전망·기대·목표·계획만 막고 있어 임박 표현이 그대로
+// 통과했다. 체결은 이 프로젝트에서 서명·조인·발효 근거를 요구하는 단계라 특히 위험하다.
+test("타결이 임박했다는 제목을 체결로 읽지 않는다", async () => {
+  for (const title of [
+    "카카오 노사, 임금협상 잠정합의...최종타결 '눈앞'",
+    "카카오 노사 임금협상 최종 타결 임박",
+    "카카오 노사 임금협상 타결 목전",
+  ]) {
+    const classification = await classifyTitle(title, "kakao");
+    assert.notEqual(classification.statusCode, "S7", `${title} → S7로 잘못 올라간다`);
+  }
+});
+
+// 같은 제목에 잠정합의와 최종타결이 함께 있으면 그 기사가 말하는 것은 잠정합의다.
+// 다만 조인·체결·서명·발효가 함께 적힌 제목은 실제 타결 보도이므로 막으면 안 된다.
+test("잠정합의가 적힌 제목은 체결로 올리지 않되 조인 보도는 통과시킨다", async () => {
+  const tentative = await classifyTitle(
+    "카카오 노사, 임금협상 잠정합의로 최종타결 수순",
+    "kakao",
+  );
+  assert.notEqual(tentative.statusCode, "S7");
+
+  const signed = await classifyTitle("카카오 노사, 잠정합의안 가결 뒤 임단협 조인식", "kakao");
+  assert.equal(signed.statusCode, "S7");
+});
+
+// 공개 시드에 서명 근거 없는 S7이 들어 있으면 화면이 "체결"로 단정한다.
+//
+// 사람이 검증한 행은 대상이 아니다. LG전자 2026년 행은 사내 공지의 "임금 4% 인상 확정"을
+// 근거로 사람이 S7로 판단했고, 그 판단까지 제목 낱말로 되짚지는 않는다. 위험한 것은
+// 제목만 보고 자동으로 올라간 S7이다.
+test("자동 수집이 올린 체결 표기는 서명·조인 근거를 동반한다", async () => {
+  const seed = JSON.parse(
+    await readFile(new URL("../data/current-2026-fact-seed.json", import.meta.url), "utf8"),
+  );
+  const autoSettled = seed.records.filter(
+    (candidate) =>
+      candidate.stage === "S7" && candidate.factualStatus === "AUTO_COLLECTED_TITLE_BASIS",
+  );
+  for (const record of autoSettled) {
+    const evidence = `${record.title} ${record.factSummary} ${record.annotation}`;
+    assert.match(
+      evidence,
+      /조인|서명|체결|발효/,
+      `${record.companyId}의 S7에 서명·조인 근거가 없다: ${record.title}`,
+    );
+    assert.doesNotMatch(
+      evidence,
+      /눈앞|임박|초읽기|코앞|목전|수순/,
+      `${record.companyId}의 S7 근거가 임박 표현이다: ${record.title}`,
+    );
+  }
+});

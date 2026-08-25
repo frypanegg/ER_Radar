@@ -169,19 +169,19 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "WAGE",
-      "stage": "S7",
-      "eventDate": "2026-07-31",
-      "title": "카카오 노사, 임금협상 잠정합의...최종타결 '눈앞'",
-      "factSummary": "연합뉴스 보도 제목 기준 최종 체결·발효 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S5",
+      "eventDate": "2026-07-30",
+      "title": "카카오 2026년 임금협상 잠정합의",
+      "factSummary": "두 차례 파업을 거친 뒤 노사가 임금협상 잠정합의안을 도출했다고 보도됐다. 조합원 찬반투표 결과는 원문에서 확인되지 않는다.",
       "unionName": "전국화학섬유식품산업노동조합 카카오지회",
       "directEmploymentEvidence": "원문은 카카오와 화섬식품노조 카카오지회를 임금협상 당사자로 적시하고, 판교 본사에서 카카오 소속 직원이 참여한 파업을 같은 교섭의 경과로 기술한다.",
-      "sourceUrl": "https://yna.co.kr/view/MYH20260731000900038",
-      "sourceName": "연합뉴스",
+      "sourceUrl": "https://biz.heraldcorp.com/article/10825344",
+      "sourceName": "헤럴드경제",
       "sourceTier": "B",
-      "confidence": 0.8,
+      "confidence": 0.86,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "잠정합의까지 확인된다. 찬반투표 결과를 확인하지 못해 S5로 둔다.",
       "flowEvents": [
         {
           "date": "2026-06-10",
@@ -196,21 +196,12 @@
           "label": "잠정합의",
           "summary": "노사가 잠정합의안을 도출해 봉합 수순에 들어갔다고 보도됐다.",
           "sourceUrl": "https://biz.heraldcorp.com/article/10825344"
-        },
-        {
-          "date": "2026-07-31",
-          "stage": "S7",
-          "label": "최종 체결·발효",
-          "summary": "연합뉴스 보도 제목 기준 확인: 카카오 노사, 임금협상 잠정합의...최종타결 '눈앞'",
-          "sourceUrl": "https://yna.co.kr/view/MYH20260731000900038"
         }
       ],
       "id": "kakao:2026:WAGE:2026-07-30",
-      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
+      "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://yna.co.kr/view/MYH20260731000900038",
-      "agreementTypeEvidence": "카카오 2026년 임금협상 잠정합의 두 차례 파업을 거친 뒤 노사가 임금협상 잠정합의안을 도출했다고 보도됐다. 조합원 찬반투표 결과는 원문에서 확인되지 않는다.",
-      "autoUpdatedAt": "2026-08-25T01:11:14.875Z"
+      "originalUrl": "https://biz.heraldcorp.com/article/10825344"
     },
     {
       "companyId": "sk-hynix",
