@@ -87,7 +87,6 @@ type CaseExample = {
   yearType: string;
   stage: string;
   reason: string;
-  lastConfirmed: string;
   verifiedAt: string;
   freshness: string;
   confidence: number;
@@ -314,7 +313,6 @@ function getBargainingCases(
         yearType: `${year}년 · 미확인`,
         stage: "U",
         reason: `${year}년 법인·원청 노조·교섭단위를 함께 식별하는 원문 미확보`,
-        lastConfirmed: "—",
         verifiedAt: "—",
         freshness: "근거 보강 대기",
         confidence: 0,
@@ -353,8 +351,9 @@ function getBargainingCases(
       yearType: `${year}년 ${agreementLabels[record.agreementType]}`,
       stage: record.stage,
       reason: record.factSummary,
-      lastConfirmed: formatDate(record.eventDate),
-      verifiedAt: formatDate(record.eventDate),
+      // 카드에 찍는 날짜는 정렬 기준과 같아야 한다. 대표 사건일만 보여 주면 경과에
+      // 더 늦은 사건이 들어온 법인은 옛 날짜를 달고 최신 카드 사이에 끼어 보인다.
+      verifiedAt: formatDate(findLastUpdatedOn(record)),
       freshness: record.bargainingYear === currentYear ? `${currentAsOf} 기준 현재 현황` : "과거 사실 초기 데이터",
       confidence: record.confidence,
       sourceTier: record.sourceTier,

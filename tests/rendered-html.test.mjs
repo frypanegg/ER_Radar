@@ -573,3 +573,49 @@ test("추적 법인은 모두 2021년 이후 확인된 교섭 기록을 하나 �
     .filter((id) => !withRecords.has(id));
   assert.deepEqual(empty, [], `2021년 이후 근거가 한 건도 없는 추적 법인: ${empty.join(", ")}`);
 });
+
+test("카드에 찍힌 날짜가 목록 순서와 같은 값이다", async () => {
+  // 두산에너빌리티는 대표 사건일이 2026-06-26이고 경과에 2026-08-24 총파업이 있다.
+  // 정렬은 08-24로 하면서 카드에는 06-26을 찍으니, 08-21인 금호타이어보다 위에 있는
+  // 카드가 더 오래된 날짜를 달고 있었다. 순서가 틀린 게 아니라 날짜 표기가 달랐다.
+  const html = await (await render()).text();
+
+  const rendered = [
+    ...html.matchAll(
+      // React가 텍스트와 값 사이에 주석 구분자를 넣는다: 업데이트 확인 <!-- -->2026.08.25
+      /class="case-card[^"]*"[\s\S]*?<strong title="([^"]+)"[\s\S]*?업데이트 확인 (?:<!-- -->)?([\d.]+)</g,
+    ),
+  ].map(([, name, date]) => ({ name, date }));
+  assert.ok(rendered.length > 1, "카드가 두 개 이상 렌더돼야 비교할 수 있다");
+
+  const historicalSeed = JSON.parse(
+    await readFile(new URL("../data/historical-fact-seed.json", import.meta.url), "utf8"),
+  );
+  const year = Math.max(
+    ...[...currentSeed.records, ...historicalSeed.records].map((record) => record.bargainingYear),
+  );
+  const expected = new Map();
+  for (const record of [...currentSeed.records, ...historicalSeed.records]) {
+    if (record.bargainingYear !== year) continue;
+    const latest = (record.flowEvents ?? []).reduce(
+      (newest, event) => (event.date > newest ? event.date : newest),
+      record.eventDate,
+    );
+    const previous = expected.get(record.companyLegalName);
+    if (!previous || latest > previous) expected.set(record.companyLegalName, latest);
+  }
+
+  const mismatched = rendered.filter(
+    (card) => expected.has(card.name) && card.date !== expected.get(card.name).replaceAll("-", "."),
+  );
+  assert.deepEqual(
+    mismatched.map((card) => `${card.name}: 카드 ${card.date} ≠ 정렬 ${expected.get(card.name)}`),
+    [],
+    "카드 날짜가 정렬 기준과 다르다",
+  );
+
+  // 표기가 같아지면 카드 날짜만 훑어도 내림차순이어야 한다.
+  const dates = rendered.filter((card) => expected.has(card.name)).map((card) => card.date);
+  const descending = [...dates].sort((left, right) => right.localeCompare(left));
+  assert.deepEqual(dates, descending, `카드 날짜가 최신순이 아니다: ${dates.join(" → ")}`);
+});
