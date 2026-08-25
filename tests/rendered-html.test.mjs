@@ -442,11 +442,22 @@ test("기업 목록이 최근 확인된 순서로 나온다", async () => {
     );
   }
 
-  // 고정 순서로 되돌아가면 이 단언이 먼저 깨진다.
-  const newest = [...lastUpdatedByName.entries()].sort((left, right) =>
-    right[1].localeCompare(left[1]),
-  )[0];
-  assert.equal(rendered[0], newest[0]);
+  // 고정 순서로 되돌아가면 맨 앞 카드가 최신이 아니게 되므로 여기서 걸린다.
+  //
+  // 단, 어느 "법인"이 맨 앞인지는 굳히지 않는다. 같은 날짜를 가진 법인이 여럿일 때
+  // 화면은 이름순으로 가르는데, 기대값을 법인명으로 잡으면 그 동점 규칙까지 똑같이
+  // 흉내내야 한다. 실제로 2026-08-25 수집에서 기아가 현대자동차와 같은 날짜로 올라오면서
+  // 이 단언만 깨졌고, 그 하나 때문에 그날 수집분 전체가 되돌려졌다. 지켜야 할 성질은
+  // "맨 앞이 가장 최근"이지 "맨 앞이 현대자동차"가 아니다.
+  const newestDate = [...lastUpdatedByName.values()].reduce(
+    (newest, date) => (date > newest ? date : newest),
+    "",
+  );
+  assert.equal(
+    renderedDates[0],
+    newestDate,
+    `맨 앞 카드가 최신이 아니다: ${rendered[0]}(${renderedDates[0]}) · 최신 ${newestDate}`,
+  );
 });
 
 // 추적 대상을 제조업 밖으로 넓혔다. 항공·금융·플랫폼·철도가 들어오면서 화면 문구의
