@@ -613,6 +613,13 @@
           "label": "11차 교섭·노동위 조정 경로",
           "summary": "11차 임단협 교섭 뒤 노동위원회 조정 절차가 보도됐다.",
           "sourceUrl": "https://biz.newdaily.co.kr/site/data/html/2026/06/26/2026062600082.html"
+        },
+        {
+          "date": "2026-08-24",
+          "stage": "S4",
+          "label": "2차 총파업",
+          "summary": "지회 사진자료실에 2026년 8월 24일 2차 총파업 참여를 독려하는 퇴근선전전 기록이 게시됐다.",
+          "sourceUrl": "http://dstu.or.kr/bbs/board.php?bo_table=04_07&wr_id=3403"
         }
       ],
       "id": "doosan-enerbility:2026:INTEGRATED:2026-06-26",
@@ -871,6 +878,115 @@
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
       "originalUrl": "https://www.ajunews.com/view/20260821165806489"
+    },
+    {
+      "companyId": "lg-chem",
+      "companyLegalName": "주식회사 엘지화학",
+      "directEmployerId": "lg-chem",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S3",
+      "eventDate": "2026-08-13",
+      "title": "LG화학 2026년 임금 및 단체협약 12차 교섭",
+      "factSummary": "지회 공고에 2026년 임금 및 단체협약 12차 교섭 개최가 올라왔고, 같은 날 천막농성 돌입 투쟁지침이 함께 공고됐다.",
+      "unionName": "전국화학섬유식품산업노동조합 대전충북지부 LG화학 청주지회",
+      "directEmploymentEvidence": "노동조합 공식 홈페이지의 지회 공고는 LG화학 청주사업장 소속 조합원으로 구성된 청주지회를 회사와의 임단협 교섭 당사자로 적시한다.",
+      "sourceUrl": "https://www.lgchemnodongcj.or.kr/post/4227",
+      "sourceName": "전국화학섬유식품산업노동조합 LG화학 청주지회",
+      "sourceTier": "A",
+      "confidence": 0.74,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "같은 주 지회공고에 \"2026년 LG화학 임.단협 체결식 건\"이 함께 올라와 교섭 단위가 갈릴 가능성이 있다. 체결 근거로 보지 않고 12차 교섭이 열린 사실까지만 기록한다. 이 행은 청주지회 교섭이며 LG화학 전 사업장을 대표하지 않는다.",
+      "flowEvents": [
+        {
+          "date": "2026-08-13",
+          "stage": "S3",
+          "label": "12차 교섭·천막농성",
+          "summary": "12차 교섭 개최 공고와 천막농성 돌입 투쟁지침이 같은 날 공고됐다.",
+          "sourceUrl": "https://www.lgchemnodongcj.or.kr/post/4227"
+        }
+      ],
+      "id": "lg-chem:2026:INTEGRATED:2026-08-13",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.lgchemnodongcj.or.kr/post/4227"
+    },
+    {
+      "companyLegalName": "서울교통공사",
+      "directEmployerId": "seoul-metro",
+      "coveredWorkerRelation": "DIRECT",
+      "companyId": "seoul-metro",
+      "unionName": "서울교통공사 노동조합",
+      "directEmploymentEvidence": "노동조합 공식 소식지는 서울교통공사 소속 직원으로 구성된 노동조합을 회사와의 교섭 당사자로 적시한다.",
+      "sourceName": "서울교통공사 노동조합",
+      "sourceTier": "A",
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S1",
+      "eventDate": "2026-07-15",
+      "title": "서울교통공사 2026년 임금 및 단체협약 요구안 확정",
+      "factSummary": "노동조합 소식지에 2026년 임금 및 단체협약 요구안과 중앙노사협의회 의결이 게시됐다.",
+      "sourceUrl": "http://www.stlu.kr/content/news/news_read.php?id=5398",
+      "confidence": 0.74,
+      "annotation": "요구안 게시까지 확인된다. 본교섭 개시·결렬 근거는 확인하지 않아 S1으로 둔다.",
+      "flowEvents": [
+        {
+          "date": "2026-07-15",
+          "stage": "S1",
+          "label": "요구안·중앙노사협의회 의결",
+          "summary": "노동조합 소식지에 2026년 임단협 요구안과 중앙노사협의회 의결이 게시됐다.",
+          "sourceUrl": "http://www.stlu.kr/content/news/news_read.php?id=5398"
+        }
+      ],
+      "id": "seoul-metro:2026:INTEGRATED:2026-07-15",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "http://www.stlu.kr/content/news/news_read.php?id=5398"
+    },
+    {
+      "companyId": "korail",
+      "companyLegalName": "한국철도공사",
+      "directEmployerId": "korail",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2026,
+      "agreementType": "INTEGRATED",
+      "stage": "S3",
+      "eventDate": "2026-08-04",
+      "title": "한국철도공사 2026년 임금 및 단체협약 제1차 본교섭",
+      "factSummary": "2026년 임금 및 단체협약 제1차 본교섭이 8월 4일 서울본부에서 열렸다고 노동조합이 게시했다. 7월 14일 임금교섭을 시작으로 실무교섭이 각각 세 차례 진행됐다.",
+      "unionName": "전국철도노동조합",
+      "directEmploymentEvidence": "노동조합 공식 게시물은 철도공사를 교섭 상대로 적시하고, 승진제도·임금 등 철도공사 소속 직원의 근로조건을 교섭 의제로 기술한다.",
+      "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774",
+      "sourceName": "전국철도노동조합",
+      "sourceTier": "A",
+      "confidence": 0.8,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "상견례를 겸한 제1차 본교섭까지 확인된다. 결렬·조정 근거는 확인하지 않아 S3으로 둔다. 같은 노조가 국가철도공단과 별도로 벌이는 교섭은 이 행에 포함하지 않는다.",
+      "flowEvents": [
+        {
+          "date": "2026-07-14",
+          "stage": "S3",
+          "label": "임금교섭 개시",
+          "summary": "7월 14일 임금교섭을 시작으로 임금·단협 실무교섭이 각각 세 차례 진행됐다고 게시됐다.",
+          "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
+        },
+        {
+          "date": "2026-08-04",
+          "stage": "S3",
+          "label": "제1차 본교섭",
+          "summary": "제1차 본교섭에서 상견례와 함께 승진제도·임금 등 주요 의제를 논의했다고 게시됐다.",
+          "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
+        }
+      ],
+      "id": "korail:2026:INTEGRATED:2026-08-04",
+      "factualStatus": "VERIFIED_SOURCE",
+      "scopeRuleVersion": "1.1.0",
+      "originalUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
     }
   ],
   "withheld": [],

@@ -244,6 +244,27 @@
           "sourceUrl": "https://www.koreadaily.com/article/20250930013125231"
         }
       ]
+    },
+    {
+      "companyLegalName": "서울교통공사",
+      "directEmployerId": "seoul-metro",
+      "coveredWorkerRelation": "DIRECT",
+      "companyId": "seoul-metro",
+      "unionName": "서울교통공사 노동조합",
+      "directEmploymentEvidence": "노동조합 공식 소식지는 서울교통공사 소속 직원으로 구성된 노동조합을 회사와의 교섭 당사자로 적시한다.",
+      "sourceName": "서울교통공사 노동조합",
+      "sourceTier": "A",
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "bargainingYear": 2023,
+      "agreementType": "CBA",
+      "stage": "S6",
+      "eventDate": "2023-11-27",
+      "title": "서울교통공사 2023년 단체협약 타결",
+      "factSummary": "노동조합 소식지 22호에 23년도 단체협약 타결이 게시됐다. 직전 호에는 교섭 결렬이 게시됐다.",
+      "sourceUrl": "http://www.stlu.kr/content/news/news_read.php?id=4647",
+      "confidence": 0.76,
+      "annotation": "노동조합 소식지 게시일 기준이다. 타결 자체의 날짜와 조인·서명 근거는 이 원문에서 확인하지 않아 S6으로 둔다."
     }
   ],
   "auditRecords": []
