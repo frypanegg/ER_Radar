@@ -619,3 +619,38 @@ test("카드에 찍힌 날짜가 목록 순서와 같은 값이다", async () =>
   const descending = [...dates].sort((left, right) => right.localeCompare(left));
   assert.deepEqual(dates, descending, `카드 날짜가 최신순이 아니다: ${dates.join(" → ")}`);
 });
+
+test("좁은 화면에서 날짜 줄이 상세 패널을 밀어내지 않는다", async () => {
+  // 전환일을 한 줄에 붙들려고 넣은 flex-wrap: nowrap이 좁은 화면에서 이 줄의 최소 너비를
+  // 600px 너머로 키웠다. 그 폭이 그리드 트랙을 밀어 상세 패널이 통째로 화면 밖으로
+  // 잘렸다. 넓은 화면에서만 한 줄로 붙들고, 좁은 화면에서는 반드시 풀어 준다.
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  // 720px 블록은 파일에 여러 개다. 전부 모아서 본다.
+  const mobileBlocks = [];
+  for (let start = css.indexOf("@media (max-width: 720px)"); start !== -1;
+       start = css.indexOf("@media (max-width: 720px)", start + 1)) {
+    let depth = 0;
+    for (let index = css.indexOf("{", start); index < css.length; index += 1) {
+      if (css[index] === "{") depth += 1;
+      else if (css[index] === "}") {
+        depth -= 1;
+        if (depth === 0) {
+          mobileBlocks.push(css.slice(start, index + 1));
+          break;
+        }
+      }
+    }
+  }
+  assert.ok(mobileBlocks.length > 0, "720px 미디어 블록이 있어야 한다");
+
+  const rule = mobileBlocks
+    .map((block) => block.match(/\.timeline-span\s*\{([^}]*)\}/))
+    .find(Boolean);
+  assert.ok(rule, "좁은 화면 규칙에 .timeline-span이 있어야 한다");
+  assert.match(
+    rule[1],
+    /flex-wrap:\s*wrap/,
+    "좁은 화면에서는 날짜 줄의 줄바꿈을 열어 둬야 한다",
+  );
+});

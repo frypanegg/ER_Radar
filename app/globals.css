@@ -3222,8 +3222,34 @@ button:focus-visible,
 }
 
 @media (max-width: 720px) {
-  /* 좁은 화면에서는 막대가 글씨를 담지 못한다. 기간만 남기고 단계 이름은 아래
-     구간 목록이 담당한다. */
+  /* 좁은 화면에서는 날짜 줄을 한 줄로 붙들면 안 된다. 줄바꿈을 막은 채로 두면 이 줄의
+     최소 너비가 600px을 넘어서고, 그 폭이 그리드 트랙을 밀어 상세 패널 전체가 화면
+     밖으로 잘려 나간다. 여기서는 시작·총기간·종료를 윗줄에 두고 전환일만 아랫줄로
+     내린다. 전환일은 그래도 막대 위에 남는다. */
+  .timeline-span {
+    flex-wrap: wrap;
+    min-width: 0;
+    gap: 6px 8px;
+  }
+  .timeline-span > .timeline-span-edge:last-child {
+    order: 1;
+  }
+  .timeline-shifts {
+    order: 2;
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 5px 10px;
+    overflow-x: visible;
+  }
+  /* 연도는 바로 윗줄의 시작·종료일이 이미 알려 준다. 전환일에서 연도를 빼면 한 줄에
+     두 개씩 들어가 목록이 절반으로 짧아진다. */
+  .timeline-shift-year {
+    display: none;
+  }
+  .timeline-shifts time {
+    font-size: 12px;
+  }
   .timeline-seg {
     min-width: 34px;
     padding: 8px 4px;

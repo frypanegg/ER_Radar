@@ -993,7 +993,12 @@ export default function Home() {
                       <ol className="timeline-shifts">
                         {selectedTimeline.segments.slice(1).map((segment, index) => (
                           <li key={`shift-${segment.startDate}-${index}`}>
-                            <time>{formatDate(segment.startDate)}</time>
+                            {/* 좁은 화면에서는 연도를 감춘다. 시작·종료일이 바로 옆에서
+                                연도를 이미 알려 주고, 그만큼 전환일이 한 줄에 더 들어간다. */}
+                            <time>
+                              <span className="timeline-shift-year">{segment.startDate.slice(0, 4)}.</span>
+                              {formatDate(segment.startDate.slice(5))}
+                            </time>
                             <span aria-hidden="true">→</span>
                             <StagePill stage={segment.stage} />
                           </li>
