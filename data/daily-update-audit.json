@@ -2,6 +2,59 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-08-25T01:11:14.875Z",
+      "kstDate": "2026-08-25",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-08-25",
+      "primarySource": "google",
+      "consideredArticles": 614,
+      "appliedCount": 3,
+      "skippedCount": 572,
+      "applied": [
+        {
+          "companyId": "hyundai-motor",
+          "companyLegalName": "현대자동차 주식회사",
+          "previousStage": "S4",
+          "previousEventDate": "2026-07-29",
+          "nextStage": "S5",
+          "nextEventDate": "2026-08-25",
+          "sourceUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624",
+          "sourceName": "주간조선",
+          "confidence": 0.8
+        },
+        {
+          "companyId": "kia",
+          "companyLegalName": "기아 주식회사",
+          "previousStage": "S4",
+          "previousEventDate": "2026-07-24",
+          "nextStage": "S3",
+          "nextEventDate": "2026-08-24",
+          "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405443",
+          "sourceName": "매일일보",
+          "confidence": 0.91
+        },
+        {
+          "companyId": "kakao",
+          "companyLegalName": "주식회사 카카오",
+          "previousStage": "S5",
+          "previousEventDate": "2026-07-30",
+          "nextStage": "S7",
+          "nextEventDate": "2026-07-31",
+          "sourceUrl": "https://yna.co.kr/view/MYH20260731000900038",
+          "sourceName": "연합뉴스",
+          "confidence": 0.8
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 287,
+        "scope_excluded": 265,
+        "stage_unknown": 15,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "not_newer_than_recorded_event": 3,
+        "company_not_tracked": 1
+      }
+    },
+    {
       "runAt": "2026-08-23T21:59:34.999Z",
       "kstDate": "2026-08-24",
       "ruleVersion": "1.0.0",

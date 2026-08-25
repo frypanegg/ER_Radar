@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-08-10",
+  "asOf": "2026-08-25",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -169,19 +169,19 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "WAGE",
-      "stage": "S5",
-      "eventDate": "2026-07-30",
-      "title": "카카오 2026년 임금협상 잠정합의",
-      "factSummary": "두 차례 파업을 거친 뒤 노사가 임금협상 잠정합의안을 도출했다고 보도됐다. 조합원 찬반투표 결과는 원문에서 확인되지 않는다.",
+      "stage": "S7",
+      "eventDate": "2026-07-31",
+      "title": "카카오 노사, 임금협상 잠정합의...최종타결 '눈앞'",
+      "factSummary": "연합뉴스 보도 제목 기준 최종 체결·발효 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국화학섬유식품산업노동조합 카카오지회",
       "directEmploymentEvidence": "원문은 카카오와 화섬식품노조 카카오지회를 임금협상 당사자로 적시하고, 판교 본사에서 카카오 소속 직원이 참여한 파업을 같은 교섭의 경과로 기술한다.",
-      "sourceUrl": "https://biz.heraldcorp.com/article/10825344",
-      "sourceName": "헤럴드경제",
+      "sourceUrl": "https://yna.co.kr/view/MYH20260731000900038",
+      "sourceName": "연합뉴스",
       "sourceTier": "B",
-      "confidence": 0.86,
+      "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "잠정합의까지 확인된다. 찬반투표 결과를 확인하지 못해 S5로 둔다.",
+      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-10",
@@ -196,12 +196,21 @@
           "label": "잠정합의",
           "summary": "노사가 잠정합의안을 도출해 봉합 수순에 들어갔다고 보도됐다.",
           "sourceUrl": "https://biz.heraldcorp.com/article/10825344"
+        },
+        {
+          "date": "2026-07-31",
+          "stage": "S7",
+          "label": "최종 체결·발효",
+          "summary": "연합뉴스 보도 제목 기준 확인: 카카오 노사, 임금협상 잠정합의...최종타결 '눈앞'",
+          "sourceUrl": "https://yna.co.kr/view/MYH20260731000900038"
         }
       ],
       "id": "kakao:2026:WAGE:2026-07-30",
-      "factualStatus": "VERIFIED_SOURCE",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://biz.heraldcorp.com/article/10825344"
+      "originalUrl": "https://yna.co.kr/view/MYH20260731000900038",
+      "agreementTypeEvidence": "카카오 2026년 임금협상 잠정합의 두 차례 파업을 거친 뒤 노사가 임금협상 잠정합의안을 도출했다고 보도됐다. 조합원 찬반투표 결과는 원문에서 확인되지 않는다.",
+      "autoUpdatedAt": "2026-08-25T01:11:14.875Z"
     },
     {
       "companyId": "sk-hynix",
@@ -250,22 +259,22 @@
       "companyLegalName": "현대자동차 주식회사",
       "bargainingYear": 2026,
       "agreementType": "WAGE",
-      "stage": "S4",
-      "eventDate": "2026-07-29",
-      "title": "현대자동차 2026년 임금협상 3차 부분파업",
-      "factSummary": "금속노조 현대차지부가 임금협상 쟁점이 풀리지 않은 가운데 7월 29일부터 31일까지 주·야간조 각 4시간의 3차 부분파업에 들어갔다고 보도됐다. 기사상 쟁점에는 기본급·성과급, 해고자 복직, 정년 연장이 포함됐다.",
+      "stage": "S5",
+      "eventDate": "2026-08-25",
+      "title": "현대차 노사 임단협 잠정합의...10년 만의 전면파업에 2조3000억 손실",
+      "factSummary": "주간조선 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 현대자동차지부",
       "directEmployerId": "hyundai-motor",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "현대자동차 지속가능성보고서는 국내 인력을 '직접 고용인원 수 기준'으로 공시하고 같은 국내 기준의 노동조합 가입 현황 및 현대자동차지부 조합원 4만4천명을 적시한다. 최신 사건 원문은 그 현대차지부를 현대자동차 임금협상·부분파업 주체로 명시한다.",
       "scopeEvidenceUrl": "https://org1.hyundai.com/content/hyundai/ww/data/csr/data/0000000052/attach/korean/hmc-2024-sustainability-report-ko-v6.pdf",
-      "sourceUrl": "https://www.mt.co.kr/amp/industry/2026/07/29/2026072909265516118",
-      "sourceName": "머니투데이",
+      "sourceUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624",
+      "sourceName": "주간조선",
       "sourceTier": "B",
-      "confidence": 0.92,
+      "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-08-10 KST 기준 최신 확인 사건은 3차 부분파업이다. 잠정합의·인준·조인 원문은 확인하지 못했으므로 S4로 유지한다.",
+      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-12",
@@ -287,12 +296,21 @@
           "label": "3차 부분파업 개시",
           "summary": "주·야간조 각 4시간씩 사흘간 부분파업이 시작됐다.",
           "sourceUrl": "https://www.mt.co.kr/amp/industry/2026/07/29/2026072909265516118"
+        },
+        {
+          "date": "2026-08-25",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "주간조선 보도 제목 기준 확인: 현대차 노사 임단협 잠정합의...10년 만의 전면파업에 2조3000억 손실",
+          "sourceUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624"
         }
       ],
       "id": "hyundai-motor:2026:WAGE:2026-07-29",
-      "factualStatus": "VERIFIED_SOURCE",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.mt.co.kr/amp/industry/2026/07/29/2026072909265516118"
+      "originalUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624",
+      "agreementTypeEvidence": "현대자동차 2026년 임금협상 3차 부분파업 금속노조 현대차지부가 임금협상 쟁점이 풀리지 않은 가운데 7월 29일부터 31일까지 주·야간조 각 4시간의 3차 부분파업에 들어갔다고 보도됐다. 기사상 쟁점에는 기본급·성과급, 해고자 복직, 정년 연장이 포함됐다.",
+      "autoUpdatedAt": "2026-08-25T01:11:14.875Z"
     },
     {
       "recordId": "gm-korea-2026-integrated-ratification",
@@ -405,22 +423,22 @@
       "companyLegalName": "기아 주식회사",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S4",
-      "eventDate": "2026-07-24",
-      "title": "기아 2026년 임금·단체협약 쟁의행위 찬반투표 가결",
-      "factSummary": "전국금속노조 기아자동차지부의 2026년 임금·단체협약 쟁의행위 찬반투표가 7월 23일 실시돼 투표자 기준 92.5% 찬성으로 가결됐다고 보도됐다. 7월 15일까지 6차례 본교섭을 했으나 핵심 요구안의 견해차를 좁히지 못했다.",
+      "stage": "S3",
+      "eventDate": "2026-08-24",
+      "title": "기아, 6년 만의 부분 파업 피할까...노사 25일 교섭 재개",
+      "factSummary": "매일일보 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 기아자동차지부",
       "directEmployerId": "kia",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "기아자동차지부 판매지회의 공식 운영규칙은 조합원 자격을 '기아(주)에 입사와 동시에 자동으로 가입'하는 자로 규정한다. 최신 사건 원문은 같은 전국금속노조 기아자동차지부가 전 조합원을 대상으로 2026년 임단협 쟁의행위 투표를 실시했다고 명시한다.",
       "scopeEvidenceUrl": "https://kmpan.com/home/intro/rules/2th/",
-      "sourceUrl": "https://www.edaily.co.kr/News/Read?newsId=03142246645517800",
-      "sourceName": "이데일리",
+      "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405443",
+      "sourceName": "매일일보",
       "sourceTier": "B",
-      "confidence": 0.94,
+      "confidence": 0.91,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "가결은 임단협 합의안 인준이 아니라 쟁의행위 찬반투표 결과다. 잠정합의·최종 체결로 표시하지 않고 S4로 분류한다.",
+      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-07-15",
@@ -442,12 +460,21 @@
           "label": "쟁의행위 찬반투표 가결",
           "summary": "투표자 기준 92.5%가 찬성했다.",
           "sourceUrl": "https://www.edaily.co.kr/News/Read?newsId=03142246645517800"
+        },
+        {
+          "date": "2026-08-24",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "매일일보 보도 제목 기준 확인: 기아, 6년 만의 부분 파업 피할까...노사 25일 교섭 재개",
+          "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405443"
         }
       ],
       "id": "kia:2026:INTEGRATED:2026-07-24",
-      "factualStatus": "VERIFIED_SOURCE",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.edaily.co.kr/News/Read?newsId=03142246645517800"
+      "originalUrl": "https://m-i.kr/news/articleView.html?idxno=1405443",
+      "agreementTypeEvidence": "기아 2026년 임금·단체협약 쟁의행위 찬반투표 가결 전국금속노조 기아자동차지부의 2026년 임금·단체협약 쟁의행위 찬반투표가 7월 23일 실시돼 투표자 기준 92.5% 찬성으로 가결됐다고 보도됐다. 7월 15일까지 6차례 본교섭을 했으나 핵심 요구안의 견해차를 좁히지 못했다.",
+      "autoUpdatedAt": "2026-08-25T01:11:14.875Z"
     },
     {
       "companyId": "hanwha-ocean",
