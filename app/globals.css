@@ -3049,14 +3049,15 @@ button:focus-visible,
   display: grid;
   gap: 12px;
 }
-/* 한 줄에 시작일 · 총기간 · 단계 전환일 · 종료일을 모두 담는다. 전환 항목이 늘어나면
-   가운데에서 줄바꿈하고, 양 끝 날짜는 줄 끝에 붙어 막대의 시작·끝과 눈높이를 맞춘다. */
+/* 시작일 · 총기간 · 단계 전환일 · 종료일을 한 줄에 담는다. 전환일만 막대 아래 따로
+   있던 때에는 날짜가 두 줄로 갈려 정작 가장 중요한 날짜가 눈에 늦게 들어왔다.
+   전환이 여러 개여도 줄을 나누지 않는다. 넘치면 가운데 칸만 가로로 스크롤한다. */
 .timeline-span {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
-  gap: 6px 10px;
+  gap: 10px;
   color: #618087;
   font-family: var(--font-geist-mono), monospace;
   font-size: 11px;
@@ -3110,12 +3111,21 @@ button:focus-visible,
 .timeline-shifts {
   display: flex;
   flex: 1 1 auto;
-  flex-wrap: wrap;
+  min-width: 0;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 6px 12px;
+  gap: 12px;
   margin: 0;
   padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
   list-style: none;
+}
+.timeline-shifts::-webkit-scrollbar {
+  display: none;
+}
+.timeline-shifts > li {
+  flex: 0 0 auto;
 }
 .timeline-shifts li {
   display: flex;
@@ -3123,6 +3133,7 @@ button:focus-visible,
   gap: 5px;
   color: #637a87;
   font-size: 11px;
+  white-space: nowrap;
 }
 .timeline-shifts time {
   color: #41707a;
