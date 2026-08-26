@@ -551,6 +551,71 @@ function RadarMark({ compact = false }: { compact?: boolean }) {
   );
 }
 
+/**
+ * 신청자 신원.
+ *
+ * 예전에는 운영 관리 코드 한 칸이 접수를 막았다. 코드를 아는 사람만 쓸 수 있어 안전해
+ * 보이지만, 코드를 공유하는 순간 누가 넣었는지 알 수 없어졌고 코드를 모르는 현업은
+ * 오탈자 하나도 알릴 수 없었다. 코드를 없애고 신원을 받는다. 신원은 인증이 아니므로
+ * 접수만으로는 공개 데이터가 바뀌지 않고, 관리자가 메일에서 인증을 눌러야 반영된다.
+ */
+const emptyRequester = {
+  requesterOrganization: "",
+  requesterCompany: "",
+  requesterJobTitle: "",
+  requesterPhone: "",
+  requesterEmail: "",
+};
+
+type RequesterFields = typeof emptyRequester;
+
+function RequesterFieldset({
+  value,
+  onChange,
+}: {
+  value: RequesterFields;
+  onChange: (patch: Partial<RequesterFields>) => void;
+}) {
+  return (
+    <fieldset className="requester-fieldset">
+      <legend>신청자 정보 <b>필수</b></legend>
+      <div className="requester-grid">
+        <label>
+          <span>회사</span>
+          <input required maxLength={80} value={value.requesterCompany}
+            onChange={(event) => onChange({ requesterCompany: event.target.value })}
+            placeholder="예: 주식회사 ○○" />
+        </label>
+        <label>
+          <span>소속</span>
+          <input required maxLength={80} value={value.requesterOrganization}
+            onChange={(event) => onChange({ requesterOrganization: event.target.value })}
+            placeholder="예: 인사노무팀" />
+        </label>
+        <label>
+          <span>직급</span>
+          <input required maxLength={40} value={value.requesterJobTitle}
+            onChange={(event) => onChange({ requesterJobTitle: event.target.value })}
+            placeholder="예: 책임" />
+        </label>
+        <label>
+          <span>휴대전화</span>
+          <input required type="tel" maxLength={20} value={value.requesterPhone}
+            onChange={(event) => onChange({ requesterPhone: event.target.value })}
+            pattern="01[016789]-?[0-9]{3,4}-?[0-9]{4}"
+            placeholder="010-0000-0000" />
+        </label>
+        <label className="requester-wide">
+          <span>이메일</span>
+          <input required type="email" maxLength={120} value={value.requesterEmail}
+            onChange={(event) => onChange({ requesterEmail: event.target.value })}
+            placeholder="name@company.com" />
+        </label>
+      </div>
+    </fieldset>
+  );
+}
+
 export default function Home() {
   // 연도·회사·검색어·단계·업종은 주소에서 읽는다. 링크로 열면 그 화면이 그대로 열리고,
   // 새로고침해도 보던 자리가 남는다.
@@ -613,7 +678,7 @@ export default function Home() {
     industry: "",
     websiteUrl: "",
     rationale: "",
-    adminCode: "",
+    ...emptyRequester,
   });
   const [companyRequestMessage, setCompanyRequestMessage] = useState("");
   const [isSubmittingCompanyRequest, setIsSubmittingCompanyRequest] = useState(false);
@@ -628,7 +693,7 @@ export default function Home() {
     evidenceUrl: "",
     reason: "",
     editorName: "",
-    adminCode: "",
+    ...emptyRequester,
   });
   const [correctionMessage, setCorrectionMessage] = useState("");
   const [isSubmittingCorrection, setIsSubmittingCorrection] = useState(false);
@@ -786,7 +851,6 @@ export default function Home() {
         method: "POST",
         headers: {
           "content-type": "application/json",
-          "x-dashboard-admin-code": companyRequest.adminCode,
         },
         body: JSON.stringify({
           companyLegalName: companyRequest.companyLegalName,
@@ -805,7 +869,7 @@ export default function Home() {
       setCompanyRequestMessage(
         readMessageField(result, "message") ?? "추적 기업 추가 요청 접수 완료",
       );
-      setCompanyRequest((current) => ({ ...current, companyLegalName: "", industry: "", websiteUrl: "", rationale: "", adminCode: "" }));
+      setCompanyRequest((current) => ({ ...current, companyLegalName: "", industry: "", websiteUrl: "", rationale: "" }));
     } catch {
       setCompanyRequestMessage("네트워크 오류 발생 · 잠시 후 재시도");
     } finally {
@@ -842,7 +906,6 @@ export default function Home() {
         method: "POST",
         headers: {
           "content-type": "application/json",
-          "x-dashboard-admin-code": correction.adminCode,
         },
         body: JSON.stringify({
           targetRecordId: record.id,
@@ -865,7 +928,7 @@ export default function Home() {
         return;
       }
       setCorrectionMessage(readMessageField(result, "message") ?? "기록 수정 요청 접수 완료");
-      setCorrection((current) => ({ ...current, proposedValue: "", evidenceUrl: "", reason: "", adminCode: "" }));
+      setCorrection((current) => ({ ...current, proposedValue: "", evidenceUrl: "", reason: "" }));
     } catch {
       setCorrectionMessage("네트워크 오류 발생 · 잠시 후 재시도");
     } finally {
@@ -983,11 +1046,6 @@ export default function Home() {
                 <FileCheck2 size={15} /> 데이터 수정
               </button>
             </div>
-          </div>
-
-          <div className="scope-guard" role="note">
-            <ShieldCheck size={17} aria-hidden="true" />
-            <p><span><strong>포함:</strong> 원청 노조의 교섭 기록</span><span><strong>제외:</strong> 하청·사내협력사·용역·파견 노조의 원청 상대 교섭 → 원청 노조 현황 합산·표시 제외, 별도 검토 대상 분리</span></p>
           </div>
 
           <div className="year-filter-bar" aria-label="연도별 교섭현황 조회">
@@ -1216,7 +1274,11 @@ export default function Home() {
                   <h4>{selectedStage.label}</h4>
                   {/* 그 해에 체결됐는지, 이듬해까지 이어졌는지를 단계와 같이 읽어야 한다.
                       이월은 기록 일자가 교섭연도를 넘긴 경우에만 확정으로 말한다. */}
-                  {selectedCase.history && (
+                  {/* 확인된 상태만 칩으로 단다. "체결 확인 못 함"은 확인하지 못했다는
+                      말을 결론처럼 붙여, 근거가 없다는 뜻이 아니라 체결되지 않았다는 뜻으로
+                      읽혔다. 미확인은 아래 구간 목록과 안내 문구가 이미 담당한다. */}
+                  {selectedCase.history
+                    && selectedCase.history.settlement.status !== "SETTLEMENT_UNCONFIRMED" && (
                     <span
                       className={`settlement-chip settlement-${selectedCase.history.settlement.status.toLowerCase()}`}
                       title={selectedCase.history.settlement.detail}
@@ -1239,7 +1301,9 @@ export default function Home() {
                     <span>
                       쟁의 <strong>{INDUSTRIAL_ACTION_LABELS[selectedCase.history.industrialActionLevel]}</strong>
                     </span>
-                    <span>{selectedCase.history.settlement.label}</span>
+                    {selectedCase.history.settlement.status !== "SETTLEMENT_UNCONFIRMED" && (
+                      <span>{selectedCase.history.settlement.label}</span>
+                    )}
                   </div>
                 )}
                 {/* 사건을 한 줄씩 나열하면 같은 단계를 확인한 기사가 계속 쌓여 "본교섭 진행"만
@@ -1324,7 +1388,13 @@ export default function Home() {
                                   <time>{formatDate(flow.date)}</time>
                                   <div>
                                     <strong>{flow.label}</strong>
-                                    <p>{flow.summary}</p>
+                                    {/* 카드의 사실 요약은 개조식인데 여기만 서술식이라
+                                        같은 화면에서 두 문체가 섞였다. 같은 변환을 쓴다. */}
+                                    <ul className="timeline-event-points">
+                                      {toKeyPoints(flow.summary ?? "").map((point, pointIndex) => (
+                                        <li key={`${point}-${pointIndex}`}>{point}</li>
+                                      ))}
+                                    </ul>
                                     {flow.sourceUrl && (
                                       <a href={flow.sourceUrl} target="_blank" rel="noreferrer">원문 보기</a>
                                     )}
@@ -1668,11 +1738,11 @@ export default function Home() {
                 <span>수정자 <b>필수</b></span>
                 <input required maxLength={80} value={correction.editorName} onChange={(event) => setCorrection((current) => ({ ...current, editorName: event.target.value }))} placeholder="표시할 이름" />
               </label>
-              <label>
-                <span>운영 관리 코드 <b>필수</b></span>
-                <input type="password" required value={correction.adminCode} onChange={(event) => setCorrection((current) => ({ ...current, adminCode: event.target.value }))} autoComplete="off" placeholder="서버에만 보관되는 코드" />
-              </label>
-              <p className="company-request-security">수정자·수정 시각·이전값·이후값·근거 URL을 함께 기록 · 관리 코드 원문 미저장 · 검토 전 공개 반영 없음</p>
+              <RequesterFieldset
+                value={correction}
+                onChange={(patch) => setCorrection((current) => ({ ...current, ...patch }))}
+              />
+              <p className="company-request-security">이전값·이후값·근거 URL과 신청자 정보를 함께 기록 · 접수만으로 공개 반영 없음 · 관리자 메일 인증 뒤에만 반영</p>
               {correctionMessage && <p className="company-request-message" role="status">{correctionMessage}</p>}
               <div className="company-request-actions">
                 <button className="dialog-cancel" type="button" onClick={() => setIsCorrectionOpen(false)}>취소</button>
@@ -1711,11 +1781,11 @@ export default function Home() {
                 <span>추가 사유</span>
                 <textarea maxLength={800} value={companyRequest.rationale} onChange={(event) => setCompanyRequest((current) => ({ ...current, rationale: event.target.value }))} placeholder="산업 영향, 원청 노조 교섭 노출도 등" rows={3} />
               </label>
-              <label>
-                <span>운영 관리 코드 <b>필수</b></span>
-                <input type="password" required value={companyRequest.adminCode} onChange={(event) => setCompanyRequest((current) => ({ ...current, adminCode: event.target.value }))} autoComplete="off" placeholder="서버에만 보관되는 코드" />
-              </label>
-              <p className="company-request-security">관리 코드 원문 미저장 · 요청은 검토 대기 상태로만 접수</p>
+              <RequesterFieldset
+                value={companyRequest}
+                onChange={(patch) => setCompanyRequest((current) => ({ ...current, ...patch }))}
+              />
+              <p className="company-request-security">요청은 검토 대기 상태로만 접수 · 관리자 메일 인증 뒤에만 반영</p>
               {companyRequestMessage && <p className="company-request-message" role="status">{companyRequestMessage}</p>}
               <div className="company-request-actions">
                 <button className="dialog-cancel" type="button" onClick={() => setIsAddCompanyOpen(false)}>취소</button>

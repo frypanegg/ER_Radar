@@ -1386,3 +1386,62 @@ test("수집 예정 시각이 실제 스케줄과 어긋나지 않는다", async
     `화면 문구가 ${policy.recommendedRunTime} KST를 가리켜야 한다`,
   );
 });
+
+test("접수는 신원을 받고, 공개 반영은 관리자 인증에서만 일어난다", async () => {
+  // 운영 관리 코드 한 칸이 접수를 막던 구조를 신원 입력으로 바꿨다. 신원은 인증이
+  // 아니므로, 접수만으로 공개 데이터가 바뀌지 않는 순서가 그대로 남아야 한다.
+  const worker = await readFile(new URL("../worker/index.ts", import.meta.url), "utf8");
+
+  // 접수는 PENDING으로만 만든다.
+  assert.match(worker, /status: "PENDING"/);
+  // 공개 데이터를 바꾸는 곳은 서명 검증을 통과한 POST 승인 경로뿐이다.
+  assert.match(worker, /validateReviewToken/);
+  // 화면이 보내는 관리 코드 헤더는 더 이상 읽지 않는다.
+  assert.doesNotMatch(worker, /x-dashboard-admin-code/);
+
+  // 주석은 왜 없앴는지를 남겨야 하므로 선택자·입력 값에서만 사라졌는지 본다.
+  const page = (await readFile(new URL("../app/page.tsx", import.meta.url), "utf8"))
+    .replaceAll(/\/\*[\s\S]*?\*\//g, "")
+    .replaceAll(/^\s*\/\/.*$/gm, "");
+  assert.doesNotMatch(page, /운영 관리 코드/);
+  assert.doesNotMatch(page, /adminCode/);
+  for (const field of [
+    "requesterOrganization",
+    "requesterCompany",
+    "requesterJobTitle",
+    "requesterPhone",
+    "requesterEmail",
+  ]) {
+    assert.ok(page.includes(field), `신청자 입력이 빠졌다: ${field}`);
+  }
+});
+
+test("접수 즉시 인증 메일을 보내는 경로가 있다", async () => {
+  // 아침 보고 메일은 하루에 한 번이라 오후 요청은 다음 날까지 아무도 모른다.
+  const worker = await readFile(new URL("../worker/index.ts", import.meta.url), "utf8");
+  assert.match(worker, /notifyAdminOfRequest/);
+  assert.match(worker, /er-radar-request/);
+
+  const workflow = await readFile(
+    new URL("../.github/workflows/request-notify.yml", import.meta.url),
+    "utf8",
+  );
+  assert.match(workflow, /repository_dispatch/);
+  assert.match(workflow, /types: \[er-radar-request\]/);
+  // 서명 비밀값은 저장소에서만 쓴다.
+  assert.match(workflow, /DASHBOARD_ADMIN_CODE/);
+
+  const { buildRequestNotice } = await import("../scripts/build-request-notice.mjs");
+  const notice = buildRequestNotice({
+    kind: "company",
+    requestId: "00000000-0000-4000-8000-000000000001",
+    subject: "테스트 주식회사",
+    requester: "주식회사 A 인사팀 책임",
+    requesterEmail: "a@example.com",
+    reviewUrl: "https://er-radar.example/admin/review?kind=company",
+  });
+  assert.match(notice.subject, /추적 기업 추가 요청/);
+  assert.equal(notice.pendingReviews.length, 1);
+  // 본문에 요청 내용을 다 담지 않는다. 확인은 링크에서 한다.
+  assert.doesNotMatch(notice.text, /근거 원문/);
+});

@@ -79,6 +79,66 @@ function cleanOptionalText(value: unknown, maximumLength: number) {
   return text && text.length <= maximumLength ? text : null;
 }
 
+/**
+ * 신청자 신원.
+ *
+ * 예전에는 운영 관리 코드 하나로 접수 자체를 막았다. 코드를 아는 사람만 쓸 수 있으니
+ * 안전해 보이지만, 실제로는 코드를 공유하는 순간 누가 넣었는지 알 수 없어졌고 코드를
+ * 모르는 현업은 오탈자 하나도 알릴 수 없었다.
+ *
+ * 코드를 없애고 신원을 받는다. 신원은 인증이 아니다. 그래서 접수만으로는 공개 데이터가
+ * 절대 바뀌지 않고, 관리자가 메일에서 인증을 눌러야 반영된다. 이 순서는 코드가 있던
+ * 때와 같고, 달라진 것은 "누가 요청했는지"가 대장에 남는다는 점이다.
+ */
+type RequesterIdentity = {
+  organization: string;
+  company: string;
+  jobTitle: string;
+  phone: string;
+  email: string;
+};
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@.]+\.[^\s@]{2,}$/;
+/** 국내 휴대전화. 하이픈은 있어도 되고 없어도 된다. */
+const PHONE_PATTERN = /^01[016789]-?\d{3,4}-?\d{4}$/;
+
+function readRequesterIdentity(payload: Record<string, unknown>):
+  { identity: RequesterIdentity } | { error: string } {
+  const organization = cleanOptionalText(payload.requesterOrganization, 80);
+  const company = cleanOptionalText(payload.requesterCompany, 80);
+  const jobTitle = cleanOptionalText(payload.requesterJobTitle, 40);
+  const phoneRaw = cleanOptionalText(payload.requesterPhone, 20);
+  const email = cleanOptionalText(payload.requesterEmail, 120);
+
+  if (!organization) return { error: "신청자 소속 입력 필요" };
+  if (!company) return { error: "신청자 회사 입력 필요" };
+  if (!jobTitle) return { error: "신청자 직급 입력 필요" };
+  if (!phoneRaw || !PHONE_PATTERN.test(phoneRaw.replaceAll(" ", ""))) {
+    return { error: "휴대전화번호는 01x-xxxx-xxxx 형식으로 입력 필요" };
+  }
+  if (!email || !EMAIL_PATTERN.test(email)) return { error: "이메일 주소 형식 확인 필요" };
+
+  return {
+    identity: {
+      organization,
+      company,
+      jobTitle,
+      phone: phoneRaw.replaceAll(" ", ""),
+      email: email.toLowerCase(),
+    },
+  };
+}
+
+function requesterColumns(identity: RequesterIdentity) {
+  return {
+    requester_organization: identity.organization,
+    requester_company: identity.company,
+    requester_job_title: identity.jobTitle,
+    requester_phone: identity.phone,
+    requester_email: identity.email,
+  };
+}
+
 function supabaseHeaders(env: Env, includeJson = false) {
   const headers: Record<string, string> = {
     apikey: env.SUPABASE_SERVICE_ROLE_KEY ?? "",
@@ -127,17 +187,63 @@ function htmlResponse(body: string, status = 200) {
   });
 }
 
+/**
+ * 접수 즉시 관리자에게 인증 메일을 보내도록 워크플로를 깨운다.
+ *
+ * 워커에서 직접 메일을 보낼 방법이 없다. SMTP를 쓸 수 없고, 예전에 쓰던 무료 메일 릴레이도
+ * 닫혔다. 그래서 이미 일일 수집을 깨우는 데 쓰고 있는 GitHub 워크플로 경로를 그대로
+ * 재사용한다. 메일 본문과 서명 링크는 저장소 쪽에서 만든다. 비밀값이 저장소 밖으로
+ * 나가지 않는다.
+ *
+ * 토큰이 없거나 호출이 실패해도 접수는 성공으로 둔다. 요청은 이미 PENDING으로 저장돼
+ * 있고, 그날 아침 보고 메일이 같은 인증 링크를 다시 실어 보낸다. 알림은 빨라지는 장치이지
+ * 유일한 경로가 아니다.
+ */
+async function notifyAdminOfRequest(
+  env: Env,
+  kind: "company" | "correction",
+  requestId: string | null,
+  subject: string | null,
+  identity: RequesterIdentity,
+) {
+  if (!requestId || !env.GITHUB_DISPATCH_TOKEN) return;
+
+  const repository = env.GITHUB_DISPATCH_REPOSITORY ?? DISPATCH_DEFAULTS.repository;
+  try {
+    await fetch(`https://api.github.com/repos/${repository}/dispatches`, {
+      method: "POST",
+      headers: {
+        accept: "application/vnd.github+json",
+        authorization: `Bearer ${env.GITHUB_DISPATCH_TOKEN}`,
+        "content-type": "application/json",
+        "user-agent": "er-radar-request-notifier",
+      },
+      body: JSON.stringify({
+        event_type: "er-radar-request",
+        // 메일에 담을 최소 정보만 넘긴다. 요청 본문과 근거는 저장소가 DB에서 다시 읽는다.
+        client_payload: {
+          kind,
+          requestId,
+          subject: subject ?? "",
+          requester: `${identity.company} ${identity.organization} ${identity.jobTitle}`,
+          requesterEmail: identity.email,
+        },
+      }),
+    });
+  } catch {
+    // 알림 실패로 접수를 되돌리지 않는다. 아침 보고 메일이 같은 링크를 다시 보낸다.
+  }
+}
+
 async function handleCompanyAddRequest(request: Request, env: Env) {
   if (request.method !== "POST") {
     return jsonResponse({ error: "POST 방식만 지원" }, 405);
   }
 
+  // DASHBOARD_ADMIN_CODE는 더 이상 화면에 입력하는 코드가 아니다. 관리자 인증 링크의
+  // 서명 비밀값으로만 쓴다. 이 값이 없으면 인증 메일을 만들 수 없으므로 접수도 막는다.
   if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY || !env.DASHBOARD_ADMIN_CODE) {
     return jsonResponse({ error: "추적 기업 추가용 데이터베이스 연결 미설정" }, 503);
-  }
-
-  if (!hasSameSecret(request.headers.get("x-dashboard-admin-code"), env.DASHBOARD_ADMIN_CODE)) {
-    return jsonResponse({ error: "관리 코드 불일치" }, 401);
   }
 
   let payload: Record<string, unknown>;
@@ -148,6 +254,9 @@ async function handleCompanyAddRequest(request: Request, env: Env) {
   } catch {
     return jsonResponse({ error: "요청 형식 오류" }, 400);
   }
+
+  const requester = readRequesterIdentity(payload);
+  if ("error" in requester) return jsonResponse({ error: requester.error }, 400);
 
   const companyLegalName = cleanOptionalText(payload.companyLegalName, 120);
   const industry = cleanOptionalText(payload.industry, 80);
@@ -184,7 +293,8 @@ async function handleCompanyAddRequest(request: Request, env: Env) {
         website_url: websiteUrl,
         rationale,
         status: "PENDING",
-        admin_code_verified_at: new Date().toISOString(),
+        ...requesterColumns(requester.identity),
+        requested_at: new Date().toISOString(),
       }),
     });
   } catch {
@@ -203,7 +313,12 @@ async function handleCompanyAddRequest(request: Request, env: Env) {
     // 저장 성공 응답의 식별자가 없더라도 요청 접수 자체는 성공으로 처리한다.
   }
 
-  return jsonResponse({ message: "추적 기업 추가 요청 접수 완료", requestId }, 201);
+  await notifyAdminOfRequest(env, "company", requestId, companyLegalName, requester.identity);
+
+  return jsonResponse({
+    message: "요청을 접수했습니다. 관리자 확인 메일이 발송되며, 인증 후 화면에 반영됩니다.",
+    requestId,
+  }, 201);
 }
 
 /**
@@ -313,10 +428,6 @@ async function handleRecordCorrectionRequest(request: Request, env: Env) {
     return jsonResponse({ error: "기록 수정 요청용 데이터베이스 연결 미설정" }, 503);
   }
 
-  if (!hasSameSecret(request.headers.get("x-dashboard-admin-code"), env.DASHBOARD_ADMIN_CODE)) {
-    return jsonResponse({ error: "관리 코드 불일치" }, 401);
-  }
-
   let payload: Record<string, unknown>;
   try {
     const parsed = await request.json();
@@ -325,6 +436,9 @@ async function handleRecordCorrectionRequest(request: Request, env: Env) {
   } catch {
     return jsonResponse({ error: "요청 형식 오류" }, 400);
   }
+
+  const requester = readRequesterIdentity(payload);
+  if ("error" in requester) return jsonResponse({ error: requester.error }, 400);
 
   const targetRecordId = cleanOptionalText(payload.targetRecordId, 200);
   const companyIdKey = cleanOptionalText(payload.companyIdKey, 120);
@@ -357,9 +471,6 @@ async function handleRecordCorrectionRequest(request: Request, env: Env) {
   if (!reason) {
     return jsonResponse({ error: "수정 사유 입력 필요" }, 400);
   }
-  if (!editorName) {
-    return jsonResponse({ error: "수정자 이름 입력 필요" }, 400);
-  }
 
   const endpoint = `${env.SUPABASE_URL.replace(/\/$/, "")}/rest/v1/bargaining_record_corrections`;
   let upstream: Response;
@@ -382,10 +493,10 @@ async function handleRecordCorrectionRequest(request: Request, env: Env) {
         proposed_value: proposedValue,
         evidence_url: evidenceUrl,
         reason,
-        editor_name: editorName,
+        editor_name: editorName ?? `${requester.identity.company} ${requester.identity.jobTitle}`,
         editor_note: editorNote,
         status: "PENDING",
-        admin_code_verified_at: new Date().toISOString(),
+        ...requesterColumns(requester.identity),
       }),
     });
   } catch {
@@ -409,12 +520,19 @@ async function handleRecordCorrectionRequest(request: Request, env: Env) {
     // 식별자를 읽지 못해도 접수 자체는 성공으로 처리한다.
   }
 
+  await notifyAdminOfRequest(
+    env,
+    "correction",
+    requestId,
+    `${companyLegalName} ${bargainingYear}년 ${fieldName}`,
+    requester.identity,
+  );
+
   return jsonResponse(
     {
-      message: "기록 수정 요청 접수 완료 · 검토 후 공개 반영",
+      message: "요청을 접수했습니다. 관리자 확인 메일이 발송되며, 인증 후 화면에 반영됩니다.",
       requestId,
       submittedAt,
-      editorName,
     },
     201,
   );
@@ -612,6 +730,31 @@ async function handleAdminReviewDecision(request: Request, env: Env) {
     return htmlResponse('<section class="card"><h1>DB 반영 중 오류가 발생했습니다.</h1><small>요청은 처리 전 상태로 유지됩니다.</small></section>', 502);
   }
   correctionClaimed = false;
+
+  // 수동 변경 이력. 요청 대장은 "무엇을 요청했는지"를 담고, 이 대장은 "실제로 공개
+  // 데이터의 무엇이 언제 어떻게 바뀌었는지"를 담는다. 둘을 한 테이블에 섞으면 반려된
+  // 요청과 반영된 변경이 같은 줄에 남아 나중에 되짚을 수가 없다.
+  await fetch(`${base}/rest/v1/manual_change_audits`, {
+    method: "POST",
+    headers: { ...supabaseHeaders(env, true), prefer: "return=minimal" },
+    body: JSON.stringify({
+      request_kind: kind,
+      request_id: id,
+      decision: approve ? "APPROVED" : "REJECTED",
+      applied: Boolean(changedCase),
+      target_table: changedCase ? "bargaining_cases" : null,
+      target_id: changedCase?.id ?? null,
+      changed_column: changedCase?.column ?? null,
+      previous_value: changedCase ? String(changedCase.previous ?? "") : null,
+      new_value: changedCase ? String(row.proposed_value ?? "") : null,
+      requester_email: row.requester_email ?? null,
+      requester_company: row.requester_company ?? null,
+      reviewed_by: "EMAIL_REVIEW",
+      reviewed_at: now,
+    }),
+  }).catch(() => {
+    // 이력 적재 실패로 이미 끝난 승인을 되돌리지 않는다. 요청 대장에는 결과가 남아 있다.
+  });
 
   if (kind === "company" && approve) {
     const slug = `pending-${id.replaceAll("-", "").slice(0, 16)}`;

@@ -1,0 +1,69 @@
+# 접수 즉시 관리자에게 인증 메일을 보낸다.
+#
+# 워커에서는 메일을 직접 보낼 수 없다. SMTP를 쓸 수 없고 무료 메일 릴레이도 닫혔다.
+# 그래서 워커가 repository_dispatch로 이 워크플로를 깨우고, 서명 링크와 본문은 여기서
+# 만든다. 서명 비밀값이 저장소 밖으로 나가지 않는다.
+#
+# 이 워크플로가 실패해도 요청은 이미 PENDING으로 저장돼 있고, 아침 보고 메일이 같은
+# 인증 링크를 다시 실어 보낸다. 알림은 빨라지는 장치이지 유일한 경로가 아니다.
+name: 요청 접수 인증 메일
+
+on:
+  repository_dispatch:
+    types: [er-radar-request]
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: 인증 메일 발송
+        env:
+          MAIL_SMTP_USER: ${{ secrets.MAIL_SMTP_USER }}
+          MAIL_SMTP_PASSWORD: ${{ secrets.MAIL_SMTP_PASSWORD }}
+          MAIL_TO: ${{ vars.MAIL_TO || 'fry@kakao.com' }}
+          DASHBOARD_ADMIN_CODE: ${{ secrets.DASHBOARD_ADMIN_CODE }}
+          KIND: ${{ github.event.client_payload.kind }}
+          REQUEST_ID: ${{ github.event.client_payload.requestId }}
+          SUBJECT: ${{ github.event.client_payload.subject }}
+          REQUESTER: ${{ github.event.client_payload.requester }}
+          REQUESTER_EMAIL: ${{ github.event.client_payload.requesterEmail }}
+        run: |
+          set -euo pipefail
+          if [ -z "$MAIL_SMTP_USER" ] || [ -z "$MAIL_SMTP_PASSWORD" ]; then
+            echo "::warning::메일 시크릿이 없어 인증 메일을 건너뜁니다. 아침 보고 메일이 같은 링크를 보냅니다."
+            exit 0
+          fi
+          if [ -z "$DASHBOARD_ADMIN_CODE" ]; then
+            echo "::warning::DASHBOARD_ADMIN_CODE가 없어 서명 링크를 만들 수 없습니다."
+            exit 0
+          fi
+
+          mkdir -p tmp
+          node scripts/build-request-notice.mjs \
+            --kind "$KIND" \
+            --request-id "$REQUEST_ID" \
+            --subject "$SUBJECT" \
+            --requester "$REQUESTER" \
+            --requester-email "$REQUESTER_EMAIL" \
+            --from "$MAIL_SMTP_USER" \
+            --to "$MAIL_TO" \
+            --site-url "https://er-radar.er-radar.workers.dev/" \
+            --out tmp/request-notice.eml
+
+          curl --silent --show-error --ssl-reqd \
+            --url "smtps://smtp.gmail.com:465" \
+            --user "$MAIL_SMTP_USER:$MAIL_SMTP_PASSWORD" \
+            --mail-from "$MAIL_SMTP_USER" \
+            --mail-rcpt "$MAIL_TO" \
+            --upload-file tmp/request-notice.eml
+
+          echo "인증 요청 메일 발송 완료: $MAIL_TO"

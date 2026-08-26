@@ -2054,6 +2054,38 @@ button:focus-visible,
   font-size: 13px;
   line-height: 1.5;
 }
+/* 신청자 정보. 다섯 칸이 세로로 늘어서면 폼이 두 배로 길어져 정작 무엇을 요청하는지가
+   밀려난다. 두 칸씩 묶고 이메일만 한 줄을 쓴다. */
+.requester-fieldset {
+  margin: 4px 0 0;
+  padding: 12px 14px 14px;
+  border: 1px solid #e3ebf1;
+  border-radius: 11px;
+  background: #fafcfd;
+}
+.requester-fieldset legend {
+  padding: 0 6px;
+  color: #33475c;
+  font-size: 11px;
+  font-weight: 720;
+}
+.requester-fieldset legend b {
+  color: #a34f10;
+}
+.requester-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px 12px;
+}
+.requester-wide {
+  grid-column: 1 / -1;
+}
+@media (max-width: 560px) {
+  .requester-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .company-request-security { color: #788a9b; }
 .company-request-message { color: #14867f; font-weight: 670; }
 .company-request-actions {
@@ -2659,7 +2691,7 @@ button:focus-visible,
   background: linear-gradient(120deg, #f6fcfb, #fbfdfd);
 }
 
-.timeline-events p,
+.timeline-event-points,
 .flow-empty,
 .flow-coverage-note {
   margin: 4px 0 0;
@@ -3062,6 +3094,15 @@ button:focus-visible,
   grid-template-columns: 72px minmax(0, 1fr);
   gap: 10px;
   align-items: baseline;
+}
+/* 경과 근거도 카드의 사실 요약과 같은 개조식으로 보여 준다. */
+.timeline-event-points {
+  margin: 4px 0 0;
+  padding-left: 15px;
+  list-style: disc;
+}
+.timeline-event-points > li {
+  margin-top: 2px;
 }
 .timeline-events time {
   color: #618087;

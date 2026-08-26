@@ -137,15 +137,32 @@ test("기록 수정 요청은 검증 없이 공개 데이터를 바꾸지 못한
   );
   assert.equal(wrongMethod.status, 405);
 
-  // 수정 경로가 자동 수집보다 느슨해지지 않도록, 근거 URL과 수정자를 필수로 둔다.
+  // 수정 경로가 자동 수집보다 느슨해지지 않도록, 근거 URL을 필수로 둔다.
   const source = await readFile(new URL("worker/index.ts", templateRoot), "utf8");
   assert.match(source, /근거 원문 URL은 http·https 주소로 입력 필요/);
-  assert.match(source, /수정자 이름 입력 필요/);
   assert.match(source, /status: "PENDING"/);
-  assert.match(source, /admin_code_verified_at/);
-  // 관리 코드는 상수 시간 비교로만 확인하고 원문을 저장하지 않는다.
-  assert.match(source, /hasSameSecret\(request\.headers\.get\("x-dashboard-admin-code"\)/);
+
+  // 운영 관리 코드를 화면에서 없앤 대신 신청자 신원을 필수로 받는다. 신원은 인증이
+  // 아니므로, 접수만으로 공개 데이터가 바뀌지 않는 순서가 그대로여야 한다.
+  assert.match(source, /readRequesterIdentity/);
+  for (const required of [
+    "신청자 소속 입력 필요",
+    "신청자 회사 입력 필요",
+    "신청자 직급 입력 필요",
+    "휴대전화번호는",
+    "이메일 주소 형식 확인 필요",
+  ]) {
+    assert.ok(source.includes(required), `신원 항목 검증이 빠졌다: ${required}`);
+  }
+
+  // 접수 경로에서는 더 이상 관리 코드를 확인하지 않는다. 그 값은 인증 링크 서명에만 쓴다.
+  assert.doesNotMatch(source, /hasSameSecret\(request\.headers\.get\("x-dashboard-admin-code"\)/);
   assert.doesNotMatch(source, /admin_code:\s*/);
+  // 코드 원문은 어떤 대장에도 저장하지 않는다.
+  assert.doesNotMatch(source, /admin_code_verified_at/);
+
+  // 승인으로 공개 데이터를 바꾼 사실은 별도 이력 대장에 남는다.
+  assert.match(source, /manual_change_audits/);
 });
 
 test("교섭 경과와 종결·이월 상태를 함께 보여준다", async () => {
@@ -156,7 +173,10 @@ test("교섭 경과와 종결·이월 상태를 함께 보여준다", async () =
   assert.match(html, /flow-rollup/, "교섭 경과 누적 지표가 있어야 한다");
   assert.match(html, /교착·조정/);
   assert.match(html, /본교섭 기록/);
-  assert.match(html, /settlement-chip settlement-(settled|continued_past_year|settlement_unconfirmed)/);
+  // 체결·이월은 확인된 상태이므로 칩으로 단다. 미확인은 칩을 달지 않는다. "체결 확인 못 함"은
+  // 확인하지 못했다는 말을 결론처럼 붙여, 체결되지 않았다는 뜻으로 읽혔다.
+  assert.doesNotMatch(html, /settlement-chip settlement-settlement_unconfirmed/);
+  assert.doesNotMatch(html, /체결 확인 못 함/);
 
   // 이슈는 노조 선거 단독 항목이 아니라 교섭을 움직인 사실을 모아 보여준다.
   assert.match(html, /identity-issues/);
