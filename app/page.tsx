@@ -9,6 +9,7 @@ import {
   CircleAlert,
   Clock3,
   Database,
+  Factory,
   FileCheck2,
   Landmark,
   Plus,
@@ -80,6 +81,11 @@ type CaseExample = {
   id: string;
   // 연도를 바꿔도 같은 법인을 계속 보려면 카드가 자기 법인을 알아야 한다.
   companyId: string;
+  // 업종 필터와 목록 신뢰도 점이 쓰는 축.
+  industryGroup: string;
+  industryLabel: string;
+  // 제목만 보고 자동 분류된 행인지. 목록만 보고 인용하는 사용자를 위한 표시다.
+  titleBasis: boolean;
   name: string;
   subtitle: string;
   agreementType: AgreementType;
@@ -306,6 +312,9 @@ function getBargainingCases(
       return {
         id: `${company.id}-${year}-unverified`,
         companyId: company.id,
+        industryGroup: getIndustryGroup(company.industry).code,
+        industryLabel: getIndustryGroup(company.industry).label,
+        titleBasis: false,
         name: company.legalName,
         subtitle: "원청 노조 교섭 근거 미확인",
         agreementType: "UNKNOWN",
@@ -338,12 +347,15 @@ function getBargainingCases(
       { event: record.title, sourceUrl: record.sourceUrl, note: `${record.sourceName} · ${formatDate(record.eventDate)} · ${record.annotation}` },
     ];
     const evidence = [
-      { date: record.eventDate.slice(5).replace("-", "."), title: record.title, source: record.sourceName, tier: record.sourceTier },
+      { date: formatDate(record.eventDate), title: record.title, source: record.sourceName, tier: record.sourceTier },
     ];
 
     return {
       id: record.id,
       companyId: record.companyId,
+      industryGroup: getIndustryGroup(company.industry).code,
+      industryLabel: getIndustryGroup(company.industry).label,
+      titleBasis: record.factualStatus === "AUTO_COLLECTED_TITLE_BASIS",
       name: record.companyLegalName,
       subtitle: record.unionName,
       agreementType: record.agreementType,
@@ -354,7 +366,7 @@ function getBargainingCases(
       // 카드에 찍는 날짜는 정렬 기준과 같아야 한다. 대표 사건일만 보여 주면 경과에
       // 더 늦은 사건이 들어온 법인은 옛 날짜를 달고 최신 카드 사이에 끼어 보인다.
       verifiedAt: formatDate(findLastUpdatedOn(record)),
-      freshness: record.bargainingYear === currentYear ? `${currentAsOf} 기준 현재 현황` : "과거 사실 초기 데이터",
+      freshness: record.bargainingYear === currentYear ? `${formatDate(currentAsOf)} 기준 현재 현황` : "과거 사실 초기 데이터",
       confidence: record.confidence,
       sourceTier: record.sourceTier,
       scope: `원청 노조 · ${record.unionName}`,
@@ -430,6 +442,80 @@ const guardrails = [
   },
 ];
 
+/**
+ * 업종 축을 살린다. 시드의 industry는 19종으로 쪼개져 있어 그대로는 필터가 되지 않는다.
+ * "반도체·전자"와 "반도체"와 "전자"와 "디스플레이"가 각각 따로 서면 어느 것도 묶이지
+ * 않기 때문이다. 6개 대분류로 정규화한다.
+ *
+ * 항공운송은 유통·플랫폼이 아니라 운송에 둔다. 교섭 양상이 철도·도시철도와 같은
+ * 필수공익사업 계열이라 그쪽과 나란히 보는 편이 쓸모 있다.
+ */
+const INDUSTRY_GROUPS = [
+  { code: "ELECTRONICS", label: "전자·반도체", members: ["반도체·전자", "반도체", "전자", "디스플레이"] },
+  { code: "AUTO", label: "자동차", members: ["자동차", "자동차부품"] },
+  { code: "HEAVY", label: "중공업·소재", members: ["조선", "철강", "에너지·기계", "화학", "타이어"] },
+  { code: "TRANSPORT", label: "운송", members: ["철도운송", "도시철도", "항공운송"] },
+  { code: "FINANCE", label: "금융", members: ["금융"] },
+  { code: "SERVICE", label: "서비스·기타", members: ["유통·물류", "플랫폼·IT", "통신", "바이오·제약"] },
+] as const;
+
+type IndustryGroup = (typeof INDUSTRY_GROUPS)[number];
+
+const industryGroupByRaw = new Map<string, IndustryGroup>(
+  INDUSTRY_GROUPS.flatMap((group) => group.members.map((member) => [member as string, group] as const)),
+);
+
+function getIndustryGroup(industry: string | undefined) {
+  return industryGroupByRaw.get(industry ?? "") ?? INDUSTRY_GROUPS[5];
+}
+
+/**
+ * 화면 상태를 주소에 담는다.
+ *
+ * 모니터링 도구의 핵심 사용법은 "이거 봐라"고 링크를 던지는 것인데, 연도·단계·업종·회사가
+ * 전부 로컬 상태면 링크로 열어도 첫 카드로 돌아가고 새로고침만 해도 보던 화면이 사라진다.
+ *
+ * 주소를 상태의 원본으로 삼는다. 마운트 뒤에 되돌리는 방식은 서버 렌더 결과와 어긋나므로
+ * useSyncExternalStore로 읽는다. 서버 스냅샷은 빈 문자열이라 하이드레이션이 맞고, 그
+ * 직후 브라우저 값으로 한 번 갱신된다. 히스토리는 쌓지 않는다. 필터를 몇 번 만졌다고
+ * 뒤로가기를 그만큼 눌러야 하면 그게 더 나쁘다.
+ */
+const urlListeners = new Set<() => void>();
+
+function subscribeUrl(onChange: () => void) {
+  urlListeners.add(onChange);
+  window.addEventListener("popstate", onChange);
+  return () => {
+    urlListeners.delete(onChange);
+    window.removeEventListener("popstate", onChange);
+  };
+}
+
+function readUrlSearch() {
+  return window.location.search;
+}
+
+function writeUrlSearch(next: URLSearchParams) {
+  const query = next.toString();
+  window.history.replaceState(null, "", query ? `?${query}` : window.location.pathname);
+  for (const listener of urlListeners) listener();
+}
+
+/**
+ * "2026.08.25"보다 "1일 전 확인"이 먼저 읽힌다. 절대 날짜는 title에 남겨 둔다.
+ * 오늘 날짜는 브라우저 시계로만 판단하므로, 서버 렌더 시점에는 절대 날짜를 그대로 쓴다.
+ */
+function describeVerifiedAt(verifiedAt: string, todayKstDate: string | null) {
+  if (verifiedAt === "—" || !todayKstDate) return verifiedAt;
+  const verified = Date.parse(verifiedAt.replaceAll(".", "-"));
+  const today = Date.parse(todayKstDate);
+  if (Number.isNaN(verified) || Number.isNaN(today)) return verifiedAt;
+  const days = Math.round((today - verified) / 86_400_000);
+  if (days <= 0) return "오늘 확인";
+  if (days === 1) return "어제 확인";
+  return `${days}일 전 확인`;
+}
+
 function getTierLabel(tier: "S" | "A" | "B" | "C") {
   return {
     S: "S · 공적·협약 원문",
@@ -456,10 +542,61 @@ function RadarMark({ compact = false }: { compact?: boolean }) {
 }
 
 export default function Home() {
-  const [selectedYear, setSelectedYear] = useState(defaultYear);
-  const [selectedId, setSelectedId] = useState(() => getBargainingCases(defaultYear)[0]?.id ?? "");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [stageFocus, setStageFocus] = useState("ALL");
+  // 연도·회사·검색어·단계·업종은 주소에서 읽는다. 링크로 열면 그 화면이 그대로 열리고,
+  // 새로고침해도 보던 자리가 남는다.
+  const urlSearch = useSyncExternalStore(subscribeUrl, readUrlSearch, () => "");
+  const urlParams = useMemo(() => new URLSearchParams(urlSearch), [urlSearch]);
+
+  const setUrlValue = useCallback(
+    (patch: Record<string, string | null>) => {
+      const next = new URLSearchParams(window.location.search);
+      for (const [key, value] of Object.entries(patch)) {
+        if (value === null || value === "") next.delete(key);
+        else next.set(key, value);
+      }
+      writeUrlSearch(next);
+    },
+    [],
+  );
+
+  const selectedYear = useMemo(() => {
+    const year = Number(urlParams.get("y"));
+    return availableYears.includes(year) ? year : defaultYear;
+  }, [urlParams]);
+  const setSelectedYear = useCallback(
+    (year: number) => setUrlValue({ y: year === defaultYear ? null : String(year) }),
+    [setUrlValue],
+  );
+
+  const searchTerm = urlParams.get("q") ?? "";
+  // 입력 중의 공백까지 지우면 타이핑이 끊긴다. 주소에는 적힌 대로 두고, 걸러낼 때만 다듬는다.
+  const setSearchTerm = useCallback((value: string) => setUrlValue({ q: value || null }), [setUrlValue]);
+
+  const stageFocus = useMemo(() => {
+    const stage = urlParams.get("stage");
+    return stage && stageByCode.has(stage) ? stage : "ALL";
+  }, [urlParams]);
+  const setStageFocus = useCallback(
+    (code: string) => setUrlValue({ stage: code === "ALL" ? null : code }),
+    [setUrlValue],
+  );
+
+  const industryFocus = useMemo(() => {
+    const industry = urlParams.get("industry");
+    return industry && INDUSTRY_GROUPS.some((group) => group.code === industry) ? industry : "ALL";
+  }, [urlParams]);
+  const setIndustryFocus = useCallback(
+    (code: string) => setUrlValue({ industry: code === "ALL" ? null : code }),
+    [setUrlValue],
+  );
+
+  // 주소에는 레코드 ID가 아니라 법인 ID를 적는다. 레코드 ID는 원문 URL까지 담고 있어
+  // 길고, 사실이 갱신되면 값 자체가 바뀐다. 법인 ID는 그 해 기록이 바뀌어도 그대로다.
+  const selectedCompanyId = urlParams.get("c") ?? "";
+  const setSelectedCompany = useCallback(
+    (companyId: string) => setUrlValue({ c: companyId || null }),
+    [setUrlValue],
+  );
   const [isAddCompanyOpen, setIsAddCompanyOpen] = useState(false);
   const [companyRequest, setCompanyRequest] = useState({
     companyLegalName: "",
@@ -510,14 +647,17 @@ export default function Home() {
   // 걸린 목록을 기준으로 삼으면, 단계를 옮기는 순간 근거가 사라져 버린다.
   const searchedCases = useMemo(
     () => {
+      const byIndustry = industryFocus === "ALL"
+        ? caseExamples
+        : caseExamples.filter((item) => item.industryGroup === industryFocus);
       const normalizedSearch = searchTerm.trim().toLocaleLowerCase("ko-KR");
-      if (!normalizedSearch) return caseExamples;
-      return caseExamples.filter((item) => {
+      if (!normalizedSearch) return byIndustry;
+      return byIndustry.filter((item) => {
         const searchTarget = `${item.name} ${item.subtitle} ${item.yearType} ${item.agreementLabel}`.toLocaleLowerCase("ko-KR");
         return searchTarget.includes(normalizedSearch);
       });
     },
-    [caseExamples, searchTerm],
+    [caseExamples, industryFocus, searchTerm],
   );
 
   const visibleCases = useMemo(
@@ -527,6 +667,20 @@ export default function Home() {
 
   // 단계별 건수. 0건인 단계는 눌러도 보여 줄 것이 없으므로 버튼을 잠근다. 잠그지
   // 않으면 목록은 "없음"인데 아래 상세는 다른 회사를 띄우는 상태가 만들어진다.
+  // 업종 칩은 검색만 반영한다. 업종을 옮길 때마다 근거가 사라지면 고를 수가 없다.
+  const caseCountByIndustry = useMemo(() => {
+    const normalizedSearch = searchTerm.trim().toLocaleLowerCase("ko-KR");
+    const counts = new Map<string, number>();
+    for (const item of caseExamples) {
+      if (normalizedSearch) {
+        const target = `${item.name} ${item.subtitle} ${item.yearType} ${item.agreementLabel}`.toLocaleLowerCase("ko-KR");
+        if (!target.includes(normalizedSearch)) continue;
+      }
+      counts.set(item.industryGroup, (counts.get(item.industryGroup) ?? 0) + 1);
+    }
+    return counts;
+  }, [caseExamples, searchTerm]);
+
   const caseCountByStage = useMemo(() => {
     const counts = new Map<string, number>();
     for (const item of searchedCases) {
@@ -541,19 +695,23 @@ export default function Home() {
   const focusStage = useCallback(
     (code: string) => {
       if ((caseCountByStage.get(code) ?? 0) === 0) return;
-      setStageFocus(code);
-      setSelectedId((currentId) => {
-        const current = searchedCases.find((item) => item.id === currentId);
-        // 이미 그 단계를 보고 있으면 선택을 흔들지 않는다.
-        if (current?.stage === code) return currentId;
-        return searchedCases.find((item) => item.stage === code)?.id ?? currentId;
+      const current = searchedCases.find((item) => item.companyId === selectedCompanyId);
+      // 이미 그 단계를 보고 있으면 선택을 흔들지 않는다.
+      const next = current?.stage === code
+        ? current
+        : searchedCases.find((item) => item.stage === code);
+      setUrlValue({
+        stage: code === "ALL" ? null : code,
+        ...(next ? { c: next.companyId } : {}),
       });
     },
-    [caseCountByStage, searchedCases],
+    [caseCountByStage, searchedCases, selectedCompanyId, setUrlValue],
   );
 
   const selectedCase =
-    visibleCases.find((item) => item.id === selectedId) ?? visibleCases[0] ?? caseExamples[0];
+    visibleCases.find((item) => item.companyId === selectedCompanyId)
+    ?? visibleCases[0]
+    ?? caseExamples[0];
   const selectedStage = stageByCode.get(selectedCase.stage) ?? stageMeta[0];
   const selectedIssues = selectedCase.history ? issueHighlights(selectedCase.history) : [];
   // 진행 중인 교섭은 오늘까지가 마지막 구간이고, 지난 연도는 그해 말이 끝이다.
@@ -775,7 +933,7 @@ export default function Home() {
               <div className="data-health" aria-label="데이터 상태 설명">
                 <span className="health-light" aria-hidden="true" />
                 <span>
-                  {currentAsOf} 기준 · 검증 교섭 기록 {activeRecords.length}건 · {getYearLabel(selectedYear)} 조회
+                  {formatDate(currentAsOf)} 기준 · 검증 교섭 기록 {activeRecords.length}건 · {getYearLabel(selectedYear)} 조회
                   <b className={`fact-source fact-source-${factState.source}`}>
                     {factState.source === "seed" ? "내장 데이터" : "DB 연결"}
                   </b>
@@ -805,16 +963,10 @@ export default function Home() {
                   type="button"
                   role="tab"
                   aria-selected={selectedYear === year}
-                  onClick={() => {
-                    // 연도만 바꾸는 것이지 보고 있던 회사를 바꾸는 게 아니다. 같은 법인의
-                    // 그 해 기록으로 이어가고, 그 법인이 목록에 없을 때만 첫 항목으로 간다.
-                    setSelectedYear(year);
-                    const nextCases = getBargainingCases(year, activeRecords);
-                    const sameCompany = nextCases.find(
-                      (item) => item.companyId === selectedCase.companyId,
-                    );
-                    setSelectedId(sameCompany?.id ?? nextCases[0]?.id ?? "");
-                  }}
+                  // 연도만 바꾸는 것이지 보고 있던 회사를 바꾸는 게 아니다. 주소가 법인
+                  // ID를 들고 있으므로 연도만 갈아 끼우면 같은 법인의 그 해 기록으로
+                  // 이어진다. 그 해 기록이 없으면 목록의 첫 항목으로 넘어간다.
+                  onClick={() => setSelectedYear(year)}
                 >
                   {getYearLabel(year)}
                 </button>
@@ -836,6 +988,53 @@ export default function Home() {
                 aria-label="원청 노조 확정 법인 검색"
               />
             </label>
+            {/* 검색 결과가 몇 건인지 알려 주지 않으면 빈 목록이 검색 탓인지 데이터 탓인지
+                구분되지 않는다. */}
+            {searchTerm.trim() && (
+              <span className="company-search-count" role="status">
+                {caseExamples.length}건 중 <strong>{searchedCases.length}건</strong>
+              </span>
+            )}
+          </div>
+
+          {/* 업종은 시드에 24개 법인 모두 들어 있는데도 '추적 기업 추가' 폼의 입력값으로만
+              쓰이고 있었다. 6개 대분류로 정규화해 축으로 세운다. */}
+          <div className="stage-filter-bar" aria-label="업종별 조회">
+            <div className="stage-filter-label"><Factory size={15} /> 업종별 조회</div>
+            <div className="stage-filter-options" role="tablist" aria-label="업종 선택">
+              <button
+                className={industryFocus === "ALL" ? "stage-filter-chip active" : "stage-filter-chip"}
+                type="button"
+                role="tab"
+                aria-selected={industryFocus === "ALL"}
+                onClick={() => setIndustryFocus("ALL")}
+              >
+                전체 <b className="stage-filter-count">{caseExamples.length}</b>
+              </button>
+              {INDUSTRY_GROUPS.map((group) => {
+                const count = caseCountByIndustry.get(group.code) ?? 0;
+                return (
+                  <button
+                    className={industryFocus === group.code ? "stage-filter-chip active" : "stage-filter-chip"}
+                    key={group.code}
+                    type="button"
+                    role="tab"
+                    aria-selected={industryFocus === group.code}
+                    disabled={count === 0}
+                    aria-label={`${group.label} ${count}건`}
+                    onClick={() => {
+                      const next = caseExamples.find((item) => item.industryGroup === group.code);
+                      setUrlValue({
+                        industry: group.code,
+                        ...(next ? { c: next.companyId } : {}),
+                      });
+                    }}
+                  >
+                    {group.label} <b className="stage-filter-count">{count}</b>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <div className="stage-filter-bar" aria-label="교섭 단계별 조회">
@@ -874,6 +1073,22 @@ export default function Home() {
             </div>
           </div>
 
+          {/* 등급 뜻이 title 속성에만 있어 마우스를 올려야 보였다. 목록 옆에 고정 범례로
+              세운다. 카드의 점과 같은 색을 쓴다. */}
+          <div className="tier-legend" aria-label="근거 등급 범례">
+            <span className="tier-legend-title">근거 등급</span>
+            {(["S", "A", "B", "C"] as const).map((tier) => (
+              <span className="tier-legend-item" key={tier}>
+                <i className={`tier-dot tier-dot-${tier.toLowerCase()}`} aria-hidden="true" />
+                {getTierLabel(tier)}
+              </span>
+            ))}
+            <span className="tier-legend-item">
+              <i className="tier-dot tier-dot-c tier-dot-title-basis" aria-hidden="true" />
+              제목 기반 분류 · 사람 검증 전
+            </span>
+          </div>
+
           <div className="case-layout">
             <div className="case-list" role="list" aria-label="검증된 교섭현황 목록">
               {visibleCases.length === 0 && (
@@ -891,7 +1106,7 @@ export default function Home() {
                   <button
                     key={item.id}
                     className={isActive ? "case-card active" : "case-card"}
-                    onClick={() => setSelectedId(item.id)}
+                    onClick={() => setSelectedCompany(item.companyId)}
                     type="button"
                     aria-pressed={isActive}
                   >
@@ -909,8 +1124,19 @@ export default function Home() {
                     </span>
                     <span className="case-card-subtitle">{item.subtitle}</span>
                     <span className="case-card-footer">
-                      <span>{meta?.label ?? "단계 미확인"}</span>
-                      <span>업데이트 확인 {item.verifiedAt}</span>
+                      <span>
+                        {/* 목록만 보고 인용하는 사용자가 반드시 생긴다. 근거 등급을 점
+                            하나로 카드에 남긴다. 제목만 보고 자동 분류된 행은 따로 표시한다. */}
+                        <i
+                          className={`tier-dot tier-dot-${item.sourceTier.toLowerCase()}${item.titleBasis ? " tier-dot-title-basis" : ""}`}
+                          aria-hidden="true"
+                        />
+                        <span className="sr-only">{getTierLabel(item.sourceTier)}{item.titleBasis ? " · 제목 기반 분류" : ""}</span>
+                        {meta?.label ?? "단계 미확인"}
+                      </span>
+                      <span title={`마지막 확인 ${item.verifiedAt}`}>
+                        {describeVerifiedAt(item.verifiedAt, todayKstDate)}
+                      </span>
                     </span>
                   </button>
                 );
@@ -1360,7 +1586,7 @@ export default function Home() {
       <footer className="site-footer">
         <div className="container footer-inner">
           <div><a className="brand footer-brand" href="#overview"><RadarMark compact /> 노사교섭 <strong>레이더</strong></a><p>한국 대기업 임금·단체교섭 현황을 위한 상태 프레임워크</p></div>
-          <div className="footer-meta"><span>프레임워크 v1.0</span><span>·</span><span>법률·연구 기반 설계</span><span>·</span><span>{currentAsOf} 기준 현황</span></div>
+          <div className="footer-meta"><span>프레임워크 v1.0</span><span>·</span><span>법률·연구 기반 설계</span><span>·</span><span>{formatDate(currentAsOf)} 기준 현황</span></div>
         </div>
       </footer>
     </main>

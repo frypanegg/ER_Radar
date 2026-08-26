@@ -582,8 +582,8 @@ test("카드에 찍힌 날짜가 목록 순서와 같은 값이다", async () =>
 
   const rendered = [
     ...html.matchAll(
-      // React가 텍스트와 값 사이에 주석 구분자를 넣는다: 업데이트 확인 <!-- -->2026.08.25
-      /class="case-card[^"]*"[\s\S]*?<strong title="([^"]+)"[\s\S]*?업데이트 확인 (?:<!-- -->)?([\d.]+)</g,
+      // 화면 글자는 "1일 전 확인"처럼 상대 표기로 바뀌므로 절대 날짜를 담은 title로 읽는다.
+      /class="case-card[^"]*"[\s\S]*?<strong title="([^"]+)"[\s\S]*?title="마지막 확인 ([\d.]+)"/g,
     ),
   ].map(([, name, date]) => ({ name, date }));
   assert.ok(rendered.length > 1, "카드가 두 개 이상 렌더돼야 비교할 수 있다");
