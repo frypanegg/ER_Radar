@@ -2,6 +2,37 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-08-26T21:36:26.629Z",
+      "kstDate": "2026-08-27",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-08-27",
+      "primarySource": "google",
+      "consideredArticles": 588,
+      "appliedCount": 1,
+      "skippedCount": 555,
+      "applied": [
+        {
+          "companyId": "kia",
+          "companyLegalName": "기아 주식회사",
+          "previousStage": "S5",
+          "previousEventDate": "2026-08-25",
+          "nextStage": "S5",
+          "nextEventDate": "2026-08-26",
+          "sourceUrl": "https://munhwa.com/article/11612297",
+          "sourceName": "문화일보",
+          "confidence": 0.8
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 253,
+        "not_eligible_for_status_aggregation": 282,
+        "retain_main_state": 1,
+        "stage_unknown": 13,
+        "not_newer_than_recorded_event": 5,
+        "stage_downgrade_without_explicit_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-08-25T21:36:56.063Z",
       "kstDate": "2026-08-26",
       "ruleVersion": "1.0.0",

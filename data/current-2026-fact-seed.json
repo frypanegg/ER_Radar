@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-08-25",
+  "asOf": "2026-08-27",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -131,21 +131,21 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S5",
-      "eventDate": "2026-08-25",
-      "title": "기아 노사, 임단협 잠정합의...파업 하루 전 '맞손'",
-      "factSummary": "매일일보 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-08-26",
+      "title": "기아 노사, ‘2026년 임단협’ 잠정합의...6년 연속 무분규 타결",
+      "factSummary": "문화일보 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 기아자동차지부",
       "directEmployerId": "kia",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "기아자동차지부 판매지회의 공식 운영규칙은 조합원 자격을 '기아(주)에 입사와 동시에 자동으로 가입'하는 자로 규정한다. 최신 사건 원문은 같은 전국금속노조 기아자동차지부가 전 조합원을 대상으로 2026년 임단협 쟁의행위 투표를 실시했다고 명시한다.",
       "scopeEvidenceUrl": "https://kmpan.com/home/intro/rules/2th/",
-      "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405971",
-      "sourceName": "매일일보",
+      "sourceUrl": "https://munhwa.com/article/11612297",
+      "sourceName": "문화일보",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-08-27 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-07-15",
@@ -181,14 +181,21 @@
           "label": "잠정합의",
           "summary": "매일일보 보도 제목 기준 확인: 기아 노사, 임단협 잠정합의...파업 하루 전 '맞손'",
           "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=1405971"
+        },
+        {
+          "date": "2026-08-26",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "문화일보 보도 제목 기준 확인: 기아 노사, ‘2026년 임단협’ 잠정합의...6년 연속 무분규 타결",
+          "sourceUrl": "https://munhwa.com/article/11612297"
         }
       ],
       "id": "kia:2026:INTEGRATED:2026-07-24",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://m-i.kr/news/articleView.html?idxno=1405971",
+      "originalUrl": "https://munhwa.com/article/11612297",
       "agreementTypeEvidence": "기아 2026년 임금·단체협약 쟁의행위 찬반투표 가결 전국금속노조 기아자동차지부의 2026년 임금·단체협약 쟁의행위 찬반투표가 7월 23일 실시돼 투표자 기준 92.5% 찬성으로 가결됐다고 보도됐다. 7월 15일까지 6차례 본교섭을 했으나 핵심 요구안의 견해차를 좁히지 못했다.",
-      "autoUpdatedAt": "2026-08-25T14:49:50.064Z"
+      "autoUpdatedAt": "2026-08-26T21:36:26.629Z"
     },
     {
       "companyId": "kumho-tire",
