@@ -814,6 +814,16 @@
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "annotation": "일반직 교섭단위의 임금교섭이다. 통상임금 개편이 함께 합의됐다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "임금 총액 2.7% 인상"
+        },
+        {
+          "field": "임금체계",
+          "value": "통상임금 개편"
+        }
+      ],
       "id": "korean-air:2025:WAGE:2025-06-26:https://www.kyeonggi.com/article/20250626580171",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
@@ -1396,6 +1406,16 @@
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "annotation": "9월 5~6일 조합원 투표 결과는 원문에 없어 S5에 둔다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "기본급 3% 인상"
+        },
+        {
+          "field": "일시금",
+          "value": "격려금 500만원"
+        }
+      ],
       "id": "kumho-tire:2024:INTEGRATED:2024-09-02:https://www.newsis.com/view/NISX20240902_0002871805",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
@@ -1431,6 +1451,12 @@
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "annotation": "조종사 교섭단위 결과다. 인준·조인 근거를 확인하지 못해 S5에 둔다. 같은 해 일반직 교섭 결과는 확인하지 못했다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "기본급·비행수당 각 3% 인상"
+        }
+      ],
       "id": "korean-air:2024:WAGE:2024-08-09:https://www.kdfnews.com/news/articleView.html?idxno=137441",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
@@ -1608,6 +1634,12 @@
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "annotation": "9월 14일부터 18일까지 1차 경고파업이 있었던 해다. 조인·서명 근거는 확인하지 않아 S6에 둔다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "기본급 월 8만3천원 인상 · 임금 1.7% 이내"
+        }
+      ],
       "id": "korail:2023:WAGE:2023-12-21:https://archive.krwu.or.kr/chronology/2023",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
@@ -1787,6 +1819,20 @@
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "annotation": "원문이 노조 정식 명칭을 적지 않아, 같은 지회를 명시한 2024년 뉴시스 보도의 명칭을 쓴다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "기본급 2% 인상"
+        },
+        {
+          "field": "일시금",
+          "value": "격려금 250만원"
+        },
+        {
+          "field": "투자",
+          "value": "광주공장 설비투자 1100억원"
+        }
+      ],
       "id": "kumho-tire:2023:INTEGRATED:2023-09-26:https://ilyo.co.kr/?ac=article_view&entry_id=459760",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
@@ -2078,6 +2124,16 @@
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "annotation": "일반직 교섭단위의 임금교섭이다. 원문은 노조를 '일반노조'로 부른다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "임금 3.5% 인상"
+        },
+        {
+          "field": "성과급",
+          "value": "경영성과급 지급 한도 300% → 500%"
+        }
+      ],
       "id": "korean-air:2023:WAGE:2023-07-18:https://www.newswire.co.kr/newsRead.php?no=970801",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
@@ -2334,6 +2390,16 @@
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "annotation": "조종사 교섭단위의 임단협이다. 같은 해 일반직 교섭단위의 결과는 확인하지 못했으므로 이 기록이 대한항공 전체를 대표하지 않는다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "임금 10% 인상"
+        },
+        {
+          "field": "근로조건",
+          "value": "미주노선 휴식시간 확대"
+        }
+      ],
       "id": "korean-air:2022:INTEGRATED:2022-11-04:https://www.4th.kr/news/articleView.html?idxno=2027851",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
@@ -2884,6 +2950,12 @@
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "annotation": "원문이 합의 날짜를 적지 않아 보도일을 기준일로 둔다. 원문은 교섭 상대를 '노사'로만 적었고, 노동조합의 존재는 LG디스플레이 뉴스룸의 노동조합 태그 게시물에서 확인했다. 조인·서명 근거가 없어 S6에 둔다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "기능직 평균 6.5~7% 인상"
+        }
+      ],
       "id": "lg-display:2021:INTEGRATED:2021-03-18:https://www.edaily.co.kr/news/read?newsId=03345606628984632&mediaCodeNo=257",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",

@@ -229,7 +229,17 @@
       "id": "kumho-tire:2026:INTEGRATED:2026-08-21",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.ajunews.com/view/20260821165806489"
+      "originalUrl": "https://www.ajunews.com/view/20260821165806489",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "기본급 3% 인상"
+        },
+        {
+          "field": "일시금",
+          "value": "경영성과 격려금 550만원 · 2018년 특별합의 이행 격려금 250만원 · 근로장려금 50만원"
+        }
+      ]
     },
     {
       "companyId": "kb-kookmin-bank",
@@ -1037,7 +1047,17 @@
       "id": "lg-display:2026:INTEGRATED:2026-04-08",
       "factualStatus": "VERIFIED_SOURCE",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.newsway.co.kr/news/view?ud=2026040815331800378"
+      "originalUrl": "https://www.newsway.co.kr/news/view?ud=2026040815331800378",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "평균 3.7% 인상"
+        },
+        {
+          "field": "복지",
+          "value": "복지제도 개편"
+        }
+      ]
     },
     {
       "recordId": "lg-electronics-2026-integrated-effective-agreement",

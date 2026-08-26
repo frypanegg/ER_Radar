@@ -30,6 +30,9 @@ import {
   compareEventsAscending,
   deriveCaseHistory,
   INDUSTRIAL_ACTION_LABELS,
+  buildYearTracks,
+  compareSettlementPace,
+  summarizeSettlementSeason,
   issueHighlights,
   type CaseHistory,
 } from "./bargaining-history";
@@ -61,6 +64,8 @@ type HistoricalRecord = {
   sourceName: string;
   sourceTier: "S" | "A" | "B" | "C";
   confidence: number;
+  // 원문에 명시된 타결 조건. 확인한 교섭에만 있다.
+  settlementTerms?: { field: string; value: string }[];
   scopeClassification: "PRIMARY_DIRECT_UNION";
   coveredWorkerRelation: "DIRECT";
   includeInPrimaryDashboard: true;
@@ -97,6 +102,8 @@ type CaseExample = {
   freshness: string;
   confidence: number;
   sourceTier: "S" | "A" | "B" | "C";
+  // 원문에 명시된 타결 조건만 담는다. 확인하지 않은 교섭은 비어 있다.
+  settlementTerms: { field: string; value: string }[];
   scope: string;
   round?: string;
   majorityUnion: "O" | "X" | "확인중";
@@ -184,6 +191,7 @@ type PublishedFact = {
   factSummary: string;
   sourceTier: string;
   confidence: number;
+  settlementTerms?: { field: string; value: string }[];
   flowEvents: { date: string; stage: string; label: string; summary: string }[];
 };
 
@@ -326,6 +334,7 @@ function getBargainingCases(
         freshness: "근거 보강 대기",
         confidence: 0,
         sourceTier: "C",
+        settlementTerms: [],
         scope: "원청 노조 교섭 근거 미확인 · 공개 단계 갱신 금지",
         majorityUnion: "확인중",
         unionMembers: "공개 근거 미확인",
@@ -369,6 +378,7 @@ function getBargainingCases(
       freshness: record.bargainingYear === currentYear ? `${formatDate(currentAsOf)} 기준 현재 현황` : "과거 사실 초기 데이터",
       confidence: record.confidence,
       sourceTier: record.sourceTier,
+      settlementTerms: record.settlementTerms ?? [],
       scope: `원청 노조 · ${record.unionName}`,
       round: record.stage === "S7" ? "조인·체결 확인" : record.stage === "S6" ? "찬반·인준 확인" : "원문 교섭 확인",
       majorityUnion: "확인중",
@@ -714,6 +724,24 @@ export default function Home() {
     ?? caseExamples[0];
   const selectedStage = stageByCode.get(selectedCase.stage) ?? stageMeta[0];
   const selectedIssues = selectedCase.history ? issueHighlights(selectedCase.history) : [];
+  // 같은 법인의 여러 해를 같은 축에 겹친다. 연도 칩은 화면을 갈아끼울 뿐이라 "작년
+  // 이맘때 대비 진도"를 볼 수 없었다.
+  const yearTracks = useMemo(
+    () =>
+      buildYearTracks(
+        activeRecords.filter((record) => record.companyId === selectedCase.companyId),
+      ),
+    [activeRecords, selectedCase.companyId],
+  );
+  const settlementSeason = useMemo(
+    () => summarizeSettlementSeason(yearTracks, { excludeYear: selectedYear }),
+    [yearTracks, selectedYear],
+  );
+  const settlementPace = useMemo(
+    () => compareSettlementPace(yearTracks, selectedYear),
+    [yearTracks, selectedYear],
+  );
+
   // 진행 중인 교섭은 오늘까지가 마지막 구간이고, 지난 연도는 그해 말이 끝이다.
   // 기준일을 연도와 무관하게 currentAsOf로 두면 2021년 교섭이 5년째 이어지는 것처럼 보인다.
   const selectedTimeline = useMemo(() => {
@@ -1305,6 +1333,104 @@ export default function Home() {
                   </p>
                 )}
               </section>
+
+              {/* 타결 조건. 요약문에서 정규식으로 뽑는 방법을 먼저 시도했는데, 요구안과
+                  사측이 제시했다가 거부된 안까지 "타결 조건"으로 잡혀 폐기했다. 예정·주장과
+                  발생을 가르는 것이 이 대시보드의 전제라 그 실수는 특히 나쁘다. 원문에서
+                  확인한 것만 레코드에 적어 두고, 있는 교섭에만 이 줄을 보여 준다. */}
+              {selectedCase.settlementTerms.length > 0 && (
+                <section className="settlement-terms" aria-labelledby="settlement-terms-title">
+                  <div className="subsection-title">
+                    <span id="settlement-terms-title">타결 조건</span>
+                    <small>원문에 명시된 값만 · 확인하지 못한 항목은 비워 둠</small>
+                  </div>
+                  <dl className="settlement-terms-list">
+                    {selectedCase.settlementTerms.map((term) => (
+                      <div key={`${term.field}-${term.value}`}>
+                        <dt>{term.field}</dt>
+                        <dd>{term.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              )}
+
+              {/* 연도 겹쳐보기. 연도 칩은 화면을 갈아끼울 뿐이라 "작년 이맘때 대비 진도"를
+                  볼 수 없었다. 같은 법인의 여러 해를 같은 시간축에 겹치면 그 비교가 열린다.
+                  단체협약 만료일은 기사에 적히지 않아 한 건도 확보하지 못했으므로, 관행으로
+                  추정하는 대신 관측된 타결 월을 그대로 요약해 다음 시기를 가늠하게 한다. */}
+              {yearTracks.length >= 2 && (
+                <section className="year-compare" aria-labelledby="year-compare-title">
+                  <div className="subsection-title">
+                    <span id="year-compare-title">연도별 교섭 진도</span>
+                    <small>같은 축 위에 겹친 {yearTracks.length}개 연도 · 1월부터 이듬해 2월까지</small>
+                  </div>
+
+                  {(settlementSeason || settlementPace) && (
+                    <div className="year-compare-summary">
+                      {settlementSeason && (
+                        <span>
+                          예년 타결 시기 <strong>{settlementSeason.label}</strong>
+                          <small>{settlementSeason.years.length}개 연도 관측</small>
+                        </span>
+                      )}
+                      {settlementPace && (
+                        <span>
+                          {settlementPace.previousYear}년 대비{" "}
+                          <strong className={settlementPace.days > 0 ? "pace-late" : "pace-early"}>
+                            {settlementPace.label}
+                          </strong>
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  <ol className="year-track-list">
+                    {yearTracks.map((track) => (
+                      <li
+                        key={track.year}
+                        className={track.year === selectedYear ? "year-track year-track-current" : "year-track"}
+                      >
+                        <button
+                          className="year-track-label"
+                          type="button"
+                          onClick={() => setSelectedYear(track.year)}
+                          aria-label={`${track.year}년 교섭으로 이동`}
+                        >
+                          {track.year}
+                        </button>
+                        <div className="year-track-rail">
+                          <span
+                            className="year-track-span"
+                            style={{
+                              left: `${track.startOffset}%`,
+                              width: `${Math.max(0.8, track.endOffset - track.startOffset)}%`,
+                            }}
+                            aria-hidden="true"
+                          />
+                          {track.points.map((point, index) => (
+                            <span
+                              key={`${point.date}-${index}`}
+                              className={`year-track-dot stage-${point.stage.toLowerCase()}`}
+                              style={{ left: `${point.offset}%` }}
+                              title={`${formatDate(point.date)} · ${point.label}`}
+                            />
+                          ))}
+                        </div>
+                        <span className="year-track-result">
+                          {track.settledOn ? formatDate(track.settledOn).slice(5) : "타결 미확인"}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+
+                  <div className="year-track-axis" aria-hidden="true">
+                    {["1월", "4월", "7월", "10월", "이듬해"].map((tick) => (
+                      <span key={tick}>{tick}</span>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               <div className="detail-meta-grid">
                 <div><span>교섭 범위</span><strong>{selectedCase.scope}</strong></div>

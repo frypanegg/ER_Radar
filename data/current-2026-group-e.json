@@ -38,6 +38,16 @@
           "summary": "평균 3.7% 임금 인상과 복지제도 개편을 담은 임금·단체협상 결정 사항이 사내에 공지됐다고 보도됐다.",
           "sourceUrl": "https://www.newsway.co.kr/news/view?ud=2026040815331800378"
         }
+      ],
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "평균 3.7% 인상"
+        },
+        {
+          "field": "복지",
+          "value": "복지제도 개편"
+        }
       ]
     }
   ]

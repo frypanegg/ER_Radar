@@ -277,3 +277,143 @@ export function buildStageTimeline(
     totalDays: Math.max(1, daysBetween(startDate, endDate)),
   };
 }
+
+/**
+ * 연도 겹쳐보기.
+ *
+ * 연도 칩은 화면을 갈아끼울 뿐이라 "작년 이맘때 대비 진도"를 볼 수 없었다. 같은 법인의
+ * 여러 해를 같은 시간축 위에 겹치면 그 비교가 열린다. 이 대시보드가 다른 곳에서 얻을 수
+ * 없는 것을 주는 자리다.
+ *
+ * 축은 교섭연도 1월 1일부터 이듬해 2월 말까지 14개월이다. 12개월로 끊으면 12월에 타결하는
+ * 철도나 이듬해 2월에 타결하는 은행이 축 밖으로 밀려난다.
+ */
+const YEAR_TRACK_AXIS_DAYS = 425;
+
+export type YearTrackPoint = {
+  date: string;
+  stage: string;
+  label: string;
+  /** 축 위의 위치(%). */
+  offset: number;
+};
+
+export type YearTrack = {
+  year: number;
+  stage: string;
+  agreementType: string;
+  /** 잠정합의 이상이 확인된 날. 없으면 null. */
+  settledOn: string | null;
+  settledOffset: number | null;
+  points: YearTrackPoint[];
+  startOffset: number;
+  endOffset: number;
+};
+
+export type YearTrackInput = {
+  bargainingYear: number;
+  agreementType: string;
+  stage: string;
+  eventDate: string;
+  title: string;
+  flowEvents?: FlowEvent[];
+};
+
+function axisOffset(year: number, date: string) {
+  const days = daysBetween(`${year}-01-01`, date);
+  return Math.min(100, Math.max(0, (days / YEAR_TRACK_AXIS_DAYS) * 100));
+}
+
+/** 잠정합의 이상으로 올라선 첫 사건. 대표 사건만 보면 경과에 남은 더 이른 타결을 놓친다. */
+function findSettlement(record: YearTrackInput) {
+  const settledEvent = [...(record.flowEvents ?? [])]
+    .sort(compareEventsAscending)
+    .find((event) => stageRankOf(event.stage) >= stageRankOf("S5"));
+  if (settledEvent) return settledEvent.date;
+  return stageRankOf(record.stage) >= stageRankOf("S5") ? record.eventDate : null;
+}
+
+export function buildYearTracks(records: YearTrackInput[]): YearTrack[] {
+  return records
+    .map((record) => {
+      const events = [...(record.flowEvents ?? [])].sort(compareEventsAscending);
+      const dates = events.length > 0 ? events.map((event) => event.date) : [record.eventDate];
+      const points: YearTrackPoint[] = (events.length > 0
+        ? events
+        : [{ date: record.eventDate, stage: record.stage, label: record.title, summary: "", sourceUrl: "" }]
+      ).map((event) => ({
+        date: event.date,
+        stage: event.stage,
+        label: event.label,
+        offset: axisOffset(record.bargainingYear, event.date),
+      }));
+      const settledOn = findSettlement(record);
+
+      return {
+        year: record.bargainingYear,
+        stage: record.stage,
+        agreementType: record.agreementType,
+        settledOn,
+        settledOffset: settledOn ? axisOffset(record.bargainingYear, settledOn) : null,
+        points,
+        startOffset: axisOffset(record.bargainingYear, dates[0]),
+        endOffset: axisOffset(record.bargainingYear, dates[dates.length - 1]),
+      };
+    })
+    .sort((left, right) => right.year - left.year);
+}
+
+/**
+ * 예년 타결 시기.
+ *
+ * 단체협약 만료일은 기사에 적히지 않아 33건 가운데 한 건도 확보하지 못했다. 관행으로
+ * 추정해 채우는 것은 이 대시보드의 전제를 깬다. 대신 지금까지 관측된 타결 월을 그대로
+ * 요약한다. 추정이 아니라 확인된 사실의 요약이므로 원칙과 부딪히지 않으면서 다음 교섭
+ * 시기를 가늠하게 해 준다.
+ */
+export type SettlementSeason = {
+  months: number[];
+  label: string;
+  years: number[];
+};
+
+export function summarizeSettlementSeason(
+  tracks: YearTrack[],
+  { excludeYear }: { excludeYear?: number } = {},
+): SettlementSeason | null {
+  const settled = tracks.filter(
+    (track) => track.settledOn && track.year !== excludeYear,
+  );
+  if (settled.length < 2) return null;
+
+  const months = settled.map((track) => Number(track.settledOn!.slice(5, 7)));
+  const unique = [...new Set(months)].sort((left, right) => left - right);
+  const min = Math.min(...months);
+  const max = Math.max(...months);
+  return {
+    months: unique,
+    label: min === max ? `${min}월` : `${min}~${max}월`,
+    years: settled.map((track) => track.year).sort((left, right) => left - right),
+  };
+}
+
+/** 직전 확인 연도와의 타결 시점 차이. 같은 축 위의 날짜 차이로만 말한다. */
+export function compareSettlementPace(tracks: YearTrack[], year: number) {
+  const current = tracks.find((track) => track.year === year);
+  if (!current?.settledOn) return null;
+  const previous = tracks.find((track) => track.year < year && track.settledOn);
+  if (!previous?.settledOn) return null;
+
+  const currentDay = daysBetween(`${current.year}-01-01`, current.settledOn);
+  const previousDay = daysBetween(`${previous.year}-01-01`, previous.settledOn);
+  const diff = currentDay - previousDay;
+  if (diff === 0) return { previousYear: previous.year, days: 0, label: "같은 시점" };
+  const weeks = Math.round(Math.abs(diff) / 7);
+  const size = weeks >= 1 ? `${weeks}주` : `${Math.abs(diff)}일`;
+  return {
+    previousYear: previous.year,
+    days: diff,
+    label: diff > 0 ? `${size} 늦음` : `${size} 빠름`,
+  };
+}
+
