@@ -1,16 +1,34 @@
 # 접수 즉시 관리자에게 인증 메일을 보낸다.
 #
 # 워커에서는 메일을 직접 보낼 수 없다. SMTP를 쓸 수 없고 무료 메일 릴레이도 닫혔다.
-# 그래서 워커가 repository_dispatch로 이 워크플로를 깨우고, 서명 링크와 본문은 여기서
+# 그래서 워커가 이 워크플로를 깨우고, 서명 링크와 본문은 여기서
 # 만든다. 서명 비밀값이 저장소 밖으로 나가지 않는다.
 #
 # 이 워크플로가 실패해도 요청은 이미 PENDING으로 저장돼 있고, 아침 보고 메일이 같은
 # 인증 링크를 다시 실어 보낸다. 알림은 빨라지는 장치이지 유일한 경로가 아니다.
 name: 요청 접수 인증 메일
 
+# workflow_dispatch로 받는다. repository_dispatch는 토큰에 contents:write가 필요한데,
+# 이 저장소의 워커 토큰은 일일 수집을 깨우려고 만든 actions:write 하나뿐이다. 알림 하나
+# 때문에 토큰 권한을 넓히는 것은 값이 맞지 않는다.
 on:
-  repository_dispatch:
-    types: [er-radar-request]
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: "요청 종류 (company | correction)"
+        required: true
+      requestId:
+        description: "접수 번호"
+        required: true
+      subject:
+        description: "요청 대상"
+        required: false
+      requester:
+        description: "신청자 회사·소속·직급"
+        required: false
+      requesterEmail:
+        description: "신청자 회신 이메일"
+        required: false
 
 permissions:
   contents: read
@@ -31,11 +49,11 @@ jobs:
           MAIL_SMTP_PASSWORD: ${{ secrets.MAIL_SMTP_PASSWORD }}
           MAIL_TO: ${{ vars.MAIL_TO || 'fry@kakao.com' }}
           DASHBOARD_ADMIN_CODE: ${{ secrets.DASHBOARD_ADMIN_CODE }}
-          KIND: ${{ github.event.client_payload.kind }}
-          REQUEST_ID: ${{ github.event.client_payload.requestId }}
-          SUBJECT: ${{ github.event.client_payload.subject }}
-          REQUESTER: ${{ github.event.client_payload.requester }}
-          REQUESTER_EMAIL: ${{ github.event.client_payload.requesterEmail }}
+          KIND: ${{ inputs.kind }}
+          REQUEST_ID: ${{ inputs.requestId }}
+          SUBJECT: ${{ inputs.subject }}
+          REQUESTER: ${{ inputs.requester }}
+          REQUESTER_EMAIL: ${{ inputs.requesterEmail }}
         run: |
           set -euo pipefail
           if [ -z "$MAIL_SMTP_USER" ] || [ -z "$MAIL_SMTP_PASSWORD" ]; then

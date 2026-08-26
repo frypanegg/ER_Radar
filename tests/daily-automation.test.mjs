@@ -1420,14 +1420,17 @@ test("접수 즉시 인증 메일을 보내는 경로가 있다", async () => {
   // 아침 보고 메일은 하루에 한 번이라 오후 요청은 다음 날까지 아무도 모른다.
   const worker = await readFile(new URL("../worker/index.ts", import.meta.url), "utf8");
   assert.match(worker, /notifyAdminOfRequest/);
-  assert.match(worker, /er-radar-request/);
+  assert.match(worker, /request-notify\.yml\/dispatches/);
 
   const workflow = await readFile(
     new URL("../.github/workflows/request-notify.yml", import.meta.url),
     "utf8",
   );
-  assert.match(workflow, /repository_dispatch/);
-  assert.match(workflow, /types: \[er-radar-request\]/);
+  // 토큰 권한을 넓히지 않으려고 workflow_dispatch로 받는다. repository_dispatch는
+  // contents:write가 필요한데 워커 토큰은 actions:write 하나뿐이다.
+  assert.match(workflow, /^on:\n\s+workflow_dispatch:/m);
+  const triggers = workflow.slice(workflow.indexOf("\non:"), workflow.indexOf("permissions:"));
+  assert.doesNotMatch(triggers, /repository_dispatch/);
   // 서명 비밀값은 저장소에서만 쓴다.
   assert.match(workflow, /DASHBOARD_ADMIN_CODE/);
 

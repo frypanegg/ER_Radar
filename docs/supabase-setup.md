@@ -199,8 +199,9 @@ ORDER BY status;
 입력하는 코드가 아니라 **인증 링크의 HMAC 서명 비밀값**으로만 쓴다.
 
 접수 즉시 메일이 나간다. 워커에서는 메일을 보낼 수 없어(SMTP 불가, 무료 릴레이 종료)
-`repository_dispatch`로 `요청 접수 인증 메일` 워크플로를 깨우고, 서명 링크와 본문은 저장소
-쪽에서 만든다. 이 경로가 실패해도 요청은 PENDING으로 남아 아침 보고 메일이 같은 링크를
+`요청 접수 인증 메일` 워크플로를 `workflow_dispatch`로 깨우고, 서명 링크와 본문은 저장소
+쪽에서 만든다. `repository_dispatch`가 아니라 `workflow_dispatch`인 이유는 앞의 것이 토큰에
+`contents:write`를 요구하는데 워커 토큰은 일일 수집용 `actions:write` 하나뿐이기 때문이다. 이 경로가 실패해도 요청은 PENDING으로 남아 아침 보고 메일이 같은 링크를
 다시 보낸다.
 
 `manual_change_audits`는 **공개 데이터가 실제로 무엇이 언제 어떻게 바뀌었는지**를 담는다.

@@ -209,8 +209,13 @@ async function notifyAdminOfRequest(
   if (!requestId || !env.GITHUB_DISPATCH_TOKEN) return;
 
   const repository = env.GITHUB_DISPATCH_REPOSITORY ?? DISPATCH_DEFAULTS.repository;
+  const ref = env.GITHUB_DISPATCH_REF ?? DISPATCH_DEFAULTS.ref;
+  // workflow_dispatch를 쓴다. repository_dispatch는 토큰에 contents:write가 필요한데
+  // 이 워커의 토큰은 일일 수집을 깨우려고 만든 actions:write 하나뿐이다.
+  const endpoint =
+    `https://api.github.com/repos/${repository}/actions/workflows/request-notify.yml/dispatches`;
   try {
-    await fetch(`https://api.github.com/repos/${repository}/dispatches`, {
+    await fetch(endpoint, {
       method: "POST",
       headers: {
         accept: "application/vnd.github+json",
@@ -219,9 +224,9 @@ async function notifyAdminOfRequest(
         "user-agent": "er-radar-request-notifier",
       },
       body: JSON.stringify({
-        event_type: "er-radar-request",
-        // 메일에 담을 최소 정보만 넘긴다. 요청 본문과 근거는 저장소가 DB에서 다시 읽는다.
-        client_payload: {
+        ref,
+        // 메일에 담을 최소 정보만 넘긴다. 요청 본문과 근거는 인증 링크를 열어야 보인다.
+        inputs: {
           kind,
           requestId,
           subject: subject ?? "",
