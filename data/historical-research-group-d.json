@@ -346,6 +346,138 @@
           "value": "격려금 500만원"
         }
       ]
+    },
+    {
+      "companyId": "posco",
+      "companyLegalName": "주식회사 포스코",
+      "directEmployerId": "posco",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2022,
+      "agreementType": "WAGE",
+      "stage": "S5",
+      "eventDate": "2022-08-25",
+      "title": "포스코 2022년 임금협상 잠정합의",
+      "factSummary": "노사가 임금 3.1% 인상과 임금피크제 폐지를 담은 잠정합의안을 마련했다고 보도됐다. 쟁점이던 임금피크제는 법원 판결 뒤 폐지하기로 했다.",
+      "unionName": "포스코노동조합",
+      "agreementTypeEvidence": "포스코 노사가 2022년 임금협상에서 임금 3.1% 인상에 잠정 합의했다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 포스코와 그 소속 직원으로 구성된 노동조합을 임금협상 당사자로 적시하며, 쟁점인 임금피크제도 포스코 직원에게 적용되는 제도다.",
+      "sourceUrl": "https://biz.sbs.co.kr/article/20000077678",
+      "sourceName": "SBS Biz",
+      "sourceTier": "B",
+      "confidence": 0.85,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "조합원 찬반투표 결과는 이 원문에서 확인하지 않아 S5에 둔다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "임금 3.1% 인상"
+        },
+        {
+          "field": "임금제도",
+          "value": "임금피크제 폐지"
+        }
+      ]
+    },
+    {
+      "companyId": "kumho-tire",
+      "companyLegalName": "금호타이어 주식회사",
+      "directEmployerId": "kumho-tire",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2021,
+      "agreementType": "INTEGRATED",
+      "stage": "S7",
+      "eventDate": "2021-08-26",
+      "title": "금호타이어 2021년 임단협 조인",
+      "factSummary": "5월 25일 상견례로 시작한 교섭이 8월 26일 광주공장 조인식으로 마무리됐고, 노사 대표와 교섭위원 16명이 참석했다고 보도됐다. 합의안은 임금 동결과 국내공장 고용안정, 광주공장 이전, 우리사주 분배를 포함했다.",
+      "unionName": "전국금속노동조합 금호타이어지회",
+      "agreementTypeEvidence": "금호타이어가 2021년 임단협을 최종 마무리하는 조인식을 열었다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 금호타이어 대표이사와 금속노조 금호타이어지회 대표지회장을 조인식 당사자로 적시한다.",
+      "sourceUrl": "https://www.namdonews.com/news/articleView.html?idxno=657235",
+      "sourceName": "남도일보",
+      "sourceTier": "B",
+      "confidence": 0.88,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "임금은 동결로 합의했다. 인상이 없는 해도 타결은 타결이므로 S7로 둔다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "임금 동결"
+        },
+        {
+          "field": "고용",
+          "value": "국내공장 고용안정·광주공장 이전"
+        },
+        {
+          "field": "일시금",
+          "value": "우리사주 분배 · 하기휴가비 인상"
+        }
+      ]
+    },
+    {
+      "companyId": "lg-uplus",
+      "companyLegalName": "주식회사 엘지유플러스",
+      "directEmployerId": "lg-uplus",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2025,
+      "agreementType": "INTEGRATED",
+      "stage": "S7",
+      "eventDate": "2025-06-27",
+      "title": "LG유플러스 2025년 임단협 조인",
+      "factSummary": "잠정합의안이 두 노조 조합원 투표에서 모두 가결돼 6월 27일 오전 조인식을 열었다고 보도됐다. 제1노조는 투표율 77%에 찬성 61%, 제2노조는 투표율 71.56%에 찬성 59.31%로 집계됐다.",
+      "unionName": "LG유플러스노동조합 · 민주유플러스지부",
+      "agreementTypeEvidence": "LG유플러스 임단협 잠정합의안이 조합원 투표에서 가결돼 조인식을 열었다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 LG유플러스와 그 소속 직원으로 구성된 두 노조를 교섭 당사자로 적시한다.",
+      "sourceUrl": "https://news.tf.co.kr/read/economy/2218770.htm",
+      "sourceName": "더팩트",
+      "sourceTier": "B",
+      "confidence": 0.9,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "복수노조가 각각 투표해 모두 가결했다. 두 노조의 찬성률을 함께 남긴다.",
+      "settlementTerms": [
+        {
+          "field": "임금",
+          "value": "기본급 정률 1.3% 인상 + 정액 19만원"
+        },
+        {
+          "field": "인사제도",
+          "value": "현장 영업·운영기술직군 '주임' 호칭 폐지"
+        }
+      ]
+    },
+    {
+      "companyId": "kakao",
+      "companyLegalName": "주식회사 카카오",
+      "directEmployerId": "kakao",
+      "coveredWorkerRelation": "DIRECT",
+      "bargainingYear": 2024,
+      "agreementType": "INTEGRATED",
+      "stage": "S6",
+      "eventDate": "2024-11-21",
+      "title": "카카오 2024년 임단협 잠정합의안 가결",
+      "factSummary": "11월 18일 마련한 임단협 잠정합의안이 조합원 투표에서 승인됐고, 조합원 약 1천600명(78%)이 참여해 62%가 찬성했다고 보도됐다. 주 1회 재택근무 시행과 비과세 식대 인상도 함께 합의했다.",
+      "unionName": "전국화학섬유식품산업노동조합 카카오지회",
+      "agreementTypeEvidence": "카카오 노사가 마련한 2024년 임단협 잠정합의안이 조합원 투표를 통해 승인됐다고 보도됐다.",
+      "directEmploymentEvidence": "원문은 카카오와 화섬식품노조 카카오지회를 교섭 당사자로 적시하며, 합의 내용도 카카오 소속 직원의 근무제도다.",
+      "sourceUrl": "https://www.ajunews.com/view/20241121202447625",
+      "sourceName": "아주경제",
+      "sourceTier": "B",
+      "confidence": 0.85,
+      "scopeClassification": "PRIMARY_DIRECT_UNION",
+      "includeInPrimaryDashboard": true,
+      "annotation": "원문이 투표 종료일을 적지 않아 보도일을 기준일로 둔다. 조인·서명 근거는 확인하지 않아 S6에 둔다.",
+      "settlementTerms": [
+        {
+          "field": "근무제도",
+          "value": "주 1회 재택근무 시행"
+        },
+        {
+          "field": "복지",
+          "value": "비과세 식대 20만원 인상 · 결혼 경조금 100만원 인상"
+        }
+      ]
     }
   ]
 }

@@ -76,6 +76,12 @@
       "researchedOn": "2026-08-25",
       "scope": "한국철도공사 2021-2024, 대한항공 2023·2025, 서울교통공사 2022, 금호타이어 2023-2024",
       "note": "철도노조 공식 연혁과 회사 보도자료를 우선 근거로 썼다. 예정으로만 적힌 조인식·조정신청은 넣지 않았다."
+    },
+    {
+      "batch": 12,
+      "researchedOn": "2026-08-26",
+      "scope": "포스코 2022, 금호타이어 2021, LG유플러스 2025, 카카오 2024",
+      "note": "수집기의 --year 옵션으로 과거 연도 후보를 훑어 찾았다. 일반 검색은 최신 기사만 돌려줘 과거 연도가 잡히지 않았다. 쿠팡 후보는 전부 물류센터지회라 별도 법인 규칙에 걸려 넣지 않았다."
     }
   ],
   "events": [
@@ -950,6 +956,62 @@
       "label": "잠정합의안 마련",
       "summary": "기본급 3% 인상과 격려금 500만원을 담은 잠정합의안을 마련해 다음 날 총파업을 유보했다.",
       "sourceUrl": "https://www.newsis.com/view/NISX20240902_0002871805"
+    },
+    {
+      "recordId": "lg-uplus:2025:INTEGRATED:2025-06-27:https://news.tf.co.kr/read/economy/2218770.htm",
+      "date": "2025-06-23",
+      "stage": "S5",
+      "label": "임단협 잠정합의",
+      "summary": "정률 1.3% 인상과 정액 19만원 지급으로 잠정 합의했다고 보도됐다.",
+      "sourceUrl": "https://www.sisajournal-e.com/news/articleView.html?idxno=412749"
+    },
+    {
+      "recordId": "lg-uplus:2025:INTEGRATED:2025-06-27:https://news.tf.co.kr/read/economy/2218770.htm",
+      "date": "2025-06-27",
+      "stage": "S7",
+      "label": "조인식",
+      "summary": "두 노조 조합원 투표가 모두 가결돼 오전 10시 30분 조인식을 열었다.",
+      "sourceUrl": "https://news.tf.co.kr/read/economy/2218770.htm"
+    },
+    {
+      "recordId": "kakao:2024:INTEGRATED:2024-11-21:https://www.ajunews.com/view/20241121202447625",
+      "date": "2024-09-04",
+      "stage": "S4",
+      "label": "단체협약 교섭 결렬 선언",
+      "summary": "노조가 단체협약 교섭 결렬을 선언하고 노동위원회 절차를 예고했다고 보도됐다.",
+      "sourceUrl": "https://www.ajunews.com/view/20241121202447625"
+    },
+    {
+      "recordId": "kakao:2024:INTEGRATED:2024-11-21:https://www.ajunews.com/view/20241121202447625",
+      "date": "2024-11-18",
+      "stage": "S5",
+      "label": "임단협 잠정합의안 마련",
+      "summary": "노사가 주 1회 재택근무 시행을 담은 잠정합의안을 마련했다고 보도됐다.",
+      "sourceUrl": "https://www.ajunews.com/view/20241121202447625"
+    },
+    {
+      "recordId": "kakao:2024:INTEGRATED:2024-11-21:https://www.ajunews.com/view/20241121202447625",
+      "date": "2024-11-21",
+      "stage": "S6",
+      "label": "잠정합의안 가결",
+      "summary": "조합원 약 1천600명(78%)이 참여해 62% 찬성으로 승인됐다고 보도됐다.",
+      "sourceUrl": "https://www.ajunews.com/view/20241121202447625"
+    },
+    {
+      "recordId": "kumho-tire:2021:INTEGRATED:2021-08-26:https://www.namdonews.com/news/articleView.html?idxno=657235",
+      "date": "2021-05-25",
+      "stage": "S3",
+      "label": "상견례",
+      "summary": "노사가 상견례를 열고 2021년 교섭을 시작했다고 보도됐다.",
+      "sourceUrl": "https://www.namdonews.com/news/articleView.html?idxno=657235"
+    },
+    {
+      "recordId": "kumho-tire:2021:INTEGRATED:2021-08-26:https://www.namdonews.com/news/articleView.html?idxno=657235",
+      "date": "2021-08-26",
+      "stage": "S7",
+      "label": "조인식",
+      "summary": "광주공장에서 노사 대표와 교섭위원 16명이 참석한 조인식으로 교섭을 마무리했다.",
+      "sourceUrl": "https://www.namdonews.com/news/articleView.html?idxno=657235"
     }
   ]
 }

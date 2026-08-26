@@ -742,11 +742,20 @@ export default function Home() {
     [yearTracks, selectedYear],
   );
 
-  // 진행 중인 교섭은 오늘까지가 마지막 구간이고, 지난 연도는 그해 말이 끝이다.
-  // 기준일을 연도와 무관하게 currentAsOf로 두면 2021년 교섭이 5년째 이어지는 것처럼 보인다.
+  // 진행 중인 교섭만 오늘까지 이어 그린다. 기준일을 연도와 무관하게 currentAsOf로 두면
+  // 2021년 교섭이 5년째 이어지는 것처럼 보인다.
+  //
+  // 지난 연도를 그해 12월 31일까지 늘리는 것도 틀렸다. 12월 23일에 잠정합의한 교섭이
+  // "잠정합의 8일"로 나오는데, 그 8일은 교섭이 아니라 남은 달력이다. 지난 연도는 확인된
+  // 마지막 사건에서 끝낸다.
   const selectedTimeline = useMemo(() => {
+    const lastEventDate = [...selectedCase.flowEvents]
+      .sort(compareEventsAscending)
+      .at(-1)?.date;
     const asOf =
-      selectedYear === currentYear ? currentAsOf : `${selectedYear}-12-31`;
+      selectedYear === currentYear
+        ? currentAsOf
+        : lastEventDate ?? `${selectedYear}-12-31`;
     return buildStageTimeline(selectedCase.flowEvents, { asOf });
   }, [selectedCase.flowEvents, selectedYear]);
   const correctionTargets = useMemo(() => {
@@ -1246,7 +1255,13 @@ export default function Home() {
                         눈에 늦게 들어왔다. */}
                     <div className="timeline-span">
                       <span className="timeline-span-edge">{formatDate(selectedTimeline.startDate)}</span>
-                      <span className="timeline-span-total">{selectedTimeline.totalDays}일간</span>
+                      {/* 사건이 하루짜리 한 건뿐이면 "1일간"은 기간이 아니라 반올림이다.
+                          같은 날짜를 양 끝에 두 번 찍는 것도 읽는 사람을 헷갈리게 한다. */}
+                      {selectedTimeline.startDate === selectedTimeline.endDate ? (
+                        <span className="timeline-span-total">확인된 사건 {selectedCase.flowEvents.length}건</span>
+                      ) : (
+                        <span className="timeline-span-total">{selectedTimeline.totalDays}일간</span>
+                      )}
                       <ol className="timeline-shifts">
                         {selectedTimeline.segments.slice(1).map((segment, index) => (
                           <li key={`shift-${segment.startDate}-${index}`}>
@@ -1264,7 +1279,9 @@ export default function Home() {
                           <li className="timeline-shift-none">단계 전환 없음</li>
                         )}
                       </ol>
-                      <span className="timeline-span-edge">{formatDate(selectedTimeline.endDate)}</span>
+                      {selectedTimeline.startDate !== selectedTimeline.endDate && (
+                        <span className="timeline-span-edge">{formatDate(selectedTimeline.endDate)}</span>
+                      )}
                     </div>
 
                     {/* 막대는 그림이라 스크린리더가 읽지 못한다. 같은 내용을 아래 구간

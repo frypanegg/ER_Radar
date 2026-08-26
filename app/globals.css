@@ -1274,20 +1274,27 @@ button:focus-visible,
   margin-bottom: 7px;
 }
 .evidence-row {
+  /* 오른쪽이 제목·매체 두 줄이라 가운데 정렬이면 날짜가 두 줄 사이에 끼어 어느 줄에도
+     붙지 않는다. 위를 맞춰 날짜와 제목이 같은 줄에서 시작하게 한다. */
+  align-items: flex-start;
   min-height: 38px;
-  gap: 9px;
+  padding: 9px 0;
+  gap: 10px;
   border-bottom: 1px solid #eff2f5;
 }
 
 .evidence-row:last-child {
   border-bottom: 0;
 }
+/* 날짜 칸은 "2026.06.02" 열 글자를 담아야 한다. 예전 "06.02" 기준 34px로 두었더니
+   표기를 통일한 뒤 날짜가 제목 위로 넘쳐 글자가 겹쳤다. */
 .evidence-row time {
-  width: 34px;
-  flex: 0 0 34px;
+  width: 68px;
+  flex: 0 0 68px;
   color: #7f8c9b;
   font-family: var(--font-geist-mono), monospace;
   font-size: 11px;
+  white-space: nowrap;
 }
 
 .evidence-row > div {
@@ -3050,13 +3057,15 @@ button:focus-visible,
 }
 .timeline-events > li {
   display: grid;
-  grid-template-columns: 66px minmax(0, 1fr);
-  gap: 8px;
-  align-items: flex-start;
+  /* 66px는 "2026.08.04" 열 글자의 폭과 거의 같아 글꼴이 조금만 달라져도 날짜가 눌리거나
+     줄이 어긋났다. 여유를 준다. */
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
 }
 .timeline-events time {
-  padding-top: 2px;
   color: #618087;
+  white-space: nowrap;
   font-family: var(--font-geist-mono), monospace;
   font-size: 11px;
   letter-spacing: -.03em;
@@ -3115,6 +3124,7 @@ button:focus-visible,
     margin-left: 0;
   }
   .timeline-events > li {
-    grid-template-columns: 58px minmax(0, 1fr);
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 8px;
   }
 }
