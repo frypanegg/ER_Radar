@@ -57,7 +57,10 @@ button:focus-visible,
   outline-offset: 3px;
 }
 .site-shell {
-  overflow: hidden;
+  /* 가로로 삐져나오는 것만 자른다. overflow: hidden으로 두면 이 요소가 스크롤 컨테이너가
+     되어, 안쪽 상세 패널의 position: sticky가 뷰포트가 아니라 여기에 묶여 아무 일도 하지
+     않는다. clip은 스크롤 컨테이너를 만들지 않으면서 자르기만 한다. */
+  overflow-x: clip;
 }
 .container {
   width: min(1180px, calc(100% - 48px));
@@ -361,7 +364,7 @@ button:focus-visible,
   border-radius: 999px;
   background: rgba(54, 216, 200, .09);
   color: #69e5d8;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .02em;
   text-transform: none;
 }
@@ -723,13 +726,32 @@ button:focus-visible,
   background: transparent;
   color: #728396;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 670;
 }
 .stage-filter-chip small {
-  color: #9ba8b5;
+  color: #7c8b99;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 8px;
+  font-size: 11px;
+}
+/* 칩마다 건수를 얹어, 눌러보기 전에 사건이 어디 몰렸는지 읽히게 한다. */
+.stage-filter-count {
+  margin-left: 1px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #e8edf1;
+  color: #4a5b6b;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+.stage-filter-chip.active .stage-filter-count {
+  background: #cceeea;
+  color: #086b65;
+}
+.stage-filter-chip:disabled .stage-filter-count {
+  background: #f1f3f5;
+  color: #97a3ae;
 }
 
 .stage-filter-chip:hover {
@@ -832,7 +854,7 @@ button:focus-visible,
 }
 .case-type {
   color: #758397;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 690;
 }
 .case-card-title-row {
@@ -868,7 +890,7 @@ button:focus-visible,
   margin-left: 2px;
   padding: 1px 4px;
   border-radius: 4px;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 790;
 }
 .majority-yes { background: #e5f7ef; color: #16805d; }
@@ -890,49 +912,55 @@ button:focus-visible,
   padding: 0 8px;
   border: 1px solid currentColor;
   border-radius: 6px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 750;
   letter-spacing: -0.025em;
 }
+/* 단계 색은 두 가지 일을 한다. 하나는 대비다. 10px 750웨이트는 일반 텍스트라
+   4.5:1을 넘겨야 하는데 여섯 중 넷이 미달이었다. 다른 하나는 "진행 중인가 끝났는가"의
+   구분이다. 교섭(청록)과 체결(초록)이 같은 계열이라 목록을 훑을 때 가장 먼저 갈려야 할
+   둘이 갈리지 않았다. 채도는 진행 중인 단계에만 주고, 체결은 중립 남회색으로 뺀다.
+   미확인도 중립이지만 근거가 없다는 뜻이므로 테두리를 점선으로 따로 구분한다. */
 .stage-u {
-  border-color: #cbd2da;
-  background: #f3f5f6;
-  color: #717f8e;
+  border-style: dashed;
+  border-color: #c3cbd4;
+  background: #f2f4f6;
+  color: #5c6774;
 }
 .stage-s0,
 .stage-s1 {
-  border-color: #c4d5ee;
-  background: #eff5fd;
-  color: #4778ac;
+  border-color: #bcd2ef;
+  background: #eef4fd;
+  color: #2f6497;
 }
 .stage-s2,
 .stage-s3 {
-  border-color: #a8ded8;
-  background: #eaf8f6;
-  color: #107f78;
+  border-color: #9ed8d2;
+  background: #e8f7f5;
+  color: #0a6a64;
 }
+/* 교착·조정은 실무에서 가장 주목해야 하는 국면이라 가장 강한 대비를 준다. */
 .stage-s4 {
-  border-color: #f0c9a6;
-  background: #fff4e9;
-  color: #b96526;
+  border-color: #eebf93;
+  background: #fff1e0;
+  color: #a34f10;
 }
 .stage-s5,
 .stage-s6 {
-  border-color: #c8bce9;
-  background: #f3f0fd;
-  color: #6647ad;
+  border-color: #c0b2e6;
+  background: #f2effd;
+  color: #5a3aa5;
 }
-.stage-s7,
-.stage-s8 {
-  border-color: #b2decf;
-  background: #ecf8f3;
-  color: #177c5d;
+.stage-s7 {
+  border-color: #c2ccd9;
+  background: #eceff4;
+  color: #3f5670;
 }
 .overlay-badge {
   min-height: 20px;
   padding: 0 7px;
   border-radius: 5px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 650;
   letter-spacing: -0.035em;
 }
@@ -948,13 +976,23 @@ button:focus-visible,
   margin-top: auto;
   padding-top: 6px;
   color: #8491a1;
-  font-size: 10px;
+  font-size: 11px;
 }
 .confidence-inline {
   color: #536a7c;
   font-weight: 690;
 }
 .case-detail {
+  /* 목록이 3,000px을 넘는다. 상세가 함께 흘러가면 아래쪽 카드를 눌렀을 때 바뀐 내용이
+     화면 위 수천 px 지점에 있어 "눌러도 아무 일이 없다"로 보인다. 화면에 붙들어 둔다.
+     그리드 항목은 기본이 stretch라 늘어난 채로는 sticky가 움직일 자리가 없으므로
+     align-self로 높이를 내용에 맞춘다. */
+  position: sticky;
+  top: 16px;
+  align-self: start;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   min-height: 608px;
   padding: 29px 31px 25px;
   border: 1px solid #dce6ee;
@@ -969,7 +1007,7 @@ button:focus-visible,
 .detail-overline {
   margin: 0 0 7px;
   color: #12958b;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 760;
   letter-spacing: .09em;
 }
@@ -997,7 +1035,7 @@ button:focus-visible,
 
 .confidence-card > span {
   color: #7c899b;
-  font-size: 10px;
+  font-size: 11px;
 }
 .confidence-card strong {
   margin-top: 1px;
@@ -1013,7 +1051,7 @@ button:focus-visible,
 .confidence-card em {
   margin-top: 1px;
   color: #718096;
-  font-size: 9px;
+  font-size: 11px;
   font-style: normal;
 }
 .status-spotlight {
@@ -1032,7 +1070,7 @@ button:focus-visible,
 .status-spotlight p {
   margin: 0 0 2px;
   color: #65817e;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 680;
 }
 .status-spotlight h4 {
@@ -1083,7 +1121,7 @@ button:focus-visible,
   display: block;
   margin-bottom: 5px;
   color: #8b96a4;
-  font-size: 10px;
+  font-size: 11px;
 }
 .detail-meta-grid strong {
   display: block;
@@ -1117,7 +1155,7 @@ button:focus-visible,
 .majority-definition {
   margin: -15px 0 21px;
   color: #8793a0;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1.48;
 }
 .majority-definition strong {
@@ -1127,12 +1165,12 @@ button:focus-visible,
 .identity-facts span {
   margin-bottom: 5px;
   color: #8b98a6;
-  font-size: 9px;
+  font-size: 11px;
 }
 .identity-facts strong {
   overflow: hidden;
   color: #455d70;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 670;
   line-height: 1.4;
   text-overflow: ellipsis;
@@ -1154,7 +1192,7 @@ button:focus-visible,
 }
 .subsection-title small {
   color: #8a97a6;
-  font-size: 10px;
+  font-size: 11px;
 }
 .overlay-groups {
   display: flex;
@@ -1307,7 +1345,7 @@ button:focus-visible,
 }
 .overlay-line small {
   color: #8b98a6;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
 }
 .detail-bottom-grid {
@@ -1333,7 +1371,7 @@ button:focus-visible,
   flex: 0 0 34px;
   color: #7f8c9b;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .evidence-row > div {
@@ -1349,19 +1387,19 @@ button:focus-visible,
 }
 .evidence-row strong {
   color: #405468;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 640;
 }
 .evidence-row span {
   margin-top: 1px;
   color: #8a97a5;
-  font-size: 9px;
+  font-size: 11px;
 }
 .tier {
   width: 18px;
   height: 18px;
   border-radius: 5px;
-  font-size: 9px;
+  font-size: 11px;
 }
 .tier-s { background: #e9f8f3; color: #167a5b; }
 .tier-a { background: #eaf5ff; color: #3974ab; }
@@ -1380,13 +1418,13 @@ button:focus-visible,
 .next-check > span {
   margin-top: 7px;
   color: #677b8c;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 720;
 }
 .next-check p {
   margin: 5px 0 0;
   color: #4e6275;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.58;
 }
 .case-inspection-grid {
@@ -1406,15 +1444,15 @@ button:focus-visible,
   margin-bottom: 7px;
 }
 .inspection-card .subsection-title span {
-  font-size: 10px;
+  font-size: 11px;
 }
 .inspection-card .subsection-title small {
-  font-size: 8px;
+  font-size: 11px;
 }
 .inspection-card p {
   margin: 0;
   color: #66798b;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.58;
 }
 
@@ -1423,7 +1461,7 @@ button:focus-visible,
   margin: 0;
   padding-left: 13px;
   color: #66798b;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.58;
   list-style: disc;
 }
@@ -1459,26 +1497,26 @@ button:focus-visible,
 }
 .source-annotation strong {
   color: #51677a;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
 }
 .source-annotation code {
   overflow: hidden;
   color: #1b9088;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
+  font-size: 11px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .source-annotation span {
   grid-column: 2;
   color: #8b98a5;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1.35;
 }
 .small-label {
   color: #8a97a6;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* 그 단계에 교섭현황이 없는 경우. 단계 축 자체는 모델 설명이라 계속 보여 주되,
@@ -2322,6 +2360,9 @@ button:focus-visible,
     min-height: 124px;
   }
 .case-detail {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
     min-height: auto;
     padding: 22px 18px;
   }
@@ -2606,7 +2647,7 @@ button:focus-visible,
 }
 .hero-stage-model-head span {
   color: #8fb2c2;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
 }
 
@@ -2660,12 +2701,12 @@ button:focus-visible,
 .hero-stage-code {
   color: #7fa8bb;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 640;
 }
 .hero-stage-track strong {
   color: #cfe4ec;
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 640;
   letter-spacing: -0.02em;
   text-align: center;
@@ -2679,7 +2720,7 @@ button:focus-visible,
 .hero-stage-glossary summary {
   color: #9dc6d6;
   cursor: pointer;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 640;
   list-style: none;
 }
@@ -2713,13 +2754,13 @@ button:focus-visible,
 }
 .hero-stage-glossary dt {
   color: #dcecf2;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 660;
 }
 .hero-stage-glossary dd {
   margin: 1px 0 0;
   color: #93b4c4;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.45;
 }
 .hero-stage-note {
@@ -2728,7 +2769,7 @@ button:focus-visible,
   gap: 6px;
   margin: 10px 0 0;
   color: #86aabb;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.45;
 }
 .hero-stage-note span {
@@ -2739,10 +2780,10 @@ button:focus-visible,
 /* 태블릿 아래에서는 제목 아래로 내려온다. 이때는 폭이 넓어지므로 글자를 조금 키운다. */
 @media (max-width: 1080px) {
 .hero-stage-track strong {
-    font-size: 10.5px;
+    font-size: 11px;
   }
 .hero-stage-code {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 
@@ -2767,7 +2808,7 @@ button:focus-visible,
     flex: 0 0 62px;
   }
 .hero-stage-track strong {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 .dashboard-section {
@@ -2824,7 +2865,7 @@ button:focus-visible,
     grid-template-columns: 61px 22px minmax(0, 1fr);
   }
 .flow-item time {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 
@@ -2833,7 +2874,7 @@ button:focus-visible,
   margin-left: 8px;
   padding: 1px 7px;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   line-height: 1;
 }
@@ -3012,7 +3053,7 @@ button:focus-visible,
     white-space: nowrap;
   }
 .stage-filter-chip small {
-    font-size: 9px;
+    font-size: 11px;
   }
 .case-list {
     grid-auto-columns: minmax(270px, 88%);
@@ -3101,7 +3142,7 @@ button:focus-visible,
 }
 .timeline-seg-days {
   font-family: var(--font-geist-mono), monospace;
-  font-size: 10px;
+  font-size: 11px;
   opacity: .72;
 }
 .timeline-seg-current {
@@ -3176,14 +3217,14 @@ button:focus-visible,
   border-radius: 999px;
   background: #14867d;
   color: #fff;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 760;
 }
 .timeline-detail-range {
   margin-left: auto;
   color: #6b8189;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: -.03em;
 }
 .timeline-events {

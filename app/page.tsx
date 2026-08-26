@@ -848,7 +848,7 @@ export default function Home() {
                 aria-selected={stageFocus === "ALL"}
                 onClick={() => setStageFocus("ALL")}
               >
-                전체
+                전체 <b className="stage-filter-count">{searchedCases.length}</b>
               </button>
               {stageMeta.map((stage) => {
                 const count = caseCountByStage.get(stage.code) ?? 0;
@@ -864,7 +864,10 @@ export default function Home() {
                   title={count === 0 ? `${stage.label} 단계의 교섭현황 없음` : undefined}
                   onClick={() => focusStage(stage.code)}
                 >
-                  <small>{stage.code}</small> {stage.shortLabel}
+                  {/* 건수는 이미 계산해 두고 aria-label에만 쓰고 있었다. 칩의 무게가
+                      모두 같으면 눌러보기 전에는 사건이 어디 몰렸는지 알 수 없다. */}
+                  <small>{stage.code}</small> {stage.shortLabel}{" "}
+                  <b className="stage-filter-count">{count}</b>
                 </button>
                 );
               })}

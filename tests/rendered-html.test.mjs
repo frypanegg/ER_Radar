@@ -654,3 +654,37 @@ test("좁은 화면에서 날짜 줄이 상세 패널을 밀어내지 않는다"
     "좁은 화면에서는 날짜 줄의 줄바꿈을 열어 둬야 한다",
   );
 });
+
+test("상세 패널이 화면에 붙들려 있다", async () => {
+  // 목록이 3,000px을 넘는다. 아래쪽 카드를 눌렀을 때 상세가 화면 위 수천 px 지점에서
+  // 바뀌면 사용자에게는 아무 일도 일어나지 않은 것으로 보인다.
+  // 주석에도 overflow 이야기가 적혀 있으므로 선언만 남기고 본다.
+  const css = (await readFile(new URL("../app/globals.css", import.meta.url), "utf8"))
+    .replaceAll(/\/\*[\s\S]*?\*\//g, "");
+
+  const baseRule = css.slice(0, css.indexOf("@media")).match(/\.case-detail\s*\{([^}]*)\}/);
+  assert.ok(baseRule, "기본 규칙에 .case-detail이 있어야 한다");
+  assert.match(baseRule[1], /position:\s*sticky/, "상세 패널은 sticky여야 한다");
+  // 그리드 항목은 기본이 stretch다. 늘어난 채로는 sticky가 움직일 자리가 없다.
+  assert.match(baseRule[1], /align-self:\s*start/, "sticky가 움직이려면 높이가 내용에 맞아야 한다");
+
+  // overflow: hidden인 조상이 있으면 sticky는 뷰포트가 아니라 그 조상에 묶여 아무 일도
+  // 하지 않는다. 가로만 자를 때는 스크롤 컨테이너를 만들지 않는 clip을 쓴다.
+  const shell = css.match(/\.site-shell\s*\{([^}]*)\}/);
+  assert.ok(shell, ".site-shell 규칙이 있어야 한다");
+  assert.doesNotMatch(
+    shell[1],
+    /overflow(-y)?:\s*(hidden|auto|scroll)/,
+    ".site-shell이 스크롤 컨테이너가 되면 상세 패널의 sticky가 죽는다",
+  );
+});
+
+test("11px보다 작은 글자를 쓰지 않는다", async () => {
+  // 한글은 9~10px에서 형태 변별이 되지 않는다. 11px로 올려서 깨지는 라벨은 없어도 되는
+  // 정보이므로 지운다.
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  const tooSmall = [...css.matchAll(/font-size:\s*([0-9]+(?:\.[0-9]+)?)px/g)]
+    .map(([, size]) => Number(size))
+    .filter((size) => size < 11);
+  assert.deepEqual(tooSmall, [], `11px 미만 글자가 있다: ${tooSmall.join(", ")}px`);
+});
