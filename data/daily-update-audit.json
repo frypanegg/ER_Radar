@@ -2,6 +2,37 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-08-27T21:37:00.885Z",
+      "kstDate": "2026-08-28",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-08-28",
+      "primarySource": "google",
+      "consideredArticles": 601,
+      "appliedCount": 1,
+      "skippedCount": 568,
+      "applied": [
+        {
+          "companyId": "hyundai-mobis",
+          "companyLegalName": "현대모비스 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-06-02",
+          "nextStage": "S5",
+          "nextEventDate": "2026-08-26",
+          "sourceUrl": "https://g-enews.com/article/Industry/2026/08/202608261553196633112616b072_1",
+          "sourceName": "글로벌이코노믹",
+          "confidence": 0.8
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 289,
+        "scope_excluded": 259,
+        "retain_main_state": 1,
+        "stage_unknown": 12,
+        "stage_downgrade_without_explicit_evidence": 3,
+        "not_newer_than_recorded_event": 4
+      }
+    },
+    {
       "runAt": "2026-08-26T21:36:26.629Z",
       "kstDate": "2026-08-27",
       "ruleVersion": "1.0.0",

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-08-27",
+  "asOf": "2026-08-28",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -893,22 +893,22 @@
       "companyLegalName": "현대모비스 주식회사",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-06-02",
-      "title": "현대모비스 2026년 단체교섭 5차 본교섭",
-      "factSummary": "현대모비스 노사와 모비스위원회는 6월 2일 2026년 단체교섭 5차 본교섭을 진행했다. 고용안정, 외주화, 복지 확대, 성과 배분, 신규채용·근무환경 등이 의제로 다뤄졌고, 회사는 향후 실무교섭에서 협의하겠다는 입장을 보였다.",
+      "stage": "S5",
+      "eventDate": "2026-08-26",
+      "title": "현대모비스 노사, 임단협 잠정합의...성과금 400%+1320만원",
+      "factSummary": "글로벌이코노믹 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 현대자동차지부 모비스위원회",
       "directEmployerId": "hyundai-mobis",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "머니투데이는 금속노조 현대자동차지부 모비스위원회를 현대모비스 노조로 식별하고, 그 조합원이 현대모비스 직원이라고 명시한다. 최신 사건 원문도 같은 모비스위원회와 현대모비스 노사의 단체교섭을 구분한다.",
       "scopeEvidenceUrl": "https://www.mt.co.kr/industry/2023/02/17/2023021717510359336",
-      "sourceUrl": "https://m.megaeconomy.co.kr/news/newsview.php?ncode=1065596825053120",
-      "sourceName": "메가경제",
+      "sourceUrl": "https://g-enews.com/article/Industry/2026/08/202608261553196633112616b072_1",
+      "sourceName": "글로벌이코노믹",
       "sourceTier": "B",
-      "confidence": 0.88,
+      "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "현대IHL·유니투스 등 자회사 노조 사건은 별도 감사기록으로 분리했다. 2026-08-10 KST까지 이 직접고용 노조 교섭의 6차 이후 결과, 잠정합의·인준·조인 원문은 이 조사 스냅샷에서 확인하지 못했으므로 마지막 검증 단계인 S3만 표기한다.",
+      "annotation": "2026-08-28 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-02",
@@ -916,12 +916,21 @@
           "label": "5차 본교섭 진행",
           "summary": "모비스위원회와 회사가 2026년 단체교섭 5차 본교섭을 열고 고용안정·외주화·복지·성과배분 등을 논의했다.",
           "sourceUrl": "https://m.megaeconomy.co.kr/news/newsview.php?ncode=1065596825053120"
+        },
+        {
+          "date": "2026-08-26",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "글로벌이코노믹 보도 제목 기준 확인: 현대모비스 노사, 임단협 잠정합의...성과금 400%+1320만원",
+          "sourceUrl": "https://g-enews.com/article/Industry/2026/08/202608261553196633112616b072_1"
         }
       ],
       "id": "hyundai-mobis:2026:INTEGRATED:2026-06-02",
-      "factualStatus": "VERIFIED_SOURCE",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://m.megaeconomy.co.kr/news/newsview.php?ncode=1065596825053120"
+      "originalUrl": "https://g-enews.com/article/Industry/2026/08/202608261553196633112616b072_1",
+      "agreementTypeEvidence": "현대모비스 2026년 단체교섭 5차 본교섭 현대모비스 노사와 모비스위원회는 6월 2일 2026년 단체교섭 5차 본교섭을 진행했다. 고용안정, 외주화, 복지 확대, 성과 배분, 신규채용·근무환경 등이 의제로 다뤄졌고, 회사는 향후 실무교섭에서 협의하겠다는 입장을 보였다.",
+      "autoUpdatedAt": "2026-08-27T21:37:00.885Z"
     },
     {
       "companyId": "samsung-electronics",
