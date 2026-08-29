@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "note": "스케줄 워크플로 자동 비활성화를 막기 위한 실행 흔적",
-  "lastRunAt": "2026-08-28T17:50:34.549Z",
-  "lastRunKstDate": "2026-08-29",
-  "lastRunId": "33195550252",
-  "lastRunTrigger": "schedule",
-  "lastLauncher": "schedule",
-  "lastCloudflareLaunchKstDate": "2026-08-28",
+  "lastRunAt": "2026-08-29T21:35:47.813Z",
+  "lastRunKstDate": "2026-08-30",
+  "lastRunId": "33275838345",
+  "lastRunTrigger": "workflow_dispatch",
+  "lastLauncher": "cloudflare-cron",
+  "lastCloudflareLaunchKstDate": "2026-08-30",
   "lastRunOutcome": "success",
   "collectOutcome": "success",
   "verifyOutcome": "success"
