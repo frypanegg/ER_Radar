@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-08-28",
+  "asOf": "2026-09-01",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -15,22 +15,22 @@
       "companyLegalName": "현대자동차 주식회사",
       "bargainingYear": 2026,
       "agreementType": "WAGE",
-      "stage": "S5",
-      "eventDate": "2026-08-25",
-      "title": "현대차 노사 임단협 잠정합의...10년 만의 전면파업에 2조3000억 손실",
-      "factSummary": "주간조선 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S6",
+      "eventDate": "2026-08-31",
+      "title": "[집중취재] 현대차 노조, 임금협상 잠정합의안 찬반투표 돌입...완성차 5개사 임단협 마무리 수순",
+      "factSummary": "매일경제 마켓 보도 제목 기준 인준·서명 대기 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 현대자동차지부",
       "directEmployerId": "hyundai-motor",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "현대자동차 지속가능성보고서는 국내 인력을 '직접 고용인원 수 기준'으로 공시하고 같은 국내 기준의 노동조합 가입 현황 및 현대자동차지부 조합원 4만4천명을 적시한다. 최신 사건 원문은 그 현대차지부를 현대자동차 임금협상·부분파업 주체로 명시한다.",
       "scopeEvidenceUrl": "https://org1.hyundai.com/content/hyundai/ww/data/csr/data/0000000052/attach/korean/hmc-2024-sustainability-report-ko-v6.pdf",
-      "sourceUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624",
-      "sourceName": "주간조선",
+      "sourceUrl": "https://stock.mk.co.kr/news/view/1150917",
+      "sourceName": "매일경제 마켓",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-09-01 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-12",
@@ -59,14 +59,21 @@
           "label": "잠정합의",
           "summary": "주간조선 보도 제목 기준 확인: 현대차 노사 임단협 잠정합의...10년 만의 전면파업에 2조3000억 손실",
           "sourceUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624"
+        },
+        {
+          "date": "2026-08-31",
+          "stage": "S6",
+          "label": "인준·서명 대기",
+          "summary": "매일경제 마켓 보도 제목 기준 확인: [집중취재] 현대차 노조, 임금협상 잠정합의안 찬반투표 돌입...완성차 5개사 임단협 마무리 수순",
+          "sourceUrl": "https://stock.mk.co.kr/news/view/1150917"
         }
       ],
       "id": "hyundai-motor:2026:WAGE:2026-07-29",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "http://weekly.chosun.com/news/articleView.html?idxno=54624",
+      "originalUrl": "https://stock.mk.co.kr/news/view/1150917",
       "agreementTypeEvidence": "현대자동차 2026년 임금협상 3차 부분파업 금속노조 현대차지부가 임금협상 쟁점이 풀리지 않은 가운데 7월 29일부터 31일까지 주·야간조 각 4시간의 3차 부분파업에 들어갔다고 보도됐다. 기사상 쟁점에는 기본급·성과급, 해고자 복직, 정년 연장이 포함됐다.",
-      "autoUpdatedAt": "2026-08-25T01:11:14.875Z"
+      "autoUpdatedAt": "2026-08-31T21:31:35.715Z"
     },
     {
       "companyId": "sk-hynix",

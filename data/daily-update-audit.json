@@ -2,6 +2,37 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-08-31T21:31:35.715Z",
+      "kstDate": "2026-09-01",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-09-01",
+      "primarySource": "google",
+      "consideredArticles": 585,
+      "appliedCount": 1,
+      "skippedCount": 545,
+      "applied": [
+        {
+          "companyId": "hyundai-motor",
+          "companyLegalName": "현대자동차 주식회사",
+          "previousStage": "S5",
+          "previousEventDate": "2026-08-25",
+          "nextStage": "S6",
+          "nextEventDate": "2026-08-31",
+          "sourceUrl": "https://stock.mk.co.kr/news/view/1150917",
+          "sourceName": "매일경제 마켓",
+          "confidence": 0.8
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 260,
+        "scope_excluded": 261,
+        "retain_main_state": 1,
+        "stage_unknown": 15,
+        "stage_downgrade_without_explicit_evidence": 2,
+        "not_newer_than_recorded_event": 6
+      }
+    },
+    {
       "runAt": "2026-08-30T21:33:51.123Z",
       "kstDate": "2026-08-31",
       "ruleVersion": "1.0.0",
