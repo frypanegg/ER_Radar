@@ -2122,6 +2122,14 @@ button:focus-visible,
 .footer-meta {
   font-size: 13px;
 }@media (max-width: 980px){
+/* 상단 띠의 두 문장은 nowrap이라 태블릿 폭에서 오른쪽 문장이 화면 밖으로 나간다.
+   ≤720px에서만 풀어 두었더니 721~980px 구간이 그대로 남아 있었다. */
+.top-band-inner {
+    flex-wrap: wrap;
+  }
+.top-band p {
+    white-space: normal;
+  }
 .dashboard-actions {
     align-items: flex-end;
     flex-direction: column;
@@ -2136,7 +2144,7 @@ button:focus-visible,
   }
 .hero-grid,
 .collection-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 42px;
   }
 .hero-copy {
@@ -2179,7 +2187,7 @@ button:focus-visible,
     width: 100%;
   }
 .correction-finder {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 .correction-target {
     align-items: flex-start;
@@ -2244,7 +2252,15 @@ button:focus-visible,
     width: 100%;
   }
 .case-layout {
-    grid-template-columns: 1fr;
+    /* 1fr은 minmax(auto, 1fr)이라 칸의 최소 폭이 안에 든 것의 min-content로 벌어진다.
+       상세 패널의 min-content가 화면보다 넓어서, 한 칸짜리 목록이 화면 밖까지 늘어났다. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+.case-list,
+  .case-detail {
+    /* 칸을 화면 폭으로 묶어도 안에 든 항목은 min-width: auto라 제 min-content만큼
+       칸을 넘어선다. 넘치는 것은 각자 안에서 처리하게 하고, 폭은 화면에 맞춘다. */
+    min-width: 0;
   }
 .case-list {
     display: grid;
@@ -2267,6 +2283,30 @@ button:focus-visible,
     min-height: auto;
     padding: 22px 18px;
   }
+
+  /* 근거 목록은 제목·매체가 nowrap이라 min-content가 380px을 넘는다. 그대로 두면
+     한 칸짜리 격자의 항목이 칸을 넘어서고, 상세 전체가 화면 밖으로 밀린다. */
+  .detail-bottom-grid > *,
+  .detail-meta-grid > *,
+  .case-inspection-grid > * {
+    min-width: 0;
+  }
+
+  /* 폭을 화면에 맞춘 뒤에는 제목과 설명이 한 줄에 나란히 서지 못하고 서로 밀며 두 줄씩
+     접힌다. 좁은 화면에서는 위아래로 쌓는다. */
+  .case-detail .subsection-title {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  /* 넓은 화면에서는 한 줄 말줄임이 목록을 가지런하게 만든다. 좁은 화면에서는 같은 규칙이
+     기사 제목의 4분의 1을 잘라 먹는다. 근거는 잘라 보일 것이 아니므로 줄을 바꾼다. */
+  .evidence-row strong,
+  .evidence-row span {
+    overflow: visible;
+    white-space: normal;
+  }
 .case-detail-header {
     align-items: flex-start;
     flex-direction: column;
@@ -2280,7 +2320,7 @@ button:focus-visible,
     border-left: 0;
   }
 .detail-meta-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .detail-meta-grid > div,
@@ -2306,20 +2346,20 @@ button:focus-visible,
     border-top: 1px solid #e5ebef;
   }
 .detail-bottom-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 .case-inspection-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 .source-annotation {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 4px;
   }
 .source-annotation span {
     grid-column: 1;
   }
 .guardrail-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 .guardrail-card {
     min-height: 0;

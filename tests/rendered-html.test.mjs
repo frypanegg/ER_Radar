@@ -699,6 +699,53 @@ test("상세 패널이 화면에 붙들려 있다", async () => {
   );
 });
 
+test("좁은 화면에서 상세 패널이 화면 폭 안에 머문다", async () => {
+  // 1fr은 minmax(auto, 1fr)이다. auto 최소는 칸에 든 것의 min-content라, 상세 패널처럼
+  // 안에 nowrap 텍스트를 품은 항목이 들어가면 한 칸짜리 격자가 화면보다 넓어진다.
+  // 그러면 목록은 제 안에서 가로로 넘겨지는데 상세는 화면 밖으로 밀려 손이 닿지 않고,
+  // 가로로 쓸면 페이지 전체가 딸려 움직인다.
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  const bare = [...css.matchAll(/grid-template-columns:\s*1fr\s*;/g)];
+  assert.deepEqual(
+    bare.map((match) => match[0]),
+    [],
+    "한 칸짜리 격자는 minmax(0, 1fr)로 적어야 칸이 화면 밖으로 벌어지지 않는다",
+  );
+
+  const mobileBlocks = [];
+  for (let start = css.indexOf("@media (max-width: 720px)"); start !== -1;
+       start = css.indexOf("@media (max-width: 720px)", start + 1)) {
+    let depth = 0;
+    for (let index = css.indexOf("{", start); index < css.length; index += 1) {
+      if (css[index] === "{") depth += 1;
+      else if (css[index] === "}") {
+        depth -= 1;
+        if (depth === 0) {
+          mobileBlocks.push(css.slice(start, index + 1));
+          break;
+        }
+      }
+    }
+  }
+  const mobile = mobileBlocks.join("\n");
+  assert.ok(mobile.length > 0, "720px 미디어 블록이 있어야 한다");
+
+  // 칸을 화면 폭에 묶어도 항목은 min-width: auto라 제 min-content만큼 칸을 넘어선다.
+  const shrinkable = mobile.match(/\.case-list,\s*\.case-detail\s*\{([^}]*)\}/);
+  assert.ok(shrinkable, "좁은 화면 규칙에 .case-list, .case-detail 묶음이 있어야 한다");
+  assert.match(shrinkable[1], /min-width:\s*0/, "목록과 상세는 칸 안으로 줄어들 수 있어야 한다");
+
+  const items = mobile.match(/\.detail-bottom-grid\s*>\s*\*[^{]*\{([^}]*)\}/);
+  assert.ok(items, "좁은 화면 규칙에 상세 하단 격자 항목 규칙이 있어야 한다");
+  assert.match(items[1], /min-width:\s*0/, "상세 하단 격자 항목도 칸 안으로 줄어들어야 한다");
+
+  // 근거 제목을 한 줄 말줄임으로 두면 min-content가 380px을 넘어 위 규칙을 도로 무너뜨린다.
+  const evidence = mobile.match(/\.evidence-row strong,\s*\.evidence-row span\s*\{([^}]*)\}/);
+  assert.ok(evidence, "좁은 화면 규칙에 근거 줄 규칙이 있어야 한다");
+  assert.match(evidence[1], /white-space:\s*normal/, "좁은 화면에서는 기사 제목이 줄바꿈되어야 한다");
+});
+
 test("11px보다 작은 글자를 쓰지 않는다", async () => {
   // 한글은 9~10px에서 형태 변별이 되지 않는다. 11px로 올려서 깨지는 라벨은 없어도 되는
   // 정보이므로 지운다.
