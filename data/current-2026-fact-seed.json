@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-09-01",
+  "asOf": "2026-09-05",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -995,20 +995,20 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S4",
-      "eventDate": "2026-05-06",
-      "title": "삼성바이오로직스 2026년 임금 및 단체협약 교섭, 전면파업 뒤 준법투쟁 전환",
-      "factSummary": "닷새간의 전면파업이 합의 없이 끝난 뒤 조합원들이 현장에 복귀하면서 연장·휴일근로를 거부하는 준법투쟁으로 전환했다고 보도됐다.",
+      "stage": "S3",
+      "eventDate": "2026-06-17",
+      "title": "삼성바이오 노사, 임단협 교섭 재개... 인사제도 명문화 놓고 줄다리기",
+      "factSummary": "IT조선 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "삼성바이오로직스 노동조합",
       "agreementTypeEvidence": "삼성바이오로직스 2026년 임금 및 단체협약 교섭에서 노조는 기본급 인상률과 성과급 재원 배분을 요구했고, 임단협 쟁점이 풀리지 않아 파업과 준법투쟁으로 이어졌다고 보도됐다.",
       "directEmploymentEvidence": "원문은 삼성바이오로직스 소속 조합원 약 2천800명이 참여한 파업과 그 노동조합을 회사의 교섭 상대로 적시한다.",
-      "sourceUrl": "https://www.joongangenews.com/news/articleView.html?idxno=516835",
-      "sourceName": "중앙이코노미뉴스",
+      "sourceUrl": "https://it.chosun.com/news/articleView.html?idxno=2023092164046",
+      "sourceName": "IT조선",
       "sourceTier": "B",
-      "confidence": 0.85,
+      "confidence": 0.91,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "창사 첫 전면파업 이후 준법투쟁이 이어지는 교착 국면이다. 잠정합의 근거를 확인하지 못해 S4로 둔다.",
+      "annotation": "2026-09-05 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-28",
@@ -1030,12 +1030,20 @@
           "label": "준법투쟁 전환",
           "summary": "전면파업이 합의 없이 끝나 조합원이 복귀했고 연장·휴일근로를 거부하는 준법투쟁으로 전환했다고 보도됐다.",
           "sourceUrl": "https://www.joongangenews.com/news/articleView.html?idxno=516835"
+        },
+        {
+          "date": "2026-06-17",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "IT조선 보도 제목 기준 확인: 삼성바이오 노사, 임단협 교섭 재개... 인사제도 명문화 놓고 줄다리기",
+          "sourceUrl": "https://it.chosun.com/news/articleView.html?idxno=2023092164046"
         }
       ],
       "id": "samsung-biologics:2026:INTEGRATED:2026-05-06",
-      "factualStatus": "VERIFIED_SOURCE",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.joongangenews.com/news/articleView.html?idxno=516835"
+      "originalUrl": "https://it.chosun.com/news/articleView.html?idxno=2023092164046",
+      "autoUpdatedAt": "2026-09-04T23:30:38.440Z"
     },
     {
       "companyId": "lg-display",
