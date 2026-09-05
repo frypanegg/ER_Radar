@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-09-05",
+  "asOf": "2026-09-06",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -996,19 +996,19 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S3",
-      "eventDate": "2026-06-17",
-      "title": "삼성바이오 노사, 임단협 교섭 재개... 인사제도 명문화 놓고 줄다리기",
+      "eventDate": "2026-07-16",
+      "title": "삼성바이오로직스 노사교섭 21차례에도 ‘제자리’... 노조, 대외 압박 확대",
       "factSummary": "IT조선 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "삼성바이오로직스 노동조합",
       "agreementTypeEvidence": "삼성바이오로직스 2026년 임금 및 단체협약 교섭에서 노조는 기본급 인상률과 성과급 재원 배분을 요구했고, 임단협 쟁점이 풀리지 않아 파업과 준법투쟁으로 이어졌다고 보도됐다.",
       "directEmploymentEvidence": "원문은 삼성바이오로직스 소속 조합원 약 2천800명이 참여한 파업과 그 노동조합을 회사의 교섭 상대로 적시한다.",
-      "sourceUrl": "https://it.chosun.com/news/articleView.html?idxno=2023092164046",
+      "sourceUrl": "https://it.chosun.com/news/articleView.html?idxno=2023092165932",
       "sourceName": "IT조선",
       "sourceTier": "B",
-      "confidence": 0.91,
+      "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-09-05 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-09-06 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-28",
@@ -1037,13 +1037,20 @@
           "label": "본교섭 진행",
           "summary": "IT조선 보도 제목 기준 확인: 삼성바이오 노사, 임단협 교섭 재개... 인사제도 명문화 놓고 줄다리기",
           "sourceUrl": "https://it.chosun.com/news/articleView.html?idxno=2023092164046"
+        },
+        {
+          "date": "2026-07-16",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "IT조선 보도 제목 기준 확인: 삼성바이오로직스 노사교섭 21차례에도 ‘제자리’... 노조, 대외 압박 확대",
+          "sourceUrl": "https://it.chosun.com/news/articleView.html?idxno=2023092165932"
         }
       ],
       "id": "samsung-biologics:2026:INTEGRATED:2026-05-06",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://it.chosun.com/news/articleView.html?idxno=2023092164046",
-      "autoUpdatedAt": "2026-09-04T23:30:38.440Z"
+      "originalUrl": "https://it.chosun.com/news/articleView.html?idxno=2023092165932",
+      "autoUpdatedAt": "2026-09-05T23:27:52.620Z"
     },
     {
       "companyId": "lg-display",

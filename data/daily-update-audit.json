@@ -2,6 +2,37 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-09-05T23:27:52.620Z",
+      "kstDate": "2026-09-06",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-09-06",
+      "primarySource": "google",
+      "consideredArticles": 599,
+      "appliedCount": 1,
+      "skippedCount": 560,
+      "applied": [
+        {
+          "companyId": "samsung-biologics",
+          "companyLegalName": "삼성바이오로직스 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-06-17",
+          "nextStage": "S3",
+          "nextEventDate": "2026-07-16",
+          "sourceUrl": "https://it.chosun.com/news/articleView.html?idxno=2023092165932",
+          "sourceName": "IT조선",
+          "confidence": 0.8
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 267,
+        "not_eligible_for_status_aggregation": 270,
+        "retain_main_state": 2,
+        "stage_unknown": 14,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "not_newer_than_recorded_event": 6
+      }
+    },
+    {
       "runAt": "2026-09-04T23:30:38.440Z",
       "kstDate": "2026-09-05",
       "ruleVersion": "1.0.0",
