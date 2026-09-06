@@ -3,6 +3,7 @@ import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import { classifyArticle, validateConfiguration } from "../scripts/collect-news.mjs";
 import { resolveCurrentAsOf } from "../lib/collection-freshness.mjs";
+import { formatDate } from "../lib/display-format.mjs";
 import automationHeartbeat from "../data/automation-heartbeat.json" with { type: "json" };
 import currentSeed from "../data/current-2026-fact-seed.json" with { type: "json" };
 
@@ -41,6 +42,20 @@ async function requestCompanyAddition() {
   );
 }
 
+// 바닥글에 찍힌 기준일만 떼어 온다.
+//
+// 예전에는 문서 전체에서 `기준일.*기준 현황`을 찾았다. 화면은 기준일을 점으로
+// 찍는데(2026.09.06) 기대값은 붙임표(2026-09-06)였으니 이 검사는 애초에 바닥글을
+// 보고 있지 않았다. 대신 상단 띠의 "마지막 수집 2026-09-06 KST"에 걸려서, 두 날짜가
+// 같은 날에만 우연히 통과했다. 사실이 실제로 반영된 날은 시드 기준일이 하루 앞서
+// 나가면서 그 우연이 깨졌고, 06:20 실행이 그날 수집분을 통째로 되돌렸다.
+// 2026-08-25 · 08-28 · 09-05 · 09-06이 그렇게 날아갔다.
+function readAsOfLabel(html) {
+  const footer = html.match(/<div class="footer-meta">([\s\S]*?)<\/div>/)?.[1] ?? "";
+  const text = footer.replaceAll("<!-- -->", "").replace(/<[^>]+>/g, "");
+  return text.match(/([\d.]+)\s*기준 현황/)?.[1] ?? null;
+}
+
 test("server-renders the collective-bargaining framework dashboard", async () => {
   const response = await render();
   assert.equal(response.status, 200);
@@ -68,7 +83,7 @@ test("server-renders the collective-bargaining framework dashboard", async () =>
     seedAsOf: currentSeed.asOf,
     heartbeat: automationHeartbeat,
   });
-  assert.match(html, new RegExp(`${expectedAsOf}.*기준 현황`));
+  assert.equal(readAsOfLabel(html), formatDate(expectedAsOf));
   assert.match(html, /radar-mark/);
   assert.match(html, /삼성전자 주식회사/);
   assert.match(html, /HD현대중공업 주식회사/);

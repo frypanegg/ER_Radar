@@ -24,6 +24,7 @@ import historicalSeed from "../data/historical-fact-seed.json";
 import currentSeed from "../data/current-2026-fact-seed.json";
 import automationHeartbeat from "../data/automation-heartbeat.json";
 import { describeCollectionLag, resolveCurrentAsOf } from "../lib/collection-freshness.mjs";
+import { formatDate } from "../lib/display-format.mjs";
 import { decideFactSource } from "../lib/fact-reconciliation.mjs";
 import {
   buildStageTimeline,
@@ -156,10 +157,6 @@ const agreementLabels: Record<AgreementType, string> = {
   SUPPLEMENTAL: "특별·보충협약",
   UNKNOWN: "유형 미확인",
 };
-
-function formatDate(date: string) {
-  return date.replaceAll("-", ".");
-}
 
 // 보는 시점의 KST 날짜. 서버 렌더·프리렌더 시점의 날짜를 굳혀 두면 캐시된 HTML이
 // "오늘 수집 완료"를 틀리게 말할 수 있으므로, 브라우저 시계로만 판단한다.

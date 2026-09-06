@@ -1024,6 +1024,18 @@ test("기준일과 수집 상태 문구를 화면·테스트가 같은 규칙으
     "2026-08-10",
   );
 
+  // 사실이 실제로 반영된 날은 시드 기준일이 오늘로 올라간다. 그런데 실행 흔적은
+  // 회귀 검증 뒤에 기록되므로, 검증 시점의 흔적은 아직 어제다. 그래서 이날만
+  // 기준일이 흔적보다 하루 앞선다. 이 어긋남이 바닥글 검사를 깨뜨려 06:20 실행이
+  // 그날 수집분을 되돌렸다. 어긋나는 것이 정상임을 여기에 박아 둔다.
+  assert.equal(
+    resolveCurrentAsOf({
+      seedAsOf: "2026-09-06",
+      heartbeat: { lastRunKstDate: "2026-09-05", lastRunOutcome: "success" },
+    }),
+    "2026-09-06",
+  );
+
   assert.equal(
     describeCollectionLag({
       heartbeat: { lastRunKstDate: "2026-08-15", lastRunOutcome: "success" },
