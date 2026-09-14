@@ -2,6 +2,26 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-09-14T22:39:39.040Z",
+      "kstDate": "2026-09-15",
+      "ruleVersion": "1.0.0",
+      "batchKstDate": "2026-09-15",
+      "primarySource": "google",
+      "consideredArticles": 607,
+      "appliedCount": 0,
+      "skippedCount": 566,
+      "applied": [],
+      "skippedReasonCounts": {
+        "scope_excluded": 267,
+        "not_eligible_for_status_aggregation": 269,
+        "stage_unknown": 20,
+        "retain_main_state": 2,
+        "settled_record_needs_equal_grade_evidence": 1,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "not_newer_than_recorded_event": 6
+      }
+    },
+    {
       "runAt": "2026-09-14T21:35:34.280Z",
       "kstDate": "2026-09-15",
       "ruleVersion": "1.0.0",
