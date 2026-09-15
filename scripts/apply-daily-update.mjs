@@ -41,7 +41,7 @@ const HELP_TEXT = `
   - 단일 법인 기사이고 주 단계가 U가 아님
   - 공개 기록이 추적하는 교섭단위의 기사
   - 기존 기록보다 발생일이 늦음
-  - 법인마다 위 조건을 모두 통과한 기사 중 가장 최근 것 하나
+  - 법인마다 통과한 기사를 날짜순으로 차례로 적용 (앞 기사까지 반영된 기록과 비교)
 `.trim();
 
 function parseArguments(argv) {
@@ -205,17 +205,30 @@ function buildFlowEvent(article, eventDate) {
 
 function applyArticleToRecord(record, article, eventDate) {
   const flowEvents = [...(record.flowEvents ?? [])];
+  // 같은 날 같은 단계를 전하는 기사가 여럿이면 경과에는 하나만 남긴다. 하루치 배치를
+  // 날짜순으로 모두 적용하므로, 이것이 없으면 한 사건의 후속 보도가 경과를 채운다.
+  const nextStage = article.classification.statusCode;
   const alreadyRecorded = flowEvents.some(
-    (event) => event.sourceUrl === article.originalUrl,
+    (event) =>
+      event.sourceUrl === article.originalUrl ||
+      (event.date === eventDate && event.stage === nextStage),
   );
   if (!alreadyRecorded) {
     flowEvents.push(buildFlowEvent(article, eventDate));
     flowEvents.sort((left, right) => left.date.localeCompare(right.date));
   }
 
+  // 타결 조건은 잠정합의 이상에서만 성립한다. 잠정합의가 부결돼 재교섭으로 돌아가면
+  // 그 조건은 조합원이 거부한 안이다. 남겨 두면 화면이 거부된 안을 타결 조건으로 보여준다.
+  // 2026-09-15 금호타이어(S5→S3)에서 회귀 검증이 이것을 잡았다.
+  const settledStages = new Set(["S5", "S6", "S7"]);
+  const { settlementTerms, ...rest } = record;
+  const keepsSettlementTerms = settledStages.has(nextStage) && settlementTerms !== undefined;
+
   return {
-    ...record,
-    stage: article.classification.statusCode,
+    ...rest,
+    ...(keepsSettlementTerms ? { settlementTerms } : {}),
+    stage: nextStage,
     eventDate,
     // 협약유형을 정한 근거는 덮어쓰기 전 문장에 있다. 아래에서 title·factSummary를
     // 새 기사로 갈아치우면 그 근거가 사라지고, "임금협상" 레코드에 "교섭 재개" 같은
@@ -271,10 +284,12 @@ async function main() {
   const applied = [];
   const skipped = [];
 
-  // 법인별로 기사를 최신순으로 줄 세우고, 기존 기록 대비 게이트까지 통과한 첫 기사를 쓴다.
-  // 전에는 가장 최근 기사 하나만 골라 게이트에 넣었다. 그러면 그 기사가 하강 방지 등에
-  // 걸리는 날, 같은 배치에 있던 조금 앞선 유효 기사(예: 조인식 보도 뒤에 붙은 파업 후속
-  // 기사)가 함께 버려져 법인이 며칠씩 갱신되지 않았다.
+  // 법인별로 통과한 기사를 날짜순으로 차례로 적용한다. 각 기사는 앞 기사까지 반영된 기록과
+  // 비교되므로 체결 보존·하강 방지가 배치 안에서도 그대로 작동한다.
+  //
+  // 전에는 가장 최근 기사 하나만 골랐다. 그러면 결렬(9/1) 뒤에 나온 증권 기사
+  // "임금협상 난항에 노조 부분파업"(9/15)이 본교섭으로 읽혀 결렬을 덮었고, 그 기사가
+  // 막히는 날에는 앞선 유효 기사까지 함께 버려져 법인이 며칠씩 갱신되지 않았다.
   const candidatesByCompany = new Map();
   for (const article of candidates.articles ?? []) {
     const selection = selectCandidate(article);
@@ -292,42 +307,43 @@ async function main() {
   }
 
   for (const [companyId, articles] of candidatesByCompany) {
-    const record = recordsByCompany.get(companyId);
+    const original = recordsByCompany.get(companyId);
     articles.sort((left, right) => {
-      const byDate = Date.parse(right.publishedAt) - Date.parse(left.publishedAt);
+      const byDate = Date.parse(left.publishedAt) - Date.parse(right.publishedAt);
       if (byDate !== 0) return byDate;
       return (
-        (ranks.get(right.classification.statusCode) ?? -1) -
-        (ranks.get(left.classification.statusCode) ?? -1)
+        (ranks.get(left.classification.statusCode) ?? -1) -
+        (ranks.get(right.classification.statusCode) ?? -1)
       );
     });
 
-    let chosen = null;
+    let record = original;
+    let last = null;
+    let eventsApplied = 0;
     for (const article of articles) {
       const reason = recordGateReason(record, article, ranks);
       if (reason) {
         skipped.push({ title: article.title, url: article.originalUrl, reason });
         continue;
       }
-      chosen = article;
-      break;
+      record = applyArticleToRecord(record, article, article.publishedAt.slice(0, 10));
+      last = article;
+      eventsApplied += 1;
     }
-    if (!chosen) continue;
+    if (!last) continue;
 
-    const eventDate = chosen.publishedAt.slice(0, 10);
-    const nextStage = chosen.classification.statusCode;
-    const updated = applyArticleToRecord(record, chosen, eventDate);
-    recordsByCompany.set(companyId, updated);
+    recordsByCompany.set(companyId, record);
     applied.push({
       companyId,
-      companyLegalName: record.companyLegalName,
-      previousStage: record.stage,
-      previousEventDate: record.eventDate,
-      nextStage,
-      nextEventDate: eventDate,
-      sourceUrl: chosen.originalUrl,
-      sourceName: chosen.media,
-      confidence: chosen.classification.confidence,
+      companyLegalName: original.companyLegalName,
+      previousStage: original.stage,
+      previousEventDate: original.eventDate,
+      nextStage: record.stage,
+      nextEventDate: record.eventDate,
+      sourceUrl: last.originalUrl,
+      sourceName: last.media,
+      confidence: last.classification.confidence,
+      eventsApplied,
     });
   }
 

@@ -646,11 +646,8 @@ test("새 사건이 확인되면 시드와 감사 로그가 함께 갱신된다"
     assert.equal(audit.runs[0].applied[0].previousStage, "S4");
     assert.equal(audit.runs[0].applied[0].nextStage, "S5");
     assert.equal(audit.runs[0].skippedReasonCounts.scope_excluded, 1);
-    assert.equal(
-      audit.runs[0].skippedReasonCounts.not_newer_than_recorded_event,
-      undefined,
-      "같은 법인의 오래된 기사는 최신 기사에 밀려 후보 선택 단계에서 제외된다",
-    );
+    // 기록보다 오래된 기사는 반영하지 않고 사유를 남긴다.
+    assert.equal(audit.runs[0].skippedReasonCounts.not_newer_than_recorded_event, 1);
   } finally {
     await rm(workingDirectory, { recursive: true, force: true });
   }
@@ -1572,14 +1569,14 @@ test("노조·노사 없이 법인의 임단협을 주어로 쓴 제목도 직�
   assert.equal(subcontracted.scopeClassification, "SUBCONTRACTOR_UNION_EXCLUDED");
 });
 
-test("가장 최근 기사가 막히면 같은 배치의 다음 유효 기사로 반영한다", async () => {
+test("같은 배치의 기사를 날짜순으로 적용해 뒤늦은 낮은 단계 제목이 앞선 사건을 덮지 않는다", async () => {
   const workingDirectory = await mkdtemp(join(tmpdir(), "bargaining-apply-fallback-"));
   const candidatesPath = join(workingDirectory, "candidates.json");
   const seedPath = join(workingDirectory, "seed.json");
   const auditPath = join(workingDirectory, "audit.json");
 
-  // 기록은 S6(찬반투표). 가장 최근 기사는 명시 근거 없는 S3라 하강 방지에 막히고,
-  // 그보다 앞선 조인식 기사가 반영돼야 한다.
+  // 기록은 S6(찬반투표). 조인식(9/2)이 먼저 반영되고, 뒤에 온 명시 근거 없는 S3 제목(9/5)은
+  // 하강 방지에 막혀야 한다.
   const followUp = verifiedArticle({
     title: "현대차 노사 교섭 후속 논의",
     publishedAt: "2026-09-05T02:00:00.000Z",
@@ -1620,4 +1617,41 @@ test("가장 최근 기사가 막히면 같은 배치의 다음 유효 기사로
   } finally {
     await rm(workingDirectory, { recursive: true, force: true });
   }
+});
+
+test("잠정합의가 부결돼 재교섭으로 돌아가면 거부된 안의 타결 조건을 지운다", () => {
+  const record = seedRecord({
+    stage: "S5",
+    settlementTerms: [{ field: "임금", value: "기본급 3% 인상" }],
+  });
+  const reopened = verifiedArticle();
+  Object.assign(reopened.classification, { statusCode: "S3", statusBasis: "exception_transition" });
+  assert.equal(applyArticleToRecord(record, reopened, "2026-08-25").settlementTerms, undefined);
+
+  const ratified = verifiedArticle();
+  Object.assign(ratified.classification, { statusCode: "S6" });
+  assert.deepEqual(
+    applyArticleToRecord(record, ratified, "2026-08-25").settlementTerms,
+    record.settlementTerms,
+  );
+});
+
+test("사후조정 합의 불발을 조정 성립으로 읽지 않는다", async () => {
+  const classification = await classifyTitle(
+    "삼성바이오로직스 임단협, 1차 사후조정서 합의 불발...추석 전 타결 가능할까",
+    "samsung-biologics",
+  );
+  assert.notEqual(classification.parallelStates.dispute.code, "MEDIATION_SETTLED");
+  assert.notEqual(classification.statusCode, "S7");
+
+  const settled = await classifyTitle("삼성바이오로직스 노사, 사후조정서 합의...임금협상 타결", "samsung-biologics");
+  assert.equal(settled.parallelStates.dispute.code, "MEDIATION_SETTLED");
+});
+
+test("같은 날 같은 단계의 후속 보도는 경과에 한 번만 남긴다", () => {
+  const first = verifiedArticle({ originalUrl: "https://example.com/a" });
+  const second = verifiedArticle({ originalUrl: "https://example.com/b" });
+  const once = applyArticleToRecord(seedRecord(), first, "2026-08-20");
+  const twice = applyArticleToRecord(once, second, "2026-08-20");
+  assert.equal(twice.flowEvents.filter((event) => event.date === "2026-08-20").length, 1);
 });
