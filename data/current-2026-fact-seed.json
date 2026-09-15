@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-09-15",
+  "asOf": "2026-09-16",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -638,22 +638,22 @@
       "companyLegalName": "주식회사 포스코",
       "bargainingYear": 2026,
       "agreementType": "WAGE",
-      "stage": "S4",
-      "eventDate": "2026-08-19",
-      "title": "포스코, 임금협상 결렬... 창사후 첫 파업 갈림길",
-      "factSummary": "donga.com 보도 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S3",
+      "eventDate": "2026-09-15",
+      "title": "'2차 파업' 기로 선 포스코 노사...12일 만의 교섭 재개",
+      "factSummary": "뉴시안 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
       "directEmployerId": "posco",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
       "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
-      "sourceUrl": "https://donga.com/news/Economy/article/all/20260818/134498964/2",
-      "sourceName": "donga.com",
+      "sourceUrl": "https://newsian.co.kr/news/articleView.html?idxno=95417",
+      "sourceName": "뉴시안",
       "sourceTier": "B",
-      "confidence": 0.8,
+      "confidence": 0.91,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-09-15 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-09-16 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-16",
@@ -689,14 +689,28 @@
           "label": "교착·조정 경로",
           "summary": "donga.com 보도 제목 기준 확인: 포스코, 임금협상 결렬... 창사후 첫 파업 갈림길",
           "sourceUrl": "https://donga.com/news/Economy/article/all/20260818/134498964/2"
+        },
+        {
+          "date": "2026-09-14",
+          "stage": "S4",
+          "label": "교착·조정 경로",
+          "summary": "etoday.co.kr 보도 제목 기준 확인: 포스코 노사 15일 교섭 재개...결렬시 16일부터 120시간 부분파업",
+          "sourceUrl": "https://etoday.co.kr/news/view/2625390"
+        },
+        {
+          "date": "2026-09-15",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "뉴시안 보도 제목 기준 확인: '2차 파업' 기로 선 포스코 노사...12일 만의 교섭 재개",
+          "sourceUrl": "https://newsian.co.kr/news/articleView.html?idxno=95417"
         }
       ],
       "id": "posco:2026:WAGE:2026-07-27",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://donga.com/news/Economy/article/all/20260818/134498964/2",
+      "originalUrl": "https://newsian.co.kr/news/articleView.html?idxno=95417",
       "agreementTypeEvidence": "포스코 2026년 임금협상 중노위 조정 신청 포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
-      "autoUpdatedAt": "2026-09-15T04:11:51.147Z"
+      "autoUpdatedAt": "2026-09-15T21:35:53.465Z"
     },
     {
       "companyId": "hanwha-ocean",

@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-09-15T21:35:53.465Z",
+      "kstDate": "2026-09-16",
+      "ruleVersion": "1.1.0",
+      "batchKstDate": "2026-09-16",
+      "primarySource": "google",
+      "consideredArticles": 627,
+      "appliedCount": 1,
+      "skippedCount": 625,
+      "applied": [
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S4",
+          "previousEventDate": "2026-08-19",
+          "nextStage": "S3",
+          "nextEventDate": "2026-09-15",
+          "sourceUrl": "https://newsian.co.kr/news/articleView.html?idxno=95417",
+          "sourceName": "뉴시안",
+          "confidence": 0.91,
+          "eventsApplied": 2
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 178,
+        "not_eligible_for_status_aggregation": 233,
+        "retain_main_state": 5,
+        "stage_unknown": 16,
+        "not_newer_than_recorded_event": 187,
+        "stage_downgrade_without_explicit_evidence": 5,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-09-15T04:11:51.148Z",
       "kstDate": "2026-09-15",
       "ruleVersion": "1.1.0",
