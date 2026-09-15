@@ -1460,3 +1460,164 @@ test("접수 즉시 인증 메일을 보내는 경로가 있다", async () => {
   // 본문에 요청 내용을 다 담지 않는다. 확인은 링크에서 한다.
   assert.doesNotMatch(notice.text, /근거 원문/);
 });
+
+// 2026-09-01~14 동안 공개 기록이 한 법인도 갱신되지 않았다. 수집은 매일 성공했고 기사도
+// 있었다(현대차 조인식, 포스코 첫 파업·교섭 재개, HD현대중공업 결렬·부분파업, SK하이닉스
+// 수정 잠정합의). 막힌 경로를 실제 제목으로 하나씩 고정한다.
+test("검색어 맥락만으로 붙은 법인 때문에 복수 법인 기사가 되지 않는다", async () => {
+  // 두산에너빌리티 검색 결과에도 걸린 포스코 기사다. 제목에는 포스코만 있다.
+  const classification = await classifyTitle(
+    "포스코 노사 15일 교섭 재개...결렬시 16일부터 120시간 부분파업",
+    "doosan-enerbility",
+  );
+  assert.deepEqual(
+    classification.companies.map((company) => company.companyId),
+    ["posco"],
+  );
+  assert.ok(!classification.reasonCodes.includes("multiple_companies"));
+
+  // 제목에 법인이 없을 때는 여전히 검색 맥락으로 잇되 검토 대기로 둔다.
+  const contextOnly = await classifyTitle("노사, 임금협상 교섭 재개", "posco");
+  assert.deepEqual(contextOnly.companies.map((company) => company.companyId), ["posco"]);
+  assert.equal(contextOnly.eligibleForStatusAggregation, false);
+});
+
+test("복수노조 법인의 단위 없는 제목은 공개 기록의 교섭 테이블로 잇는다", async () => {
+  // 포스코는 2026년이 임금교섭 해라 "임단협"은 주기 충돌 주석이 붙는다. 주석은 남기되
+  // 단계 반영까지 막지 않는다.
+  const posco = await classifyTitle("포스코 노사 임단협 교섭 재개", "posco");
+  assert.ok(posco.annotations.agreementType.cycleConflict);
+  const poscoMatch = posco.companies[0];
+  assert.equal(poscoMatch.bargainingUnitScope, "public_record_default");
+  assert.equal(poscoMatch.tracksPublicRecordUnit, true);
+  assert.equal(posco.eligibleForStatusAggregation, true);
+
+  // 같은 법인의 다른 교섭단위 기사는 직영이지만 공개 기록을 바꾸지 않는다.
+  const pilots = await classifyTitle(
+    "대한항공 조종사노조, 11년 만에 노동쟁의 조정 신청",
+    "korean-air",
+  );
+  assert.equal(pilots.scopeClassification, "PRIMARY_DIRECT_UNION");
+  assert.equal(pilots.companies[0].tracksPublicRecordUnit, false);
+  assert.equal(pilots.eligibleForStatusAggregation, false);
+  assert.ok(pilots.reasonCodes.includes("different_bargaining_unit"));
+
+  // 단위 이름이 없어도 다른 노조를 가리키는 말이 있으면 공개 테이블로 잇지 않는다.
+  const office = await classifyTitle("HD현대중공업 사무직 노사, 임금협상 교섭 재개", "hd-hyundai-heavy-industries");
+  assert.notEqual(office.companies[0].bargainingUnitScope, "public_record_default");
+  assert.equal(office.eligibleForStatusAggregation, false);
+
+  const otherUnit = verifiedArticle();
+  otherUnit.classification.companies = [{ companyId: "korean-air", tracksPublicRecordUnit: false }];
+  assert.equal(selectCandidate(otherUnit).reason, "different_bargaining_unit");
+});
+
+test("교착·조정 기사는 교섭 사유 주석이 미확인이어도 단계 반영 후보가 된다", async () => {
+  // 교착 사유의 인과관계는 제목으로 확정할 수 없어 늘 검토 표시가 붙는다. 반영기는 그
+  // 주석을 쓰지 않으므로 단계 반영까지 막으면 S4는 영영 자동 반영되지 않는다.
+  const classification = await classifyTitle(
+    "두산에너빌리티 노조, 임단협 노동위 조정 신청",
+    "doosan-enerbility",
+  );
+  assert.equal(classification.statusCode, "S4");
+  assert.equal(classification.annotations.impasseReason.needsReview, true);
+  assert.equal(classification.eligibleForStatusAggregation, true);
+});
+
+test("임금교섭 조인식은 체결로, 조인 예정은 체결로 읽지 않는다", async () => {
+  const signed = await classifyTitle("현대차 노사, 2026년 임금교섭 조인식 가져");
+  assert.equal(signed.statusCode, "S7");
+  assert.equal(signed.retainMainState, false);
+  assert.equal(signed.eligibleForStatusAggregation, true);
+
+  const planned = await classifyTitle("현대차 노사, 임금교섭 조인식 다음주 열기로");
+  assert.ok(
+    planned.statusCode !== "S7" || planned.retainMainState,
+    "예정된 조인식으로 체결 단계를 반영하면 안 된다",
+  );
+  assert.equal(planned.eligibleForStatusAggregation && planned.statusCode === "S7", false);
+});
+
+test("노조·노사 없이 법인의 임단협을 주어로 쓴 제목도 직영으로 본다", async () => {
+  const hhi = await classifyTitle(
+    "HD현대중공업 임단협 결렬... 결국 2일부터 부분파업 돌입",
+    "hd-hyundai-heavy-industries",
+  );
+  assert.equal(hhi.scopeClassification, "PRIMARY_DIRECT_UNION");
+  assert.equal(hhi.companies[0].scopeEvidenceTier, "COMPANY_BARGAINING_TERM_NO_EXCLUSION_SIGNAL");
+  assert.equal(hhi.statusCode, "S4");
+
+  const postMediation = await classifyTitle(
+    "삼성바이오로직스 노사, 8일 사후 조정...임금협상 돌파구 찾나",
+    "samsung-biologics",
+  );
+  assert.equal(postMediation.statusCode, "S4");
+
+  // 별칭이 다른 법인 이름의 앞부분이면 근거가 아니다.
+  for (const [title, companyId] of [
+    ["카카오뱅크 임단협 결렬... 본사·계열사 총파업에 참전하나", "kakao"],
+    ["현대제철, 현대차그룹 첫 임단협 잠정합의...성과급 300%", "hyundai-motor"],
+  ]) {
+    const classification = await classifyTitle(title, companyId);
+    const match = classification.companies.find((company) => company.companyId === companyId);
+    assert.notEqual(
+      match?.scopeEvidenceTier,
+      "COMPANY_BARGAINING_TERM_NO_EXCLUSION_SIGNAL",
+      `${title}은 ${companyId}의 교섭 근거가 아니다`,
+    );
+  }
+
+  // 하청 신호가 있으면 여전히 격리된다.
+  const subcontracted = await classifyTitle("현대차 하청 임단협 결렬", "hyundai-motor");
+  assert.equal(subcontracted.scopeClassification, "SUBCONTRACTOR_UNION_EXCLUDED");
+});
+
+test("가장 최근 기사가 막히면 같은 배치의 다음 유효 기사로 반영한다", async () => {
+  const workingDirectory = await mkdtemp(join(tmpdir(), "bargaining-apply-fallback-"));
+  const candidatesPath = join(workingDirectory, "candidates.json");
+  const seedPath = join(workingDirectory, "seed.json");
+  const auditPath = join(workingDirectory, "audit.json");
+
+  // 기록은 S6(찬반투표). 가장 최근 기사는 명시 근거 없는 S3라 하강 방지에 막히고,
+  // 그보다 앞선 조인식 기사가 반영돼야 한다.
+  const followUp = verifiedArticle({
+    title: "현대차 노사 교섭 후속 논의",
+    publishedAt: "2026-09-05T02:00:00.000Z",
+    originalUrl: "https://example.com/follow-up",
+  });
+  Object.assign(followUp.classification, { statusCode: "S3", statusBasis: "stage_mapping" });
+  const signing = verifiedArticle({
+    title: "현대차 노사, 2026년 임금교섭 조인식 가져",
+    publishedAt: "2026-09-02T02:00:00.000Z",
+    originalUrl: "https://example.com/signing",
+  });
+  Object.assign(signing.classification, { statusCode: "S7", statusLabel: "최종 체결·발효" });
+
+  await writeFile(
+    candidatesPath,
+    JSON.stringify({
+      batch: { status: "complete", kstDate: "2026-09-06", primarySource: "google" },
+      articles: [followUp, signing],
+    }),
+  );
+  await writeFile(
+    seedPath,
+    JSON.stringify({
+      schemaVersion: 1,
+      asOf: "2026-09-01",
+      records: [seedRecord({ stage: "S6", eventDate: "2026-08-31", factualStatus: "AUTO_COLLECTED_TITLE_BASIS" })],
+    }),
+  );
+
+  try {
+    await runScript("node", [APPLY_SCRIPT, "--candidates", candidatesPath, "--seed", seedPath, "--audit", auditPath]);
+    const record = JSON.parse(await readFile(seedPath, "utf8")).records[0];
+    assert.equal(record.stage, "S7");
+    assert.equal(record.eventDate, "2026-09-02");
+
+    const audit = JSON.parse(await readFile(auditPath, "utf8"));
+    assert.equal(audit.runs[0].skippedReasonCounts.stage_downgrade_without_explicit_evidence, 1);
+  } finally {
+    await rm(workingDirectory, { recursive: true, force: true });
+  }
+});

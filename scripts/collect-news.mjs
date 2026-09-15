@@ -923,6 +923,12 @@ function representationFromScope(scope) {
         label: "단일 교섭단위 추론",
         eventState: "occurred",
       };
+    case "public_record_default":
+      return {
+        code: "SINGLE_UNION",
+        label: "공개 기록 교섭 테이블로 연결",
+        eventState: "occurred",
+      };
     default:
       return {
         code: "MULTI_UNION",
@@ -1220,6 +1226,38 @@ function classifyEmploymentScope(title, company, unitMatches, config) {
     }
     return false;
   });
+  // "현대차 임금협상 잠정합의", "HD현대중공업 임단협 결렬"처럼 노조·노사라는 말 없이 법인의
+  // 교섭 자체를 주어로 쓰는 제목이 많다. 법인의 임단협·임금협상은 그 법인이 직접 고용한
+  // 근로자의 노조와 맺는 것이라 "법인명 노사"와 같은 근거로 본다. 2026-09-15 배치에서
+  // 이 표현만 가진 직영 기사 100건이 검토 대기로 빠져 현대중공업 결렬·파업이 보이지 않았다.
+  //
+  // 대신 법인명 뒤가 단어 경계여야 한다. "카카오뱅크 임단협", "현대차그룹 첫 임단협"은
+  // 별칭이 다른 법인 이름의 앞부분일 뿐이다. 공백·문장부호나 조사 한 글자만 허용한다.
+  const bargainingTerms = [
+    "임단협",
+    "임·단협",
+    "임금협상",
+    "임금교섭",
+    "임금협약",
+    "단체교섭",
+    "단체협상",
+    "단체협약",
+  ].map((word) => comparableText(word));
+  const loweredTitle = cleanText(title).toLocaleLowerCase("ko-KR");
+  const hasCompanyBargainingTerm = company.aliases.some((alias) => {
+    const loweredAlias = cleanText(alias).toLocaleLowerCase("ko-KR");
+    let searchFrom = loweredTitle.indexOf(loweredAlias);
+    while (searchFrom >= 0) {
+      const rest = loweredTitle.slice(searchFrom + loweredAlias.length);
+      const boundary = /^(?:$|[\s\p{P}\p{S}]|[도의은는이가와과](?:$|[\s\p{P}\p{S}]))/u.test(rest);
+      if (boundary) {
+        const window = comparableText(rest).slice(0, UNION_PHRASE_WINDOW);
+        if (bargainingTerms.some((word) => window.includes(word))) return true;
+      }
+      searchFrom = loweredTitle.indexOf(loweredAlias, searchFrom + 1);
+    }
+    return false;
+  });
   const hasDirectUnionUnit = unitMatches.some(
     (unit) => unit.id !== "works-council",
   );
@@ -1249,13 +1287,16 @@ function classifyEmploymentScope(title, company, unitMatches, config) {
     );
   const hasCompanyUnionPhraseEvidence =
     hasCompanyUnionPhrase && registryListsOnlyDirectUnits;
+  const hasCompanyBargainingTermEvidence =
+    !hasCompanyUnionPhrase && hasCompanyBargainingTerm && registryListsOnlyDirectUnits;
   const hasSubcontractorSignal = config.scopePolicy.subcontractorSignals.some(
     (pattern) => matchesPattern(title, pattern),
   );
   const hasAffiliateSignal = config.scopePolicy.affiliateSignals.some((pattern) =>
     matchesPattern(title, pattern),
   );
-  const hasDirectEvidence = hasDirectUnionUnit || hasCompanyUnionPhraseEvidence;
+  const hasDirectEvidence =
+    hasDirectUnionUnit || hasCompanyUnionPhraseEvidence || hasCompanyBargainingTermEvidence;
 
   // 혼재로 볼 수 있는 건 정식 지부명이 확인된 강한 근거와 배제 신호가 함께 있을 때다.
   // "한화오션 하청 노조"처럼 약칭 근거와 하청 신호가 겹치는 건 그냥 하청 사건이므로,
@@ -1306,9 +1347,15 @@ function classifyEmploymentScope(title, company, unitMatches, config) {
       // 사람 검증 때 우선 확인 대상이다.
       scopeEvidenceTier: hasDirectUnionUnit
         ? "CONFIGURED_UNION_ALIAS"
-        : "COMPANY_UNION_PHRASE_NO_EXCLUSION_SIGNAL",
+        : hasCompanyUnionPhraseEvidence
+          ? "COMPANY_UNION_PHRASE_NO_EXCLUSION_SIGNAL"
+          : "COMPANY_BARGAINING_TERM_NO_EXCLUSION_SIGNAL",
       reasonCodes: [
-        hasDirectUnionUnit ? "configured_direct_union_alias" : "company_union_phrase",
+        hasDirectUnionUnit
+          ? "configured_direct_union_alias"
+          : hasCompanyUnionPhraseEvidence
+            ? "company_union_phrase"
+            : "company_bargaining_term",
       ],
     };
   }
@@ -1370,6 +1417,20 @@ function classifyCompanyMatch(title, company, matchedDirectly, config) {
       },
     ];
     bargainingUnitScope = "inferred_single";
+  } else if (defaultsToPublicRecordUnit(title, company)) {
+    // 복수노조 법인이라도 공개 기록은 법인당 한 교섭 테이블(교섭대표노조·공동교섭단)만
+    // 추적한다. "포스코 노사 교섭 재개"처럼 단위를 밝히지 않은 제목은 그 테이블 이야기다.
+    // 이것까지 검토 대기로 두면 복수노조 10개 법인은 제목에 정식 노조명이 나오지 않는 한
+    // 영영 갱신되지 않는다. 실제로 2026-09 포스코 첫 파업·SK하이닉스 수정 잠정합의가
+    // 이 분기에서 전부 막혔다. 다른 단위를 가리키는 말(사무직·조종사 등)이 있으면 넘기지 않는다.
+    bargainingUnits = company.bargainingUnits
+      .filter((unit) => company.publicRecordUnitIds.includes(unit.id))
+      .map((unit) => ({
+        id: unit.id,
+        name: unit.name,
+        matchBasis: "public_record_unit_default",
+      }));
+    bargainingUnitScope = "public_record_default";
   } else {
     bargainingUnits = [];
     bargainingUnitScope = "unspecified";
@@ -1420,6 +1481,12 @@ function classifyCompanyMatch(title, company, matchedDirectly, config) {
     needsReview: true,
   }));
 
+  // 공개 기록이 추적하는 교섭 테이블의 기사인지. 대한항공 조종사노조처럼 같은 법인의
+  // 다른 교섭단위 기사는 직영이지만, 대한항공 노동조합의 기록을 바꾸면 안 된다.
+  const tracksPublicRecordUnit = Array.isArray(company.publicRecordUnitIds)
+    ? bargainingUnits.some((unit) => company.publicRecordUnitIds.includes(unit.id))
+    : bargainingUnits.length > 0;
+
   return {
     companyId: company.id,
     companyName: company.name,
@@ -1430,9 +1497,24 @@ function classifyCompanyMatch(title, company, matchedDirectly, config) {
     representationState,
     unionProfiles,
     ...employmentScope,
+    tracksPublicRecordUnit,
     needsReview,
     reasonCode,
   };
+}
+
+// 제목에 이 말이 있으면 공개 기록 테이블이 아닌 다른 노조 이야기일 수 있다.
+const OTHER_UNIT_HINTS = ["사무직", "조종사", "소수노조", "제2노조", "제3노조", "통합노조", "노사협의회"];
+
+function defaultsToPublicRecordUnit(title, company) {
+  const recordUnitIds = company.publicRecordUnitIds;
+  if (!Array.isArray(recordUnitIds) || recordUnitIds.length === 0) return false;
+  const hasOtherUnits = company.bargainingUnits.some(
+    (unit) => unit.id !== "works-council" && !recordUnitIds.includes(unit.id),
+  );
+  if (!hasOtherUnits) return true;
+  const comparableTitle = comparableText(title);
+  return !OTHER_UNIT_HINTS.some((hint) => comparableTitle.includes(comparableText(hint)));
 }
 
 function freshnessFor(publishedAt, now, policy) {
@@ -1710,7 +1792,11 @@ function classifyArticle(
       .filter((company) => matchingAliases(record.title, company.aliases).length > 0)
       .map((company) => company.id),
   );
-  const matchedCompanyIds = new Set([...originCompanyIds, ...directCompanyIds]);
+  // 검색어 맥락은 제목에 법인이 없을 때만 쓴다. 같은 기사가 여러 법인의 검색 결과에
+  // 함께 걸리면 URL 중복 제거가 검색 법인을 합치는데, 그러면 "포스코 노사 교섭 재개"가
+  // 두산에너빌리티 검색에서도 나왔다는 이유만으로 복수 법인 기사가 되어 반영이 막혔다.
+  const matchedCompanyIds =
+    directCompanyIds.size > 0 ? directCompanyIds : originCompanyIds;
   const companies = config.companies
     .filter((company) => matchedCompanyIds.has(company.id))
     .map((company) =>
@@ -1831,8 +1917,26 @@ function classifyArticle(
   const requiresSourceVerification =
     !record.originalUrl ||
     (!record.collectionSources.includes("naver") && !resolvedByGoogle);
+  // 반영 여부는 주 단계 판단에 쓰이는 근거로만 가른다. 교착 사유의 인과관계, 인준안의
+  // 전년 대비 변화, 협약유형 주기 충돌 같은 주석은 제목으로 확정할 수 없어 검토 표시가
+  // 붙는데, 반영기는 협약유형을 포함해 그 주석을 시드에 쓰지 않는다. 그런데도 이것까지
+  // 막으면 교착·조정(S4) 기사, 인준 투표 기사, "임단협"이라 부르는 포스코 임금교섭 기사는
+  // 구조적으로 반영될 수 없었다(감사 로그 44회분에서 S4 자동 반영 0건). 주석의 검토
+  // 표시는 그대로 남긴다.
+  const statusGateNeedsReview =
+    stageClassification.needsReview ||
+    companyNeedsReview ||
+    multipleCompanies ||
+    frameworkNeedsReview ||
+    !record.originalUrl;
+  const tracksPublicRecordUnit = companies.every(
+    (company) => company.tracksPublicRecordUnit !== false,
+  );
   const eligibleForStatusAggregation =
-    includeInPrimaryDashboard && !requiresSourceVerification && !needsReview;
+    includeInPrimaryDashboard &&
+    !requiresSourceVerification &&
+    !statusGateNeedsReview &&
+    tracksPublicRecordUnit;
   const companyConfidence = Math.min(
     ...companies.map((company) => company.confidence),
   );
@@ -1844,6 +1948,7 @@ function classifyArticle(
     ...new Set(companies.map((company) => company.reasonCode)),
   ];
   if (multipleCompanies) reasonCodes.push("multiple_companies");
+  if (!tracksPublicRecordUnit) reasonCodes.push("different_bargaining_unit");
   if (frameworkClassification.retainMainState) {
     reasonCodes.push("retain_main_state");
   }
@@ -1942,12 +2047,21 @@ async function resolveOriginalUrls(preliminary, config, options) {
     return stats;
   }
 
-  const pending = preliminary.filter(
-    ({ record, classification }) =>
-      classification.classification.includeInPrimaryDashboard &&
-      !record.originalUrl &&
-      typeof record.url === "string",
-  );
+  // 예산 안에서 반영 가능성이 큰 기사부터 되돌린다. 전에는 설정의 법인 순서대로 잘려서,
+  // 뒤쪽 법인의 오늘자 단계 기사가 앞쪽 법인의 몇 달 전 기사에 예산을 뺏겼다.
+  const pending = preliminary
+    .filter(
+      ({ record, classification }) =>
+        classification.classification.includeInPrimaryDashboard &&
+        !record.originalUrl &&
+        typeof record.url === "string",
+    )
+    .sort((left, right) => {
+      const leftHasStage = left.classification.classification.statusCode !== "U";
+      const rightHasStage = right.classification.classification.statusCode !== "U";
+      if (leftHasStage !== rightHasStage) return leftHasStage ? -1 : 1;
+      return Date.parse(right.record.publishedAt) - Date.parse(left.record.publishedAt);
+    });
   const limit = options.maxResolutions ?? config.collectionPolicy.maxUrlResolutions ?? 60;
 
   for (const entry of pending.slice(0, limit)) {

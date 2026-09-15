@@ -18,7 +18,7 @@ const CANDIDATES_PATH = resolve(PROJECT_ROOT, "public/data/news-candidates.json"
 const SEED_PATH = resolve(PROJECT_ROOT, "data/current-2026-fact-seed.json");
 const FRAMEWORK_PATH = resolve(PROJECT_ROOT, "data/negotiation-framework.json");
 const AUDIT_PATH = resolve(PROJECT_ROOT, "data/daily-update-audit.json");
-const RULE_VERSION = "1.0.0";
+const RULE_VERSION = "1.1.0";
 const MAX_AUDIT_RUNS = 60;
 
 const HELP_TEXT = `
@@ -39,7 +39,9 @@ const HELP_TEXT = `
   - 원문 URL 확인 완료 (NAVER 직접 링크 또는 Google 링크 되돌리기 검증)
   - 상태 집계 후보 (eligibleForStatusAggregation)
   - 단일 법인 기사이고 주 단계가 U가 아님
+  - 공개 기록이 추적하는 교섭단위의 기사
   - 기존 기록보다 발생일이 늦음
+  - 법인마다 위 조건을 모두 통과한 기사 중 가장 최근 것 하나
 `.trim();
 
 function parseArguments(argv) {
@@ -166,7 +168,28 @@ function selectCandidate(article) {
   if (classification.retainMainState) {
     return { ok: false, reason: "retain_main_state" };
   }
+  if (classification.companies[0].tracksPublicRecordUnit === false) {
+    return { ok: false, reason: "different_bargaining_unit" };
+  }
   return { ok: true, companyId: classification.companies[0].companyId };
+}
+
+/** 기존 기록과 비교해 반영을 막는 사유를 돌려준다. 통과하면 null. */
+function recordGateReason(record, article, ranks) {
+  // 추적 목록에 없는 법인은 사람이 범위 검토를 거쳐 추가해야 한다.
+  if (!record) return "company_not_tracked";
+  if (article.publishedAt.slice(0, 10) <= record.eventDate) {
+    return "not_newer_than_recorded_event";
+  }
+  const nextStage = article.classification.statusCode;
+  if (!ranks.has(nextStage)) return "unknown_stage_code";
+  if (blocksSettledRecord(record, nextStage)) {
+    return "settled_record_needs_equal_grade_evidence";
+  }
+  if (blocksStageDowngrade(record, article, ranks)) {
+    return "stage_downgrade_without_explicit_evidence";
+  }
+  return null;
 }
 
 function buildFlowEvent(article, eventDate) {
@@ -248,8 +271,11 @@ async function main() {
   const applied = [];
   const skipped = [];
 
-  // 법인별로 가장 최근 발행 기사 하나만 후보로 쓴다.
-  const bestByCompany = new Map();
+  // 법인별로 기사를 최신순으로 줄 세우고, 기존 기록 대비 게이트까지 통과한 첫 기사를 쓴다.
+  // 전에는 가장 최근 기사 하나만 골라 게이트에 넣었다. 그러면 그 기사가 하강 방지 등에
+  // 걸리는 날, 같은 배치에 있던 조금 앞선 유효 기사(예: 조인식 보도 뒤에 붙은 파업 후속
+  // 기사)가 함께 버려져 법인이 며칠씩 갱신되지 않았다.
+  const candidatesByCompany = new Map();
   for (const article of candidates.articles ?? []) {
     const selection = selectCandidate(article);
     if (!selection.ok) {
@@ -260,59 +286,37 @@ async function main() {
       });
       continue;
     }
-    const current = bestByCompany.get(selection.companyId);
-    if (!current || Date.parse(article.publishedAt) > Date.parse(current.publishedAt)) {
-      bestByCompany.set(selection.companyId, article);
-    }
+    const list = candidatesByCompany.get(selection.companyId) ?? [];
+    list.push(article);
+    candidatesByCompany.set(selection.companyId, list);
   }
 
-  for (const [companyId, article] of bestByCompany) {
+  for (const [companyId, articles] of candidatesByCompany) {
     const record = recordsByCompany.get(companyId);
-    const eventDate = article.publishedAt.slice(0, 10);
-    if (!record) {
-      // 추적 목록에 없는 법인은 사람이 범위 검토를 거쳐 추가해야 한다.
-      skipped.push({
-        title: article.title,
-        url: article.originalUrl,
-        reason: "company_not_tracked",
-      });
-      continue;
-    }
-    if (eventDate <= record.eventDate) {
-      skipped.push({
-        title: article.title,
-        url: article.originalUrl,
-        reason: "not_newer_than_recorded_event",
-      });
-      continue;
-    }
-    const nextStage = article.classification.statusCode;
-    if (!ranks.has(nextStage)) {
-      skipped.push({
-        title: article.title,
-        url: article.originalUrl,
-        reason: "unknown_stage_code",
-      });
-      continue;
-    }
-    if (blocksSettledRecord(record, nextStage)) {
-      skipped.push({
-        title: article.title,
-        url: article.originalUrl,
-        reason: "settled_record_needs_equal_grade_evidence",
-      });
-      continue;
-    }
-    if (blocksStageDowngrade(record, article, ranks)) {
-      skipped.push({
-        title: article.title,
-        url: article.originalUrl,
-        reason: "stage_downgrade_without_explicit_evidence",
-      });
-      continue;
-    }
+    articles.sort((left, right) => {
+      const byDate = Date.parse(right.publishedAt) - Date.parse(left.publishedAt);
+      if (byDate !== 0) return byDate;
+      return (
+        (ranks.get(right.classification.statusCode) ?? -1) -
+        (ranks.get(left.classification.statusCode) ?? -1)
+      );
+    });
 
-    const updated = applyArticleToRecord(record, article, eventDate);
+    let chosen = null;
+    for (const article of articles) {
+      const reason = recordGateReason(record, article, ranks);
+      if (reason) {
+        skipped.push({ title: article.title, url: article.originalUrl, reason });
+        continue;
+      }
+      chosen = article;
+      break;
+    }
+    if (!chosen) continue;
+
+    const eventDate = chosen.publishedAt.slice(0, 10);
+    const nextStage = chosen.classification.statusCode;
+    const updated = applyArticleToRecord(record, chosen, eventDate);
     recordsByCompany.set(companyId, updated);
     applied.push({
       companyId,
@@ -321,9 +325,9 @@ async function main() {
       previousEventDate: record.eventDate,
       nextStage,
       nextEventDate: eventDate,
-      sourceUrl: article.originalUrl,
-      sourceName: article.media,
-      confidence: article.classification.confidence,
+      sourceUrl: chosen.originalUrl,
+      sourceName: chosen.media,
+      confidence: chosen.classification.confidence,
     });
   }
 
@@ -396,6 +400,7 @@ export {
   applyArticleToRecord,
   blocksSettledRecord,
   blocksStageDowngrade,
+  recordGateReason,
   selectCandidate,
   stageRanks,
 };
