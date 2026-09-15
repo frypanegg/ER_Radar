@@ -2,6 +2,111 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-09-15T04:11:51.148Z",
+      "kstDate": "2026-09-15",
+      "ruleVersion": "1.1.0",
+      "batchKstDate": "2026-09-15",
+      "primarySource": "google",
+      "consideredArticles": 598,
+      "appliedCount": 7,
+      "skippedCount": 589,
+      "applied": [
+        {
+          "companyId": "hd-hyundai-heavy-industries",
+          "companyLegalName": "HD현대중공업 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-06-09",
+          "nextStage": "S4",
+          "nextEventDate": "2026-09-02",
+          "sourceUrl": "https://chosun.com/economy/industry-company/2026/09/01/F2RE3UGTEJG2XN6GJNWHVZYGFM",
+          "sourceName": "조선일보",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S4",
+          "previousEventDate": "2026-07-27",
+          "nextStage": "S4",
+          "nextEventDate": "2026-08-19",
+          "sourceUrl": "https://donga.com/news/Economy/article/all/20260818/134498964/2",
+          "sourceName": "donga.com",
+          "confidence": 0.8,
+          "eventsApplied": 2
+        },
+        {
+          "companyId": "sk-hynix",
+          "companyLegalName": "SK하이닉스 주식회사",
+          "previousStage": "S5",
+          "previousEventDate": "2026-08-25",
+          "nextStage": "S5",
+          "nextEventDate": "2026-09-10",
+          "sourceUrl": "https://epnc.co.kr/news/articleView.html?idxno=406789",
+          "sourceName": "테크월드",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "hyundai-motor",
+          "companyLegalName": "현대자동차 주식회사",
+          "previousStage": "S6",
+          "previousEventDate": "2026-08-31",
+          "nextStage": "S7",
+          "nextEventDate": "2026-09-02",
+          "sourceUrl": "https://khan.co.kr/article/202609021517001",
+          "sourceName": "khan.co.kr",
+          "confidence": 0.86,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "kia",
+          "companyLegalName": "기아 주식회사",
+          "previousStage": "S5",
+          "previousEventDate": "2026-08-26",
+          "nextStage": "S6",
+          "nextEventDate": "2026-08-28",
+          "sourceUrl": "https://yna.co.kr/view/AKR20260828138200061",
+          "sourceName": "연합뉴스",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "kumho-tire",
+          "companyLegalName": "금호타이어 주식회사",
+          "previousStage": "S5",
+          "previousEventDate": "2026-08-21",
+          "nextStage": "S3",
+          "nextEventDate": "2026-08-25",
+          "sourceUrl": "https://hantoday.net/news/articleView.html?idxno=54646",
+          "sourceName": "한국투데이",
+          "confidence": 0.91,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "coupang",
+          "companyLegalName": "쿠팡 주식회사",
+          "previousStage": "S4",
+          "previousEventDate": "2026-08-11",
+          "nextStage": "S4",
+          "nextEventDate": "2026-08-14",
+          "sourceUrl": "https://laborplus.co.kr/news/articleView.html?idxno=41306",
+          "sourceName": "참여와혁신",
+          "confidence": 0.8,
+          "eventsApplied": 2
+        }
+      ],
+      "skippedReasonCounts": {
+        "stage_unknown": 21,
+        "scope_excluded": 167,
+        "not_eligible_for_status_aggregation": 224,
+        "retain_main_state": 4,
+        "not_newer_than_recorded_event": 165,
+        "stage_downgrade_without_explicit_evidence": 7,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-09-14T22:39:39.040Z",
       "kstDate": "2026-09-15",
       "ruleVersion": "1.0.0",
