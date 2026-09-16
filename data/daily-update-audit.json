@@ -2,6 +2,51 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-09-16T21:35:01.059Z",
+      "kstDate": "2026-09-17",
+      "ruleVersion": "1.1.0",
+      "batchKstDate": "2026-09-17",
+      "primarySource": "google",
+      "consideredArticles": 629,
+      "appliedCount": 2,
+      "skippedCount": 627,
+      "applied": [
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S3",
+          "previousEventDate": "2026-09-15",
+          "nextStage": "S3",
+          "nextEventDate": "2026-09-16",
+          "sourceUrl": "https://newstomato.com/ReadNews.aspx?no=1313854",
+          "sourceName": "뉴스토마토",
+          "confidence": 0.86,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "hd-hyundai-heavy-industries",
+          "companyLegalName": "HD현대중공업 주식회사",
+          "previousStage": "S4",
+          "previousEventDate": "2026-09-02",
+          "nextStage": "S4",
+          "nextEventDate": "2026-09-03",
+          "sourceUrl": "https://newsis.com/view/NISX20260903_0003775343",
+          "sourceName": "뉴시스",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 231,
+        "stage_unknown": 13,
+        "scope_excluded": 181,
+        "retain_main_state": 8,
+        "not_newer_than_recorded_event": 191,
+        "stage_downgrade_without_explicit_evidence": 2,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-09-15T21:35:53.465Z",
       "kstDate": "2026-09-16",
       "ruleVersion": "1.1.0",

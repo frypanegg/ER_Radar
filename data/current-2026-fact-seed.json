@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-09-16",
+  "asOf": "2026-09-17",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -639,21 +639,21 @@
       "bargainingYear": 2026,
       "agreementType": "WAGE",
       "stage": "S3",
-      "eventDate": "2026-09-15",
-      "title": "'2차 파업' 기로 선 포스코 노사...12일 만의 교섭 재개",
-      "factSummary": "뉴시안 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-09-16",
+      "title": "포스코 노조 2차 부분 파업 돌입...노사, 교섭 여지는 남겨",
+      "factSummary": "뉴스토마토 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
       "directEmployerId": "posco",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
       "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
-      "sourceUrl": "https://newsian.co.kr/news/articleView.html?idxno=95417",
-      "sourceName": "뉴시안",
+      "sourceUrl": "https://newstomato.com/ReadNews.aspx?no=1313854",
+      "sourceName": "뉴스토마토",
       "sourceTier": "B",
-      "confidence": 0.91,
+      "confidence": 0.86,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-09-16 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-09-17 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-16",
@@ -703,14 +703,21 @@
           "label": "본교섭 진행",
           "summary": "뉴시안 보도 제목 기준 확인: '2차 파업' 기로 선 포스코 노사...12일 만의 교섭 재개",
           "sourceUrl": "https://newsian.co.kr/news/articleView.html?idxno=95417"
+        },
+        {
+          "date": "2026-09-16",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "뉴스토마토 보도 제목 기준 확인: 포스코 노조 2차 부분 파업 돌입...노사, 교섭 여지는 남겨",
+          "sourceUrl": "https://newstomato.com/ReadNews.aspx?no=1313854"
         }
       ],
       "id": "posco:2026:WAGE:2026-07-27",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://newsian.co.kr/news/articleView.html?idxno=95417",
+      "originalUrl": "https://newstomato.com/ReadNews.aspx?no=1313854",
       "agreementTypeEvidence": "포스코 2026년 임금협상 중노위 조정 신청 포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
-      "autoUpdatedAt": "2026-09-15T21:35:53.465Z"
+      "autoUpdatedAt": "2026-09-16T21:35:01.058Z"
     },
     {
       "companyId": "hanwha-ocean",
@@ -919,21 +926,21 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S4",
-      "eventDate": "2026-09-02",
-      "title": "HD현대중공업 임단협 결렬... 결국 2일부터 부분파업 돌입",
-      "factSummary": "조선일보 보도 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-09-03",
+      "title": "HD현대중공업 임단협 잠정 중단...노조, 2차 제시안 요구",
+      "factSummary": "뉴시스 보도 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 현대중공업지부",
       "directEmployerId": "hd-hyundai-heavy-industries",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "금속노조 공식 선거 공고는 현대중공업지부 소속 인사가 '2011년 현대중공업 입사, 현중지부 가입'했다고 명시한다. 사건 원문은 HD현대중공업 사장과 현대중공업지부장을 교섭위원으로 구분하고, 사내하청지회는 별도 하청노조라고 구분한다.",
       "scopeEvidenceUrl": "https://kmwu.kr/bbs/download.php?bo_table=ce_B11&no=0&wr_id=217877",
-      "sourceUrl": "https://chosun.com/economy/industry-company/2026/09/01/F2RE3UGTEJG2XN6GJNWHVZYGFM",
-      "sourceName": "조선일보",
+      "sourceUrl": "https://newsis.com/view/NISX20260903_0003775343",
+      "sourceName": "뉴시스",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-09-15 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-09-17 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-05-20",
@@ -962,14 +969,21 @@
           "label": "교착·조정 경로",
           "summary": "조선일보 보도 제목 기준 확인: HD현대중공업 임단협 결렬... 결국 2일부터 부분파업 돌입",
           "sourceUrl": "https://chosun.com/economy/industry-company/2026/09/01/F2RE3UGTEJG2XN6GJNWHVZYGFM"
+        },
+        {
+          "date": "2026-09-03",
+          "stage": "S4",
+          "label": "교착·조정 경로",
+          "summary": "뉴시스 보도 제목 기준 확인: HD현대중공업 임단협 잠정 중단...노조, 2차 제시안 요구",
+          "sourceUrl": "https://newsis.com/view/NISX20260903_0003775343"
         }
       ],
       "id": "hd-hyundai-heavy-industries:2026:INTEGRATED:2026-06-09",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://chosun.com/economy/industry-company/2026/09/01/F2RE3UGTEJG2XN6GJNWHVZYGFM",
+      "originalUrl": "https://newsis.com/view/NISX20260903_0003775343",
       "agreementTypeEvidence": "HD현대중공업 2026년 임금·단체협약 1차 본교섭 HD현대중공업 노사가 6월 2일 상견례 뒤 6월 9일 1차 교섭으로 2026년 임금·단체협약 본교섭에 들어갔다고 보도됐다. 요구안에는 기본급 인상, 상여금, 영업이익 연동 성과공유, AI 도입 시 고용안정 등이 포함됐다.",
-      "autoUpdatedAt": "2026-09-15T04:11:51.146Z"
+      "autoUpdatedAt": "2026-09-16T21:35:01.058Z"
     },
     {
       "companyId": "hyundai-mobis",
