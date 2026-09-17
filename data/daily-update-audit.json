@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-09-17T13:56:17.327Z",
+      "kstDate": "2026-09-17",
+      "ruleVersion": "1.1.0",
+      "batchKstDate": "2026-09-17",
+      "primarySource": "google",
+      "consideredArticles": 624,
+      "appliedCount": 1,
+      "skippedCount": 623,
+      "applied": [
+        {
+          "companyId": "kumho-tire",
+          "companyLegalName": "금호타이어 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-08-25",
+          "nextStage": "S5",
+          "nextEventDate": "2026-09-17",
+          "sourceUrl": "https://newspim.com/news/view/20260917000378",
+          "sourceName": "뉴스핌",
+          "confidence": 0.91,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 196,
+        "not_eligible_for_status_aggregation": 219,
+        "stage_unknown": 17,
+        "retain_main_state": 8,
+        "not_newer_than_recorded_event": 181,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-09-17T13:30:20.477Z",
       "kstDate": "2026-09-17",
       "ruleVersion": "1.1.0",

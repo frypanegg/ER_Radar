@@ -233,19 +233,19 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-08-25",
-      "title": "금호타이어 임단협 다시 원점으로...잠정합의안 54% 반대에 노사 재교섭",
-      "factSummary": "한국투데이 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S5",
+      "eventDate": "2026-09-17",
+      "title": "금호타이어 임단협, 부결 20여일 만에 '두 번째 잠정합의'",
+      "factSummary": "뉴스핌 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 광주전남지부 금호타이어지회",
       "directEmploymentEvidence": "원문은 금호타이어와 금속노조 금호타이어지회를 잠정합의안의 교섭 당사자로 적시한다.",
-      "sourceUrl": "https://hantoday.net/news/articleView.html?idxno=54646",
-      "sourceName": "한국투데이",
+      "sourceUrl": "https://newspim.com/news/view/20260917000378",
+      "sourceName": "뉴스핌",
       "sourceTier": "B",
       "confidence": 0.91,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-09-15 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-09-17 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-08-10",
@@ -267,14 +267,21 @@
           "label": "본교섭 진행",
           "summary": "한국투데이 보도 제목 기준 확인: 금호타이어 임단협 다시 원점으로...잠정합의안 54% 반대에 노사 재교섭",
           "sourceUrl": "https://hantoday.net/news/articleView.html?idxno=54646"
+        },
+        {
+          "date": "2026-09-17",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "뉴스핌 보도 제목 기준 확인: 금호타이어 임단협, 부결 20여일 만에 '두 번째 잠정합의'",
+          "sourceUrl": "https://newspim.com/news/view/20260917000378"
         }
       ],
       "id": "kumho-tire:2026:INTEGRATED:2026-08-21",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://hantoday.net/news/articleView.html?idxno=54646",
+      "originalUrl": "https://newspim.com/news/view/20260917000378",
       "agreementTypeEvidence": "금호타이어 2026년 임금 및 단체협약 잠정합의 기본급 3% 인상과 경영성과 격려금 550만원 등을 담은 잠정합의안을 노사가 마련했다고 보도됐다. 조합원 찬반투표는 8월 23~24일로 예고됐다.",
-      "autoUpdatedAt": "2026-09-15T04:11:51.148Z"
+      "autoUpdatedAt": "2026-09-17T13:56:17.327Z"
     },
     {
       "companyId": "kb-kookmin-bank",
