@@ -1535,6 +1535,32 @@ test("임금교섭 조인식은 체결로, 조인 예정은 체결로 읽지 않
   assert.equal(planned.eligibleForStatusAggregation && planned.statusCode === "S7", false);
 });
 
+test("부결을 되짚으며 다시 맺은 잠정합의는 부결로 읽지 않는다", async () => {
+  // 금호타이어는 8월 25일 부결 뒤 9월 17일 두 번째 잠정합의에 이르렀다. 그런데
+  // 제목의 '부결'이 tentative_rejected 예외에 걸려 재교섭(S3)으로 되돌아갔다.
+  const reagreed = [
+    "금호타이어 노사, 임단협 '잠정 합의'...부결 20여일 만에 재교섭 결실",
+    "금호타이어 임단협, 부결 20여일 만에 '두 번째 잠정합의'",
+    "금호타이어 노사, 임금·단협 잠정 합의안 재도출",
+  ];
+  for (const title of reagreed) {
+    const classification = await classifyTitle(title, "kumho-tire");
+    assert.equal(classification.statusCode, "S5", title);
+    assert.equal(classification.retainMainState, false, title);
+    assert.equal(classification.eligibleForStatusAggregation, true, title);
+  }
+
+  // 진짜 부결은 그대로 부결이다.
+  const rejected = await classifyTitle(
+    "금호타이어 임단협 잠정합의안 부결...노조원 54% 반대",
+    "kumho-tire",
+  );
+  assert.equal(rejected.statusCode === "S5", false);
+
+  const resumedStrike = await classifyTitle("현대차 잠정합의 부결 뒤 파업 재개");
+  assert.equal(resumedStrike.statusCode === "S5", false);
+});
+
 test("법인명으로 시작하는 다른 회사의 노사 기사는 그 법인으로 보지 않는다", async () => {
   // "삼성전자서비스 노사, 임단협 체결"이 별칭 '삼성전자'에 걸려 삼성전자의 2026년
   // 조인식 기록을 덮어쓰려 했다(2026-09-17 수집본). 별칭 뒤는 단어 경계여야 한다.

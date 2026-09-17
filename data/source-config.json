@@ -239,6 +239,18 @@
     ],
     "exceptionEvents": [
       {
+        "eventType": "tentative_reagreed",
+        "patterns": [
+          "(?:\ubd80\uacb0|\ubb34\uc0b0|\uac70\ubd80)[^.\\u2026\\u00b7]{0,12}(?:\ub9cc\uc5d0|\ub51b\uace0|\uadf9\ubcf5|\ub05d\uc5d0)[^.\\u2026\\u00b7]{0,24}\uc7a0\uc815\\s*\ud569\uc758",
+          "\uc7a0\uc815\\s*\ud569\uc758.{0,8}(?:\ubd80\uacb0|\ubb34\uc0b0)[^.\\u2026\\u00b7]{0,12}(?:\ub9cc\uc5d0|\ub51b\uace0|\uadf9\ubcf5|\ub05d\uc5d0)",
+          "\ud569\uc758\uc548?\\s*\uc7ac\ub3c4\ucd9c",
+          "(?:\ub450\\s*\ubc88\uc9f8|2\ucc28)\\s*[^.\\u2026\\u00b7]{0,3}\uc7a0\uc815\\s*\ud569\uc758"
+        ],
+        "stage": "tentative_agreement",
+        "transitionHint": "evaluate_by_date",
+        "needsReview": false
+      },
+      {
         "eventType": "rejected_then_action_resumed",
         "patterns": [
           "(?=.*잠정\\s*합의안?.{0,14}(?:부결|거부|무산))(?=.*(?:파업|쟁의행위).{0,8}재개)",
