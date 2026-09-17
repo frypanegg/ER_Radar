@@ -1204,7 +1204,6 @@ function matchingAliases(title, aliases) {
 }
 
 function classifyEmploymentScope(title, company, unitMatches, config) {
-  const comparableTitle = comparableText(title);
   // 법인명과 노조 표현이 제목에서 붙어 있는 경우만 보면 대부분을 놓친다. 실제 제목은
   // "현대제철, 임단협 마무리..노조 잠정합의안 가결"처럼 사이에 다른 말이 끼고,
   // "포스코 노사, 단체교섭 조정기간 연장"처럼 "노사"를 쓰는 경우도 많다.
@@ -1214,15 +1213,26 @@ function classifyEmploymentScope(title, company, unitMatches, config) {
   // 노사협의회 기사는 그 앞의 works-council 분기가 잡는다. 복수 법인이 섞인 제목은
   // 반영 단계에서 따로 막는다.
   const UNION_PHRASE_WINDOW = 20;
-  const unionWords = ["노조", "노동조합", "지부", "노사"].map((word) => comparableText(word));
+  const UNION_WORDS = ["노조", "노동조합", "지부", "노사"];
+  const unionWords = UNION_WORDS.map((word) => comparableText(word));
+  const loweredTitle = cleanText(title).toLocaleLowerCase("ko-KR");
+  // 별칭 뒤가 단어 경계여야 한다. "삼성전자서비스 노사, 임단협 체결"은 별칭
+  // "삼성전자"로 시작하는 다른 법인이다. 경계를 보지 않았던 때 이 기사가 삼성전자의
+  // 2026년 조인식 기록을 덮어쓰려고 했다(2026-09-17 재현). 조사 한 글자와
+  // 붙여 쓴 노조·노사 표현은 그대로 허용한다.
   const hasCompanyUnionPhrase = company.aliases.some((alias) => {
-    const comparableAlias = comparableText(alias);
-    let searchFrom = comparableTitle.indexOf(comparableAlias);
+    const loweredAlias = cleanText(alias).toLocaleLowerCase("ko-KR");
+    let searchFrom = loweredTitle.indexOf(loweredAlias);
     while (searchFrom >= 0) {
-      const windowStart = searchFrom + comparableAlias.length;
-      const window = comparableTitle.slice(windowStart, windowStart + UNION_PHRASE_WINDOW);
-      if (unionWords.some((word) => window.includes(word))) return true;
-      searchFrom = comparableTitle.indexOf(comparableAlias, searchFrom + 1);
+      const rest = loweredTitle.slice(searchFrom + loweredAlias.length);
+      const boundary =
+        /^(?:$|[\s\p{P}\p{S}]|[도의은는이가와과](?:$|[\s\p{P}\p{S}]))/u.test(rest) ||
+        UNION_WORDS.some((word) => rest.startsWith(word));
+      if (boundary) {
+        const window = comparableText(rest).slice(0, UNION_PHRASE_WINDOW);
+        if (unionWords.some((word) => window.includes(word))) return true;
+      }
+      searchFrom = loweredTitle.indexOf(loweredAlias, searchFrom + 1);
     }
     return false;
   });
@@ -1243,7 +1253,6 @@ function classifyEmploymentScope(title, company, unitMatches, config) {
     "단체협상",
     "단체협약",
   ].map((word) => comparableText(word));
-  const loweredTitle = cleanText(title).toLocaleLowerCase("ko-KR");
   const hasCompanyBargainingTerm = company.aliases.some((alias) => {
     const loweredAlias = cleanText(alias).toLocaleLowerCase("ko-KR");
     let searchFrom = loweredTitle.indexOf(loweredAlias);

@@ -1535,6 +1535,84 @@ test("임금교섭 조인식은 체결로, 조인 예정은 체결로 읽지 않
   assert.equal(planned.eligibleForStatusAggregation && planned.statusCode === "S7", false);
 });
 
+test("법인명으로 시작하는 다른 회사의 노사 기사는 그 법인으로 보지 않는다", async () => {
+  // "삼성전자서비스 노사, 임단협 체결"이 별칭 '삼성전자'에 걸려 삼성전자의 2026년
+  // 조인식 기록을 덮어쓰려 했다(2026-09-17 수집본). 별칭 뒤는 단어 경계여야 한다.
+  const affiliates = [
+    ["삼성전자서비스 노사, 임단협 체결...임금 4.1% 인상", "samsung-electronics"],
+    ["카카오뱅크 노조, 31일 전면 파업..\"임금교섭 결렬\"", "kakao"],
+    ["쿠팡CFS 노사, 단체협약 체결...노조 활동 보장", "coupang"],
+    ["코레일네트웍스 노사, 50여 일 파업 끝에 잠정 합의안 마련", "korail"],
+  ];
+  for (const [title, companyId] of affiliates) {
+    const classification = await classifyTitle(title, companyId);
+    assert.equal(
+      classification.eligibleForStatusAggregation,
+      false,
+      `다른 법인 기사를 반영하면 안 된다: ${title}`,
+    );
+  }
+
+  // 붙여 쓴 노조·노사 표현과 조사 한 글자는 그대로 같은 법인으로 읽는다.
+  const direct = [
+    ["포스코노조, 임금협상 결렬 선언", "posco"],
+    ["현대차 노사, 임금협상 잠정합의안 마련", "hyundai-motor"],
+    ["쿠팡 노사, 단체교섭 결렬", "coupang"],
+  ];
+  for (const [title, companyId] of direct) {
+    const classification = await classifyTitle(title, companyId);
+    assert.equal(classification.scopeClassification, "PRIMARY_DIRECT_UNION", title);
+  }
+});
+
+test("잠정합의를 예고·발표 예정으로 쓴 제목은 잠정합의로 반영하지 않는다", async () => {
+  // 2026-09-17 수집본에도 "SK하이닉스 노사, 밤샘 교섭 끝 임단협 잠정합의 수순"이
+  // S5로 남아 있었다. '수순·임박·발표 예정'은 아직 합의가 없다는 뜻인데 제목에
+  // '잠정합의'가 들어 있다는 이유만으로 잠정합의 단계가 됐다.
+  const pending = [
+    "SK하이닉스 노사, 밤샘 교섭 끝 임단협 잠정합의 수순",
+    "SK하이닉스 노사, 마라톤 교섭 끝 임단협 잠정합의 수순...\"세부내용 곧 발표\"",
+    "SK하이닉스 노사 교섭 마무리 수순...곧 잠정합의안 정리",
+    "현대차 노사, 오늘 잠정합의안 발표 예정",
+    "현대차 노사, 잠정합의안 발표 앞두고 막판 조율",
+    "현대차 노사, 잠정합의안 도출 전망...이르면 내일 발표",
+    "현대차 노사 잠정합의 임박...타결 초읽기",
+    "현대차 노사, 잠정합의 여부 주목",
+    "현대차 사측, 잠정합의안 제시...노조는 유보",
+  ];
+  for (const title of pending) {
+    const classification = await classifyTitle(title, "sk-hynix");
+    assert.equal(
+      classification.statusCode === "S5" && !classification.retainMainState,
+      false,
+      `아직 이루어지지 않은 잠정합의를 반영하면 안 된다: ${title}`,
+    );
+    assert.equal(classification.eventState, "planned", title);
+    assert.equal(classification.eligibleForStatusAggregation, false, title);
+  }
+});
+
+test("실제로 이루어진 잠정합의는 계속 잠정합의로 반영한다", async () => {
+  // 위 가드가 넓어지면 진짜 잠정합의까지 막힌다. 2026년에 실제로 반영된 제목을
+  // 그대로 넣어 회귀를 잡는다. '봉합 수순'처럼 수순이 다른 말에 붙은 제목도 포함한다.
+  const agreed = [
+    ["현대차 노사, 임금협상 잠정합의안 마련..기본급 10만원 인상", "hyundai-motor"],
+    ["[속보] SK하이닉스 노사, 수정 잠정합의안 마련...성과급 주식 선택권 강화", "sk-hynix"],
+    ["SK하이닉스 노사, 임단협 잠정합의...성과급 60% 자사주로", "sk-hynix"],
+    ["현대모비스 노사, 임단협 잠정합의...성과금 400%+1320만원", "hyundai-mobis"],
+    ["현대모비스 노사, 임단협 잠정합의안 도출", "hyundai-mobis"],
+    ["카카오 노사, 두 달 갈등 끝 임금협상 잠정 합의...‘봉합 수순’", "kakao"],
+    ["카카오 노사, 임금협상 잠정 합의...내주 조합원 설명회 후 찬반투표", "kakao"],
+    ["금호타이어 노사, 임단협 잠정 합의...기본급 3% 인상", "kumho-tire"],
+  ];
+  for (const [title, companyId] of agreed) {
+    const classification = await classifyTitle(title, companyId);
+    assert.equal(classification.statusCode, "S5", title);
+    assert.equal(classification.retainMainState, false, title);
+    assert.equal(classification.eligibleForStatusAggregation, true, title);
+  }
+});
+
 test("노조·노사 없이 법인의 임단협을 주어로 쓴 제목도 직영으로 본다", async () => {
   const hhi = await classifyTitle(
     "HD현대중공업 임단협 결렬... 결국 2일부터 부분파업 돌입",
