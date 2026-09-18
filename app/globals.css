@@ -2983,6 +2983,13 @@ button:focus-visible,
   display: grid;
   gap: 12px;
 }
+/* 그리드 칸의 자동 최소 크기는 내용의 min-content라, 줄바꿈을 막은 `.timeline-span`이
+   칸 자체를 769px까지 넓혔다. 그 폭이 상세 패널(598px)을 넘어 본문 오른쪽이 잘려
+   나갔다(2026-09-18 기아 2026 카드). 칸이 부모보다 넓어지지 못하게 막으면, 아래에
+   적어 둔 대로 넘치는 부분은 가운데 전환일 칸이 가로 스크롤로 받는다. */
+.stage-timeline > * {
+  min-width: 0;
+}
 /* 시작일 · 총기간 · 단계 전환일 · 종료일을 한 줄에 담는다. 전환일만 막대 아래 따로
    있던 때에는 날짜가 두 줄로 갈려 정작 가장 중요한 날짜가 눈에 늦게 들어왔다.
    전환이 여러 개여도 줄을 나누지 않는다. 넘치면 가운데 칸만 가로로 스크롤한다. */
@@ -3057,6 +3064,26 @@ button:focus-visible,
 }
 .timeline-shifts::-webkit-scrollbar {
   display: none;
+}
+/* 스크롤 막대를 감춰 두었으므로, 넘칠 때 그 사실을 알려 줄 것이 없었다. 양 끝을
+   흐리게 덮어 "여기서 이어진다"를 표시한다. 넘치지 않을 때는 가운데 정렬이라
+   양 끝이 비어 있어 이 덮개가 보이지 않는다. 가려진 전환일은 아래 구간 목록에
+   날짜와 함께 그대로 남아 있다. */
+.timeline-shifts {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 10px,
+    #000 calc(100% - 10px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 10px,
+    #000 calc(100% - 10px),
+    transparent 100%
+  );
 }
 .timeline-shifts > li {
   flex: 0 0 auto;
