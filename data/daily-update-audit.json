@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-09-22T21:35:13.274Z",
+      "kstDate": "2026-09-23",
+      "ruleVersion": "1.1.0",
+      "batchKstDate": "2026-09-23",
+      "primarySource": "google",
+      "consideredArticles": 624,
+      "appliedCount": 1,
+      "skippedCount": 623,
+      "applied": [
+        {
+          "companyId": "kia",
+          "companyLegalName": "기아 주식회사",
+          "previousStage": "S6",
+          "previousEventDate": "2026-08-28",
+          "nextStage": "S6",
+          "nextEventDate": "2026-08-29",
+          "sourceUrl": "https://newscj.com/news/articleView.html?idxno=3428586",
+          "sourceName": "천지일보",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 229,
+        "scope_excluded": 194,
+        "stage_unknown": 19,
+        "retain_main_state": 4,
+        "not_newer_than_recorded_event": 174,
+        "stage_downgrade_without_explicit_evidence": 2,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-09-21T21:34:16.141Z",
       "kstDate": "2026-09-22",
       "ruleVersion": "1.1.0",
