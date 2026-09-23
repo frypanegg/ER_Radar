@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-09-23",
+  "asOf": "2026-09-24",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -946,22 +946,22 @@
       "companyLegalName": "HD현대중공업 주식회사",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S4",
-      "eventDate": "2026-09-03",
-      "title": "HD현대중공업 임단협 잠정 중단...노조, 2차 제시안 요구",
-      "factSummary": "뉴시스 보도 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S3",
+      "eventDate": "2026-09-22",
+      "title": "[단독] HD현대중공업, 노조에 단체교섭 재개 요청...\"29일 협상하자\"",
+      "factSummary": "디지털데일리 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 현대중공업지부",
       "directEmployerId": "hd-hyundai-heavy-industries",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "금속노조 공식 선거 공고는 현대중공업지부 소속 인사가 '2011년 현대중공업 입사, 현중지부 가입'했다고 명시한다. 사건 원문은 HD현대중공업 사장과 현대중공업지부장을 교섭위원으로 구분하고, 사내하청지회는 별도 하청노조라고 구분한다.",
       "scopeEvidenceUrl": "https://kmwu.kr/bbs/download.php?bo_table=ce_B11&no=0&wr_id=217877",
-      "sourceUrl": "https://newsis.com/view/NISX20260903_0003775343",
-      "sourceName": "뉴시스",
+      "sourceUrl": "https://ddaily.co.kr/page/view/2026092218063859862",
+      "sourceName": "디지털데일리",
       "sourceTier": "B",
-      "confidence": 0.8,
+      "confidence": 0.91,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-09-17 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-09-24 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-05-20",
@@ -997,14 +997,21 @@
           "label": "교착·조정 경로",
           "summary": "뉴시스 보도 제목 기준 확인: HD현대중공업 임단협 잠정 중단...노조, 2차 제시안 요구",
           "sourceUrl": "https://newsis.com/view/NISX20260903_0003775343"
+        },
+        {
+          "date": "2026-09-22",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "디지털데일리 보도 제목 기준 확인: [단독] HD현대중공업, 노조에 단체교섭 재개 요청...\"29일 협상하자\"",
+          "sourceUrl": "https://ddaily.co.kr/page/view/2026092218063859862"
         }
       ],
       "id": "hd-hyundai-heavy-industries:2026:INTEGRATED:2026-06-09",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://newsis.com/view/NISX20260903_0003775343",
+      "originalUrl": "https://ddaily.co.kr/page/view/2026092218063859862",
       "agreementTypeEvidence": "HD현대중공업 2026년 임금·단체협약 1차 본교섭 HD현대중공업 노사가 6월 2일 상견례 뒤 6월 9일 1차 교섭으로 2026년 임금·단체협약 본교섭에 들어갔다고 보도됐다. 요구안에는 기본급 인상, 상여금, 영업이익 연동 성과공유, AI 도입 시 고용안정 등이 포함됐다.",
-      "autoUpdatedAt": "2026-09-16T21:35:01.058Z"
+      "autoUpdatedAt": "2026-09-23T21:33:13.062Z"
     },
     {
       "companyId": "hyundai-mobis",
@@ -1106,20 +1113,20 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-09-01",
-      "title": "삼성바이오로직스 노사, 8일 사후 조정...임금협상 돌파구 찾나",
-      "factSummary": "전자신문 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S4",
+      "eventDate": "2026-09-22",
+      "title": "삼성바이오 2차 사후조정도 '빈손'...노조, 파업 준비",
+      "factSummary": "biz.sbs.co.kr 보도 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "삼성바이오로직스 노동조합",
       "agreementTypeEvidence": "삼성바이오로직스 2026년 임금 및 단체협약 교섭에서 노조는 기본급 인상률과 성과급 재원 배분을 요구했고, 임단협 쟁점이 풀리지 않아 파업과 준법투쟁으로 이어졌다고 보도됐다.",
       "directEmploymentEvidence": "원문은 삼성바이오로직스 소속 조합원 약 2천800명이 참여한 파업과 그 노동조합을 회사의 교섭 상대로 적시한다.",
-      "sourceUrl": "https://etnews.com/20260901000402",
-      "sourceName": "전자신문",
+      "sourceUrl": "https://biz.sbs.co.kr/article/20000336319",
+      "sourceName": "biz.sbs.co.kr",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-09-09 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-09-24 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-28",
@@ -1162,13 +1169,27 @@
           "label": "본교섭 진행",
           "summary": "전자신문 보도 제목 기준 확인: 삼성바이오로직스 노사, 8일 사후 조정...임금협상 돌파구 찾나",
           "sourceUrl": "https://etnews.com/20260901000402"
+        },
+        {
+          "date": "2026-09-08",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "뉴시스 보도 제목 기준 확인: '임금협상 갈등' 삼성바이오 노사, 다음주 2차조정",
+          "sourceUrl": "https://newsis.com/view/NISX20260908_0003781474"
+        },
+        {
+          "date": "2026-09-22",
+          "stage": "S4",
+          "label": "교착·조정 경로",
+          "summary": "biz.sbs.co.kr 보도 제목 기준 확인: 삼성바이오 2차 사후조정도 '빈손'...노조, 파업 준비",
+          "sourceUrl": "https://biz.sbs.co.kr/article/20000336319"
         }
       ],
       "id": "samsung-biologics:2026:INTEGRATED:2026-05-06",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://etnews.com/20260901000402",
-      "autoUpdatedAt": "2026-09-08T21:32:18.377Z"
+      "originalUrl": "https://biz.sbs.co.kr/article/20000336319",
+      "autoUpdatedAt": "2026-09-23T21:33:13.062Z"
     },
     {
       "companyId": "lg-display",
