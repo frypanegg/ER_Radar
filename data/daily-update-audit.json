@@ -2,6 +2,38 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-09-29T21:32:42.639Z",
+      "kstDate": "2026-09-30",
+      "ruleVersion": "1.1.0",
+      "batchKstDate": "2026-09-30",
+      "primarySource": "google",
+      "consideredArticles": 629,
+      "appliedCount": 1,
+      "skippedCount": 628,
+      "applied": [
+        {
+          "companyId": "hanwha-ocean",
+          "companyLegalName": "한화오션 주식회사",
+          "previousStage": "S1",
+          "previousEventDate": "2026-07-24",
+          "nextStage": "S3",
+          "nextEventDate": "2026-09-29",
+          "sourceUrl": "https://v.daum.net/v/20260929183301602",
+          "sourceName": "v.daum.net",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 224,
+        "scope_excluded": 197,
+        "stage_unknown": 14,
+        "retain_main_state": 7,
+        "not_newer_than_recorded_event": 184,
+        "stage_downgrade_without_explicit_evidence": 2
+      }
+    },
+    {
       "runAt": "2026-09-28T21:34:46.582Z",
       "kstDate": "2026-09-29",
       "ruleVersion": "1.1.0",
@@ -1470,22 +1502,6 @@
     },
     {
       "runAt": "2026-08-10T14:56:32.085Z",
-      "kstDate": "2026-08-10",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-10",
-      "primarySource": "google",
-      "consideredArticles": 309,
-      "appliedCount": 0,
-      "skippedCount": 308,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 259,
-        "not_eligible_for_status_aggregation": 47,
-        "not_newer_than_recorded_event": 2
-      }
-    },
-    {
-      "runAt": "2026-08-10T13:55:00.069Z",
       "kstDate": "2026-08-10",
       "ruleVersion": "1.0.0",
       "batchKstDate": "2026-08-10",

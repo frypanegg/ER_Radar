@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-09-24",
+  "asOf": "2026-09-30",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -745,22 +745,22 @@
       "companyLegalName": "한화오션 주식회사",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S1",
-      "eventDate": "2026-07-24",
-      "title": "한화오션 2026년 본조합 임단협 본교섭 지연",
-      "factSummary": "7월 24일 보도는 한화오션 본조합의 2026년 임금·단체협약 본교섭 자체가 지연됐다고 전했다. 앞선 보도에서 노조는 기본급 정액 인상, 성과급 기준, 정년·임금피크제, 복지 및 채용 확대를 포함한 요구안을 전달한 것으로 확인된다.",
+      "stage": "S3",
+      "eventDate": "2026-09-29",
+      "title": "[단독] 한화오션 노사, 내일부터 매일 교섭...임단협 타결 속도 낸다",
+      "factSummary": "v.daum.net 보도 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 경남지부 한화오션지회",
       "directEmployerId": "hanwha-ocean",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "한화오션지회 공식 규칙 제6조는 지회를 한화오션(주) 노동자 중 생산직·기타직·4급·5급 사원으로 구성한다고 명시하고, 생산직·별정직은 입사와 동시에 조합원이 된다고 규정한다.",
       "scopeEvidenceUrl": "https://howu.or.kr/38/?bmode=view&idx=160524153",
-      "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202607231339525930271",
-      "sourceName": "대한경제",
+      "sourceUrl": "https://v.daum.net/v/20260929183301602",
+      "sourceName": "v.daum.net",
       "sourceTier": "B",
-      "confidence": 0.9,
+      "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "최신 기사에서 본조합 임단협의 본교섭 지연과 웰리브·거제통영고성조선하청지회 사건을 명시적으로 분리했다. 본조합은 요구안 확인 뒤 본교섭 개시가 검증되지 않아 S1로 두며, 하청 쟁의권은 주 단계 산정에 사용하지 않는다.",
+      "annotation": "2026-09-30 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-12",
@@ -775,12 +775,21 @@
           "label": "본조합 본교섭 지연 확인",
           "summary": "한화오션 본조합 임단협의 본교섭 자체가 지연됐다고 보도됐다.",
           "sourceUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202607231339525930271"
+        },
+        {
+          "date": "2026-09-29",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "v.daum.net 보도 제목 기준 확인: [단독] 한화오션 노사, 내일부터 매일 교섭...임단협 타결 속도 낸다",
+          "sourceUrl": "https://v.daum.net/v/20260929183301602"
         }
       ],
       "id": "hanwha-ocean:2026:INTEGRATED:2026-07-24",
-      "factualStatus": "VERIFIED_SOURCE",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202607231339525930271"
+      "originalUrl": "https://v.daum.net/v/20260929183301602",
+      "agreementTypeEvidence": "한화오션 2026년 본조합 임단협 본교섭 지연 7월 24일 보도는 한화오션 본조합의 2026년 임금·단체협약 본교섭 자체가 지연됐다고 전했다. 앞선 보도에서 노조는 기본급 정액 인상, 성과급 기준, 정년·임금피크제, 복지 및 채용 확대를 포함한 요구안을 전달한 것으로 확인된다.",
+      "autoUpdatedAt": "2026-09-29T21:32:42.638Z"
     },
     {
       "companyLegalName": "서울교통공사",
