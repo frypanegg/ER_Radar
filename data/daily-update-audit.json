@@ -2,6 +2,63 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-09-30T21:35:13.243Z",
+      "kstDate": "2026-10-01",
+      "ruleVersion": "1.1.0",
+      "batchKstDate": "2026-10-01",
+      "primarySource": "google",
+      "consideredArticles": 633,
+      "appliedCount": 3,
+      "skippedCount": 629,
+      "applied": [
+        {
+          "companyId": "hd-hyundai-heavy-industries",
+          "companyLegalName": "HD현대중공업 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-09-22",
+          "nextStage": "S5",
+          "nextEventDate": "2026-09-30",
+          "sourceUrl": "http://haesanews.com/news/articleView.html?idxno=151570",
+          "sourceName": "해사신문",
+          "confidence": 0.8,
+          "eventsApplied": 2
+        },
+        {
+          "companyId": "seoul-metro",
+          "companyLegalName": "서울교통공사",
+          "previousStage": "S1",
+          "previousEventDate": "2026-07-15",
+          "nextStage": "S4",
+          "nextEventDate": "2026-09-30",
+          "sourceUrl": "https://newstomato.com/readnews.aspx?no=1315212",
+          "sourceName": "뉴스토마토",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "hanwha-ocean",
+          "companyLegalName": "한화오션 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-09-29",
+          "nextStage": "S5",
+          "nextEventDate": "2026-09-30",
+          "sourceUrl": "https://4th.kr/news/articleView.html?idxno=2118877",
+          "sourceName": "포쓰저널",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 198,
+        "retain_main_state": 7,
+        "not_eligible_for_status_aggregation": 238,
+        "stage_unknown": 9,
+        "not_newer_than_recorded_event": 175,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-09-29T21:32:42.639Z",
       "kstDate": "2026-09-30",
       "ruleVersion": "1.1.0",
@@ -1496,22 +1553,6 @@
       "applied": [],
       "skippedReasonCounts": {
         "scope_excluded": 256,
-        "not_eligible_for_status_aggregation": 47,
-        "not_newer_than_recorded_event": 2
-      }
-    },
-    {
-      "runAt": "2026-08-10T14:56:32.085Z",
-      "kstDate": "2026-08-10",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-10",
-      "primarySource": "google",
-      "consideredArticles": 309,
-      "appliedCount": 0,
-      "skippedCount": 308,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 259,
         "not_eligible_for_status_aggregation": 47,
         "not_newer_than_recorded_event": 2
       }
