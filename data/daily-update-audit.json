@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-01T21:33:20.377Z",
+      "kstDate": "2026-10-02",
+      "ruleVersion": "1.1.0",
+      "batchKstDate": "2026-10-02",
+      "primarySource": "google",
+      "consideredArticles": 643,
+      "appliedCount": 1,
+      "skippedCount": 642,
+      "applied": [
+        {
+          "companyId": "hanwha-ocean",
+          "companyLegalName": "한화오션 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-09-29",
+          "nextStage": "S5",
+          "nextEventDate": "2026-10-01",
+          "sourceUrl": "https://newspim.com/news/view/20261001000505",
+          "sourceName": "뉴스핌",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 206,
+        "not_eligible_for_status_aggregation": 252,
+        "retain_main_state": 6,
+        "stage_unknown": 16,
+        "not_newer_than_recorded_event": 160,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-09-30T21:35:13.243Z",
       "kstDate": "2026-10-01",
       "ruleVersion": "1.1.0",
@@ -1538,22 +1571,6 @@
         "scope_excluded": 136,
         "not_eligible_for_status_aggregation": 151,
         "stage_unknown": 13,
-        "not_newer_than_recorded_event": 2
-      }
-    },
-    {
-      "runAt": "2026-08-10T23:03:17.860Z",
-      "kstDate": "2026-08-11",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-11",
-      "primarySource": "google",
-      "consideredArticles": 306,
-      "appliedCount": 0,
-      "skippedCount": 305,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 256,
-        "not_eligible_for_status_aggregation": 47,
         "not_newer_than_recorded_event": 2
       }
     }
