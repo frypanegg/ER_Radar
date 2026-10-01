@@ -3484,21 +3484,21 @@
       },
       "classification": {
         "stage": {
-          "code": "tentative_agreement",
-          "label": "잠정합의"
+          "code": "manual_review",
+          "label": "수동검토"
         },
-        "eventType": "stage_update",
-        "transitionHint": "evaluate_by_date",
-        "statusCode": "S5",
-        "statusName": "tentative",
-        "statusLabel": "잠정합의",
+        "eventType": "unclassified",
+        "transitionHint": "manual_review",
+        "statusCode": "U",
+        "statusName": "unverified",
+        "statusLabel": "올해 현황 미확인",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
         "statusBasis": "stage_mapping",
         "scopeClassification": "PRIMARY_DIRECT_UNION",
         "includeInPrimaryDashboard": true,
-        "eligibleForStatusAggregation": true,
+        "eligibleForStatusAggregation": false,
         "requiresSourceVerification": false,
         "parallelStates": {
           "dispute": {
@@ -3514,8 +3514,8 @@
             "eventStateCode": "OCCURRED"
           },
           "agreement": {
-            "code": "TENTATIVE_AGREEMENT",
-            "label": "잠정합의",
+            "code": "NONE",
+            "label": "없음",
             "eventState": "occurred",
             "eventStateCode": "OCCURRED"
           },
@@ -3538,11 +3538,11 @@
           "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
           "needsReview": false
         },
-        "confidence": 0.8,
-        "needsReview": false,
+        "confidence": 0.49,
+        "needsReview": true,
         "freshness": {
-          "score": 0.9798,
-          "ageDays": 0.9,
+          "score": 0.9651,
+          "ageDays": 1.5,
           "band": "very_recent"
         },
         "companies": [
@@ -3610,7 +3610,8 @@
           }
         ],
         "reasonCodes": [
-          "stage_signal",
+          "no_stage_signal",
+          "company_clause_evidence",
           "company_alias"
         ],
         "collectionSources": [

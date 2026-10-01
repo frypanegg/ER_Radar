@@ -1759,3 +1759,25 @@ test("같은 날 같은 단계의 후속 보도는 경과에 한 번만 남긴�
   const twice = applyArticleToRecord(once, second, "2026-08-20");
   assert.equal(twice.flowEvents.filter((event) => event.date === "2026-08-20").length, 1);
 });
+
+
+test("comparison headlines bind agreement evidence to the employer clause", async () => {
+  for (const title of [
+    "삼성重 이어 HD현대重도 잠정합의...한화오션은 지지부진",
+    "삼성重 이어 HD현대重도 잠정합의…한화오션은 지지부진",
+    "HD현대重 잠정합의; 한화오션은 협상 난항",
+    "HD현대重 잠정합의 반면 한화오션은 교섭 진행",
+  ]) {
+    const result = await classifyTitle(title, "hanwha-ocean");
+    assert.notEqual(result.statusCode, "S5", title);
+    assert.notEqual(result.parallelStates.agreement.code, "TENTATIVE_AGREEMENT", title);
+    assert.ok(result.reasonCodes.includes("company_clause_evidence"), title);
+  }
+  const pending = await classifyTitle(
+    "삼성重 이어 HD현대重도 잠정합의…한화오션은 지지부진", "hanwha-ocean",
+  );
+  assert.equal(pending.eligibleForStatusAggregation, false);
+  const agreed = await classifyTitle("한화오션 노사 잠정합의…기본급 10만원 인상", "hanwha-ocean");
+  assert.equal(agreed.statusCode, "S5");
+  assert.equal(agreed.eligibleForStatusAggregation, true);
+});

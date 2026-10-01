@@ -1817,9 +1817,25 @@ function classifyArticle(
       ),
     );
 
-  const stageClassification = classifyStage(record.title, config.taxonomy);
+  // Bind stage evidence to the named employer's clause. Comparison headlines may
+  // contain an agreement for another employer, including unregistered abbreviations.
+  const clauses = record.title.split(/(?:…+|\.{2,}|[;；]|하지만|반면|그러나)/u);
+  const targetCompany = companies.length === 1
+    ? config.companies.find((company) => company.id === companies[0].companyId)
+    : null;
+  const targetClauses = targetCompany
+    ? clauses.filter((clause) => matchingAliases(clause, targetCompany.aliases).length > 0)
+    : [];
+  const evidenceTitle = targetClauses.length === 1 && clauses.length > 1 && (targetClauses[0] !== clauses[0] ||
+      classifyStage(targetClauses[0], config.taxonomy).stage.code === "manual_review")
+    ? targetClauses[0]
+    : record.title;
+  const stageClassification = classifyStage(evidenceTitle, config.taxonomy);
+  if (evidenceTitle !== record.title) {
+    stageClassification.reasonCodes.push("company_clause_evidence");
+  }
   const derivedFrameworkClassification = deriveFrameworkClassification(
-    record.title,
+    evidenceTitle,
     stageClassification,
     companies,
     config.taxonomy,
@@ -1880,7 +1896,7 @@ function classifyArticle(
         ),
       };
   const voteData = extractVoteData(
-    record.title,
+    evidenceTitle,
     frameworkClassification.parallelStates,
   );
   // 교섭 주기는 회사마다 다르므로 대상 회사가 하나로 좁혀질 때만 적용한다. 한 기사가
