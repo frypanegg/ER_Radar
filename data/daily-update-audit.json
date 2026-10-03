@@ -2,6 +2,25 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-03T21:35:19.710Z",
+      "kstDate": "2026-10-04",
+      "ruleVersion": "1.1.0",
+      "batchKstDate": "2026-10-04",
+      "primarySource": "google",
+      "consideredArticles": 637,
+      "appliedCount": 0,
+      "skippedCount": 637,
+      "applied": [],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 248,
+        "scope_excluded": 210,
+        "retain_main_state": 8,
+        "stage_unknown": 14,
+        "not_newer_than_recorded_event": 156,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-10-02T21:33:11.439Z",
       "kstDate": "2026-10-03",
       "ruleVersion": "1.1.0",
@@ -1556,23 +1575,6 @@
         "scope_excluded": 141,
         "stage_unknown": 16,
         "not_eligible_for_status_aggregation": 155,
-        "not_newer_than_recorded_event": 2
-      }
-    },
-    {
-      "runAt": "2026-08-11T05:10:19.659Z",
-      "kstDate": "2026-08-11",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-11",
-      "primarySource": "google",
-      "consideredArticles": 309,
-      "appliedCount": 0,
-      "skippedCount": 302,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 136,
-        "not_eligible_for_status_aggregation": 151,
-        "stage_unknown": 13,
         "not_newer_than_recorded_event": 2
       }
     }
