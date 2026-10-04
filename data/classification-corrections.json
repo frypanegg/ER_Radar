@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "corrections": [
+    {
+      "correctedAt": "2026-10-04T06:08:45.377Z",
+      "companyId": "hanwha-ocean",
+      "sourceUrl": "https://newspim.com/news/view/20261001000505",
+      "previousStage": "S5",
+      "correctedStage": "S3",
+      "reason": "Other employer tentative agreement was attributed to Hanwha Ocean. Publisher body confirms direct-union bargaining continues; subcontractor protest is a separate dispute.",
+      "evidence": {
+        "companyId": "hanwha-ocean",
+        "text": "한화오션 노사는 지난 6월 4일 상견례 이후 교섭을 이어가고 있지만, 기본급 인상과 성과급 지급 기준, 정년 연장 등을 놓고 입장차를 좁히지 못하고 있다",
+        "topic": "ongoing_bargaining",
+        "basis": "publisher_body_subject_predicate"
+      }
+    }
+  ]
+}

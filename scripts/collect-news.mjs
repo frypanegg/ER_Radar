@@ -17,6 +17,9 @@ import {
   resolveGoogleNewsUrl,
 } from "./resolve-google-news.mjs";
 
+import { delayedTopic, employerBodyEvidence, needsBodyEvidence, employerAliases, employerHeadline } from "./bargaining-evidence.mjs";
+import { verifyPublisherPage } from "./resolve-google-news.mjs";
+
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
 const SCRIPT_DIRECTORY = dirname(SCRIPT_PATH);
 const PROJECT_ROOT = resolve(SCRIPT_DIRECTORY, "..");
@@ -1252,6 +1255,11 @@ function classifyEmploymentScope(title, company, unitMatches, config) {
     "단체교섭",
     "단체협상",
     "단체협약",
+    "본교섭",
+    "실무교섭",
+    "교섭요구안",
+    "교섭창구",
+    "교섭대표",
   ].map((word) => comparableText(word));
   const hasCompanyBargainingTerm = company.aliases.some((alias) => {
     const loweredAlias = cleanText(alias).toLocaleLowerCase("ko-KR");
@@ -1794,52 +1802,88 @@ function classifyArticle(
   config,
   now,
   bargainingYear = currentKstYear(now),
+  targetCompanyId = null,
 ) {
   const originCompanyIds = new Set(record.originCompanyIds);
   const directCompanyIds = new Set(
     config.companies
-      .filter((company) => matchingAliases(record.title, company.aliases).length > 0)
+      .filter((company) => matchingAliases(record.title, employerAliases(company)).length > 0)
       .map((company) => company.id),
   );
   // 검색어 맥락은 제목에 법인이 없을 때만 쓴다. 같은 기사가 여러 법인의 검색 결과에
   // 함께 걸리면 URL 중복 제거가 검색 법인을 합치는데, 그러면 "포스코 노사 교섭 재개"가
   // 두산에너빌리티 검색에서도 나왔다는 이유만으로 복수 법인 기사가 되어 반영이 막혔다.
-  const matchedCompanyIds =
-    directCompanyIds.size > 0 ? directCompanyIds : originCompanyIds;
+  const matchedCompanyIds = targetCompanyId
+    ? new Set([targetCompanyId])
+    : directCompanyIds.size > 0 ? directCompanyIds : originCompanyIds;
   const companies = config.companies
     .filter((company) => matchedCompanyIds.has(company.id))
     .map((company) =>
       classifyCompanyMatch(
         record.title,
-        company,
+        { ...company, aliases: employerAliases(company) },
         directCompanyIds.has(company.id),
         config,
       ),
     );
 
-  // Bind stage evidence to the named employer's clause. Comparison headlines may
-  // contain an agreement for another employer, including unregistered abbreviations.
-  const clauses = record.title.split(/(?:…+|\.{2,}|[;；]|하지만|반면|그러나)/u);
   const targetCompany = companies.length === 1
     ? config.companies.find((company) => company.id === companies[0].companyId)
     : null;
-  const targetClauses = targetCompany
-    ? clauses.filter((clause) => matchingAliases(clause, targetCompany.aliases).length > 0)
-    : [];
-  const evidenceTitle = targetClauses.length === 1 && clauses.length > 1 && (targetClauses[0] !== clauses[0] ||
-      classifyStage(targetClauses[0], config.taxonomy).stage.code === "manual_review")
-    ? targetClauses[0]
-    : record.title;
-  const stageClassification = classifyStage(evidenceTitle, config.taxonomy);
+  const headline = employerHeadline(record.title, targetCompany, config.companies);
+  const evidenceTitle = headline.text;
+  const titleTopic = delayedTopic(evidenceTitle);
+  const localStage = classifyStage(evidenceTitle, config.taxonomy);
+  const needsLocalBody = !["tentative_agreement", "final_agreement"].includes(localStage.stage.code) &&
+    (headline.multipleEmployers || needsBodyEvidence(evidenceTitle));
+  const bodyTopic = !titleTopic && needsLocalBody
+    ? employerBodyEvidence(record.articleBody, targetCompany, config.companies)
+    : null;
+  const subjectEvidence = titleTopic
+    ? { ...titleTopic, basis: "title_subject_predicate" }
+    : bodyTopic;
+  const resolvedEvidenceTitle = bodyTopic?.text ?? evidenceTitle;
+  const stageClassification = classifyStage(resolvedEvidenceTitle, config.taxonomy);
+  if (subjectEvidence) {
+    const stage = config.taxonomy.stages.find((entry) => entry.code === subjectEvidence.stage);
+    Object.assign(stageClassification, {
+      stage: { code: stage.code, label: stage.label },
+      suggestedStage: null,
+      eventType: "stage_update",
+      transitionHint: "evaluate_by_date",
+      confidence: 0.8,
+      needsReview: false,
+      reasonCodes: ["subject_predicate_evidence"],
+    });
+  }
   if (evidenceTitle !== record.title) {
     stageClassification.reasonCodes.push("company_clause_evidence");
   }
+  // Body evidence also supplies the employment context for this same employer.
+  // Re-run the existing scope rules; do not bypass subcontractor/unit exclusions.
+  if (bodyTopic && targetCompany) {
+    const scopeText = `${targetCompany.name} ${bodyTopic.text} ${bodyTopic.scopeContext}`;
+    companies[0] = classifyCompanyMatch(scopeText, targetCompany, true, config);
+  }
   const derivedFrameworkClassification = deriveFrameworkClassification(
-    evidenceTitle,
+    resolvedEvidenceTitle,
     stageClassification,
     companies,
     config.taxonomy,
   );
+  if (subjectEvidence) {
+    const state = frameworkStateDefinition(config.taxonomy.statusFramework, subjectEvidence.status);
+    Object.assign(derivedFrameworkClassification, {
+      statusCode: state.code, statusName: state.name, statusLabel: state.label,
+      statusBasis: "subject_predicate_evidence", retainMainState: false,
+      eventState: "occurred", eventStateCode: "OCCURRED", needsReview: false,
+    });
+    if (["S1", "S2", "S3"].includes(subjectEvidence.status)) {
+      derivedFrameworkClassification.parallelStates.agreement = {
+        code: "NONE", label: "없음", eventState: "occurred", eventStateCode: "OCCURRED",
+      };
+    }
+  }
   const primaryCompanyMatches = companies.filter(
     (company) => company.includeInPrimaryDashboard,
   );
@@ -1896,7 +1940,7 @@ function classifyArticle(
         ),
       };
   const voteData = extractVoteData(
-    evidenceTitle,
+    resolvedEvidenceTitle,
     frameworkClassification.parallelStates,
   );
   // 교섭 주기는 회사마다 다르므로 대상 회사가 하나로 좁혀질 때만 적용한다. 한 기사가
@@ -1917,7 +1961,7 @@ function classifyArticle(
         )?.bargainingCycle ?? null
       : null;
   const annotations = deriveArticleAnnotations(
-    record,
+    bodyTopic ? { ...record, title: resolvedEvidenceTitle } : record,
     frameworkClassification,
     bargainingYear,
     bargainingCycle,
@@ -1981,7 +2025,7 @@ function classifyArticle(
 
   return {
     id: `news_${createHash("sha256")
-      .update(record.url || normalizedTitleKey(record.title))
+      .update((record.url || normalizedTitleKey(record.title)) + (targetCompanyId ? `:${targetCompanyId}` : ""))
       .digest("hex")
       .slice(0, 16)}`,
     title: record.title,
@@ -2006,6 +2050,12 @@ function classifyArticle(
       eventStateCode: frameworkClassification.eventStateCode,
       retainMainState: frameworkClassification.retainMainState,
       statusBasis: frameworkClassification.statusBasis,
+      stageEvidence: {
+        companyId: targetCompany?.id ?? null,
+        text: subjectEvidence?.text ?? evidenceTitle,
+        topic: subjectEvidence?.topic ?? null,
+        basis: subjectEvidence?.basis ?? "title_signals",
+      },
       scopeClassification,
       includeInPrimaryDashboard,
       eligibleForStatusAggregation,
@@ -2036,6 +2086,15 @@ function classifyArticle(
       collectionSources: record.collectionSources,
     },
   };
+}
+
+function classifyCompanyArticles(record, config, now, year) {
+  const ids = config.companies.filter((company) =>
+    matchingAliases(record.title, employerAliases(company)).length > 0,
+  ).map((company) => company.id);
+  return ids.length > 1
+    ? ids.map((id) => classifyArticle(record, config, now, year, id))
+    : [classifyArticle(record, config, now, year)];
 }
 
 function createCollectionStats() {
@@ -2077,7 +2136,8 @@ async function resolveOriginalUrls(preliminary, config, options) {
   const pending = preliminary
     .filter(
       ({ record, classification }) =>
-        classification.classification.includeInPrimaryDashboard &&
+        (classification.classification.includeInPrimaryDashboard ||
+          classification.classification.companies.length > 0) &&
         !record.originalUrl &&
         typeof record.url === "string",
     )
@@ -2100,7 +2160,9 @@ async function resolveOriginalUrls(preliminary, config, options) {
 
     if (verification.status === RESOLUTION_STATUS.verified) {
       entry.record.originalUrl = verification.originalUrl;
-      entry.record.sourceVerification = verification;
+      const { articleBody, ...sourceVerification } = verification;
+      entry.record.sourceVerification = sourceVerification;
+      entry.record.articleBody = articleBody;
       stats.verified += 1;
     } else {
       // 되돌리기에 실패해도 감사 기록은 남긴다. 다만 originalUrl은 비워 두어
@@ -2234,12 +2296,22 @@ async function collectCandidates(config, options, year, now) {
     classification: classifyArticle(record, config, now, year),
   }));
   const resolutionStats = await resolveOriginalUrls(preliminary, config, options);
+  if (options.resolveOriginalUrls !== false) {
+    const pendingBodies = preliminary.filter(({ record }) =>
+      record.originalUrl && !record.articleBody && (
+        needsBodyEvidence(record.title) || config.companies.filter((company) =>
+          matchingAliases(record.title, employerAliases(company)).length > 0).length > 1
+      ),
+    ).slice(0, options.maxResolutions ?? config.collectionPolicy.maxUrlResolutions ?? 60);
+    for (const { record } of pendingBodies) {
+      const page = await verifyPublisherPage(record.originalUrl, record.title);
+      if (page.status === RESOLUTION_STATUS.verified) {
+        record.articleBody = page.articleBody;
+      }
+    }
+  }
   const articles = preliminary
-    .map(({ record, classification }) =>
-      record.sourceVerification
-        ? classifyArticle(record, config, now, year)
-        : classification,
-    )
+    .flatMap(({ record }) => classifyCompanyArticles(record, config, now, year))
     .sort((left, right) => Date.parse(right.publishedAt) - Date.parse(left.publishedAt));
   const scopeCounts = Object.fromEntries(
     config.scopePolicy.classifications.map((scope) => [scope, 0]),
@@ -2462,4 +2534,4 @@ if (process.argv[1] && resolve(process.argv[1]) === SCRIPT_PATH) {
   });
 }
 
-export { classifyArticle, classifyStage, validateConfiguration, matchingAliases };
+export { classifyCompanyArticles, classifyArticle, classifyStage, validateConfiguration, matchingAliases };

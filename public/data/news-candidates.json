@@ -26,7 +26,7 @@
       "candidatesBeforeDeduplication": 847,
       "removedByUrlDeduplication": 193,
       "removedByTitleDeduplication": 17,
-      "finalCandidates": 637,
+      "finalCandidates": 638,
       "urlResolution": {
         "attempted": 300,
         "verified": 263,
@@ -38,11 +38,11 @@
           "RESOLVED_TITLE_MISMATCH": 10
         }
       },
-      "statusAggregationCandidates": 179,
-      "primaryDashboardCandidates": 427,
+      "statusAggregationCandidates": 180,
+      "primaryDashboardCandidates": 428,
       "excludedAuditCandidates": 210,
       "scopeCounts": {
-        "PRIMARY_DIRECT_UNION": 427,
+        "PRIMARY_DIRECT_UNION": 428,
         "SUBCONTRACTOR_UNION_EXCLUDED": 17,
         "AFFILIATE_UNION_EXCLUDED": 1,
         "UNKNOWN_REVIEW": 192,
@@ -50,7 +50,7 @@
       },
       "excludedCompanyMatches": 248,
       "companyScopeCounts": {
-        "PRIMARY_DIRECT_UNION": 439,
+        "PRIMARY_DIRECT_UNION": 440,
         "SUBCONTRACTOR_UNION_EXCLUDED": 21,
         "AFFILIATE_UNION_EXCLUDED": 1,
         "UNKNOWN_REVIEW": 226,
@@ -599,7 +599,7 @@
         "basis": "editorial_seed",
         "needsReview": true
       },
-      "candidateCount": 26,
+      "candidateCount": 27,
       "excludedAuditCount": 10,
       "needsReviewCount": 17,
       "latestPublishedAt": "2026-10-03T06:28:18.000Z"
@@ -3361,7 +3361,7 @@
       }
     },
     {
-      "id": "news_70eee3f4f677ccc6",
+      "id": "news_236a5335a894b903",
       "title": "HD현대重 잠정합의·한화오션은 크레인 농성...조선 임단협 뇌관, 거제로 옮겨붙었다",
       "media": "뉴스핌",
       "publishedAt": "2026-10-01T02:57:00.000Z",
@@ -3390,6 +3390,12 @@
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
         "statusBasis": "stage_mapping",
+        "stageEvidence": {
+          "companyId": "hd-hyundai-heavy-industries",
+          "text": "HD현대重 잠정합의",
+          "topic": null,
+          "basis": "title_signals"
+        },
         "scopeClassification": "PRIMARY_DIRECT_UNION",
         "includeInPrimaryDashboard": true,
         "eligibleForStatusAggregation": true,
@@ -3435,8 +3441,183 @@
         "confidence": 0.8,
         "needsReview": false,
         "freshness": {
-          "score": 0.9381,
-          "ageDays": 2.8,
+          "score": 0.9302,
+          "ageDays": 3.1,
+          "band": "very_recent"
+        },
+        "companies": [
+          {
+            "companyId": "hd-hyundai-heavy-industries",
+            "companyName": "HD현대중공업",
+            "matchBasis": "title_alias",
+            "confidence": 0.94,
+            "bargainingUnits": [
+              {
+                "id": "metal-union-branch",
+                "name": "금속노조 현대중공업지부",
+                "matchBasis": "public_record_unit_default"
+              }
+            ],
+            "bargainingUnitScope": "public_record_default",
+            "representationState": {
+              "code": "SINGLE_UNION",
+              "label": "공개 기록 교섭 테이블로 연결",
+              "eventState": "occurred",
+              "eventStateCode": "OCCURRED"
+            },
+            "unionProfiles": [
+              {
+                "bargainingUnitId": "metal-union-branch",
+                "bargainingUnitName": "금속노조 현대중공업지부",
+                "memberCount": null,
+                "electionIssues": [],
+                "majorityUnion": {
+                  "status": "UNKNOWN",
+                  "numerator": null,
+                  "denominator": null,
+                  "calculationBasis": null,
+                  "evidenceDate": null,
+                  "evidenceUrl": null
+                },
+                "representativeBargainingUnion": {
+                  "status": "UNKNOWN"
+                },
+                "directEmploymentUnionizationRate": {
+                  "value": null
+                },
+                "verifiedAt": null,
+                "needsReview": true
+              }
+            ],
+            "scopeClassification": "PRIMARY_DIRECT_UNION",
+            "includeInPrimaryDashboard": true,
+            "directEmployerMatch": true,
+            "coveredWorkerRelation": "DIRECT",
+            "scopeEvidenceTier": "COMPANY_BARGAINING_TERM_NO_EXCLUSION_SIGNAL",
+            "reasonCodes": [
+              "company_bargaining_term"
+            ],
+            "scopeReview": {
+              "agentId": "primary-union-scope-review",
+              "ruleVersion": "1.2.0",
+              "executionOrder": "before_stage_classification",
+              "publicScope": "selected_legal_entity_direct_employee_union_only",
+              "quarantined": false
+            },
+            "tracksPublicRecordUnit": true,
+            "needsReview": false,
+            "reasonCode": "company_alias"
+          }
+        ],
+        "reasonCodes": [
+          "stage_signal",
+          "company_clause_evidence",
+          "company_alias"
+        ],
+        "collectionSources": [
+          "google-news-rss"
+        ]
+      }
+    },
+    {
+      "id": "news_fbf71547bb9355ee",
+      "title": "HD현대重 잠정합의·한화오션은 크레인 농성...조선 임단협 뇌관, 거제로 옮겨붙었다",
+      "media": "뉴스핌",
+      "publishedAt": "2026-10-01T02:57:00.000Z",
+      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5oSE85SnoxYjFYZG5VX043dHJsa29kMGJNUkZzNUN6OEczeXphR0hpM2lfRl81cHZ5b0x2ZzlBenFCa1pxRGdzclFfSWtGeDN2bnRPbEpHUUR6U0Rx",
+      "originalUrl": "https://newspim.com/news/view/20261001000505",
+      "sourceVerification": {
+        "method": "google-news-batchexecute",
+        "originalUrl": "https://newspim.com/news/view/20261001000505",
+        "httpStatus": 200,
+        "resolvedMedia": "newspim.com",
+        "titleOverlap": 1,
+        "verifiedAt": "2026-10-03T21:22:41.646Z",
+        "status": "RESOLVED_AND_REACHABLE"
+      },
+      "classification": {
+        "stage": {
+          "code": "bargaining",
+          "label": "교섭"
+        },
+        "eventType": "stage_update",
+        "transitionHint": "evaluate_by_date",
+        "statusCode": "S3",
+        "statusName": "bargaining",
+        "statusLabel": "본교섭 진행",
+        "eventState": "occurred",
+        "eventStateCode": "OCCURRED",
+        "retainMainState": false,
+        "statusBasis": "subject_predicate_evidence",
+        "stageEvidence": {
+          "companyId": "hanwha-ocean",
+          "text": "한화오션 노사는 지난 6월 4일 상견례 이후 교섭을 이어가고 있지만, 기본급 인상과 성과급 지급 기준, 정년 연장 등을 놓고 입장차를 좁히지 못하고 있다",
+          "topic": "ongoing_bargaining",
+          "basis": "publisher_body_subject_predicate"
+        },
+        "scopeClassification": "PRIMARY_DIRECT_UNION",
+        "includeInPrimaryDashboard": true,
+        "eligibleForStatusAggregation": true,
+        "requiresSourceVerification": false,
+        "parallelStates": {
+          "dispute": {
+            "code": "NONE",
+            "label": "없음",
+            "eventState": "occurred",
+            "eventStateCode": "OCCURRED"
+          },
+          "representation": {
+            "code": "SINGLE_UNION",
+            "label": "공개 기록 교섭 테이블로 연결",
+            "eventState": "occurred",
+            "eventStateCode": "OCCURRED"
+          },
+          "agreement": {
+            "code": "NONE",
+            "label": "없음",
+            "eventState": "occurred",
+            "eventStateCode": "OCCURRED"
+          },
+          "agreementLifecycle": null
+        },
+        "annotations": {
+          "agreementType": {
+            "code": null,
+            "bargainingYear": 2026,
+            "bargainingYearScope": "current_year",
+            "factBasis": "unverified",
+            "needsReview": true,
+            "cycleConflict": null
+          },
+          "issueSummary": [
+            {
+              "code": "WAGE_BASE",
+              "label": "기본급·임금체계",
+              "factBasis": "title_keyword"
+            },
+            {
+              "code": "VARIABLE_PAY_PERFORMANCE",
+              "label": "성과·변동급",
+              "factBasis": "title_keyword"
+            },
+            {
+              "code": "EMPLOYMENT_SECURITY",
+              "label": "고용안정",
+              "factBasis": "title_keyword"
+            }
+          ],
+          "impasseReason": null,
+          "ratification": null,
+          "originalUrlStatus": "PUBLISHER_VERIFIED",
+          "sourceTier": "B",
+          "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
+          "needsReview": false
+        },
+        "confidence": 0.84,
+        "needsReview": false,
+        "freshness": {
+          "score": 0.9302,
+          "ageDays": 3.1,
           "band": "very_recent"
         },
         "companies": [
@@ -3487,9 +3668,9 @@
             "includeInPrimaryDashboard": true,
             "directEmployerMatch": true,
             "coveredWorkerRelation": "DIRECT",
-            "scopeEvidenceTier": "COMPANY_BARGAINING_TERM_NO_EXCLUSION_SIGNAL",
+            "scopeEvidenceTier": "COMPANY_UNION_PHRASE_NO_EXCLUSION_SIGNAL",
             "reasonCodes": [
-              "company_bargaining_term"
+              "company_union_phrase"
             ],
             "scopeReview": {
               "agentId": "primary-union-scope-review",
@@ -3504,7 +3685,8 @@
           }
         ],
         "reasonCodes": [
-          "stage_signal",
+          "subject_predicate_evidence",
+          "company_clause_evidence",
           "company_alias"
         ],
         "collectionSources": [

@@ -27,21 +27,23 @@ import {
   stageRanks,
 } from "../scripts/apply-daily-update.mjs";
 import { decideFactSource, latestEvidenceDate } from "../lib/fact-reconciliation.mjs";
-import { classifyArticle, validateConfiguration } from "../scripts/collect-news.mjs";
+import { classifyCompanyArticles, validateConfiguration } from "../scripts/collect-news.mjs";
 
 /** 제목 하나를 실제 설정으로 분류한다. 원문 검증까지 통과한 기사로 취급한다. */
 async function classifyTitle(
   title,
   companyId = "hyundai-motor",
   bargainingYear = 2026,
+  articleBody = "",
 ) {
   const config = JSON.parse(
     await readFile(new URL("../data/source-config.json", import.meta.url), "utf8"),
   );
   validateConfiguration(config);
-  return classifyArticle(
+  const articles = classifyCompanyArticles(
     {
       title,
+      articleBody,
       media: "검증 매체",
       publishedAt: "2026-08-11T00:00:00.000Z",
       url: "https://news.google.com/rss/articles/CBMiTEST",
@@ -52,7 +54,9 @@ async function classifyTitle(
     config,
     new Date("2026-08-11T00:00:00.000Z"),
     bargainingYear,
-  ).classification;
+  );
+  return (articles.find((article) => article.classification.companies.some((company) =>
+    company.companyId === companyId)) ?? articles[0]).classification;
 }
 
 function verifiedArticle(overrides = {}) {
@@ -587,6 +591,7 @@ test("새 사건이 확인되면 시드와 감사 로그가 함께 갱신된다"
     title: "현대자동차 2026년 임금협상 교섭 재개",
     publishedAt: "2026-07-01T02:00:00.000Z",
     originalUrl: "https://yna.co.kr/view/AKR20260701000000001",
+    classification: { ...verifiedArticle().classification, statusCode: "S3", statusLabel: "본교섭 진행" },
   });
   const subcontractorArticle = verifiedArticle({
     title: "현대자동차 하청 노조, 원청 상대 교섭 요구",
@@ -1774,10 +1779,88 @@ test("comparison headlines bind agreement evidence to the employer clause", asyn
     assert.ok(result.reasonCodes.includes("company_clause_evidence"), title);
   }
   const pending = await classifyTitle(
-    "삼성重 이어 HD현대重도 잠정합의…한화오션은 지지부진", "hanwha-ocean",
+    "삼성重 이어 HD현대重도 잠정합의…한화오션은 지지부진", "hanwha-ocean", 2026,
+    "한화오션 노사는 실무교섭을 매일 진행하고 있다.",
   );
-  assert.equal(pending.eligibleForStatusAggregation, false);
+  assert.equal(pending.statusCode, "S3");
+  assert.equal(pending.eligibleForStatusAggregation, true);
+  assert.equal(pending.stageEvidence.text, "한화오션 노사는 실무교섭을 매일 진행하고 있다");
+  assert.equal(pending.stageEvidence.basis, "publisher_body_subject_predicate");
   const agreed = await classifyTitle("한화오션 노사 잠정합의…기본급 10만원 인상", "hanwha-ocean");
   assert.equal(agreed.statusCode, "S5");
   assert.equal(agreed.eligibleForStatusAggregation, true);
+});
+
+
+
+test("delay is bound to its grammatical topic, not a generic stage keyword", async () => {
+  const examples = [
+    ["한화오션 교섭 요구안 제시가 지지부진", "S1", "demand_preparation"],
+    ["한화오션 노조 요구안 확정이 지연", "S1", "demand_preparation"],
+    ["한화오션 노사 본교섭 개시가 지연", "S1", "bargaining_opening"],
+    ["한화오션 노사 교섭창구 단일화가 지지부진", "S2", "representation"],
+    ["한화오션 노사 본교섭이 지지부진", "S3", "ongoing_bargaining"],
+    ["한화오션 노사 잠정합의안 도출이 지지부진", "S3", "agreement_formation"],
+    ["한화오션 노사 잠정합의안 인준이 지연", "S6", "ratification"],
+    ["한화오션 노사 협약 서명이 지연", "S6", "signature"],
+  ];
+  for (const [title, expected, topic] of examples) {
+    const c = await classifyTitle(title, "hanwha-ocean");
+    assert.equal(c.statusCode, expected, title);
+    assert.equal(c.stageEvidence.topic, topic, title);
+    assert.equal(c.eligibleForStatusAggregation, true, title);
+    assert.equal(c.retainMainState, false, title);
+  }
+  const breakdown = await classifyTitle("한화오션 노사 본교섭 결렬 선언", "hanwha-ocean");
+  assert.equal(breakdown.statusCode, "S4");
+});
+
+test("an omitted headline topic is resolved from that employer's body, not a rival", async () => {
+  const title = "HD현대重 잠정합의…한화오션은 지지부진";
+  for (const [body, stage] of [
+    ["한화오션 노조는 교섭 요구안 제시가 지지부진하다.", "S1"],
+    ["한화오션 노사는 본교섭이 지지부진하다.", "S3"],
+  ]) {
+    const c = await classifyTitle(title, "hanwha-ocean", 2026, body);
+    assert.equal(c.statusCode, stage, body);
+    assert.equal(c.eligibleForStatusAggregation, true, body);
+  }
+  const rival = await classifyTitle(title, "hanwha-ocean", 2026,
+    "HD현대중공업 노사는 실무교섭을 매일 진행하고 있다.");
+  assert.notEqual(rival.statusCode, "S3");
+  const subcontractor = await classifyTitle(title, "hanwha-ocean", 2026,
+    "한화오션 하청 노조는 본교섭이 지지부진하다.");
+  assert.equal(subcontractor.eligibleForStatusAggregation, false);
+});
+
+test("October 2 report article separates employers across a middle dot and uses direct-union body evidence", async () => {
+  const title = "HD현대重 잠정합의·한화오션은 크레인 농성...조선 임단협 뇌관, 거제로 옮겨붙었다";
+  const body = "HD현대중공업 노사는 잠정합의안을 도출했다.\n한화오션 노사는 교섭을 이어가고 있다.\n노사는 매일 실무교섭을 진행하고 있다.\n한화오션 하청노조는 고공농성을 시작했다.";
+  const hanwha = await classifyTitle(title, "hanwha-ocean", 2026, body);
+  const hyundai = await classifyTitle(title, "hd-hyundai-heavy-industries", 2026, body);
+  assert.equal(hanwha.statusCode, "S3");
+  assert.equal(hanwha.eligibleForStatusAggregation, true);
+  assert.equal(hyundai.statusCode, "S5");
+  assert.equal(hyundai.eligibleForStatusAggregation, true);
+  assert.equal(hanwha.parallelStates.agreement.code, "NONE");
+  const config = JSON.parse(await readFile(new URL("../data/source-config.json", import.meta.url), "utf8"));
+  validateConfiguration(config);
+  const stale = verifiedArticle({title, classification: {...verifiedArticle().classification,
+    companies: [{companyId: "hanwha-ocean"}]}});
+  assert.equal(selectCandidate(stale, config).reason, "employer_stage_evidence_mismatch");
+});
+
+test("employer attribution is independent of punctuation, order and abbreviated names", async () => {
+  for (const separator of ["·", ", ", "…", "...", " 반면 ", " "]) {
+    for (const other of ["HD현대重", "HD현대중공업"]) {
+      for (const title of [
+        `${other} 잠정합의${separator}한화오션 노사 교섭 요구안 제시가 지지부진`,
+        `한화오션 노사 교섭 요구안 제시가 지지부진${separator}${other} 잠정합의`,
+      ]) {
+        const c = await classifyTitle(title, "hanwha-ocean");
+        assert.equal(c.statusCode, "S1", title);
+        assert.equal(c.eligibleForStatusAggregation, true, title);
+      }
+    }
+  }
 });

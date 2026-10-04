@@ -745,10 +745,10 @@
       "companyLegalName": "한화오션 주식회사",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S5",
+      "stage": "S3",
       "eventDate": "2026-10-01",
       "title": "HD현대重 잠정합의·한화오션은 크레인 농성...조선 임단협 뇌관, 거제로 옮겨붙었다",
-      "factSummary": "뉴스핌 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "factSummary": "뉴스핌 본문 회사별 행위 근거 기준 본교섭 진행 확인 · 원문 URL 검증 완료",
       "unionName": "전국금속노동조합 경남지부 한화오션지회",
       "directEmployerId": "hanwha-ocean",
       "coveredWorkerRelation": "DIRECT",
@@ -757,10 +757,10 @@
       "sourceUrl": "https://newspim.com/news/view/20261001000505",
       "sourceName": "뉴스핌",
       "sourceTier": "B",
-      "confidence": 0.8,
+      "confidence": 0.84,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-02 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-04 원문 회사별 문맥 확인으로 오집계 정정 · 직영 교섭 진행(S3) · 하청 농성은 별도 사안",
       "flowEvents": [
         {
           "date": "2026-04-12",
@@ -785,9 +785,9 @@
         },
         {
           "date": "2026-10-01",
-          "stage": "S5",
-          "label": "잠정합의",
-          "summary": "뉴스핌 보도 제목 기준 확인: HD현대重 잠정합의·한화오션은 크레인 농성...조선 임단협 뇌관, 거제로 옮겨붙었다",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "뉴스핌 본문의 해당 회사 문맥 기준 본교섭 진행 확인: 한화오션 노사는 지난 6월 4일 상견례 이후 교섭을 이어가고 있지만, 기본급 인상과 성과급 지급 기준, 정년 연장 등을 놓고 입장차를 좁히지 못하고 있다",
           "sourceUrl": "https://newspim.com/news/view/20261001000505"
         }
       ],
@@ -796,7 +796,13 @@
       "scopeRuleVersion": "1.1.0",
       "originalUrl": "https://newspim.com/news/view/20261001000505",
       "agreementTypeEvidence": "한화오션 2026년 본조합 임단협 본교섭 지연 7월 24일 보도는 한화오션 본조합의 2026년 임금·단체협약 본교섭 자체가 지연됐다고 전했다. 앞선 보도에서 노조는 기본급 정액 인상, 성과급 기준, 정년·임금피크제, 복지 및 채용 확대를 포함한 요구안을 전달한 것으로 확인된다.",
-      "autoUpdatedAt": "2026-10-01T21:33:20.377Z"
+      "autoUpdatedAt": "2026-10-04T06:08:45.376Z",
+      "stageEvidence": {
+        "companyId": "hanwha-ocean",
+        "text": "한화오션 노사는 지난 6월 4일 상견례 이후 교섭을 이어가고 있지만, 기본급 인상과 성과급 지급 기준, 정년 연장 등을 놓고 입장차를 좁히지 못하고 있다",
+        "topic": "ongoing_bargaining",
+        "basis": "publisher_body_subject_predicate"
+      }
     },
     {
       "companyLegalName": "서울교통공사",

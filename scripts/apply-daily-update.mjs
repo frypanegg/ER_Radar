@@ -11,6 +11,7 @@
 import { readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { classifyArticle, validateConfiguration } from "./collect-news.mjs";
 
 const SCRIPT_DIRECTORY = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = resolve(SCRIPT_DIRECTORY, "..");
@@ -18,7 +19,7 @@ const CANDIDATES_PATH = resolve(PROJECT_ROOT, "public/data/news-candidates.json"
 const SEED_PATH = resolve(PROJECT_ROOT, "data/current-2026-fact-seed.json");
 const FRAMEWORK_PATH = resolve(PROJECT_ROOT, "data/negotiation-framework.json");
 const AUDIT_PATH = resolve(PROJECT_ROOT, "data/daily-update-audit.json");
-const RULE_VERSION = "1.1.0";
+const RULE_VERSION = "1.2.0";
 const MAX_AUDIT_RUNS = 60;
 
 const HELP_TEXT = `
@@ -144,7 +145,7 @@ function blocksStageDowngrade(existing, article, ranks) {
   return !explicitDowngradeBasis.has(article.classification.statusBasis);
 }
 
-function selectCandidate(article) {
+function selectCandidate(article, sourceConfig = null) {
   const classification = article.classification;
   if (!classification) return { ok: false, reason: "no_classification" };
   if (!classification.includeInPrimaryDashboard) {
@@ -170,6 +171,18 @@ function selectCandidate(article) {
   }
   if (classification.companies[0].tracksPublicRecordUnit === false) {
     return { ok: false, reason: "different_bargaining_unit" };
+  }
+  if (sourceConfig && ["S5", "S6", "S7"].includes(classification.statusCode)) {
+    // Do not trust an old cached S5/S6/S7 computed from another employer's text.
+    const companyId = classification.companies[0].companyId;
+    const checked = classifyArticle({
+      ...article,
+      originCompanyIds: [companyId],
+      collectionSources: classification.collectionSources ?? [],
+    }, sourceConfig, new Date(article.publishedAt), Number(article.publishedAt.slice(0, 4)), companyId).classification;
+    if (checked.statusCode !== classification.statusCode || checked.retainMainState) {
+      return { ok: false, reason: "employer_stage_evidence_mismatch" };
+    }
   }
   return { ok: true, companyId: classification.companies[0].companyId };
 }
@@ -198,7 +211,9 @@ function buildFlowEvent(article, eventDate) {
     stage: article.classification.statusCode,
     label: article.classification.statusLabel ?? article.classification.statusName,
     // 기사 본문을 복제하지 않는다. 제목과 계산된 분류만 보존한다.
-    summary: `${article.media} 보도 제목 기준 확인: ${article.title}`,
+    summary: article.classification.stageEvidence?.basis === "publisher_body_subject_predicate"
+      ? `${article.media} 본문의 해당 회사 문맥 기준 ${article.classification.statusLabel} 확인: ${article.classification.stageEvidence.text}`
+      : `${article.media} 보도 제목 기준 확인: ${article.title}`,
     sourceUrl: article.originalUrl,
   };
 }
@@ -238,15 +253,16 @@ function applyArticleToRecord(record, article, eventDate) {
       record.agreementTypeEvidence ??
       `${record.title ?? ""} ${record.factSummary ?? ""}`.trim(),
     title: article.title,
-    factSummary: `${article.media} 보도 제목 기준 ${
+    factSummary: `${article.media} ${article.classification.stageEvidence?.basis === "publisher_body_subject_predicate" ? "본문 회사별 행위 근거" : "제목"} 기준 ${
       article.classification.statusLabel ?? article.classification.statusName
-    } 확인 · 원문 URL 검증 완료 · 본문 인용 없음`,
+    } 확인 · 원문 URL 검증 완료${article.classification.stageEvidence?.basis === "publisher_body_subject_predicate" ? "" : " · 본문 인용 없음"}`,
+    ...(article.classification.stageEvidence ? { stageEvidence: article.classification.stageEvidence } : {}),
     sourceUrl: article.originalUrl,
     originalUrl: article.originalUrl,
     sourceName: article.media,
     sourceTier: article.classification.annotations?.sourceTier ?? "C",
     confidence: article.classification.confidence,
-    annotation: `${kstDateKey(new Date())} 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계`,
+    annotation: `${kstDateKey(new Date())} 자동 수집 반영 · ${article.classification.stageEvidence?.basis === "publisher_body_subject_predicate" ? "본문 회사별 행위" : "제목"} 기반 분류 · 사람 검증 전 단계`,
     // 사람이 확인한 기록과 자동 수집 기록을 화면·감사에서 구분할 수 있게 남긴다.
     factualStatus: "AUTO_COLLECTED_TITLE_BASIS",
     autoUpdatedAt: new Date().toISOString(),
@@ -261,11 +277,13 @@ async function main() {
     return;
   }
 
-  const [candidates, seed, framework] = await Promise.all([
+  const [candidates, seed, framework, sourceConfig] = await Promise.all([
     readJson(options.candidatesPath),
     readJson(options.seedPath),
     readJson(FRAMEWORK_PATH),
+    readJson(resolve(PROJECT_ROOT, "data/source-config.json")),
   ]);
+  validateConfiguration(sourceConfig);
 
   // 일부 쿼리가 실패한 partial 배치도 수집된 기사 자체는 유효하므로 반영을 허용한다.
   // 수집기가 한 번도 돌지 않은 not_collected 상태에서만 시드를 건드리지 않는다.
@@ -292,7 +310,7 @@ async function main() {
   // 막히는 날에는 앞선 유효 기사까지 함께 버려져 법인이 며칠씩 갱신되지 않았다.
   const candidatesByCompany = new Map();
   for (const article of candidates.articles ?? []) {
-    const selection = selectCandidate(article);
+    const selection = selectCandidate(article, sourceConfig);
     if (!selection.ok) {
       skipped.push({
         title: article.title,

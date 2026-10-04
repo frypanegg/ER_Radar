@@ -1,3 +1,5 @@
+import { extractArticleBody } from "./bargaining-evidence.mjs";
+
 // Google News RSS 링크를 발행사 원문 URL로 되돌리고, 그 URL이 실제로 살아 있는지
 // 확인한다. NAVER API 자격증명 없이도 원문 URL 근거를 확보하기 위한 경로다.
 //
@@ -225,6 +227,14 @@ export async function resolveGoogleNewsUrl(url, feedTitle, options = {}) {
   const originalUrl = canonicalize(resolvedUrl) ?? resolvedUrl;
   const resolvedMedia = inferMedia(originalUrl);
 
+  return verifyPublisherPage(originalUrl, feedTitle, { timeoutMs, minimumTitleOverlap, base, resolvedMedia });
+}
+
+export async function verifyPublisherPage(originalUrl, feedTitle, options = {}) {
+  const { timeoutMs = 20000, minimumTitleOverlap = 0.4,
+    base = { method: "publisher-page", verifiedAt: new Date().toISOString() },
+    resolvedMedia = null } = options;
+  let articleBody = "";
   let httpStatus = null;
   let pageTitle = "";
   try {
@@ -235,6 +245,7 @@ export async function resolveGoogleNewsUrl(url, feedTitle, options = {}) {
     );
     httpStatus = response.status;
     pageTitle = extractPageTitle(body);
+    articleBody = extractArticleBody(body);
   } catch {
     httpStatus = null;
   }
@@ -263,6 +274,7 @@ export async function resolveGoogleNewsUrl(url, feedTitle, options = {}) {
   return {
     ...base,
     status: RESOLUTION_STATUS.verified,
+    articleBody,
     originalUrl,
     httpStatus,
     resolvedMedia,
