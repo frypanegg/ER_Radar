@@ -2,6 +2,38 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-04T21:37:30.792Z",
+      "kstDate": "2026-10-05",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-05",
+      "primarySource": "google",
+      "consideredArticles": 695,
+      "appliedCount": 1,
+      "skippedCount": 694,
+      "applied": [
+        {
+          "companyId": "hd-hyundai-heavy-industries",
+          "companyLegalName": "HD현대중공업 주식회사",
+          "previousStage": "S5",
+          "previousEventDate": "2026-09-30",
+          "nextStage": "S5",
+          "nextEventDate": "2026-10-01",
+          "sourceUrl": "https://newspim.com/news/view/20261001000505",
+          "sourceName": "뉴스핌",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 265,
+        "scope_excluded": 223,
+        "retain_main_state": 7,
+        "stage_unknown": 4,
+        "not_newer_than_recorded_event": 193,
+        "settled_record_needs_equal_grade_evidence": 2
+      }
+    },
+    {
       "runAt": "2026-10-03T21:35:19.710Z",
       "kstDate": "2026-10-04",
       "ruleVersion": "1.1.0",
@@ -1558,23 +1590,6 @@
         "not_eligible_for_status_aggregation": 160,
         "scope_excluded": 131,
         "stage_unknown": 18,
-        "not_newer_than_recorded_event": 2
-      }
-    },
-    {
-      "runAt": "2026-08-11T23:33:19.929Z",
-      "kstDate": "2026-08-12",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-12",
-      "primarySource": "google",
-      "consideredArticles": 319,
-      "appliedCount": 0,
-      "skippedCount": 314,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 141,
-        "stage_unknown": 16,
-        "not_eligible_for_status_aggregation": 155,
         "not_newer_than_recorded_event": 2
       }
     }

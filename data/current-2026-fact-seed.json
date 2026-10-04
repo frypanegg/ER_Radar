@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-02",
+  "asOf": "2026-10-05",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -978,21 +978,21 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S5",
-      "eventDate": "2026-09-30",
-      "title": "HD현대중공업 노사, 기본급 12만원 인상 임단협 잠정합의",
-      "factSummary": "해사신문 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-10-01",
+      "title": "HD현대重 잠정합의·한화오션은 크레인 농성...조선 임단협 뇌관, 거제로 옮겨붙었다",
+      "factSummary": "뉴스핌 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 현대중공업지부",
       "directEmployerId": "hd-hyundai-heavy-industries",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "금속노조 공식 선거 공고는 현대중공업지부 소속 인사가 '2011년 현대중공업 입사, 현중지부 가입'했다고 명시한다. 사건 원문은 HD현대중공업 사장과 현대중공업지부장을 교섭위원으로 구분하고, 사내하청지회는 별도 하청노조라고 구분한다.",
       "scopeEvidenceUrl": "https://kmwu.kr/bbs/download.php?bo_table=ce_B11&no=0&wr_id=217877",
-      "sourceUrl": "http://haesanews.com/news/articleView.html?idxno=151570",
-      "sourceName": "해사신문",
+      "sourceUrl": "https://newspim.com/news/view/20261001000505",
+      "sourceName": "뉴스핌",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-01 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-05 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-05-20",
@@ -1049,14 +1049,27 @@
           "label": "잠정합의",
           "summary": "해사신문 보도 제목 기준 확인: HD현대중공업 노사, 기본급 12만원 인상 임단협 잠정합의",
           "sourceUrl": "http://haesanews.com/news/articleView.html?idxno=151570"
+        },
+        {
+          "date": "2026-10-01",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "뉴스핌 보도 제목 기준 확인: HD현대重 잠정합의·한화오션은 크레인 농성...조선 임단협 뇌관, 거제로 옮겨붙었다",
+          "sourceUrl": "https://newspim.com/news/view/20261001000505"
         }
       ],
       "id": "hd-hyundai-heavy-industries:2026:INTEGRATED:2026-06-09",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "http://haesanews.com/news/articleView.html?idxno=151570",
+      "originalUrl": "https://newspim.com/news/view/20261001000505",
       "agreementTypeEvidence": "HD현대중공업 2026년 임금·단체협약 1차 본교섭 HD현대중공업 노사가 6월 2일 상견례 뒤 6월 9일 1차 교섭으로 2026년 임금·단체협약 본교섭에 들어갔다고 보도됐다. 요구안에는 기본급 인상, 상여금, 영업이익 연동 성과공유, AI 도입 시 고용안정 등이 포함됐다.",
-      "autoUpdatedAt": "2026-09-30T21:35:13.243Z"
+      "autoUpdatedAt": "2026-10-04T21:37:30.791Z",
+      "stageEvidence": {
+        "companyId": "hd-hyundai-heavy-industries",
+        "text": "HD현대重 잠정합의",
+        "topic": null,
+        "basis": "title_signals"
+      }
     },
     {
       "companyId": "hyundai-mobis",
