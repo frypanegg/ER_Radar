@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-05T21:41:36.259Z",
+      "kstDate": "2026-10-06",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-06",
+      "primarySource": "google",
+      "consideredArticles": 701,
+      "appliedCount": 1,
+      "skippedCount": 700,
+      "applied": [
+        {
+          "companyId": "hanwha-ocean",
+          "companyLegalName": "한화오션 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-10-01",
+          "nextStage": "S3",
+          "nextEventDate": "2026-10-02",
+          "sourceUrl": "https://greened.kr/news/articleView.html?idxno=351326",
+          "sourceName": "녹색경제신문",
+          "confidence": 0.84,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 265,
+        "scope_excluded": 225,
+        "retain_main_state": 10,
+        "stage_unknown": 4,
+        "not_newer_than_recorded_event": 194,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-10-04T21:37:30.792Z",
       "kstDate": "2026-10-05",
       "ruleVersion": "1.2.0",
@@ -1573,23 +1606,6 @@
         "not_eligible_for_status_aggregation": 157,
         "scope_excluded": 132,
         "stage_unknown": 17,
-        "not_newer_than_recorded_event": 2
-      }
-    },
-    {
-      "runAt": "2026-08-12T22:39:59.012Z",
-      "kstDate": "2026-08-13",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-13",
-      "primarySource": "google",
-      "consideredArticles": 316,
-      "appliedCount": 0,
-      "skippedCount": 311,
-      "applied": [],
-      "skippedReasonCounts": {
-        "not_eligible_for_status_aggregation": 160,
-        "scope_excluded": 131,
-        "stage_unknown": 18,
         "not_newer_than_recorded_event": 2
       }
     }

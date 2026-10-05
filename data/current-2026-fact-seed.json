@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-05",
+  "asOf": "2026-10-06",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -746,21 +746,21 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S3",
-      "eventDate": "2026-10-01",
-      "title": "HD현대重 잠정합의·한화오션은 크레인 농성...조선 임단협 뇌관, 거제로 옮겨붙었다",
-      "factSummary": "뉴스핌 본문 회사별 행위 근거 기준 본교섭 진행 확인 · 원문 URL 검증 완료",
+      "eventDate": "2026-10-02",
+      "title": "[속보] HD현대 임단협 부결···한화오션·HD현대 갈등 지속",
+      "factSummary": "녹색경제신문 본문 회사별 행위 근거 기준 본교섭 진행 확인 · 원문 URL 검증 완료",
       "unionName": "전국금속노동조합 경남지부 한화오션지회",
       "directEmployerId": "hanwha-ocean",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "한화오션지회 공식 규칙 제6조는 지회를 한화오션(주) 노동자 중 생산직·기타직·4급·5급 사원으로 구성한다고 명시하고, 생산직·별정직은 입사와 동시에 조합원이 된다고 규정한다.",
       "scopeEvidenceUrl": "https://howu.or.kr/38/?bmode=view&idx=160524153",
-      "sourceUrl": "https://newspim.com/news/view/20261001000505",
-      "sourceName": "뉴스핌",
+      "sourceUrl": "https://greened.kr/news/articleView.html?idxno=351326",
+      "sourceName": "녹색경제신문",
       "sourceTier": "B",
       "confidence": 0.84,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-04 원문 회사별 문맥 확인으로 오집계 정정 · 직영 교섭 진행(S3) · 하청 농성은 별도 사안",
+      "annotation": "2026-10-06 자동 수집 반영 · 본문 회사별 행위 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-12",
@@ -789,17 +789,24 @@
           "label": "본교섭 진행",
           "summary": "뉴스핌 본문의 해당 회사 문맥 기준 본교섭 진행 확인: 한화오션 노사는 지난 6월 4일 상견례 이후 교섭을 이어가고 있지만, 기본급 인상과 성과급 지급 기준, 정년 연장 등을 놓고 입장차를 좁히지 못하고 있다",
           "sourceUrl": "https://newspim.com/news/view/20261001000505"
+        },
+        {
+          "date": "2026-10-02",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "녹색경제신문 본문의 해당 회사 문맥 기준 본교섭 진행 확인: 한화오션 또한 임금협상을 두고 대치를 이어가고 있다",
+          "sourceUrl": "https://greened.kr/news/articleView.html?idxno=351326"
         }
       ],
       "id": "hanwha-ocean:2026:INTEGRATED:2026-07-24",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://newspim.com/news/view/20261001000505",
+      "originalUrl": "https://greened.kr/news/articleView.html?idxno=351326",
       "agreementTypeEvidence": "한화오션 2026년 본조합 임단협 본교섭 지연 7월 24일 보도는 한화오션 본조합의 2026년 임금·단체협약 본교섭 자체가 지연됐다고 전했다. 앞선 보도에서 노조는 기본급 정액 인상, 성과급 기준, 정년·임금피크제, 복지 및 채용 확대를 포함한 요구안을 전달한 것으로 확인된다.",
-      "autoUpdatedAt": "2026-10-04T06:08:45.376Z",
+      "autoUpdatedAt": "2026-10-05T21:41:36.259Z",
       "stageEvidence": {
         "companyId": "hanwha-ocean",
-        "text": "한화오션 노사는 지난 6월 4일 상견례 이후 교섭을 이어가고 있지만, 기본급 인상과 성과급 지급 기준, 정년 연장 등을 놓고 입장차를 좁히지 못하고 있다",
+        "text": "한화오션 또한 임금협상을 두고 대치를 이어가고 있다",
         "topic": "ongoing_bargaining",
         "basis": "publisher_body_subject_predicate"
       }
