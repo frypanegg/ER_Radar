@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-08T21:35:08.882Z",
+      "kstDate": "2026-10-09",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-09",
+      "primarySource": "google",
+      "consideredArticles": 690,
+      "appliedCount": 1,
+      "skippedCount": 689,
+      "applied": [
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S3",
+          "previousEventDate": "2026-10-02",
+          "nextStage": "S3",
+          "nextEventDate": "2026-10-08",
+          "sourceUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=211876&pno=20261008091455AE06569",
+          "sourceName": "Tbc.co.kr",
+          "confidence": 0.91,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 212,
+        "not_eligible_for_status_aggregation": 264,
+        "stage_unknown": 1,
+        "retain_main_state": 7,
+        "not_newer_than_recorded_event": 202,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "settled_record_needs_equal_grade_evidence": 2
+      }
+    },
+    {
       "runAt": "2026-10-07T21:37:56.975Z",
       "kstDate": "2026-10-08",
       "ruleVersion": "1.2.0",
@@ -1597,35 +1630,6 @@
         "not_eligible_for_status_aggregation": 168,
         "stage_unknown": 16,
         "not_newer_than_recorded_event": 2
-      }
-    },
-    {
-      "runAt": "2026-08-15T02:10:02.726Z",
-      "kstDate": "2026-08-15",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-15",
-      "primarySource": "google",
-      "consideredArticles": 320,
-      "appliedCount": 1,
-      "skippedCount": 314,
-      "applied": [
-        {
-          "companyId": "hyundai-motor",
-          "companyLegalName": "현대자동차 주식회사",
-          "previousStage": "S4",
-          "previousEventDate": "2026-07-29",
-          "nextStage": "S3",
-          "nextEventDate": "2026-08-14",
-          "sourceUrl": "https://industrynews.co.kr/news/articleView.html?idxno=84506",
-          "sourceName": "인더스트리뉴스",
-          "confidence": 0.91
-        }
-      ],
-      "skippedReasonCounts": {
-        "not_eligible_for_status_aggregation": 163,
-        "scope_excluded": 134,
-        "stage_unknown": 16,
-        "not_newer_than_recorded_event": 1
       }
     }
   ]
