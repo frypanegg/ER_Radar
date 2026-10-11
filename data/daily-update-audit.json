@@ -2,6 +2,25 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-11T21:36:53.786Z",
+      "kstDate": "2026-10-12",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-12",
+      "primarySource": "google",
+      "consideredArticles": 705,
+      "appliedCount": 0,
+      "skippedCount": 705,
+      "applied": [],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 274,
+        "scope_excluded": 225,
+        "retain_main_state": 5,
+        "not_newer_than_recorded_event": 198,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "settled_record_needs_equal_grade_evidence": 2
+      }
+    },
+    {
       "runAt": "2026-10-10T21:38:07.636Z",
       "kstDate": "2026-10-11",
       "ruleVersion": "1.2.0",
@@ -1603,35 +1622,6 @@
       "skippedReasonCounts": {
         "scope_excluded": 133,
         "not_eligible_for_status_aggregation": 178,
-        "stage_unknown": 18,
-        "not_newer_than_recorded_event": 1
-      }
-    },
-    {
-      "runAt": "2026-08-17T21:26:25.790Z",
-      "kstDate": "2026-08-18",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-18",
-      "primarySource": "google",
-      "consideredArticles": 327,
-      "appliedCount": 1,
-      "skippedCount": 321,
-      "applied": [
-        {
-          "companyId": "hyundai-motor",
-          "companyLegalName": "현대자동차 주식회사",
-          "previousStage": "S3",
-          "previousEventDate": "2026-08-14",
-          "nextStage": "S3",
-          "nextEventDate": "2026-08-16",
-          "sourceUrl": "https://usmbc.co.kr/NewsArticle/856917",
-          "sourceName": "usmbc.co.kr",
-          "confidence": 0.91
-        }
-      ],
-      "skippedReasonCounts": {
-        "not_eligible_for_status_aggregation": 168,
-        "scope_excluded": 134,
         "stage_unknown": 18,
         "not_newer_than_recorded_event": 1
       }
