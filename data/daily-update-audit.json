@@ -2,6 +2,25 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-12T21:34:54.933Z",
+      "kstDate": "2026-10-13",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-13",
+      "primarySource": "google",
+      "consideredArticles": 712,
+      "appliedCount": 0,
+      "skippedCount": 712,
+      "applied": [],
+      "skippedReasonCounts": {
+        "scope_excluded": 241,
+        "not_eligible_for_status_aggregation": 265,
+        "retain_main_state": 6,
+        "not_newer_than_recorded_event": 198,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-10-11T21:36:53.786Z",
       "kstDate": "2026-10-12",
       "ruleVersion": "1.2.0",
@@ -1594,35 +1613,6 @@
         "not_eligible_for_status_aggregation": 181,
         "retain_main_state": 1,
         "stage_unknown": 8,
-        "not_newer_than_recorded_event": 1
-      }
-    },
-    {
-      "runAt": "2026-08-18T21:27:59.870Z",
-      "kstDate": "2026-08-19",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-19",
-      "primarySource": "google",
-      "consideredArticles": 337,
-      "appliedCount": 1,
-      "skippedCount": 330,
-      "applied": [
-        {
-          "companyId": "hyundai-motor",
-          "companyLegalName": "현대자동차 주식회사",
-          "previousStage": "S3",
-          "previousEventDate": "2026-08-16",
-          "nextStage": "S3",
-          "nextEventDate": "2026-08-18",
-          "sourceUrl": "https://v.daum.net/v/QEjdxVrNhw",
-          "sourceName": "v.daum.net",
-          "confidence": 0.8
-        }
-      ],
-      "skippedReasonCounts": {
-        "scope_excluded": 133,
-        "not_eligible_for_status_aggregation": 178,
-        "stage_unknown": 18,
         "not_newer_than_recorded_event": 1
       }
     }
