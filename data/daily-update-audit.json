@@ -2,6 +2,50 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-13T21:36:44.127Z",
+      "kstDate": "2026-10-14",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-14",
+      "primarySource": "google",
+      "consideredArticles": 717,
+      "appliedCount": 2,
+      "skippedCount": 715,
+      "applied": [
+        {
+          "companyId": "hanwha-ocean",
+          "companyLegalName": "한화오션 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-10-02",
+          "nextStage": "S3",
+          "nextEventDate": "2026-10-13",
+          "sourceUrl": "https://idomin.com/news/articleView.html?idxno=2016870",
+          "sourceName": "경남도민일보",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S3",
+          "previousEventDate": "2026-10-08",
+          "nextStage": "S3",
+          "nextEventDate": "2026-10-13",
+          "sourceUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=212047&pno=20261013085244AE06736",
+          "sourceName": "Tbc.co.kr",
+          "confidence": 0.91,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 234,
+        "not_eligible_for_status_aggregation": 270,
+        "retain_main_state": 6,
+        "not_newer_than_recorded_event": 202,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "settled_record_needs_equal_grade_evidence": 2
+      }
+    },
+    {
       "runAt": "2026-10-12T21:34:54.933Z",
       "kstDate": "2026-10-13",
       "ruleVersion": "1.2.0",
@@ -1596,24 +1640,6 @@
         "stage_unknown": 8,
         "retain_main_state": 1,
         "not_newer_than_recorded_event": 2
-      }
-    },
-    {
-      "runAt": "2026-08-19T21:30:53.041Z",
-      "kstDate": "2026-08-20",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-20",
-      "primarySource": "google",
-      "consideredArticles": 334,
-      "appliedCount": 0,
-      "skippedCount": 327,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 136,
-        "not_eligible_for_status_aggregation": 181,
-        "retain_main_state": 1,
-        "stage_unknown": 8,
-        "not_newer_than_recorded_event": 1
       }
     }
   ]

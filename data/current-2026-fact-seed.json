@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-09",
+  "asOf": "2026-10-14",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -653,21 +653,21 @@
       "bargainingYear": 2026,
       "agreementType": "WAGE",
       "stage": "S3",
-      "eventDate": "2026-10-08",
-      "title": "포스코 임금교섭 재개...임금 협상 입장차 여전",
+      "eventDate": "2026-10-13",
+      "title": "포스코 노사, 13일·14일 임금 교섭 재개",
       "factSummary": "Tbc.co.kr 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
       "directEmployerId": "posco",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
       "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
-      "sourceUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=211876&pno=20261008091455AE06569",
+      "sourceUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=212047&pno=20261013085244AE06736",
       "sourceName": "Tbc.co.kr",
       "sourceTier": "B",
       "confidence": 0.91,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-09 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-14 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-16",
@@ -745,17 +745,24 @@
           "label": "본교섭 진행",
           "summary": "Tbc.co.kr 보도 제목 기준 확인: 포스코 임금교섭 재개...임금 협상 입장차 여전",
           "sourceUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=211876&pno=20261008091455AE06569"
+        },
+        {
+          "date": "2026-10-13",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "Tbc.co.kr 보도 제목 기준 확인: 포스코 노사, 13일·14일 임금 교섭 재개",
+          "sourceUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=212047&pno=20261013085244AE06736"
         }
       ],
       "id": "posco:2026:WAGE:2026-07-27",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=211876&pno=20261008091455AE06569",
+      "originalUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=212047&pno=20261013085244AE06736",
       "agreementTypeEvidence": "포스코 2026년 임금협상 중노위 조정 신청 포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
-      "autoUpdatedAt": "2026-10-08T21:35:08.881Z",
+      "autoUpdatedAt": "2026-10-13T21:36:44.127Z",
       "stageEvidence": {
         "companyId": "posco",
-        "text": "포스코 임금교섭 재개...임금 협상 입장차 여전",
+        "text": "포스코 노사, 13일·14일 임금 교섭 재개",
         "topic": null,
         "basis": "title_signals"
       }
@@ -766,21 +773,21 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S3",
-      "eventDate": "2026-10-02",
-      "title": "[속보] HD현대 임단협 부결···한화오션·HD현대 갈등 지속",
-      "factSummary": "녹색경제신문 본문 회사별 행위 근거 기준 본교섭 진행 확인 · 원문 URL 검증 완료",
+      "eventDate": "2026-10-13",
+      "title": "“한화오션이 공동체 정신으로 노사 교섭 해결해달라”",
+      "factSummary": "경남도민일보 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 경남지부 한화오션지회",
       "directEmployerId": "hanwha-ocean",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "한화오션지회 공식 규칙 제6조는 지회를 한화오션(주) 노동자 중 생산직·기타직·4급·5급 사원으로 구성한다고 명시하고, 생산직·별정직은 입사와 동시에 조합원이 된다고 규정한다.",
       "scopeEvidenceUrl": "https://howu.or.kr/38/?bmode=view&idx=160524153",
-      "sourceUrl": "https://greened.kr/news/articleView.html?idxno=351326",
-      "sourceName": "녹색경제신문",
+      "sourceUrl": "https://idomin.com/news/articleView.html?idxno=2016870",
+      "sourceName": "경남도민일보",
       "sourceTier": "B",
-      "confidence": 0.84,
+      "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-06 자동 수집 반영 · 본문 회사별 행위 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-14 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-12",
@@ -816,19 +823,26 @@
           "label": "본교섭 진행",
           "summary": "녹색경제신문 본문의 해당 회사 문맥 기준 본교섭 진행 확인: 한화오션 또한 임금협상을 두고 대치를 이어가고 있다",
           "sourceUrl": "https://greened.kr/news/articleView.html?idxno=351326"
+        },
+        {
+          "date": "2026-10-13",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "경남도민일보 보도 제목 기준 확인: “한화오션이 공동체 정신으로 노사 교섭 해결해달라”",
+          "sourceUrl": "https://idomin.com/news/articleView.html?idxno=2016870"
         }
       ],
       "id": "hanwha-ocean:2026:INTEGRATED:2026-07-24",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://greened.kr/news/articleView.html?idxno=351326",
+      "originalUrl": "https://idomin.com/news/articleView.html?idxno=2016870",
       "agreementTypeEvidence": "한화오션 2026년 본조합 임단협 본교섭 지연 7월 24일 보도는 한화오션 본조합의 2026년 임금·단체협약 본교섭 자체가 지연됐다고 전했다. 앞선 보도에서 노조는 기본급 정액 인상, 성과급 기준, 정년·임금피크제, 복지 및 채용 확대를 포함한 요구안을 전달한 것으로 확인된다.",
-      "autoUpdatedAt": "2026-10-05T21:41:36.259Z",
+      "autoUpdatedAt": "2026-10-13T21:36:44.127Z",
       "stageEvidence": {
         "companyId": "hanwha-ocean",
-        "text": "한화오션 또한 임금협상을 두고 대치를 이어가고 있다",
-        "topic": "ongoing_bargaining",
-        "basis": "publisher_body_subject_predicate"
+        "text": "“한화오션이 공동체 정신으로 노사 교섭 해결해달라”",
+        "topic": null,
+        "basis": "title_signals"
       }
     },
     {
