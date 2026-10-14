@@ -2,6 +2,50 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-14T21:35:38.464Z",
+      "kstDate": "2026-10-15",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-15",
+      "primarySource": "google",
+      "consideredArticles": 703,
+      "appliedCount": 2,
+      "skippedCount": 701,
+      "applied": [
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S3",
+          "previousEventDate": "2026-10-13",
+          "nextStage": "S3",
+          "nextEventDate": "2026-10-14",
+          "sourceUrl": "https://news.jkn.co.kr/post/1022372",
+          "sourceName": "재경일보",
+          "confidence": 0.86,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "lg-uplus",
+          "companyLegalName": "주식회사 엘지유플러스",
+          "previousStage": "S3",
+          "previousEventDate": "2026-07-02",
+          "nextStage": "S5",
+          "nextEventDate": "2026-10-14",
+          "sourceUrl": "https://newsway.co.kr/news/view?ud=2026101416082780577",
+          "sourceName": "뉴스웨이",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 267,
+        "scope_excluded": 226,
+        "retain_main_state": 7,
+        "not_newer_than_recorded_event": 199,
+        "stage_downgrade_without_explicit_evidence": 1,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-10-13T21:36:44.127Z",
       "kstDate": "2026-10-14",
       "ruleVersion": "1.2.0",
@@ -1622,24 +1666,6 @@
         "stage_unknown": 6,
         "retain_main_state": 1,
         "not_newer_than_recorded_event": 1
-      }
-    },
-    {
-      "runAt": "2026-08-20T21:27:59.127Z",
-      "kstDate": "2026-08-21",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-21",
-      "primarySource": "google",
-      "consideredArticles": 330,
-      "appliedCount": 0,
-      "skippedCount": 324,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 132,
-        "not_eligible_for_status_aggregation": 181,
-        "stage_unknown": 8,
-        "retain_main_state": 1,
-        "not_newer_than_recorded_event": 2
       }
     }
   ]

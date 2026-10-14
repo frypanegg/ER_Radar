@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-14",
+  "asOf": "2026-10-15",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -653,21 +653,21 @@
       "bargainingYear": 2026,
       "agreementType": "WAGE",
       "stage": "S3",
-      "eventDate": "2026-10-13",
-      "title": "포스코 노사, 13일·14일 임금 교섭 재개",
-      "factSummary": "Tbc.co.kr 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-10-14",
+      "title": "김영훈 장관 “포스코 노사교섭 적극 지도”...노동부, 임금교섭 직접 조정 나선다 : 정치",
+      "factSummary": "재경일보 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
       "directEmployerId": "posco",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
       "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
-      "sourceUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=212047&pno=20261013085244AE06736",
-      "sourceName": "Tbc.co.kr",
+      "sourceUrl": "https://news.jkn.co.kr/post/1022372",
+      "sourceName": "재경일보",
       "sourceTier": "B",
-      "confidence": 0.91,
+      "confidence": 0.86,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-14 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-15 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-16",
@@ -752,17 +752,24 @@
           "label": "본교섭 진행",
           "summary": "Tbc.co.kr 보도 제목 기준 확인: 포스코 노사, 13일·14일 임금 교섭 재개",
           "sourceUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=212047&pno=20261013085244AE06736"
+        },
+        {
+          "date": "2026-10-14",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "재경일보 보도 제목 기준 확인: 김영훈 장관 “포스코 노사교섭 적극 지도”...노동부, 임금교섭 직접 조정 나선다 : 정치",
+          "sourceUrl": "https://news.jkn.co.kr/post/1022372"
         }
       ],
       "id": "posco:2026:WAGE:2026-07-27",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=212047&pno=20261013085244AE06736",
+      "originalUrl": "https://news.jkn.co.kr/post/1022372",
       "agreementTypeEvidence": "포스코 2026년 임금협상 중노위 조정 신청 포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
-      "autoUpdatedAt": "2026-10-13T21:36:44.127Z",
+      "autoUpdatedAt": "2026-10-14T21:35:38.464Z",
       "stageEvidence": {
         "companyId": "posco",
-        "text": "포스코 노사, 13일·14일 임금 교섭 재개",
+        "text": "김영훈 장관 “포스코 노사교섭 적극 지도”...노동부, 임금교섭 직접 조정 나선다 : 정치",
         "topic": null,
         "basis": "title_signals"
       }
@@ -929,19 +936,19 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-07-02",
-      "title": "LG유플러스 2026년 임금 및 단체협약 7차 본교섭",
-      "factSummary": "7차 본교섭에서 회사가 평가등급분을 포함한 임금총액 3.6% 인상안을 제시했으나 노조가 물가 상승을 이유로 반대해 입장차가 남았다고 보도됐다.",
+      "stage": "S5",
+      "eventDate": "2026-10-14",
+      "title": "KT는 잠정합의, LGU+는 평행선···통신사 임단협 '희비'",
+      "factSummary": "뉴스웨이 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "LG유플러스 공동교섭단(민주유플러스지부·한마음지부)",
       "directEmploymentEvidence": "원문은 LG유플러스와 두 개 노조로 구성된 공동교섭단을 본교섭 당사자로 적시한다.",
-      "sourceUrl": "https://www.sisajournal-e.com/news/articleView.html?idxno=422271",
-      "sourceName": "시사저널e",
+      "sourceUrl": "https://newsway.co.kr/news/view?ud=2026101416082780577",
+      "sourceName": "뉴스웨이",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "본교섭이 이어지는 단계다. 결렬 선언이나 조정 신청 근거는 확인하지 못해 S3으로 둔다.",
+      "annotation": "2026-10-15 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-05-21",
@@ -956,12 +963,27 @@
           "label": "7차 본교섭",
           "summary": "회사가 임금총액 3.6% 인상안을 제시했고 노조가 이를 받아들이지 않았다고 보도됐다.",
           "sourceUrl": "https://www.sisajournal-e.com/news/articleView.html?idxno=422271"
+        },
+        {
+          "date": "2026-10-14",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "뉴스웨이 보도 제목 기준 확인: KT는 잠정합의, LGU+는 평행선···통신사 임단협 '희비'",
+          "sourceUrl": "https://newsway.co.kr/news/view?ud=2026101416082780577"
         }
       ],
       "id": "lg-uplus:2026:INTEGRATED:2026-07-02",
-      "factualStatus": "VERIFIED_SOURCE",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.sisajournal-e.com/news/articleView.html?idxno=422271"
+      "originalUrl": "https://newsway.co.kr/news/view?ud=2026101416082780577",
+      "agreementTypeEvidence": "LG유플러스 2026년 임금 및 단체협약 7차 본교섭 7차 본교섭에서 회사가 평가등급분을 포함한 임금총액 3.6% 인상안을 제시했으나 노조가 물가 상승을 이유로 반대해 입장차가 남았다고 보도됐다.",
+      "stageEvidence": {
+        "companyId": "lg-uplus",
+        "text": "KT는 잠정합의, LGU+는 평행선···통신사 임단협 '희비'",
+        "topic": null,
+        "basis": "title_signals"
+      },
+      "autoUpdatedAt": "2026-10-14T21:35:38.464Z"
     },
     {
       "recordId": "doosan-enerbility-2026-integrated-mediation-path",
