@@ -1105,7 +1105,7 @@
       },
       "candidateCount": 7,
       "excludedAuditCount": 7,
-      "needsReviewCount": 4,
+      "needsReviewCount": 5,
       "latestPublishedAt": "2026-10-14T07:17:16.000Z"
     },
     {
@@ -2916,23 +2916,23 @@
       },
       "classification": {
         "stage": {
-          "code": "tentative_agreement",
-          "label": "잠정합의"
+          "code": "bargaining",
+          "label": "교섭"
         },
         "eventType": "stage_update",
         "transitionHint": "evaluate_by_date",
-        "statusCode": "S5",
-        "statusName": "tentative",
-        "statusLabel": "잠정합의",
+        "statusCode": "S3",
+        "statusName": "bargaining",
+        "statusLabel": "본교섭 진행",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
-        "statusBasis": "stage_mapping",
+        "statusBasis": "subject_predicate_evidence",
         "stageEvidence": {
           "companyId": "lg-uplus",
-          "text": "KT는 잠정합의, LGU+는 평행선···통신사 임단협 '희비'",
-          "topic": null,
-          "basis": "title_signals"
+          "text": "반면 LG유플러스는 노사 간 임금 인상률을 둘러싼 이견을 좁히지 못하며 협상에 난항을 겪고 있다",
+          "topic": "ongoing_bargaining",
+          "basis": "publisher_body_subject_predicate"
         },
         "scopeClassification": "PRIMARY_DIRECT_UNION",
         "includeInPrimaryDashboard": true,
@@ -2940,8 +2940,8 @@
         "requiresSourceVerification": false,
         "parallelStates": {
           "dispute": {
-            "code": "NONE",
-            "label": "없음",
+            "code": "IMPASSE_REPORTED",
+            "label": "교착",
             "eventState": "occurred",
             "eventStateCode": "OCCURRED"
           },
@@ -2952,8 +2952,8 @@
             "eventStateCode": "OCCURRED"
           },
           "agreement": {
-            "code": "TENTATIVE_AGREEMENT",
-            "label": "잠정합의",
+            "code": "NONE",
+            "label": "없음",
             "eventState": "occurred",
             "eventStateCode": "OCCURRED"
           },
@@ -2961,23 +2961,37 @@
         },
         "annotations": {
           "agreementType": {
-            "code": "INTEGRATED",
+            "code": "WAGE",
             "bargainingYear": 2026,
             "bargainingYearScope": "current_year",
             "factBasis": "title_keyword",
             "needsReview": false,
             "cycleConflict": null
           },
-          "issueSummary": [],
-          "impasseReason": null,
+          "issueSummary": [
+            {
+              "code": "WAGE_INCREASE",
+              "label": "임금 인상",
+              "factBasis": "title_keyword"
+            }
+          ],
+          "impasseReason": {
+            "issueCodes": [
+              "WAGE_INCREASE"
+            ],
+            "summary": "임금 인상 관련 가능성",
+            "causalLinkConfirmed": false,
+            "factBasis": "title_keywords_only",
+            "needsReview": true
+          },
           "ratification": null,
           "originalUrlStatus": "PUBLISHER_VERIFIED",
           "sourceTier": "B",
           "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
-          "needsReview": false
+          "needsReview": true
         },
-        "confidence": 0.8,
-        "needsReview": false,
+        "confidence": 0.84,
+        "needsReview": true,
         "freshness": {
           "score": 0.9865,
           "ageDays": 0.6,
@@ -3031,9 +3045,9 @@
             "includeInPrimaryDashboard": true,
             "directEmployerMatch": true,
             "coveredWorkerRelation": "DIRECT",
-            "scopeEvidenceTier": "COMPANY_BARGAINING_TERM_NO_EXCLUSION_SIGNAL",
+            "scopeEvidenceTier": "COMPANY_UNION_PHRASE_NO_EXCLUSION_SIGNAL",
             "reasonCodes": [
-              "company_bargaining_term"
+              "company_union_phrase"
             ],
             "scopeReview": {
               "agentId": "primary-union-scope-review",
@@ -3048,7 +3062,8 @@
           }
         ],
         "reasonCodes": [
-          "stage_signal",
+          "subject_predicate_evidence",
+          "company_clause_evidence",
           "company_alias"
         ],
         "collectionSources": [

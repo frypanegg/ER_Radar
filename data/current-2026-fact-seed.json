@@ -936,19 +936,19 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S5",
+      "stage": "S3",
       "eventDate": "2026-10-14",
       "title": "KT는 잠정합의, LGU+는 평행선···통신사 임단협 '희비'",
-      "factSummary": "뉴스웨이 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "factSummary": "뉴스웨이 본문 회사별 행위 근거 기준 본교섭 진행 확인 · 원문 URL 검증 완료",
       "unionName": "LG유플러스 공동교섭단(민주유플러스지부·한마음지부)",
       "directEmploymentEvidence": "원문은 LG유플러스와 두 개 노조로 구성된 공동교섭단을 본교섭 당사자로 적시한다.",
       "sourceUrl": "https://newsway.co.kr/news/view?ud=2026101416082780577",
       "sourceName": "뉴스웨이",
       "sourceTier": "B",
-      "confidence": 0.8,
+      "confidence": 0.84,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-15 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-15 원문 회사별 문맥 확인으로 오집계 정정 · KT 잠정합의와 LG유플러스 협상 진행 분리",
       "flowEvents": [
         {
           "date": "2026-05-21",
@@ -966,9 +966,9 @@
         },
         {
           "date": "2026-10-14",
-          "stage": "S5",
-          "label": "잠정합의",
-          "summary": "뉴스웨이 보도 제목 기준 확인: KT는 잠정합의, LGU+는 평행선···통신사 임단협 '희비'",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "뉴스웨이 본문의 해당 회사 문맥 기준 본교섭 진행 확인: 반면 LG유플러스는 노사 간 임금 인상률을 둘러싼 이견을 좁히지 못하며 협상에 난항을 겪고 있다",
           "sourceUrl": "https://newsway.co.kr/news/view?ud=2026101416082780577"
         }
       ],
@@ -979,11 +979,11 @@
       "agreementTypeEvidence": "LG유플러스 2026년 임금 및 단체협약 7차 본교섭 7차 본교섭에서 회사가 평가등급분을 포함한 임금총액 3.6% 인상안을 제시했으나 노조가 물가 상승을 이유로 반대해 입장차가 남았다고 보도됐다.",
       "stageEvidence": {
         "companyId": "lg-uplus",
-        "text": "KT는 잠정합의, LGU+는 평행선···통신사 임단협 '희비'",
-        "topic": null,
-        "basis": "title_signals"
+        "text": "반면 LG유플러스는 노사 간 임금 인상률을 둘러싼 이견을 좁히지 못하며 협상에 난항을 겪고 있다",
+        "topic": "ongoing_bargaining",
+        "basis": "publisher_body_subject_predicate"
       },
-      "autoUpdatedAt": "2026-10-14T21:35:38.464Z"
+      "autoUpdatedAt": "2026-10-15T00:41:07.050Z"
     },
     {
       "recordId": "doosan-enerbility-2026-integrated-mediation-path",

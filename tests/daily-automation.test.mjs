@@ -1864,3 +1864,24 @@ test("employer attribution is independent of punctuation, order and abbreviated 
     }
   }
 });
+
+test('untracked comparison employers cannot lend their agreement to LG Uplus', async () => {
+  const body = '반면 LG유플러스는 노사 간 임금 인상률을 둘러싼 이견을 좁히지 못하며 협상에 난항을 겪고 있다.\nLG유플러스 노사는 오는 15일 제12차 본교섭을 진행할 예정이다.\n노조 측은 이후 합의점을 찾지 못할 경우 조정을 신청할 예정이다.';
+  for (const rival of ['KT', 'ABC', 'SK텔레콤']) {
+    for (const title of [`${rival}는 잠정합의, LGU+는 평행선···통신사 임단협 희비`, `LGU+는 평행선, ${rival}는 잠정합의···통신사 임단협 희비`]) {
+      const result = await classifyTitle(title, 'lg-uplus', 2026, body);
+      assert.equal(result.statusCode, 'S3', title);
+      assert.equal(result.eligibleForStatusAggregation, true);
+      assert.equal(result.parallelStates.agreement.code, 'NONE');
+      assert.equal(result.stageEvidence.basis, 'publisher_body_subject_predicate');
+      assert.doesNotMatch(result.stageEvidence.text, /KT|ABC|SK텔레콤/);
+    }
+  }
+  const demand = await classifyTitle('KT는 잠정합의, LGU+는 평행선···임단협', 'lg-uplus', 2026, 'LG유플러스 교섭 요구안 제시가 지지부진하다.');
+  assert.equal(demand.statusCode, 'S1');
+  const config = JSON.parse(await readFile(new URL('../data/source-config.json', import.meta.url), 'utf8'));
+  validateConfiguration(config);
+  const stale = verifiedArticle({title: 'KT는 잠정합의, LGU+는 평행선···통신사 임단협 희비'});
+  stale.classification.companies = [{companyId:'lg-uplus', tracksPublicRecordUnit:true}];
+  assert.equal(selectCandidate(stale, config).reason, 'employer_stage_evidence_mismatch');
+});

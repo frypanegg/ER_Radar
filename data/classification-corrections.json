@@ -14,6 +14,20 @@
         "topic": "ongoing_bargaining",
         "basis": "publisher_body_subject_predicate"
       }
+    },
+    {
+      "correctedAt": "2026-10-15T00:41:07.081Z",
+      "companyId": "lg-uplus",
+      "sourceUrl": "https://newsway.co.kr/news/view?ud=2026101416082780577",
+      "previousStage": "S5",
+      "correctedStage": "S3",
+      "reason": "Untracked KT agreement leaked into LG Uplus. Publisher body confirms ongoing wage negotiations; mediation is only conditional and future.",
+      "evidence": {
+        "companyId": "lg-uplus",
+        "text": "반면 LG유플러스는 노사 간 임금 인상률을 둘러싼 이견을 좁히지 못하며 협상에 난항을 겪고 있다",
+        "topic": "ongoing_bargaining",
+        "basis": "publisher_body_subject_predicate"
+      }
     }
   ]
 }

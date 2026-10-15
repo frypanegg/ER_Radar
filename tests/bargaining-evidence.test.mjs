@@ -41,3 +41,15 @@ test('body scope does not cross a rival employer or a historical passage', () =>
   assert.equal(employerBodyEvidence('한화오션 현황\nHD현대중공업 현황\n노사는 본교섭이 지지부진하다.', employer, [employer, rival]), null);
   assert.equal(employerBodyEvidence('한화오션은 지난해 본교섭이 지지부진했다.', employer, [employer, rival]), null);
 });
+
+test('Newsway article ID takes precedence over date and related-story classes', () => {
+  const body = extractArticleBody('<div class="view-text">등록 2026.10.14</div><div class="view-text" id="view-text"><p>LG유플러스는 협상에 난항을 겪고 있다.</p></div><div>KT 잠정합의</div>');
+  assert.match(body, /협상에 난항/);
+  assert.doesNotMatch(body, /등록|KT/);
+});
+
+test('an untracked employer terminates body anaphora', () => {
+  assert.equal(employerBodyEvidence('한화오션 현황\nKT는 잠정합의했다.\n노사는 교섭이 지지부진하다.', employer, [employer]), null);
+  assert.equal(delayedTopic('한화오션 교섭 요구안 제시가 평행선').status, 'S1');
+  assert.equal(delayedTopic('한화오션 협상에 난항을 겪고 있다').status, 'S3');
+});

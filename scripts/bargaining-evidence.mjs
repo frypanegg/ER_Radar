@@ -1,6 +1,6 @@
 // Extract employer-bound evidence before assigning a bargaining stage.
 // A delay describes its grammatical topic; it is never a stage on its own.
-const DELAY = /지지부진|더디|지연|난항|장기화|답보/u;
+const DELAY = /지지부진|더디|지연|난항|장기화|답보|평행선/u;
 const TOPICS = [
   { topic: 'ratification', stage: 'tentative_agreement', status: 'S6', re: /(?:잠정\s*합의안?\s*)?(?:인준|찬반\s*투표|조합원\s*투표)(?:\s*(?:절차|진행))?/gu },
   { topic: 'signature', stage: 'tentative_agreement', status: 'S6', re: /(?:협약\s*)?(?:조인식|서명|체결)(?:\s*(?:절차|진행))?/gu },
@@ -18,7 +18,7 @@ export function delayedTopic(text) {
       const after = text.slice(match.index + match[0].length);
       // Only case particles/adverbs can connect this topic to the delay.
       // Thus "교섭 요구안 제시가 지지부진" binds to "요구안 제시", not "교섭".
-      const predicate = after.match(/^(?:은|는|이|가|도|의)?\s*(?:(?:계속|여전히|좀처럼|아직|다소)\s*)?(지지부진|더디|지연|난항|장기화|답보)/u);
+      const predicate = after.match(/^(?:은|는|이|가|도|의|에|에서)?\s*(?:(?:계속|여전히|좀처럼|아직|다소)\s*)?(지지부진|더디|지연|난항|장기화|답보|평행선)/u);
       if (predicate && !/^(?:하지?\s*않|이?\s*아니|될\s*(?:경우|전망)|할\s*경우)/u.test(after.slice(predicate[0].length))) delayed.push({ ...rule, index: match.index, text: match[0] + predicate[0] });
     }
   }
@@ -42,7 +42,12 @@ export function employerBodyEvidence(body, company, companies) {
   let active = false;
   let scopeContext = "";
   const owned = [];
-  for (const sentence of sentences) {
+  for (const rawSentence of sentences) {
+    const scoped = employerHeadline(rawSentence, company, companies);
+    // A foreign subject terminates anaphora even when it is not tracked.
+    if (scoped.multipleEmployers && !scoped.text) { active = false; continue; }
+    const sentence = scoped.text;
+    if (subjectMentions(rawSentence, companies).some(m => m.id !== company.id) && !mentions(sentence, company)) { active = false; continue; }
     const named = companies.filter((c) => mentions(sentence, c));
     const target = mentions(sentence, company);
     const foreign = named.some((c) => c.id !== company.id);
@@ -88,7 +93,7 @@ export function extractArticleBody(html) {
       if (body) return body.slice(0, 60000);
     } catch { /* Fall back to a known article container. */ }
   }
-  const opening = /<(div|section)\b[^>]*\b(?:id|class)=["'](?:article-view-content-div|articleBodyContents|articleBody|newsct_article|dic_area|news-contents)["'][^>]*>/i.exec(html);
+  const opening = /<(div)\b[^>]*\bid=["']view-text["'][^>]*>/i.exec(html) ?? /<(div|section)\b[^>]*\b(?:id|class)=["'](?:article-view-content-div|articleBodyContents|articleBody|newsct_article|dic_area|news-contents)["'][^>]*>/i.exec(html);
   if (!opening) return '';
   const start = opening.index + opening[0].length;
   const tags = new RegExp(`<\\/?${opening[1]}\\b[^>]*>`, 'gi');
@@ -113,8 +118,7 @@ export function employerAliases(company) {
   ))];
 }
 
-export function employerHeadline(title, company, companies) {
-  if (!company) return { text: title, multipleEmployers: false };
+function subjectMentions(title, companies) {
   const found = [];
   for (const entry of companies) {
     for (const alias of employerAliases(entry)) {
@@ -132,11 +136,24 @@ export function employerHeadline(title, company, companies) {
   for (const match of title.matchAll(/[A-Z\p{Script=Hangul}]{1,12}重/gu)) {
     found.push({ id: `untracked:${match[0]}`, start: match.index, end: match.index + match[0].length });
   }
+  // Untracked company acronyms and explicit company-name suffixes also delimit
+  // subjects. Do not require every comparison employer to be a dashboard entry.
+  for (const match of title.matchAll(/(?:^|[\s,·…;]|반면\s*)([A-Z][A-Za-z0-9+&-]{1,20}|[가-힣A-Z]{2,20}(?:중공업|텔레콤|전자|자동차|유플러스))(?=은|는|이|가|\s|[,·…;]|$)/gu)) {
+    const name = match[1];
+    const start = match.index + match[0].lastIndexOf(name);
+    found.push({ id: `untracked:${name}`, start, end: start + name.length });
+  }
   found.sort((a, b) => a.start - b.start || b.end - a.end || Number(a.id.startsWith('untracked:')) - Number(b.id.startsWith('untracked:')));
   const mentions = [];
   for (const match of found) {
     if (!mentions.length || match.start >= mentions.at(-1).end) mentions.push(match);
   }
+  return mentions;
+}
+
+export function employerHeadline(title, company, companies) {
+  if (!company) return { text: title, multipleEmployers: false };
+  const mentions = subjectMentions(title, companies);
   const multipleEmployers = new Set(mentions.map((m) => m.id)).size > 1;
   if (!multipleEmployers) return { text: title, multipleEmployers: false };
   const parts = mentions.flatMap((mention, index) => mention.id === company.id
