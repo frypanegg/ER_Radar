@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-15",
+  "asOf": "2026-10-16",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -506,19 +506,19 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-08-04",
-      "title": "한국철도공사 2026년 임금 및 단체협약 제1차 본교섭",
-      "factSummary": "2026년 임금 및 단체협약 제1차 본교섭이 8월 4일 서울본부에서 열렸다고 노동조합이 게시했다. 7월 14일 임금교섭을 시작으로 실무교섭이 각각 세 차례 진행됐다.",
+      "stage": "S4",
+      "eventDate": "2026-10-13",
+      "title": "코레일 노사 임단협 결렬 “12월 파업”",
+      "factSummary": "매일노동뉴스 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국철도노동조합",
       "directEmploymentEvidence": "노동조합 공식 게시물은 철도공사를 교섭 상대로 적시하고, 승진제도·임금 등 철도공사 소속 직원의 근로조건을 교섭 의제로 기술한다.",
-      "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774",
-      "sourceName": "전국철도노동조합",
-      "sourceTier": "A",
+      "sourceUrl": "https://labortoday.co.kr/news/articleView.html?idxno=237214",
+      "sourceName": "매일노동뉴스",
+      "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "상견례를 겸한 제1차 본교섭까지 확인된다. 결렬·조정 근거는 확인하지 않아 S3으로 둔다. 같은 노조가 국가철도공단과 별도로 벌이는 교섭은 이 행에 포함하지 않는다.",
+      "annotation": "2026-10-16 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-07-14",
@@ -533,12 +533,27 @@
           "label": "제1차 본교섭",
           "summary": "제1차 본교섭에서 상견례와 함께 승진제도·임금 등 주요 의제를 논의했다고 게시됐다.",
           "sourceUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
+        },
+        {
+          "date": "2026-10-13",
+          "stage": "S4",
+          "label": "교착·조정 경로",
+          "summary": "매일노동뉴스 보도 제목 기준 확인: 코레일 노사 임단협 결렬 “12월 파업”",
+          "sourceUrl": "https://labortoday.co.kr/news/articleView.html?idxno=237214"
         }
       ],
       "id": "korail:2026:INTEGRATED:2026-08-04",
-      "factualStatus": "VERIFIED_SOURCE",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.krwu.or.kr/bbs/board.php?bo_table=s2_1&wr_id=157774"
+      "originalUrl": "https://labortoday.co.kr/news/articleView.html?idxno=237214",
+      "agreementTypeEvidence": "한국철도공사 2026년 임금 및 단체협약 제1차 본교섭 2026년 임금 및 단체협약 제1차 본교섭이 8월 4일 서울본부에서 열렸다고 노동조합이 게시했다. 7월 14일 임금교섭을 시작으로 실무교섭이 각각 세 차례 진행됐다.",
+      "stageEvidence": {
+        "companyId": "korail",
+        "text": "코레일 노사 임단협 결렬 “12월 파업”",
+        "topic": null,
+        "basis": "title_signals"
+      },
+      "autoUpdatedAt": "2026-10-15T21:34:03.151Z"
     },
     {
       "companyId": "kakao",
@@ -859,19 +874,19 @@
       "companyId": "seoul-metro",
       "unionName": "서울교통공사 노동조합",
       "directEmploymentEvidence": "노동조합 공식 소식지는 서울교통공사 소속 직원으로 구성된 노동조합을 회사와의 교섭 당사자로 적시한다.",
-      "sourceName": "뉴스토마토",
+      "sourceName": "한국철도일보",
       "sourceTier": "B",
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S4",
-      "eventDate": "2026-09-30",
-      "title": "(단독)서울교통공사 임단협 결렬...'인력 충원' 놓고 노사 평행선",
-      "factSummary": "뉴스토마토 보도 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
-      "sourceUrl": "https://newstomato.com/readnews.aspx?no=1315212",
+      "eventDate": "2026-10-15",
+      "title": "서울교통공사노조, 임단협 결렬 후 쟁의절차 돌입...내달 찬반투표",
+      "factSummary": "한국철도일보 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "sourceUrl": "https://korearailroad.kr/news/articleView.html?idxno=205883",
       "confidence": 0.8,
-      "annotation": "2026-10-01 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-16 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-07-15",
@@ -886,14 +901,27 @@
           "label": "교착·조정 경로",
           "summary": "뉴스토마토 보도 제목 기준 확인: (단독)서울교통공사 임단협 결렬...'인력 충원' 놓고 노사 평행선",
           "sourceUrl": "https://newstomato.com/readnews.aspx?no=1315212"
+        },
+        {
+          "date": "2026-10-15",
+          "stage": "S4",
+          "label": "교착·조정 경로",
+          "summary": "한국철도일보 보도 제목 기준 확인: 서울교통공사노조, 임단협 결렬 후 쟁의절차 돌입...내달 찬반투표",
+          "sourceUrl": "https://korearailroad.kr/news/articleView.html?idxno=205883"
         }
       ],
       "id": "seoul-metro:2026:INTEGRATED:2026-07-15",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://newstomato.com/readnews.aspx?no=1315212",
+      "originalUrl": "https://korearailroad.kr/news/articleView.html?idxno=205883",
       "agreementTypeEvidence": "서울교통공사 2026년 임금 및 단체협약 요구안 확정 노동조합 소식지에 2026년 임금 및 단체협약 요구안과 중앙노사협의회 의결이 게시됐다.",
-      "autoUpdatedAt": "2026-09-30T21:35:13.243Z"
+      "autoUpdatedAt": "2026-10-15T21:34:03.150Z",
+      "stageEvidence": {
+        "companyId": "seoul-metro",
+        "text": "서울교통공사노조, 임단협 결렬 후 쟁의절차 돌입...내달 찬반투표",
+        "topic": null,
+        "basis": "title_signals"
+      }
     },
     {
       "companyId": "korean-air",

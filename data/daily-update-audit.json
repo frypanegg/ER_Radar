@@ -2,6 +2,51 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-15T21:34:03.151Z",
+      "kstDate": "2026-10-16",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-16",
+      "primarySource": "google",
+      "consideredArticles": 710,
+      "appliedCount": 2,
+      "skippedCount": 708,
+      "applied": [
+        {
+          "companyId": "seoul-metro",
+          "companyLegalName": "서울교통공사",
+          "previousStage": "S4",
+          "previousEventDate": "2026-09-30",
+          "nextStage": "S4",
+          "nextEventDate": "2026-10-15",
+          "sourceUrl": "https://korearailroad.kr/news/articleView.html?idxno=205883",
+          "sourceName": "한국철도일보",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "korail",
+          "companyLegalName": "한국철도공사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-08-04",
+          "nextStage": "S4",
+          "nextEventDate": "2026-10-13",
+          "sourceUrl": "https://labortoday.co.kr/news/articleView.html?idxno=237214",
+          "sourceName": "매일노동뉴스",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 279,
+        "stage_unknown": 1,
+        "scope_excluded": 221,
+        "retain_main_state": 5,
+        "stage_downgrade_without_explicit_evidence": 3,
+        "not_newer_than_recorded_event": 198,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-10-14T21:35:38.464Z",
       "kstDate": "2026-10-15",
       "ruleVersion": "1.2.0",
@@ -1647,24 +1692,6 @@
         "scope_excluded": 147,
         "not_eligible_for_status_aggregation": 175,
         "stage_unknown": 6,
-        "not_newer_than_recorded_event": 1
-      }
-    },
-    {
-      "runAt": "2026-08-21T21:29:01.670Z",
-      "kstDate": "2026-08-22",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-22",
-      "primarySource": "google",
-      "consideredArticles": 329,
-      "appliedCount": 0,
-      "skippedCount": 322,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 140,
-        "not_eligible_for_status_aggregation": 174,
-        "stage_unknown": 6,
-        "retain_main_state": 1,
         "not_newer_than_recorded_event": 1
       }
     }
