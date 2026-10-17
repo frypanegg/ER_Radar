@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-16",
+  "asOf": "2026-10-18",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -507,7 +507,7 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S4",
-      "eventDate": "2026-10-13",
+      "eventDate": "2026-10-17",
       "title": "코레일 노사 임단협 결렬 “12월 파업”",
       "factSummary": "매일노동뉴스 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국철도노동조합",
@@ -518,7 +518,7 @@
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-16 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-18 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-07-14",
@@ -553,7 +553,7 @@
         "topic": null,
         "basis": "title_signals"
       },
-      "autoUpdatedAt": "2026-10-15T21:34:03.151Z"
+      "autoUpdatedAt": "2026-10-17T21:35:12.569Z"
     },
     {
       "companyId": "kakao",
