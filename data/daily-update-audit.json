@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-21T21:38:58.711Z",
+      "kstDate": "2026-10-22",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-22",
+      "primarySource": "google",
+      "consideredArticles": 714,
+      "appliedCount": 1,
+      "skippedCount": 713,
+      "applied": [
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S3",
+          "previousEventDate": "2026-10-14",
+          "nextStage": "S3",
+          "nextEventDate": "2026-10-21",
+          "sourceUrl": "https://weekly.hankooki.com/news/articleViewAmp.html?idxno=7189944",
+          "sourceName": "주간한국",
+          "confidence": 0.84,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "stage_unknown": 8,
+        "not_eligible_for_status_aggregation": 295,
+        "scope_excluded": 230,
+        "retain_main_state": 5,
+        "not_newer_than_recorded_event": 171,
+        "stage_downgrade_without_explicit_evidence": 2,
+        "settled_record_needs_equal_grade_evidence": 2
+      }
+    },
+    {
       "runAt": "2026-10-20T21:39:34.201Z",
       "kstDate": "2026-10-21",
       "ruleVersion": "1.2.0",
@@ -1599,37 +1632,6 @@
         "stage_unknown": 12,
         "stage_downgrade_without_explicit_evidence": 3,
         "not_newer_than_recorded_event": 4
-      }
-    },
-    {
-      "runAt": "2026-08-26T21:36:26.629Z",
-      "kstDate": "2026-08-27",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-27",
-      "primarySource": "google",
-      "consideredArticles": 588,
-      "appliedCount": 1,
-      "skippedCount": 555,
-      "applied": [
-        {
-          "companyId": "kia",
-          "companyLegalName": "기아 주식회사",
-          "previousStage": "S5",
-          "previousEventDate": "2026-08-25",
-          "nextStage": "S5",
-          "nextEventDate": "2026-08-26",
-          "sourceUrl": "https://munhwa.com/article/11612297",
-          "sourceName": "문화일보",
-          "confidence": 0.8
-        }
-      ],
-      "skippedReasonCounts": {
-        "scope_excluded": 253,
-        "not_eligible_for_status_aggregation": 282,
-        "retain_main_state": 1,
-        "stage_unknown": 13,
-        "not_newer_than_recorded_event": 5,
-        "stage_downgrade_without_explicit_evidence": 1
       }
     }
   ]

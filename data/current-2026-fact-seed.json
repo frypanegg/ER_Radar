@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-18",
+  "asOf": "2026-10-22",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -668,21 +668,21 @@
       "bargainingYear": 2026,
       "agreementType": "WAGE",
       "stage": "S3",
-      "eventDate": "2026-10-14",
-      "title": "김영훈 장관 “포스코 노사교섭 적극 지도”...노동부, 임금교섭 직접 조정 나선다 : 정치",
-      "factSummary": "재경일보 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-10-21",
+      "title": "‘제철보국’ 잊었나...포스코 임금협상 장기화에 한국경제 ‘긴장’",
+      "factSummary": "주간한국 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
       "directEmployerId": "posco",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
       "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
-      "sourceUrl": "https://news.jkn.co.kr/post/1022372",
-      "sourceName": "재경일보",
+      "sourceUrl": "https://weekly.hankooki.com/news/articleViewAmp.html?idxno=7189944",
+      "sourceName": "주간한국",
       "sourceTier": "B",
-      "confidence": 0.86,
+      "confidence": 0.84,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-15 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-22 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-16",
@@ -774,19 +774,26 @@
           "label": "본교섭 진행",
           "summary": "재경일보 보도 제목 기준 확인: 김영훈 장관 “포스코 노사교섭 적극 지도”...노동부, 임금교섭 직접 조정 나선다 : 정치",
           "sourceUrl": "https://news.jkn.co.kr/post/1022372"
+        },
+        {
+          "date": "2026-10-21",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "주간한국 보도 제목 기준 확인: ‘제철보국’ 잊었나...포스코 임금협상 장기화에 한국경제 ‘긴장’",
+          "sourceUrl": "https://weekly.hankooki.com/news/articleViewAmp.html?idxno=7189944"
         }
       ],
       "id": "posco:2026:WAGE:2026-07-27",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://news.jkn.co.kr/post/1022372",
+      "originalUrl": "https://weekly.hankooki.com/news/articleViewAmp.html?idxno=7189944",
       "agreementTypeEvidence": "포스코 2026년 임금협상 중노위 조정 신청 포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
-      "autoUpdatedAt": "2026-10-14T21:35:38.464Z",
+      "autoUpdatedAt": "2026-10-21T21:38:58.711Z",
       "stageEvidence": {
         "companyId": "posco",
-        "text": "김영훈 장관 “포스코 노사교섭 적극 지도”...노동부, 임금교섭 직접 조정 나선다 : 정치",
-        "topic": null,
-        "basis": "title_signals"
+        "text": "임금협상 장기화",
+        "topic": "ongoing_bargaining",
+        "basis": "title_subject_predicate"
       }
     },
     {
