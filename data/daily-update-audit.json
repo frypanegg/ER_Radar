@@ -2,6 +2,26 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-22T21:35:34.761Z",
+      "kstDate": "2026-10-23",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-23",
+      "primarySource": "google",
+      "consideredArticles": 725,
+      "appliedCount": 0,
+      "skippedCount": 725,
+      "applied": [],
+      "skippedReasonCounts": {
+        "scope_excluded": 242,
+        "not_eligible_for_status_aggregation": 283,
+        "stage_unknown": 7,
+        "retain_main_state": 7,
+        "not_newer_than_recorded_event": 181,
+        "stage_downgrade_without_explicit_evidence": 2,
+        "settled_record_needs_equal_grade_evidence": 3
+      }
+    },
+    {
       "runAt": "2026-10-21T21:38:58.711Z",
       "kstDate": "2026-10-22",
       "ruleVersion": "1.2.0",
@@ -1601,37 +1621,6 @@
         "stage_unknown": 9,
         "stage_downgrade_without_explicit_evidence": 3,
         "not_newer_than_recorded_event": 5
-      }
-    },
-    {
-      "runAt": "2026-08-27T21:37:00.885Z",
-      "kstDate": "2026-08-28",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-28",
-      "primarySource": "google",
-      "consideredArticles": 601,
-      "appliedCount": 1,
-      "skippedCount": 568,
-      "applied": [
-        {
-          "companyId": "hyundai-mobis",
-          "companyLegalName": "현대모비스 주식회사",
-          "previousStage": "S3",
-          "previousEventDate": "2026-06-02",
-          "nextStage": "S5",
-          "nextEventDate": "2026-08-26",
-          "sourceUrl": "https://g-enews.com/article/Industry/2026/08/202608261553196633112616b072_1",
-          "sourceName": "글로벌이코노믹",
-          "confidence": 0.8
-        }
-      ],
-      "skippedReasonCounts": {
-        "not_eligible_for_status_aggregation": 289,
-        "scope_excluded": 259,
-        "retain_main_state": 1,
-        "stage_unknown": 12,
-        "stage_downgrade_without_explicit_evidence": 3,
-        "not_newer_than_recorded_event": 4
       }
     }
   ]
