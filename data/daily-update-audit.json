@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-23T21:36:27.462Z",
+      "kstDate": "2026-10-24",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-24",
+      "primarySource": "google",
+      "consideredArticles": 730,
+      "appliedCount": 1,
+      "skippedCount": 729,
+      "applied": [
+        {
+          "companyId": "hd-hyundai-heavy-industries",
+          "companyLegalName": "HD현대중공업 주식회사",
+          "previousStage": "S5",
+          "previousEventDate": "2026-10-01",
+          "nextStage": "S5",
+          "nextEventDate": "2026-10-23",
+          "sourceUrl": "https://fntimes.com/html/view.php?ud=20261023164716750fa6b69a559_18",
+          "sourceName": "한국금융신문",
+          "confidence": 0.91,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 242,
+        "not_eligible_for_status_aggregation": 276,
+        "stage_unknown": 10,
+        "retain_main_state": 6,
+        "not_newer_than_recorded_event": 191,
+        "stage_downgrade_without_explicit_evidence": 2,
+        "settled_record_needs_equal_grade_evidence": 2
+      }
+    },
+    {
       "runAt": "2026-10-22T21:35:34.761Z",
       "kstDate": "2026-10-23",
       "ruleVersion": "1.2.0",
@@ -1600,25 +1633,6 @@
         "not_eligible_for_status_aggregation": 272,
         "retain_main_state": 1,
         "stage_unknown": 10,
-        "stage_downgrade_without_explicit_evidence": 3,
-        "not_newer_than_recorded_event": 5
-      }
-    },
-    {
-      "runAt": "2026-08-28T17:50:23.358Z",
-      "kstDate": "2026-08-29",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-29",
-      "primarySource": "google",
-      "consideredArticles": 606,
-      "appliedCount": 0,
-      "skippedCount": 572,
-      "applied": [],
-      "skippedReasonCounts": {
-        "not_eligible_for_status_aggregation": 288,
-        "scope_excluded": 265,
-        "retain_main_state": 2,
-        "stage_unknown": 9,
         "stage_downgrade_without_explicit_evidence": 3,
         "not_newer_than_recorded_event": 5
       }
