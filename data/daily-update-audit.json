@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-24T21:38:13.973Z",
+      "kstDate": "2026-10-25",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-25",
+      "primarySource": "google",
+      "consideredArticles": 715,
+      "appliedCount": 1,
+      "skippedCount": 714,
+      "applied": [
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S3",
+          "previousEventDate": "2026-10-21",
+          "nextStage": "S4",
+          "nextEventDate": "2026-10-24",
+          "sourceUrl": "https://newstomato.com/readnews.aspx?no=1317871",
+          "sourceName": "뉴스토마토",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 232,
+        "not_eligible_for_status_aggregation": 293,
+        "retain_main_state": 5,
+        "stage_unknown": 7,
+        "not_newer_than_recorded_event": 173,
+        "settled_record_needs_equal_grade_evidence": 3,
+        "stage_downgrade_without_explicit_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-10-23T21:36:27.462Z",
       "kstDate": "2026-10-24",
       "ruleVersion": "1.2.0",
@@ -1616,25 +1649,6 @@
         "stage_unknown": 16,
         "stage_downgrade_without_explicit_evidence": 2,
         "not_newer_than_recorded_event": 6
-      }
-    },
-    {
-      "runAt": "2026-08-29T21:35:32.951Z",
-      "kstDate": "2026-08-30",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-08-30",
-      "primarySource": "google",
-      "consideredArticles": 597,
-      "appliedCount": 0,
-      "skippedCount": 557,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 266,
-        "not_eligible_for_status_aggregation": 272,
-        "retain_main_state": 1,
-        "stage_unknown": 10,
-        "stage_downgrade_without_explicit_evidence": 3,
-        "not_newer_than_recorded_event": 5
       }
     }
   ]
