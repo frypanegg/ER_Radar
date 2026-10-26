@@ -2,6 +2,26 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-26T21:35:16.474Z",
+      "kstDate": "2026-10-27",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-27",
+      "primarySource": "google",
+      "consideredArticles": 716,
+      "appliedCount": 0,
+      "skippedCount": 716,
+      "applied": [],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 287,
+        "scope_excluded": 242,
+        "stage_unknown": 2,
+        "retain_main_state": 6,
+        "not_newer_than_recorded_event": 173,
+        "stage_downgrade_without_explicit_evidence": 3,
+        "settled_record_needs_equal_grade_evidence": 3
+      }
+    },
+    {
       "runAt": "2026-10-25T21:44:54.782Z",
       "kstDate": "2026-10-26",
       "ruleVersion": "1.2.0",
@@ -1619,37 +1639,6 @@
         "stage_unknown": 15,
         "not_newer_than_recorded_event": 7,
         "stage_downgrade_without_explicit_evidence": 2
-      }
-    },
-    {
-      "runAt": "2026-08-31T21:31:35.715Z",
-      "kstDate": "2026-09-01",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-09-01",
-      "primarySource": "google",
-      "consideredArticles": 585,
-      "appliedCount": 1,
-      "skippedCount": 545,
-      "applied": [
-        {
-          "companyId": "hyundai-motor",
-          "companyLegalName": "현대자동차 주식회사",
-          "previousStage": "S5",
-          "previousEventDate": "2026-08-25",
-          "nextStage": "S6",
-          "nextEventDate": "2026-08-31",
-          "sourceUrl": "https://stock.mk.co.kr/news/view/1150917",
-          "sourceName": "매일경제 마켓",
-          "confidence": 0.8
-        }
-      ],
-      "skippedReasonCounts": {
-        "not_eligible_for_status_aggregation": 260,
-        "scope_excluded": 261,
-        "retain_main_state": 1,
-        "stage_unknown": 15,
-        "stage_downgrade_without_explicit_evidence": 2,
-        "not_newer_than_recorded_event": 6
       }
     }
   ]
