@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-25",
+  "asOf": "2026-10-28",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -808,22 +808,22 @@
       "companyLegalName": "한화오션 주식회사",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-10-13",
-      "title": "“한화오션이 공동체 정신으로 노사 교섭 해결해달라”",
-      "factSummary": "경남도민일보 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S6",
+      "eventDate": "2026-10-27",
+      "title": "한화오션 노사, 임단협 잠정합의...29일 조합원 찬반투표",
+      "factSummary": "매일일보 제목 기준 인준·서명 대기 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 경남지부 한화오션지회",
       "directEmployerId": "hanwha-ocean",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "한화오션지회 공식 규칙 제6조는 지회를 한화오션(주) 노동자 중 생산직·기타직·4급·5급 사원으로 구성한다고 명시하고, 생산직·별정직은 입사와 동시에 조합원이 된다고 규정한다.",
       "scopeEvidenceUrl": "https://howu.or.kr/38/?bmode=view&idx=160524153",
-      "sourceUrl": "https://idomin.com/news/articleView.html?idxno=2016870",
-      "sourceName": "경남도민일보",
+      "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=2011052",
+      "sourceName": "매일일보",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-14 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-28 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-12",
@@ -866,17 +866,24 @@
           "label": "본교섭 진행",
           "summary": "경남도민일보 보도 제목 기준 확인: “한화오션이 공동체 정신으로 노사 교섭 해결해달라”",
           "sourceUrl": "https://idomin.com/news/articleView.html?idxno=2016870"
+        },
+        {
+          "date": "2026-10-27",
+          "stage": "S6",
+          "label": "인준·서명 대기",
+          "summary": "매일일보 보도 제목 기준 확인: 한화오션 노사, 임단협 잠정합의...29일 조합원 찬반투표",
+          "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=2011052"
         }
       ],
       "id": "hanwha-ocean:2026:INTEGRATED:2026-07-24",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://idomin.com/news/articleView.html?idxno=2016870",
+      "originalUrl": "https://m-i.kr/news/articleView.html?idxno=2011052",
       "agreementTypeEvidence": "한화오션 2026년 본조합 임단협 본교섭 지연 7월 24일 보도는 한화오션 본조합의 2026년 임금·단체협약 본교섭 자체가 지연됐다고 전했다. 앞선 보도에서 노조는 기본급 정액 인상, 성과급 기준, 정년·임금피크제, 복지 및 채용 확대를 포함한 요구안을 전달한 것으로 확인된다.",
-      "autoUpdatedAt": "2026-10-13T21:36:44.127Z",
+      "autoUpdatedAt": "2026-10-27T21:35:44.529Z",
       "stageEvidence": {
         "companyId": "hanwha-ocean",
-        "text": "“한화오션이 공동체 정신으로 노사 교섭 해결해달라”",
+        "text": "한화오션 노사, 임단협 잠정합의...29일 조합원 찬반투표",
         "topic": null,
         "basis": "title_signals"
       }
