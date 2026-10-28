@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-28",
+  "asOf": "2026-10-29",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -562,19 +562,19 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "WAGE",
-      "stage": "S5",
-      "eventDate": "2026-07-31",
-      "title": "카카오뱅크 인뱅 첫 전일파업...카카오노사는 잠정합의",
-      "factSummary": "v.daum.net 보도 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S6",
+      "eventDate": "2026-08-05",
+      "title": "파업 사태 넘은 카카오, 임금협상 잠정합의...찬반투표 돌입",
+      "factSummary": "진일보 | 전남일보 제목 기준 인준·서명 대기 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국화학섬유식품산업노동조합 카카오지회",
       "directEmploymentEvidence": "원문은 카카오와 화섬식품노조 카카오지회를 임금협상 당사자로 적시하고, 판교 본사에서 카카오 소속 직원이 참여한 파업을 같은 교섭의 경과로 기술한다.",
-      "sourceUrl": "https://v.daum.net/v/20260731114922048?f=p",
-      "sourceName": "v.daum.net",
+      "sourceUrl": "https://jnilbo.com/news/articleView.html?idxno=90000054809",
+      "sourceName": "진일보 | 전남일보",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-08-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-29 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-10",
@@ -596,14 +596,27 @@
           "label": "잠정합의",
           "summary": "v.daum.net 보도 제목 기준 확인: 카카오뱅크 인뱅 첫 전일파업...카카오노사는 잠정합의",
           "sourceUrl": "https://v.daum.net/v/20260731114922048?f=p"
+        },
+        {
+          "date": "2026-08-05",
+          "stage": "S6",
+          "label": "인준·서명 대기",
+          "summary": "진일보 | 전남일보 보도 제목 기준 확인: 파업 사태 넘은 카카오, 임금협상 잠정합의...찬반투표 돌입",
+          "sourceUrl": "https://jnilbo.com/news/articleView.html?idxno=90000054809"
         }
       ],
       "id": "kakao:2026:WAGE:2026-07-30",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://v.daum.net/v/20260731114922048?f=p",
+      "originalUrl": "https://jnilbo.com/news/articleView.html?idxno=90000054809",
       "agreementTypeEvidence": "카카오 2026년 임금협상 잠정합의 두 차례 파업을 거친 뒤 노사가 임금협상 잠정합의안을 도출했다고 보도됐다. 조합원 찬반투표 결과는 원문에서 확인되지 않는다.",
-      "autoUpdatedAt": "2026-08-25T14:49:50.065Z"
+      "autoUpdatedAt": "2026-10-28T21:37:41.175Z",
+      "stageEvidence": {
+        "companyId": "kakao",
+        "text": "파업 사태 넘은 카카오, 임금협상 잠정합의...찬반투표 돌입",
+        "topic": null,
+        "basis": "title_signals"
+      }
     },
     {
       "recordId": "gm-korea-2026-integrated-ratification",
@@ -1290,20 +1303,20 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S4",
-      "eventDate": "2026-09-22",
-      "title": "삼성바이오 2차 사후조정도 '빈손'...노조, 파업 준비",
-      "factSummary": "biz.sbs.co.kr 보도 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S3",
+      "eventDate": "2026-10-28",
+      "title": "삼성바이오로직스 노사, 다음달 3일부터 임단협 교섭 재개",
+      "factSummary": "연합인포맥스 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "삼성바이오로직스 노동조합",
       "agreementTypeEvidence": "삼성바이오로직스 2026년 임금 및 단체협약 교섭에서 노조는 기본급 인상률과 성과급 재원 배분을 요구했고, 임단협 쟁점이 풀리지 않아 파업과 준법투쟁으로 이어졌다고 보도됐다.",
       "directEmploymentEvidence": "원문은 삼성바이오로직스 소속 조합원 약 2천800명이 참여한 파업과 그 노동조합을 회사의 교섭 상대로 적시한다.",
-      "sourceUrl": "https://biz.sbs.co.kr/article/20000336319",
-      "sourceName": "biz.sbs.co.kr",
+      "sourceUrl": "https://news.einfomax.co.kr/news/articleView.html?idxno=4441639",
+      "sourceName": "연합인포맥스",
       "sourceTier": "B",
-      "confidence": 0.8,
+      "confidence": 0.91,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-09-24 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-29 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-28",
@@ -1360,13 +1373,33 @@
           "label": "교착·조정 경로",
           "summary": "biz.sbs.co.kr 보도 제목 기준 확인: 삼성바이오 2차 사후조정도 '빈손'...노조, 파업 준비",
           "sourceUrl": "https://biz.sbs.co.kr/article/20000336319"
+        },
+        {
+          "date": "2026-10-20",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "연합뉴스 보도 제목 기준 확인: 삼성바이오 노조, 2차 파업 연기...교섭 재개 추진",
+          "sourceUrl": "https://yna.co.kr/view/AKR20261020122800017"
+        },
+        {
+          "date": "2026-10-28",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "연합인포맥스 보도 제목 기준 확인: 삼성바이오로직스 노사, 다음달 3일부터 임단협 교섭 재개",
+          "sourceUrl": "https://news.einfomax.co.kr/news/articleView.html?idxno=4441639"
         }
       ],
       "id": "samsung-biologics:2026:INTEGRATED:2026-05-06",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://biz.sbs.co.kr/article/20000336319",
-      "autoUpdatedAt": "2026-09-23T21:33:13.062Z"
+      "originalUrl": "https://news.einfomax.co.kr/news/articleView.html?idxno=4441639",
+      "autoUpdatedAt": "2026-10-28T21:37:41.175Z",
+      "stageEvidence": {
+        "companyId": "samsung-biologics",
+        "text": "삼성바이오로직스 노사, 다음달 3일부터 임단협 교섭 재개",
+        "topic": null,
+        "basis": "title_signals"
+      }
     },
     {
       "companyId": "lg-display",

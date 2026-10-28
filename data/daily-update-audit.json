@@ -2,6 +2,51 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-10-28T21:37:41.175Z",
+      "kstDate": "2026-10-29",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-10-29",
+      "primarySource": "google",
+      "consideredArticles": 741,
+      "appliedCount": 2,
+      "skippedCount": 738,
+      "applied": [
+        {
+          "companyId": "samsung-biologics",
+          "companyLegalName": "삼성바이오로직스 주식회사",
+          "previousStage": "S4",
+          "previousEventDate": "2026-09-22",
+          "nextStage": "S3",
+          "nextEventDate": "2026-10-28",
+          "sourceUrl": "https://news.einfomax.co.kr/news/articleView.html?idxno=4441639",
+          "sourceName": "연합인포맥스",
+          "confidence": 0.91,
+          "eventsApplied": 2
+        },
+        {
+          "companyId": "kakao",
+          "companyLegalName": "주식회사 카카오",
+          "previousStage": "S5",
+          "previousEventDate": "2026-07-31",
+          "nextStage": "S6",
+          "nextEventDate": "2026-08-05",
+          "sourceUrl": "https://jnilbo.com/news/articleView.html?idxno=90000054809",
+          "sourceName": "진일보 | 전남일보",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 242,
+        "not_eligible_for_status_aggregation": 300,
+        "stage_unknown": 7,
+        "retain_main_state": 5,
+        "not_newer_than_recorded_event": 177,
+        "stage_downgrade_without_explicit_evidence": 3,
+        "settled_record_needs_equal_grade_evidence": 4
+      }
+    },
+    {
       "runAt": "2026-10-27T21:35:44.529Z",
       "kstDate": "2026-10-28",
       "ruleVersion": "1.2.0",
@@ -1634,25 +1679,6 @@
         "stage_unknown": 12,
         "stage_downgrade_without_explicit_evidence": 3,
         "not_newer_than_recorded_event": 7
-      }
-    },
-    {
-      "runAt": "2026-09-02T21:31:36.248Z",
-      "kstDate": "2026-09-03",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-09-03",
-      "primarySource": "google",
-      "consideredArticles": 573,
-      "appliedCount": 0,
-      "skippedCount": 541,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 243,
-        "not_eligible_for_status_aggregation": 269,
-        "retain_main_state": 1,
-        "stage_unknown": 20,
-        "stage_downgrade_without_explicit_evidence": 3,
-        "not_newer_than_recorded_event": 5
       }
     }
   ]
