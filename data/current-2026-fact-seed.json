@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-29",
+  "asOf": "2026-10-31",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -680,22 +680,22 @@
       "companyLegalName": "주식회사 포스코",
       "bargainingYear": 2026,
       "agreementType": "WAGE",
-      "stage": "S4",
-      "eventDate": "2026-10-24",
-      "title": "포스코 임금협상 끝내 결렬...“11월2일부터 무기한 파업”",
-      "factSummary": "뉴스토마토 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S5",
+      "eventDate": "2026-10-30",
+      "title": "포스코노사 임금교섭 잠정 합의...기본급 2.6% 인상",
+      "factSummary": "연합뉴스 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
       "directEmployerId": "posco",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
       "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
-      "sourceUrl": "https://newstomato.com/readnews.aspx?no=1317871",
-      "sourceName": "뉴스토마토",
+      "sourceUrl": "https://yna.co.kr/view/AKR20261030171100053",
+      "sourceName": "연합뉴스",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-25 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-31 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-16",
@@ -801,17 +801,24 @@
           "label": "교착·조정 경로",
           "summary": "뉴스토마토 보도 제목 기준 확인: 포스코 임금협상 끝내 결렬...“11월2일부터 무기한 파업”",
           "sourceUrl": "https://newstomato.com/readnews.aspx?no=1317871"
+        },
+        {
+          "date": "2026-10-30",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "연합뉴스 보도 제목 기준 확인: 포스코노사 임금교섭 잠정 합의...기본급 2.6% 인상",
+          "sourceUrl": "https://yna.co.kr/view/AKR20261030171100053"
         }
       ],
       "id": "posco:2026:WAGE:2026-07-27",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://newstomato.com/readnews.aspx?no=1317871",
+      "originalUrl": "https://yna.co.kr/view/AKR20261030171100053",
       "agreementTypeEvidence": "포스코 2026년 임금협상 중노위 조정 신청 포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
-      "autoUpdatedAt": "2026-10-24T21:38:13.973Z",
+      "autoUpdatedAt": "2026-10-30T21:37:40.986Z",
       "stageEvidence": {
         "companyId": "posco",
-        "text": "포스코 임금협상 끝내 결렬...“11월2일부터 무기한 파업”",
+        "text": "포스코노사 임금교섭 잠정 합의...기본급 2.6% 인상",
         "topic": null,
         "basis": "title_signals"
       }
@@ -822,21 +829,21 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S6",
-      "eventDate": "2026-10-27",
-      "title": "한화오션 노사, 임단협 잠정합의...29일 조합원 찬반투표",
-      "factSummary": "매일일보 제목 기준 인준·서명 대기 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-10-28",
+      "title": "한화오션 노사, 임단협 잠정 합의...내일 찬반투표",
+      "factSummary": "KBS 뉴스 제목 기준 인준·서명 대기 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 경남지부 한화오션지회",
       "directEmployerId": "hanwha-ocean",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "한화오션지회 공식 규칙 제6조는 지회를 한화오션(주) 노동자 중 생산직·기타직·4급·5급 사원으로 구성한다고 명시하고, 생산직·별정직은 입사와 동시에 조합원이 된다고 규정한다.",
       "scopeEvidenceUrl": "https://howu.or.kr/38/?bmode=view&idx=160524153",
-      "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=2011052",
-      "sourceName": "매일일보",
+      "sourceUrl": "https://news.kbs.co.kr/news/view.do?ncd=8698082",
+      "sourceName": "KBS 뉴스",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-28 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-10-31 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-12",
@@ -886,17 +893,24 @@
           "label": "인준·서명 대기",
           "summary": "매일일보 보도 제목 기준 확인: 한화오션 노사, 임단협 잠정합의...29일 조합원 찬반투표",
           "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=2011052"
+        },
+        {
+          "date": "2026-10-28",
+          "stage": "S6",
+          "label": "인준·서명 대기",
+          "summary": "KBS 뉴스 보도 제목 기준 확인: 한화오션 노사, 임단협 잠정 합의...내일 찬반투표",
+          "sourceUrl": "https://news.kbs.co.kr/news/view.do?ncd=8698082"
         }
       ],
       "id": "hanwha-ocean:2026:INTEGRATED:2026-07-24",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://m-i.kr/news/articleView.html?idxno=2011052",
+      "originalUrl": "https://news.kbs.co.kr/news/view.do?ncd=8698082",
       "agreementTypeEvidence": "한화오션 2026년 본조합 임단협 본교섭 지연 7월 24일 보도는 한화오션 본조합의 2026년 임금·단체협약 본교섭 자체가 지연됐다고 전했다. 앞선 보도에서 노조는 기본급 정액 인상, 성과급 기준, 정년·임금피크제, 복지 및 채용 확대를 포함한 요구안을 전달한 것으로 확인된다.",
-      "autoUpdatedAt": "2026-10-27T21:35:44.529Z",
+      "autoUpdatedAt": "2026-10-30T21:37:40.986Z",
       "stageEvidence": {
         "companyId": "hanwha-ocean",
-        "text": "한화오션 노사, 임단협 잠정합의...29일 조합원 찬반투표",
+        "text": "한화오션 노사, 임단협 잠정 합의...내일 찬반투표",
         "topic": null,
         "basis": "title_signals"
       }
