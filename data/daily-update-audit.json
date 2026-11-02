@@ -2,6 +2,63 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-11-02T21:38:26.216Z",
+      "kstDate": "2026-11-03",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-11-03",
+      "primarySource": "google",
+      "consideredArticles": 713,
+      "appliedCount": 3,
+      "skippedCount": 709,
+      "applied": [
+        {
+          "companyId": "lg-uplus",
+          "companyLegalName": "주식회사 엘지유플러스",
+          "previousStage": "S3",
+          "previousEventDate": "2026-10-14",
+          "nextStage": "S4",
+          "nextEventDate": "2026-11-02",
+          "sourceUrl": "http://inews24.com/view/2021504",
+          "sourceName": "아이뉴스24",
+          "confidence": 0.86,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "samsung-biologics",
+          "companyLegalName": "삼성바이오로직스 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-10-28",
+          "nextStage": "S3",
+          "nextEventDate": "2026-11-02",
+          "sourceUrl": "https://yna.co.kr/view/AKR20261102073500017",
+          "sourceName": "연합뉴스",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S5",
+          "previousEventDate": "2026-10-30",
+          "nextStage": "S6",
+          "nextEventDate": "2026-11-01",
+          "sourceUrl": "https://sentv.co.kr/article/view/sentv202611010006?d=pc",
+          "sourceName": "서울경제TV",
+          "confidence": 0.8,
+          "eventsApplied": 2
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 279,
+        "retain_main_state": 6,
+        "scope_excluded": 217,
+        "stage_unknown": 7,
+        "not_newer_than_recorded_event": 198,
+        "settled_record_needs_equal_grade_evidence": 1,
+        "stage_downgrade_without_explicit_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-11-01T21:34:15.202Z",
       "kstDate": "2026-11-02",
       "ruleVersion": "1.2.0",
@@ -1665,25 +1722,6 @@
         "retain_main_state": 4,
         "stage_downgrade_without_explicit_evidence": 2,
         "not_newer_than_recorded_event": 5
-      }
-    },
-    {
-      "runAt": "2026-09-07T21:33:53.007Z",
-      "kstDate": "2026-09-08",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-09-08",
-      "primarySource": "google",
-      "consideredArticles": 590,
-      "appliedCount": 0,
-      "skippedCount": 555,
-      "applied": [],
-      "skippedReasonCounts": {
-        "not_eligible_for_status_aggregation": 267,
-        "scope_excluded": 265,
-        "retain_main_state": 3,
-        "stage_unknown": 12,
-        "stage_downgrade_without_explicit_evidence": 1,
-        "not_newer_than_recorded_event": 7
       }
     }
   ]

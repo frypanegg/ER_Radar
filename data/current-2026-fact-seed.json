@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-10-31",
+  "asOf": "2026-11-03",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -680,22 +680,22 @@
       "companyLegalName": "주식회사 포스코",
       "bargainingYear": 2026,
       "agreementType": "WAGE",
-      "stage": "S5",
-      "eventDate": "2026-10-30",
-      "title": "포스코노사 임금교섭 잠정 합의...기본급 2.6% 인상",
-      "factSummary": "연합뉴스 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S6",
+      "eventDate": "2026-11-01",
+      "title": "포스코 노조, 임금협상 잠정합의...7일 찬반투표",
+      "factSummary": "서울경제TV 제목 기준 인준·서명 대기 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
       "directEmployerId": "posco",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
       "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
-      "sourceUrl": "https://yna.co.kr/view/AKR20261030171100053",
-      "sourceName": "연합뉴스",
+      "sourceUrl": "https://sentv.co.kr/article/view/sentv202611010006?d=pc",
+      "sourceName": "서울경제TV",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-31 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-11-03 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-16",
@@ -808,17 +808,31 @@
           "label": "잠정합의",
           "summary": "연합뉴스 보도 제목 기준 확인: 포스코노사 임금교섭 잠정 합의...기본급 2.6% 인상",
           "sourceUrl": "https://yna.co.kr/view/AKR20261030171100053"
+        },
+        {
+          "date": "2026-10-31",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "광양뉴스 보도 제목 기준 확인: 포스코 노사, 140일 만에 임금교섭 ‘잠정 합의’",
+          "sourceUrl": "https://gynet.co.kr/news/articleView.html?idxno=57247"
+        },
+        {
+          "date": "2026-11-01",
+          "stage": "S6",
+          "label": "인준·서명 대기",
+          "summary": "서울경제TV 보도 제목 기준 확인: 포스코 노조, 임금협상 잠정합의...7일 찬반투표",
+          "sourceUrl": "https://sentv.co.kr/article/view/sentv202611010006?d=pc"
         }
       ],
       "id": "posco:2026:WAGE:2026-07-27",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://yna.co.kr/view/AKR20261030171100053",
+      "originalUrl": "https://sentv.co.kr/article/view/sentv202611010006?d=pc",
       "agreementTypeEvidence": "포스코 2026년 임금협상 중노위 조정 신청 포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
-      "autoUpdatedAt": "2026-10-30T21:37:40.986Z",
+      "autoUpdatedAt": "2026-11-02T21:38:26.216Z",
       "stageEvidence": {
         "companyId": "posco",
-        "text": "포스코노사 임금교섭 잠정 합의...기본급 2.6% 인상",
+        "text": "포스코 노조, 임금협상 잠정합의...7일 찬반투표",
         "topic": null,
         "basis": "title_signals"
       }
@@ -1012,19 +1026,19 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-10-14",
-      "title": "KT는 잠정합의, LGU+는 평행선···통신사 임단협 '희비'",
-      "factSummary": "뉴스웨이 본문 회사별 행위 근거 기준 본교섭 진행 확인 · 원문 URL 검증 완료",
+      "stage": "S4",
+      "eventDate": "2026-11-02",
+      "title": "LGU+ 노사 임단협 결국 결렬...중노위 조정 돌입",
+      "factSummary": "아이뉴스24 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "LG유플러스 공동교섭단(민주유플러스지부·한마음지부)",
       "directEmploymentEvidence": "원문은 LG유플러스와 두 개 노조로 구성된 공동교섭단을 본교섭 당사자로 적시한다.",
-      "sourceUrl": "https://newsway.co.kr/news/view?ud=2026101416082780577",
-      "sourceName": "뉴스웨이",
+      "sourceUrl": "http://inews24.com/view/2021504",
+      "sourceName": "아이뉴스24",
       "sourceTier": "B",
-      "confidence": 0.84,
+      "confidence": 0.86,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-15 원문 회사별 문맥 확인으로 오집계 정정 · KT 잠정합의와 LG유플러스 협상 진행 분리",
+      "annotation": "2026-11-03 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-05-21",
@@ -1046,20 +1060,27 @@
           "label": "본교섭 진행",
           "summary": "뉴스웨이 본문의 해당 회사 문맥 기준 본교섭 진행 확인: 반면 LG유플러스는 노사 간 임금 인상률을 둘러싼 이견을 좁히지 못하며 협상에 난항을 겪고 있다",
           "sourceUrl": "https://newsway.co.kr/news/view?ud=2026101416082780577"
+        },
+        {
+          "date": "2026-11-02",
+          "stage": "S4",
+          "label": "교착·조정 경로",
+          "summary": "아이뉴스24 보도 제목 기준 확인: LGU+ 노사 임단협 결국 결렬...중노위 조정 돌입",
+          "sourceUrl": "http://inews24.com/view/2021504"
         }
       ],
       "id": "lg-uplus:2026:INTEGRATED:2026-07-02",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://newsway.co.kr/news/view?ud=2026101416082780577",
+      "originalUrl": "http://inews24.com/view/2021504",
       "agreementTypeEvidence": "LG유플러스 2026년 임금 및 단체협약 7차 본교섭 7차 본교섭에서 회사가 평가등급분을 포함한 임금총액 3.6% 인상안을 제시했으나 노조가 물가 상승을 이유로 반대해 입장차가 남았다고 보도됐다.",
       "stageEvidence": {
         "companyId": "lg-uplus",
-        "text": "반면 LG유플러스는 노사 간 임금 인상률을 둘러싼 이견을 좁히지 못하며 협상에 난항을 겪고 있다",
-        "topic": "ongoing_bargaining",
-        "basis": "publisher_body_subject_predicate"
+        "text": "LGU+ 노사 임단협 결국 결렬...중노위 조정 돌입",
+        "topic": null,
+        "basis": "title_signals"
       },
-      "autoUpdatedAt": "2026-10-15T00:41:07.050Z"
+      "autoUpdatedAt": "2026-11-02T21:38:26.215Z"
     },
     {
       "recordId": "doosan-enerbility-2026-integrated-mediation-path",
@@ -1318,19 +1339,19 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S3",
-      "eventDate": "2026-10-28",
-      "title": "삼성바이오로직스 노사, 다음달 3일부터 임단협 교섭 재개",
-      "factSummary": "연합인포맥스 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-11-02",
+      "title": "삼성바이오 노사 교섭 미뤄지나...사측 \"2주 연기 제안\"",
+      "factSummary": "연합뉴스 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "삼성바이오로직스 노동조합",
       "agreementTypeEvidence": "삼성바이오로직스 2026년 임금 및 단체협약 교섭에서 노조는 기본급 인상률과 성과급 재원 배분을 요구했고, 임단협 쟁점이 풀리지 않아 파업과 준법투쟁으로 이어졌다고 보도됐다.",
       "directEmploymentEvidence": "원문은 삼성바이오로직스 소속 조합원 약 2천800명이 참여한 파업과 그 노동조합을 회사의 교섭 상대로 적시한다.",
-      "sourceUrl": "https://news.einfomax.co.kr/news/articleView.html?idxno=4441639",
-      "sourceName": "연합인포맥스",
+      "sourceUrl": "https://yna.co.kr/view/AKR20261102073500017",
+      "sourceName": "연합뉴스",
       "sourceTier": "B",
-      "confidence": 0.91,
+      "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-29 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-11-03 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-28",
@@ -1401,16 +1422,23 @@
           "label": "본교섭 진행",
           "summary": "연합인포맥스 보도 제목 기준 확인: 삼성바이오로직스 노사, 다음달 3일부터 임단협 교섭 재개",
           "sourceUrl": "https://news.einfomax.co.kr/news/articleView.html?idxno=4441639"
+        },
+        {
+          "date": "2026-11-02",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "연합뉴스 보도 제목 기준 확인: 삼성바이오 노사 교섭 미뤄지나...사측 \"2주 연기 제안\"",
+          "sourceUrl": "https://yna.co.kr/view/AKR20261102073500017"
         }
       ],
       "id": "samsung-biologics:2026:INTEGRATED:2026-05-06",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://news.einfomax.co.kr/news/articleView.html?idxno=4441639",
-      "autoUpdatedAt": "2026-10-28T21:37:41.175Z",
+      "originalUrl": "https://yna.co.kr/view/AKR20261102073500017",
+      "autoUpdatedAt": "2026-11-02T21:38:26.215Z",
       "stageEvidence": {
         "companyId": "samsung-biologics",
-        "text": "삼성바이오로직스 노사, 다음달 3일부터 임단협 교섭 재개",
+        "text": "삼성바이오 노사 교섭 미뤄지나...사측 \"2주 연기 제안\"",
         "topic": null,
         "basis": "title_signals"
       }
