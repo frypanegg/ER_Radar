@@ -1885,3 +1885,18 @@ test('untracked comparison employers cannot lend their agreement to LG Uplus', a
   stale.classification.companies = [{companyId:'lg-uplus', tracksPublicRecordUnit:true}];
   assert.equal(selectCandidate(stale, config).reason, 'employer_stage_evidence_mismatch');
 });
+
+test('a planned ratification vote does not advance a completed tentative agreement', async () => {
+  for (const vote of ['7일 찬반투표', '내일 찬반투표', '다음 달 7일 찬반투표', '이달 말 찬반투표', '찬반투표 예정', '찬반투표를 앞두고', '찬반투표 남겨둬', '내일 찬반투표 실시']) {
+    const result = await classifyTitle(`현대차 노사 임금협상 잠정합의...${vote}`);
+    assert.equal(result.statusCode, 'S5', vote);
+    assert.equal(result.eventState, 'occurred', vote);
+    assert.equal(result.retainMainState, false, vote);
+    assert.equal(result.parallelStates.agreement.code, 'RATIFICATION_SCHEDULED', vote);
+    assert.equal(result.parallelStates.agreement.eventState, 'planned', vote);
+  }
+  for (const vote of ['찬반투표 돌입', '찬반투표 진행 중', '찬반투표 가결', '인준 완료']) {
+    assert.equal((await classifyTitle(`현대차 노사 잠정합의안...${vote}`)).statusCode, 'S6', vote);
+  }
+  assert.notEqual((await classifyTitle('현대차 노사 잠정합의 예정...7일 찬반투표')).eventState, 'occurred');
+});

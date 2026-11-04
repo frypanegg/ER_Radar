@@ -17,7 +17,7 @@ import {
   resolveGoogleNewsUrl,
 } from "./resolve-google-news.mjs";
 
-import { delayedTopic, employerBodyEvidence, needsBodyEvidence, employerAliases, employerHeadline } from "./bargaining-evidence.mjs";
+import { ratificationEvent, delayedTopic, employerBodyEvidence, needsBodyEvidence, employerAliases, employerHeadline } from "./bargaining-evidence.mjs";
 import { verifyPublisherPage } from "./resolve-google-news.mjs";
 
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
@@ -1015,7 +1015,7 @@ function deriveFrameworkClassification(
       eventState: "occurred",
     };
   }
-  const eventState = deriveEventState(
+  let eventState = deriveEventState(
     title,
     stageClassification,
     framework,
@@ -1046,9 +1046,10 @@ function deriveFrameworkClassification(
     title,
     "(?:쟁의행위|파업).{0,8}찬반투표|찬반투표.{0,12}(?:쟁의행위|파업)",
   );
+  const voteEvent = ratificationEvent(title);
   const explicitState = framework.explicitStateSignals.find(
     (signal) =>
-      !(isStrikeVoteTitle && signal.code === "S6") &&
+      !(signal.code === "S6" && (isStrikeVoteTitle || voteEvent?.planned)) &&
       signal.patterns.some((pattern) => matchesPattern(title, pattern)),
   );
   if (
@@ -1149,6 +1150,26 @@ function deriveFrameworkClassification(
     statusBasis = "ambiguous_agreement_report";
   }
 
+  if (voteEvent && !exceptionCode && statusCode !== "S7") {
+    if (voteEvent.planned) {
+      agreementState = { code: "RATIFICATION_SCHEDULED", label: "인준 투표 예정", eventState: "planned" };
+      // Re-evaluate only the agreement event, without the future vote clause.
+      const agreementText = title.split(/(?:\.{2,}|…+|·{2,}|[,;])/u)
+        .find(part => /잠정\s*합의/u.test(part) && !/(?:찬반\s*투표|조합원\s*투표|인준)/u.test(part));
+      if (agreementText && !/잠정\s*합의.{0,8}(?:예정|전망|추진|목표|기대|가능성)/u.test(agreementText) && !guardForStage(agreementText, "tentative_agreement", taxonomy)) {
+        statusCode = "S5";
+        statusBasis = "tentative_agreement_before_planned_vote";
+        eventState = "occurred";
+      } else {
+        eventState = "planned";
+      }
+    } else {
+      statusCode = "S6";
+      statusBasis = "ratification_occurred";
+      agreementState = { code: voteEvent.ratified ? "RATIFIED" : "RATIFICATION_IN_PROGRESS", label: voteEvent.ratified ? "인준 완료" : "인준 투표 중", eventState: "occurred" };
+      eventState = "occurred";
+    }
+  }
   const status = frameworkStateDefinition(framework, statusCode);
   const retainMainState =
     eventState !== "occurred" ||

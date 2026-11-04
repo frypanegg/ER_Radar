@@ -433,7 +433,7 @@
       },
       "candidateCount": 39,
       "excludedAuditCount": 7,
-      "needsReviewCount": 21,
+      "needsReviewCount": 22,
       "latestPublishedAt": "2026-09-01T07:00:00.000Z"
     },
     {
@@ -517,7 +517,7 @@
       },
       "candidateCount": 42,
       "excludedAuditCount": 4,
-      "needsReviewCount": 25,
+      "needsReviewCount": 27,
       "latestPublishedAt": "2026-11-02T23:49:21.000Z"
     },
     {
@@ -601,7 +601,7 @@
       },
       "candidateCount": 39,
       "excludedAuditCount": 4,
-      "needsReviewCount": 27,
+      "needsReviewCount": 28,
       "latestPublishedAt": "2026-10-28T07:00:00.000Z"
     },
     {
@@ -643,7 +643,7 @@
       },
       "candidateCount": 14,
       "excludedAuditCount": 14,
-      "needsReviewCount": 6,
+      "needsReviewCount": 8,
       "latestPublishedAt": "2026-10-28T13:38:00.000Z"
     },
     {
@@ -1021,7 +1021,7 @@
       },
       "candidateCount": 38,
       "excludedAuditCount": 11,
-      "needsReviewCount": 27,
+      "needsReviewCount": 28,
       "latestPublishedAt": "2026-08-13T07:00:00.000Z"
     },
     {
@@ -2756,13 +2756,13 @@
         },
         "eventType": "stage_update",
         "transitionHint": "evaluate_by_date",
-        "statusCode": "S6",
-        "statusName": "ratification",
-        "statusLabel": "인준·서명 대기",
+        "statusCode": "S5",
+        "statusName": "tentative",
+        "statusLabel": "잠정합의",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
-        "statusBasis": "explicit_status_signal",
+        "statusBasis": "tentative_agreement_before_planned_vote",
         "stageEvidence": {
           "companyId": "posco",
           "text": "포스코 노조, 임금협상 잠정합의...7일 찬반투표",
@@ -2787,16 +2787,16 @@
             "eventStateCode": "OCCURRED"
           },
           "agreement": {
-            "code": "TENTATIVE_AGREEMENT",
-            "label": "잠정합의",
-            "eventState": "occurred",
-            "eventStateCode": "OCCURRED"
+            "code": "RATIFICATION_SCHEDULED",
+            "label": "인준 투표 예정",
+            "eventState": "planned",
+            "eventStateCode": "PLANNED"
           },
           "agreementLifecycle": null
         },
         "voteData": {
           "voteType": "RATIFICATION",
-          "result": "REPORTED",
+          "result": "SCHEDULED",
           "turnoutRate": null,
           "approvalRate": null,
           "legalConclusionInferred": false,
@@ -2813,7 +2813,13 @@
           },
           "issueSummary": [],
           "impasseReason": null,
-          "ratification": null,
+          "ratification": {
+            "proposalChangeSummary": {
+              "summary": null,
+              "comparisonBasis": "previous_or_existing_agreement_not_available",
+              "needsReview": true
+            }
+          },
           "originalUrlStatus": "AGGREGATOR_ONLY",
           "sourceTier": "C",
           "factStatus": "INFERENCE",
@@ -3876,13 +3882,13 @@
         },
         "eventType": "stage_update",
         "transitionHint": "evaluate_by_date",
-        "statusCode": "S6",
-        "statusName": "ratification",
-        "statusLabel": "인준·서명 대기",
+        "statusCode": "S5",
+        "statusName": "tentative",
+        "statusLabel": "잠정합의",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
-        "statusBasis": "explicit_status_signal",
+        "statusBasis": "tentative_agreement_before_planned_vote",
         "stageEvidence": {
           "companyId": "posco",
           "text": "포스코 노사, 임금협약 잠정합의...다음 달 7일 찬반투표",
@@ -3907,16 +3913,16 @@
             "eventStateCode": "OCCURRED"
           },
           "agreement": {
-            "code": "TENTATIVE_AGREEMENT",
-            "label": "잠정합의",
-            "eventState": "occurred",
-            "eventStateCode": "OCCURRED"
+            "code": "RATIFICATION_SCHEDULED",
+            "label": "인준 투표 예정",
+            "eventState": "planned",
+            "eventStateCode": "PLANNED"
           },
           "agreementLifecycle": null
         },
         "voteData": {
           "voteType": "RATIFICATION",
-          "result": "REPORTED",
+          "result": "SCHEDULED",
           "turnoutRate": null,
           "approvalRate": null,
           "legalConclusionInferred": false,
@@ -3933,14 +3939,20 @@
           },
           "issueSummary": [],
           "impasseReason": null,
-          "ratification": null,
+          "ratification": {
+            "proposalChangeSummary": {
+              "summary": null,
+              "comparisonBasis": "previous_or_existing_agreement_not_available",
+              "needsReview": true
+            }
+          },
           "originalUrlStatus": "PUBLISHER_VERIFIED",
           "sourceTier": "B",
           "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
-          "needsReview": false
+          "needsReview": true
         },
         "confidence": 0.8,
-        "needsReview": false,
+        "needsReview": true,
         "freshness": {
           "score": 0.9024,
           "ageDays": 4.4,
@@ -4696,13 +4708,13 @@
         },
         "eventType": "stage_update",
         "transitionHint": "evaluate_by_date",
-        "statusCode": "S6",
-        "statusName": "ratification",
-        "statusLabel": "인준·서명 대기",
+        "statusCode": "S5",
+        "statusName": "tentative",
+        "statusLabel": "잠정합의",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
-        "statusBasis": "explicit_status_signal",
+        "statusBasis": "tentative_agreement_before_planned_vote",
         "stageEvidence": {
           "companyId": "posco",
           "text": "[종합] 포스코 노사, 무기한 파업 문턱서 극적 잠정합의...내달 7일 찬반투표",
@@ -4727,16 +4739,16 @@
             "eventStateCode": "OCCURRED"
           },
           "agreement": {
-            "code": "TENTATIVE_AGREEMENT",
-            "label": "잠정합의",
-            "eventState": "occurred",
-            "eventStateCode": "OCCURRED"
+            "code": "RATIFICATION_SCHEDULED",
+            "label": "인준 투표 예정",
+            "eventState": "planned",
+            "eventStateCode": "PLANNED"
           },
           "agreementLifecycle": null
         },
         "voteData": {
           "voteType": "RATIFICATION",
-          "result": "REPORTED",
+          "result": "SCHEDULED",
           "turnoutRate": null,
           "approvalRate": null,
           "legalConclusionInferred": false,
@@ -4753,14 +4765,20 @@
           },
           "issueSummary": [],
           "impasseReason": null,
-          "ratification": null,
+          "ratification": {
+            "proposalChangeSummary": {
+              "summary": null,
+              "comparisonBasis": "previous_or_existing_agreement_not_available",
+              "needsReview": true
+            }
+          },
           "originalUrlStatus": "PUBLISHER_VERIFIED",
           "sourceTier": "B",
           "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
-          "needsReview": false
+          "needsReview": true
         },
         "confidence": 0.8,
-        "needsReview": false,
+        "needsReview": true,
         "freshness": {
           "score": 0.9017,
           "ageDays": 4.5,
@@ -5521,13 +5539,13 @@
         },
         "eventType": "stage_update",
         "transitionHint": "evaluate_by_date",
-        "statusCode": "S6",
-        "statusName": "ratification",
-        "statusLabel": "인준·서명 대기",
+        "statusCode": "S5",
+        "statusName": "tentative",
+        "statusLabel": "잠정합의",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
-        "statusBasis": "explicit_status_signal",
+        "statusBasis": "tentative_agreement_before_planned_vote",
         "stageEvidence": {
           "companyId": "hanwha-ocean",
           "text": "한화오션 노사, 임단협 잠정 합의...내일 찬반투표",
@@ -5552,16 +5570,16 @@
             "eventStateCode": "OCCURRED"
           },
           "agreement": {
-            "code": "TENTATIVE_AGREEMENT",
-            "label": "잠정합의",
-            "eventState": "occurred",
-            "eventStateCode": "OCCURRED"
+            "code": "RATIFICATION_SCHEDULED",
+            "label": "인준 투표 예정",
+            "eventState": "planned",
+            "eventStateCode": "PLANNED"
           },
           "agreementLifecycle": null
         },
         "voteData": {
           "voteType": "RATIFICATION",
-          "result": "REPORTED",
+          "result": "SCHEDULED",
           "turnoutRate": null,
           "approvalRate": null,
           "legalConclusionInferred": false,
@@ -5578,14 +5596,20 @@
           },
           "issueSummary": [],
           "impasseReason": null,
-          "ratification": null,
+          "ratification": {
+            "proposalChangeSummary": {
+              "summary": null,
+              "comparisonBasis": "previous_or_existing_agreement_not_available",
+              "needsReview": true
+            }
+          },
           "originalUrlStatus": "PUBLISHER_VERIFIED",
           "sourceTier": "B",
           "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
-          "needsReview": false
+          "needsReview": true
         },
         "confidence": 0.8,
-        "needsReview": false,
+        "needsReview": true,
         "freshness": {
           "score": 0.8641,
           "ageDays": 6.3,
@@ -7662,13 +7686,13 @@
         },
         "eventType": "stage_update",
         "transitionHint": "evaluate_by_date",
-        "statusCode": "S6",
-        "statusName": "ratification",
-        "statusLabel": "인준·서명 대기",
+        "statusCode": "S5",
+        "statusName": "tentative",
+        "statusLabel": "잠정합의",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
-        "statusBasis": "explicit_status_signal",
+        "statusBasis": "tentative_agreement_before_planned_vote",
         "stageEvidence": {
           "companyId": "hanwha-ocean",
           "text": "한화오션 노사, 임단협 잠정합의...29일 조합원 찬반투표",
@@ -7693,16 +7717,16 @@
             "eventStateCode": "OCCURRED"
           },
           "agreement": {
-            "code": "TENTATIVE_AGREEMENT",
-            "label": "잠정합의",
-            "eventState": "occurred",
-            "eventStateCode": "OCCURRED"
+            "code": "RATIFICATION_SCHEDULED",
+            "label": "인준 투표 예정",
+            "eventState": "planned",
+            "eventStateCode": "PLANNED"
           },
           "agreementLifecycle": null
         },
         "voteData": {
           "voteType": "RATIFICATION",
-          "result": "REPORTED",
+          "result": "SCHEDULED",
           "turnoutRate": null,
           "approvalRate": null,
           "legalConclusionInferred": false,
@@ -7719,14 +7743,20 @@
           },
           "issueSummary": [],
           "impasseReason": null,
-          "ratification": null,
+          "ratification": {
+            "proposalChangeSummary": {
+              "summary": null,
+              "comparisonBasis": "previous_or_existing_agreement_not_available",
+              "needsReview": true
+            }
+          },
           "originalUrlStatus": "PUBLISHER_VERIFIED",
           "sourceTier": "B",
           "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
-          "needsReview": false
+          "needsReview": true
         },
         "confidence": 0.8,
-        "needsReview": false,
+        "needsReview": true,
         "freshness": {
           "score": 0.8401,
           "ageDays": 7.5,
@@ -9178,13 +9208,13 @@
         },
         "eventType": "tentative_reagreed",
         "transitionHint": "evaluate_by_date",
-        "statusCode": "S6",
-        "statusName": "ratification",
-        "statusLabel": "인준·서명 대기",
+        "statusCode": "S5",
+        "statusName": "tentative",
+        "statusLabel": "잠정합의",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
-        "statusBasis": "explicit_status_signal",
+        "statusBasis": "tentative_agreement_before_planned_vote",
         "stageEvidence": {
           "companyId": "hd-hyundai-heavy-industries",
           "text": "HD현대중공업 노사, 임단협 2차 잠정합의... 이달 말 찬반투표",
@@ -9209,16 +9239,16 @@
             "eventStateCode": "OCCURRED"
           },
           "agreement": {
-            "code": "TENTATIVE_AGREEMENT",
-            "label": "잠정합의",
-            "eventState": "occurred",
-            "eventStateCode": "OCCURRED"
+            "code": "RATIFICATION_SCHEDULED",
+            "label": "인준 투표 예정",
+            "eventState": "planned",
+            "eventStateCode": "PLANNED"
           },
           "agreementLifecycle": null
         },
         "voteData": {
           "voteType": "RATIFICATION",
-          "result": "REPORTED",
+          "result": "SCHEDULED",
           "turnoutRate": null,
           "approvalRate": null,
           "legalConclusionInferred": false,
@@ -9235,14 +9265,20 @@
           },
           "issueSummary": [],
           "impasseReason": null,
-          "ratification": null,
+          "ratification": {
+            "proposalChangeSummary": {
+              "summary": null,
+              "comparisonBasis": "previous_or_existing_agreement_not_available",
+              "needsReview": true
+            }
+          },
           "originalUrlStatus": "PUBLISHER_VERIFIED",
           "sourceTier": "B",
           "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
-          "needsReview": false
+          "needsReview": true
         },
         "confidence": 0.91,
-        "needsReview": false,
+        "needsReview": true,
         "freshness": {
           "score": 0.7649,
           "ageDays": 11.6,
@@ -52813,13 +52849,13 @@
         },
         "eventType": "stage_update",
         "transitionHint": "evaluate_by_date",
-        "statusCode": "S6",
-        "statusName": "ratification",
-        "statusLabel": "인준·서명 대기",
+        "statusCode": "S5",
+        "statusName": "tentative",
+        "statusLabel": "잠정합의",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
-        "statusBasis": "explicit_status_signal",
+        "statusBasis": "tentative_agreement_before_planned_vote",
         "stageEvidence": {
           "companyId": "kia",
           "text": "기아도 임단협 '잠정합의'...28일 찬반투표",
@@ -52844,16 +52880,16 @@
             "eventStateCode": "OCCURRED"
           },
           "agreement": {
-            "code": "TENTATIVE_AGREEMENT",
-            "label": "잠정합의",
-            "eventState": "occurred",
-            "eventStateCode": "OCCURRED"
+            "code": "RATIFICATION_SCHEDULED",
+            "label": "인준 투표 예정",
+            "eventState": "planned",
+            "eventStateCode": "PLANNED"
           },
           "agreementLifecycle": null
         },
         "voteData": {
           "voteType": "RATIFICATION",
-          "result": "REPORTED",
+          "result": "SCHEDULED",
           "turnoutRate": null,
           "approvalRate": null,
           "legalConclusionInferred": false,
@@ -52870,14 +52906,20 @@
           },
           "issueSummary": [],
           "impasseReason": null,
-          "ratification": null,
+          "ratification": {
+            "proposalChangeSummary": {
+              "summary": null,
+              "comparisonBasis": "previous_or_existing_agreement_not_available",
+              "needsReview": true
+            }
+          },
           "originalUrlStatus": "PUBLISHER_VERIFIED",
           "sourceTier": "B",
           "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
-          "needsReview": false
+          "needsReview": true
         },
         "confidence": 0.8,
-        "needsReview": false,
+        "needsReview": true,
         "freshness": {
           "score": 0.1957,
           "ageDays": 70.6,
@@ -78191,13 +78233,13 @@
         },
         "eventType": "stage_update",
         "transitionHint": "evaluate_by_date",
-        "statusCode": "S6",
-        "statusName": "ratification",
-        "statusLabel": "인준·서명 대기",
+        "statusCode": "S5",
+        "statusName": "tentative",
+        "statusLabel": "잠정합의",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
         "retainMainState": false,
-        "statusBasis": "explicit_status_signal",
+        "statusBasis": "tentative_agreement_before_planned_vote",
         "stageEvidence": {
           "companyId": "kakao",
           "text": "카카오 노사, 임금협상 잠정합의...조합원 찬반투표 남겨둬",
@@ -78222,16 +78264,16 @@
             "eventStateCode": "OCCURRED"
           },
           "agreement": {
-            "code": "TENTATIVE_AGREEMENT",
-            "label": "잠정합의",
-            "eventState": "occurred",
-            "eventStateCode": "OCCURRED"
+            "code": "RATIFICATION_SCHEDULED",
+            "label": "인준 투표 예정",
+            "eventState": "planned",
+            "eventStateCode": "PLANNED"
           },
           "agreementLifecycle": null
         },
         "voteData": {
           "voteType": "RATIFICATION",
-          "result": "REPORTED",
+          "result": "SCHEDULED",
           "turnoutRate": null,
           "approvalRate": null,
           "legalConclusionInferred": false,
@@ -78248,14 +78290,20 @@
           },
           "issueSummary": [],
           "impasseReason": null,
-          "ratification": null,
+          "ratification": {
+            "proposalChangeSummary": {
+              "summary": null,
+              "comparisonBasis": "previous_or_existing_agreement_not_available",
+              "needsReview": true
+            }
+          },
           "originalUrlStatus": "PUBLISHER_VERIFIED",
           "sourceTier": "B",
           "factStatus": "TITLE_BASIS_SOURCE_VERIFIED",
-          "needsReview": false
+          "needsReview": true
         },
         "confidence": 0.8,
-        "needsReview": false,
+        "needsReview": true,
         "freshness": {
           "score": 0.1073,
           "ageDays": 96.6,

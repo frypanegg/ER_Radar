@@ -28,6 +28,34 @@
         "topic": "ongoing_bargaining",
         "basis": "publisher_body_subject_predicate"
       }
+    },
+    {
+      "correctedAt": "2026-11-04T07:08:07.795Z",
+      "companyId": "posco",
+      "sourceUrl": "https://sentv.co.kr/article/view/sentv202611010006?d=pc",
+      "previousStage": "S6",
+      "correctedStage": "S5",
+      "reason": "Planned vote does not establish voting or ratification. Preserve tentative agreement as the occurred event.",
+      "evidence": {
+        "companyId": "posco",
+        "text": "포스코 노조, 임금협상 잠정합의...7일 찬반투표",
+        "topic": null,
+        "basis": "title_signals"
+      }
+    },
+    {
+      "correctedAt": "2026-11-04T07:08:07.799Z",
+      "companyId": "hanwha-ocean",
+      "sourceUrl": "https://news.kbs.co.kr/news/view.do?ncd=8698082",
+      "previousStage": "S6",
+      "correctedStage": "S5",
+      "reason": "Planned vote does not establish voting or ratification. Preserve tentative agreement as the occurred event.",
+      "evidence": {
+        "companyId": "hanwha-ocean",
+        "text": "한화오션 노사, 임단협 잠정 합의...내일 찬반투표",
+        "topic": null,
+        "basis": "title_signals"
+      }
     }
   ]
 }

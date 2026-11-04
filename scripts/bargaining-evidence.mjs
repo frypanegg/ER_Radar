@@ -162,3 +162,18 @@ export function employerHeadline(title, company, companies) {
     : []);
   return { text: parts.join(' … '), multipleEmployers };
 }
+
+// A vote mention is not evidence that voting has begun. Keep the completed
+// agreement separate from its next, planned event (including verbless headlines).
+export function ratificationEvent(text) {
+  if (/(?:파업|쟁의행위).{0,8}(?:찬반)?투표/u.test(text)) return null;
+  const vote = /(?:찬반\s*투표|조합원\s*(?:총)?투표|인준)/u.exec(text);
+  if (!vote || !/잠정\s*합의|임단협|임금협약/u.test(text)) return null;
+  const tail = text.slice(vote.index);
+  const future = /예정|앞두|남겨|계획|실시하기로|진행하기로/u.test(tail) ||
+    /(?:내일|모레|오는\s*\d+일|내달|다음\s*달|이달\s*말)[^.…·,;]*$/u.test(text.slice(0, vote.index));
+  if (!future && /(?:가결|통과|인준\s*완료|투표.{0,12}(?:돌입|시작|진행\s*중|실시했다|마쳤|완료))/u.test(tail)) {
+    return { planned: false, ratified: /가결|통과|인준\s*완료/u.test(tail) };
+  }
+  return { planned: true, ratified: false };
+}
