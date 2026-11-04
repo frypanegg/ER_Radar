@@ -2,6 +2,50 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-11-04T21:36:45.799Z",
+      "kstDate": "2026-11-05",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-11-05",
+      "primarySource": "google",
+      "consideredArticles": 716,
+      "appliedCount": 2,
+      "skippedCount": 714,
+      "applied": [
+        {
+          "companyId": "samsung-biologics",
+          "companyLegalName": "삼성바이오로직스 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-11-02",
+          "nextStage": "S3",
+          "nextEventDate": "2026-11-04",
+          "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=2014609",
+          "sourceName": "매일일보",
+          "confidence": 0.91,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S5",
+          "previousEventDate": "2026-11-01",
+          "nextStage": "S5",
+          "nextEventDate": "2026-11-03",
+          "sourceUrl": "https://greened.kr/news/articleView.html?idxno=353760",
+          "sourceName": "녹색경제신문",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 218,
+        "not_eligible_for_status_aggregation": 278,
+        "retain_main_state": 9,
+        "stage_unknown": 2,
+        "not_newer_than_recorded_event": 206,
+        "stage_downgrade_without_explicit_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-11-03T21:37:18.251Z",
       "kstDate": "2026-11-04",
       "ruleVersion": "1.2.0",
@@ -1688,26 +1732,6 @@
         "not_eligible_for_status_aggregation": 270,
         "stage_unknown": 18,
         "retain_main_state": 2,
-        "settled_record_needs_equal_grade_evidence": 1,
-        "stage_downgrade_without_explicit_evidence": 1,
-        "not_newer_than_recorded_event": 6
-      }
-    },
-    {
-      "runAt": "2026-09-09T21:36:34.742Z",
-      "kstDate": "2026-09-10",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-09-10",
-      "primarySource": "google",
-      "consideredArticles": 607,
-      "appliedCount": 0,
-      "skippedCount": 569,
-      "applied": [],
-      "skippedReasonCounts": {
-        "not_eligible_for_status_aggregation": 271,
-        "scope_excluded": 273,
-        "stage_unknown": 14,
-        "retain_main_state": 3,
         "settled_record_needs_equal_grade_evidence": 1,
         "stage_downgrade_without_explicit_evidence": 1,
         "not_newer_than_recorded_event": 6

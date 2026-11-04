@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-11-03",
+  "asOf": "2026-11-05",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -681,21 +681,21 @@
       "bargainingYear": 2026,
       "agreementType": "WAGE",
       "stage": "S5",
-      "eventDate": "2026-11-01",
-      "title": "포스코 노조, 임금협상 잠정합의...7일 찬반투표",
-      "factSummary": "서울경제TV 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-11-03",
+      "title": "“조합원 기대에는 못 미치지만”...포스코 노사 잠정합의 투표 나선다",
+      "factSummary": "녹색경제신문 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
       "directEmployerId": "posco",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
       "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
-      "sourceUrl": "https://sentv.co.kr/article/view/sentv202611010006?d=pc",
-      "sourceName": "서울경제TV",
+      "sourceUrl": "https://greened.kr/news/articleView.html?idxno=353760",
+      "sourceName": "녹색경제신문",
       "sourceTier": "B",
       "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-11-04 정정 · 찬반투표 예정과 실제 인준을 구분하여 기사 당시 잠정합의(S5)로 수정",
+      "annotation": "2026-11-05 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-16",
@@ -822,17 +822,24 @@
           "label": "잠정합의",
           "summary": "서울경제TV 보도 제목 기준 확인: 포스코 노조, 임금협상 잠정합의...7일 찬반투표",
           "sourceUrl": "https://sentv.co.kr/article/view/sentv202611010006?d=pc"
+        },
+        {
+          "date": "2026-11-03",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "녹색경제신문 보도 제목 기준 확인: “조합원 기대에는 못 미치지만”...포스코 노사 잠정합의 투표 나선다",
+          "sourceUrl": "https://greened.kr/news/articleView.html?idxno=353760"
         }
       ],
       "id": "posco:2026:WAGE:2026-07-27",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://sentv.co.kr/article/view/sentv202611010006?d=pc",
+      "originalUrl": "https://greened.kr/news/articleView.html?idxno=353760",
       "agreementTypeEvidence": "포스코 2026년 임금협상 중노위 조정 신청 포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
-      "autoUpdatedAt": "2026-11-04T07:08:07.795Z",
+      "autoUpdatedAt": "2026-11-04T21:36:45.799Z",
       "stageEvidence": {
         "companyId": "posco",
-        "text": "포스코 노조, 임금협상 잠정합의...7일 찬반투표",
+        "text": "“조합원 기대에는 못 미치지만”...포스코 노사 잠정합의 투표 나선다",
         "topic": null,
         "basis": "title_signals"
       }
@@ -1339,19 +1346,19 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S3",
-      "eventDate": "2026-11-02",
-      "title": "삼성바이오 노사 교섭 미뤄지나...사측 \"2주 연기 제안\"",
-      "factSummary": "연합뉴스 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-11-04",
+      "title": "삼성바이오로직스 노조, 6일부터 2차 파업...노사 교섭 재개 불발",
+      "factSummary": "매일일보 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "삼성바이오로직스 노동조합",
       "agreementTypeEvidence": "삼성바이오로직스 2026년 임금 및 단체협약 교섭에서 노조는 기본급 인상률과 성과급 재원 배분을 요구했고, 임단협 쟁점이 풀리지 않아 파업과 준법투쟁으로 이어졌다고 보도됐다.",
       "directEmploymentEvidence": "원문은 삼성바이오로직스 소속 조합원 약 2천800명이 참여한 파업과 그 노동조합을 회사의 교섭 상대로 적시한다.",
-      "sourceUrl": "https://yna.co.kr/view/AKR20261102073500017",
-      "sourceName": "연합뉴스",
+      "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=2014609",
+      "sourceName": "매일일보",
       "sourceTier": "B",
-      "confidence": 0.8,
+      "confidence": 0.91,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-11-03 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-11-05 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-28",
@@ -1429,16 +1436,23 @@
           "label": "본교섭 진행",
           "summary": "연합뉴스 보도 제목 기준 확인: 삼성바이오 노사 교섭 미뤄지나...사측 \"2주 연기 제안\"",
           "sourceUrl": "https://yna.co.kr/view/AKR20261102073500017"
+        },
+        {
+          "date": "2026-11-04",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "매일일보 보도 제목 기준 확인: 삼성바이오로직스 노조, 6일부터 2차 파업...노사 교섭 재개 불발",
+          "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=2014609"
         }
       ],
       "id": "samsung-biologics:2026:INTEGRATED:2026-05-06",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://yna.co.kr/view/AKR20261102073500017",
-      "autoUpdatedAt": "2026-11-02T21:38:26.215Z",
+      "originalUrl": "https://m-i.kr/news/articleView.html?idxno=2014609",
+      "autoUpdatedAt": "2026-11-04T21:36:45.799Z",
       "stageEvidence": {
         "companyId": "samsung-biologics",
-        "text": "삼성바이오 노사 교섭 미뤄지나...사측 \"2주 연기 제안\"",
+        "text": "삼성바이오로직스 노조, 6일부터 2차 파업...노사 교섭 재개 불발",
         "topic": null,
         "basis": "title_signals"
       }
