@@ -30,6 +30,8 @@ def main():
         with urllib.request.urlopen(request, timeout=30):
             raise RuntimeError('예상하지 못한 dispatch 응답. Cloudflare 값은 변경하지 않았습니다.')
     except urllib.error.HTTPError as error:
+        if error.code != 422:
+            raise RuntimeError(f'GitHub 인증/권한 검증 실패 (HTTP {error.code}). Cloudflare 값은 변경하지 않았습니다.') from None
         try:
             message = json.loads(error.read()).get('message', '')
         except (ValueError, TypeError):
