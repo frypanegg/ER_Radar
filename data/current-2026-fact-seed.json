@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-11-06",
+  "asOf": "2026-11-07",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -365,19 +365,19 @@
       "coveredWorkerRelation": "DIRECT",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S3",
-      "eventDate": "2026-08-13",
-      "title": "LG화학 2026년 임금 및 단체협약 12차 교섭",
-      "factSummary": "지회 공고에 2026년 임금 및 단체협약 12차 교섭 개최가 올라왔고, 같은 날 천막농성 돌입 투쟁지침이 함께 공고됐다.",
+      "stage": "S5",
+      "eventDate": "2026-11-06",
+      "title": "[단독] LG화학, 호봉 외 2만원 인상...임단협 잠정합의",
+      "factSummary": "데일리한국 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국화학섬유식품산업노동조합 대전충북지부 LG화학 청주지회",
       "directEmploymentEvidence": "노동조합 공식 홈페이지의 지회 공고는 LG화학 청주사업장 소속 조합원으로 구성된 청주지회를 회사와의 임단협 교섭 당사자로 적시한다.",
-      "sourceUrl": "https://www.lgchemnodongcj.or.kr/post/4227",
-      "sourceName": "전국화학섬유식품산업노동조합 LG화학 청주지회",
-      "sourceTier": "A",
-      "confidence": 0.74,
+      "sourceUrl": "https://daily.hankooki.com/news/articleView.html?idxno=1422441",
+      "sourceName": "데일리한국",
+      "sourceTier": "B",
+      "confidence": 0.8,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "같은 주 지회공고에 \"2026년 LG화학 임.단협 체결식 건\"이 함께 올라와 교섭 단위가 갈릴 가능성이 있다. 체결 근거로 보지 않고 12차 교섭이 열린 사실까지만 기록한다. 이 행은 청주지회 교섭이며 LG화학 전 사업장을 대표하지 않는다.",
+      "annotation": "2026-11-07 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-08-13",
@@ -385,12 +385,27 @@
           "label": "12차 교섭·천막농성",
           "summary": "12차 교섭 개최 공고와 천막농성 돌입 투쟁지침이 같은 날 공고됐다.",
           "sourceUrl": "https://www.lgchemnodongcj.or.kr/post/4227"
+        },
+        {
+          "date": "2026-11-06",
+          "stage": "S5",
+          "label": "잠정합의",
+          "summary": "데일리한국 보도 제목 기준 확인: [단독] LG화학, 호봉 외 2만원 인상...임단협 잠정합의",
+          "sourceUrl": "https://daily.hankooki.com/news/articleView.html?idxno=1422441"
         }
       ],
       "id": "lg-chem:2026:INTEGRATED:2026-08-13",
-      "factualStatus": "VERIFIED_SOURCE",
+      "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://www.lgchemnodongcj.or.kr/post/4227"
+      "originalUrl": "https://daily.hankooki.com/news/articleView.html?idxno=1422441",
+      "agreementTypeEvidence": "LG화학 2026년 임금 및 단체협약 12차 교섭 지회 공고에 2026년 임금 및 단체협약 12차 교섭 개최가 올라왔고, 같은 날 천막농성 돌입 투쟁지침이 함께 공고됐다.",
+      "stageEvidence": {
+        "companyId": "lg-chem",
+        "text": "[단독] LG화학, 호봉 외 2만원 인상...임단협 잠정합의",
+        "topic": null,
+        "basis": "title_signals"
+      },
+      "autoUpdatedAt": "2026-11-06T21:33:53.417Z"
     },
     {
       "companyId": "coupang",

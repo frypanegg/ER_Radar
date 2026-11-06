@@ -2,6 +2,38 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-11-06T21:33:53.417Z",
+      "kstDate": "2026-11-07",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-11-07",
+      "primarySource": "google",
+      "consideredArticles": 754,
+      "appliedCount": 1,
+      "skippedCount": 753,
+      "applied": [
+        {
+          "companyId": "lg-chem",
+          "companyLegalName": "주식회사 엘지화학",
+          "previousStage": "S3",
+          "previousEventDate": "2026-08-13",
+          "nextStage": "S5",
+          "nextEventDate": "2026-11-06",
+          "sourceUrl": "https://daily.hankooki.com/news/articleView.html?idxno=1422441",
+          "sourceName": "데일리한국",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 292,
+        "scope_excluded": 235,
+        "stage_unknown": 5,
+        "retain_main_state": 8,
+        "not_newer_than_recorded_event": 212,
+        "stage_downgrade_without_explicit_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-11-05T21:36:38.867Z",
       "kstDate": "2026-11-06",
       "ruleVersion": "1.2.0",
@@ -1728,26 +1760,6 @@
         "settled_record_needs_equal_grade_evidence": 1,
         "stage_downgrade_without_explicit_evidence": 1,
         "not_newer_than_recorded_event": 6
-      }
-    },
-    {
-      "runAt": "2026-09-11T21:35:41.877Z",
-      "kstDate": "2026-09-12",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-09-12",
-      "primarySource": "google",
-      "consideredArticles": 612,
-      "appliedCount": 0,
-      "skippedCount": 576,
-      "applied": [],
-      "skippedReasonCounts": {
-        "not_eligible_for_status_aggregation": 275,
-        "scope_excluded": 269,
-        "stage_unknown": 22,
-        "retain_main_state": 2,
-        "settled_record_needs_equal_grade_evidence": 1,
-        "stage_downgrade_without_explicit_evidence": 2,
-        "not_newer_than_recorded_event": 5
       }
     }
   ]
