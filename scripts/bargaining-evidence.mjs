@@ -177,3 +177,11 @@ export function ratificationEvent(text) {
   }
   return { planned: true, ratified: false };
 }
+
+// Rejection invalidates the tentative agreement immediately. Returning to the
+// bargaining phase does not assert that a new bargaining meeting has occurred.
+export function confirmedAgreementRejection(text) {
+  if (/지난해|작년|과거|당시/u.test(text)) return false;
+  return /(?:잠정\s*합의안?|임단협|협약안|합의안).{0,24}부결/u.test(text) &&
+    !/부결.{0,12}(?:가능성|우려|전망|예상|될\s*경우|된다면|되면|시(?:\s|[,·…]|$)|아니|않)/u.test(text);
+}

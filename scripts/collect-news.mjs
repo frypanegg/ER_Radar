@@ -17,7 +17,7 @@ import {
   resolveGoogleNewsUrl,
 } from "./resolve-google-news.mjs";
 
-import { ratificationEvent, delayedTopic, employerBodyEvidence, needsBodyEvidence, employerAliases, employerHeadline } from "./bargaining-evidence.mjs";
+import { confirmedAgreementRejection, ratificationEvent, delayedTopic, employerBodyEvidence, needsBodyEvidence, employerAliases, employerHeadline } from "./bargaining-evidence.mjs";
 import { verifyPublisherPage } from "./resolve-google-news.mjs";
 
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
@@ -1023,7 +1023,8 @@ function deriveFrameworkClassification(
     agreementState,
   );
 
-  const hasExplicitReopenEvidence = matchesPattern(
+  const rejectionConfirmed = ["tentative_rejected", "rejected_then_action_resumed"].includes(stageClassification.eventType) && confirmedAgreementRejection(title);
+  const hasExplicitReopenEvidence = rejectionConfirmed || matchesPattern(
     title,
     "재교섭|재협상|교섭\\s*재개|협상\\s*재개",
   );
@@ -1169,6 +1170,10 @@ function deriveFrameworkClassification(
       agreementState = { code: voteEvent.ratified ? "RATIFIED" : "RATIFICATION_IN_PROGRESS", label: voteEvent.ratified ? "인준 완료" : "인준 투표 중", eventState: "occurred" };
       eventState = "occurred";
     }
+  }
+  if (rejectionConfirmed) {
+    agreementState = { code: "RATIFICATION_REJECTED", label: "잠정합의안 부결", eventState: "occurred" };
+    eventState = "occurred";
   }
   const status = frameworkStateDefinition(framework, statusCode);
   const retainMainState =
@@ -1879,6 +1884,10 @@ function classifyArticle(
   }
   if (evidenceTitle !== record.title) {
     stageClassification.reasonCodes.push("company_clause_evidence");
+  }
+  if (["tentative_rejected", "rejected_then_action_resumed"].includes(stageClassification.eventType) && confirmedAgreementRejection(resolvedEvidenceTitle)) {
+    stageClassification.needsReview = false;
+    stageClassification.reasonCodes.push("confirmed_agreement_rejection");
   }
   // Body evidence also supplies the employment context for this same employer.
   // Re-run the existing scope rules; do not bypass subcontractor/unit exclusions.

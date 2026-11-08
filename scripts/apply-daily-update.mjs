@@ -209,7 +209,9 @@ function buildFlowEvent(article, eventDate) {
   return {
     date: eventDate,
     stage: article.classification.statusCode,
-    label: article.classification.statusLabel ?? article.classification.statusName,
+    label: article.classification.reasonCodes?.includes("confirmed_agreement_rejection")
+      ? "잠정합의안 부결 · 교섭 국면 복귀"
+      : article.classification.statusLabel ?? article.classification.statusName,
     // 기사 본문을 복제하지 않는다. 제목과 계산된 분류만 보존한다.
     summary: article.classification.stageEvidence?.basis === "publisher_body_subject_predicate"
       ? `${article.media} 본문의 해당 회사 문맥 기준 ${article.classification.statusLabel} 확인: ${article.classification.stageEvidence.text}`
@@ -254,7 +256,9 @@ function applyArticleToRecord(record, article, eventDate) {
       `${record.title ?? ""} ${record.factSummary ?? ""}`.trim(),
     title: article.title,
     factSummary: `${article.media} ${article.classification.stageEvidence?.basis === "publisher_body_subject_predicate" ? "본문 회사별 행위 근거" : "제목"} 기준 ${
-      article.classification.statusLabel ?? article.classification.statusName
+      article.classification.reasonCodes?.includes("confirmed_agreement_rejection")
+        ? "잠정합의안 부결로 교섭 국면 복귀(실제 회의 재개 여부는 별도 확인)"
+        : article.classification.statusLabel ?? article.classification.statusName
     } 확인 · 원문 URL 검증 완료${article.classification.stageEvidence?.basis === "publisher_body_subject_predicate" ? "" : " · 본문 인용 없음"}`,
     ...(article.classification.stageEvidence ? { stageEvidence: article.classification.stageEvidence } : {}),
     sourceUrl: article.originalUrl,

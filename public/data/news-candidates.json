@@ -38,7 +38,7 @@
           "RESOLVED_TITLE_MISMATCH": 5
         }
       },
-      "statusAggregationCandidates": 222,
+      "statusAggregationCandidates": 223,
       "primaryDashboardCandidates": 518,
       "excludedAuditCandidates": 233,
       "scopeCounts": {
@@ -1301,12 +1301,12 @@
         },
         "eventType": "tentative_rejected",
         "transitionHint": "rollback_to_bargaining",
-        "statusCode": "U",
-        "statusName": "unverified",
-        "statusLabel": "올해 현황 미확인",
+        "statusCode": "S3",
+        "statusName": "bargaining",
+        "statusLabel": "본교섭 진행",
         "eventState": "occurred",
         "eventStateCode": "OCCURRED",
-        "retainMainState": true,
+        "retainMainState": false,
         "statusBasis": "exception_transition",
         "stageEvidence": {
           "companyId": "posco",
@@ -1316,7 +1316,7 @@
         },
         "scopeClassification": "PRIMARY_DIRECT_UNION",
         "includeInPrimaryDashboard": true,
-        "eligibleForStatusAggregation": false,
+        "eligibleForStatusAggregation": true,
         "requiresSourceVerification": false,
         "parallelStates": {
           "dispute": {
@@ -1333,7 +1333,7 @@
           },
           "agreement": {
             "code": "RATIFICATION_REJECTED",
-            "label": "합의안 부결",
+            "label": "잠정합의안 부결",
             "eventState": "occurred",
             "eventStateCode": "OCCURRED"
           },
@@ -1443,8 +1443,8 @@
         ],
         "reasonCodes": [
           "exception_transition_rule",
-          "company_alias",
-          "retain_main_state"
+          "confirmed_agreement_rejection",
+          "company_alias"
         ],
         "collectionSources": [
           "google-news-rss"

@@ -56,6 +56,20 @@
         "topic": null,
         "basis": "title_signals"
       }
+    },
+    {
+      "correctedAt": "2026-11-08T23:55:24.155Z",
+      "companyId": "posco",
+      "sourceUrl": "https://biz.sbs.co.kr/article/20000344923",
+      "previousStage": "S5",
+      "correctedStage": "S3",
+      "reason": "Confirmed rejection was collected but blocked by U/retain-main-state and stage-review gates. Rejection invalidates S5; returning to bargaining phase does not assert a new meeting occurred.",
+      "evidence": {
+        "companyId": "posco",
+        "text": "포스코 노조, 임금교섭 잠정합의안 찬반투표 부결...51.7% 반대",
+        "topic": null,
+        "basis": "title_signals"
+      }
     }
   ]
 }

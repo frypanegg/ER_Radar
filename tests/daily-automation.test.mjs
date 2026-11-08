@@ -1900,3 +1900,26 @@ test('a planned ratification vote does not advance a completed tentative agreeme
   }
   assert.notEqual((await classifyTitle('현대차 노사 잠정합의 예정...7일 찬반투표')).eventState, 'occurred');
 });
+
+test('confirmed rejection invalidates S5 even when the headline omits reopening', async () => {
+  const title = '포스코 노조, 임금교섭 잠정합의안 찬반투표 부결...51.7% 반대';
+  const classification = await classifyTitle(title, 'posco');
+  assert.equal(classification.statusCode, 'S3');
+  assert.equal(classification.eventState, 'occurred');
+  assert.equal(classification.retainMainState, false);
+  assert.equal(classification.eligibleForStatusAggregation, true);
+  assert.equal(classification.parallelStates.agreement.code, 'RATIFICATION_REJECTED');
+  const article = verifiedArticle({title, classification});
+  assert.equal(selectCandidate(article).ok, true);
+  assert.equal(blocksStageDowngrade({stage:'S5'}, article, new Map([['S3',3],['S5',5]])), false);
+  const updated = applyArticleToRecord(seedRecord({stage:'S5', settlementTerms:{wage:'rejected'}}), article, '2026-11-07');
+  assert.equal(updated.stage, 'S3');
+  assert.equal(updated.settlementTerms, undefined);
+  assert.equal(updated.flowEvents.at(-1).stage, 'S3');
+  for (const suffix of ['부결 가능성', '부결 우려', '부결될 경우', '부결되지 않았다']) {
+    const result = await classifyTitle(`포스코 임금교섭 잠정합의안 ${suffix}`, 'posco');
+    assert.equal(result.eligibleForStatusAggregation && result.statusCode==='S3', false, suffix);
+  }
+  const rival = await classifyTitle('현대차 잠정합의안 부결, 포스코 임금협상 잠정합의', 'posco');
+  assert.equal(rival.statusCode, 'S5');
+});

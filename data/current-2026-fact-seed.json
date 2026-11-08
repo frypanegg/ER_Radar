@@ -695,22 +695,22 @@
       "companyLegalName": "주식회사 포스코",
       "bargainingYear": 2026,
       "agreementType": "WAGE",
-      "stage": "S5",
-      "eventDate": "2026-11-03",
-      "title": "“조합원 기대에는 못 미치지만”...포스코 노사 잠정합의 투표 나선다",
-      "factSummary": "녹색경제신문 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S3",
+      "eventDate": "2026-11-07",
+      "title": "포스코 노조, 임금교섭 잠정합의안 찬반투표 부결...51.7% 반대",
+      "factSummary": "SBS Biz 제목 기준 잠정합의안 부결로 교섭 국면 복귀(실제 회의 재개 여부는 별도 확인) 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
       "directEmployerId": "posco",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
       "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
-      "sourceUrl": "https://greened.kr/news/articleView.html?idxno=353760",
-      "sourceName": "녹색경제신문",
+      "sourceUrl": "https://biz.sbs.co.kr/article/20000344923",
+      "sourceName": "SBS Biz",
       "sourceTier": "B",
-      "confidence": 0.8,
+      "confidence": 0.86,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-11-05 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-11-09 누락 보정 · 11월 7일 잠정합의안 부결 확인 · 교섭 국면 복귀, 실제 회의 재개일 미확인",
       "flowEvents": [
         {
           "date": "2026-06-16",
@@ -844,17 +844,24 @@
           "label": "잠정합의",
           "summary": "녹색경제신문 보도 제목 기준 확인: “조합원 기대에는 못 미치지만”...포스코 노사 잠정합의 투표 나선다",
           "sourceUrl": "https://greened.kr/news/articleView.html?idxno=353760"
+        },
+        {
+          "date": "2026-11-07",
+          "stage": "S3",
+          "label": "잠정합의안 부결 · 교섭 국면 복귀",
+          "summary": "SBS Biz 보도 제목 기준 확인: 포스코 노조, 임금교섭 잠정합의안 찬반투표 부결...51.7% 반대",
+          "sourceUrl": "https://biz.sbs.co.kr/article/20000344923"
         }
       ],
       "id": "posco:2026:WAGE:2026-07-27",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://greened.kr/news/articleView.html?idxno=353760",
+      "originalUrl": "https://biz.sbs.co.kr/article/20000344923",
       "agreementTypeEvidence": "포스코 2026년 임금협상 중노위 조정 신청 포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
-      "autoUpdatedAt": "2026-11-04T21:36:45.799Z",
+      "autoUpdatedAt": "2026-11-08T23:55:24.155Z",
       "stageEvidence": {
         "companyId": "posco",
-        "text": "“조합원 기대에는 못 미치지만”...포스코 노사 잠정합의 투표 나선다",
+        "text": "포스코 노조, 임금교섭 잠정합의안 찬반투표 부결...51.7% 반대",
         "topic": null,
         "basis": "title_signals"
       }
