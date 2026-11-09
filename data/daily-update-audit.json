@@ -2,6 +2,50 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-11-09T21:36:49.631Z",
+      "kstDate": "2026-11-10",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-11-10",
+      "primarySource": "google",
+      "consideredArticles": 757,
+      "appliedCount": 2,
+      "skippedCount": 755,
+      "applied": [
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S3",
+          "previousEventDate": "2026-11-07",
+          "nextStage": "S3",
+          "nextEventDate": "2026-11-08",
+          "sourceUrl": "https://kyongbuk.co.kr/news/articleView.html?idxno=4090001",
+          "sourceName": "경북일보",
+          "confidence": 0.86,
+          "eventsApplied": 1
+        },
+        {
+          "companyId": "hd-hyundai-heavy-industries",
+          "companyLegalName": "HD현대중공업 주식회사",
+          "previousStage": "S5",
+          "previousEventDate": "2026-10-23",
+          "nextStage": "S7",
+          "nextEventDate": "2026-10-28",
+          "sourceUrl": "https://news.kbs.co.kr/news/view.do?ncd=8698059",
+          "sourceName": "KBS 뉴스",
+          "confidence": 0.86,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "scope_excluded": 237,
+        "not_eligible_for_status_aggregation": 281,
+        "stage_unknown": 3,
+        "retain_main_state": 6,
+        "not_newer_than_recorded_event": 227,
+        "stage_downgrade_without_explicit_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-11-08T21:36:58.870Z",
       "kstDate": "2026-11-09",
       "ruleVersion": "1.2.0",
@@ -1735,26 +1779,6 @@
         "scope_excluded": 267,
         "not_eligible_for_status_aggregation": 269,
         "stage_unknown": 20,
-        "retain_main_state": 2,
-        "settled_record_needs_equal_grade_evidence": 1,
-        "stage_downgrade_without_explicit_evidence": 1,
-        "not_newer_than_recorded_event": 6
-      }
-    },
-    {
-      "runAt": "2026-09-14T21:35:34.280Z",
-      "kstDate": "2026-09-15",
-      "ruleVersion": "1.0.0",
-      "batchKstDate": "2026-09-15",
-      "primarySource": "google",
-      "consideredArticles": 601,
-      "appliedCount": 0,
-      "skippedCount": 560,
-      "applied": [],
-      "skippedReasonCounts": {
-        "not_eligible_for_status_aggregation": 274,
-        "scope_excluded": 258,
-        "stage_unknown": 18,
         "retain_main_state": 2,
         "settled_record_needs_equal_grade_evidence": 1,
         "stage_downgrade_without_explicit_evidence": 1,

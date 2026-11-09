@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-11-07",
+  "asOf": "2026-11-10",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -696,21 +696,21 @@
       "bargainingYear": 2026,
       "agreementType": "WAGE",
       "stage": "S3",
-      "eventDate": "2026-11-07",
-      "title": "포스코 노조, 임금교섭 잠정합의안 찬반투표 부결...51.7% 반대",
-      "factSummary": "SBS Biz 제목 기준 잠정합의안 부결로 교섭 국면 복귀(실제 회의 재개 여부는 별도 확인) 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-11-08",
+      "title": "[사설] 포스코 노사 임금협상 원점, 이럴 때 아니다",
+      "factSummary": "경북일보 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "한국노총 전국금속노동조합연맹 포스코노동조합",
       "directEmployerId": "posco",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "포스코 공식 ESG 페이지는 포스코노동조합이 교섭창구 단일화 절차를 거쳐 단체교섭권을 행사하고, 포스코가 매년 임금교섭 및 2년 주기 단체교섭을 한다고 명시한다. 해당 설명은 포스코의 임직원·근로조건 문맥에서 제공된다.",
       "scopeEvidenceUrl": "https://sustainability.posco.co.kr/S91/S91F10/kor/cmspage.do?cmspreview=T&mmcd=1745995965009574",
-      "sourceUrl": "https://biz.sbs.co.kr/article/20000344923",
-      "sourceName": "SBS Biz",
+      "sourceUrl": "https://kyongbuk.co.kr/news/articleView.html?idxno=4090001",
+      "sourceName": "경북일보",
       "sourceTier": "B",
       "confidence": 0.86,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-11-09 누락 보정 · 11월 7일 잠정합의안 부결 확인 · 교섭 국면 복귀, 실제 회의 재개일 미확인",
+      "annotation": "2026-11-10 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-06-16",
@@ -851,17 +851,24 @@
           "label": "잠정합의안 부결 · 교섭 국면 복귀",
           "summary": "SBS Biz 보도 제목 기준 확인: 포스코 노조, 임금교섭 잠정합의안 찬반투표 부결...51.7% 반대",
           "sourceUrl": "https://biz.sbs.co.kr/article/20000344923"
+        },
+        {
+          "date": "2026-11-08",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "경북일보 보도 제목 기준 확인: [사설] 포스코 노사 임금협상 원점, 이럴 때 아니다",
+          "sourceUrl": "https://kyongbuk.co.kr/news/articleView.html?idxno=4090001"
         }
       ],
       "id": "posco:2026:WAGE:2026-07-27",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://biz.sbs.co.kr/article/20000344923",
+      "originalUrl": "https://kyongbuk.co.kr/news/articleView.html?idxno=4090001",
       "agreementTypeEvidence": "포스코 2026년 임금협상 중노위 조정 신청 포스코노동조합은 7월 23일 본교섭 결렬 뒤 7월 27일 중앙노동위원회에 노동쟁의 조정을 신청했다. 기사상 미합의 쟁점은 임금·복지와 현장 안전, 인력·설비 문제이며, 조정 기간에도 교섭을 이어갈 수 있다고 밝혔다.",
-      "autoUpdatedAt": "2026-11-08T23:55:24.155Z",
+      "autoUpdatedAt": "2026-11-09T21:36:49.630Z",
       "stageEvidence": {
         "companyId": "posco",
-        "text": "포스코 노조, 임금교섭 잠정합의안 찬반투표 부결...51.7% 반대",
+        "text": "[사설] 포스코 노사 임금협상 원점, 이럴 때 아니다",
         "topic": null,
         "basis": "title_signals"
       }
@@ -1173,22 +1180,22 @@
       "companyLegalName": "HD현대중공업 주식회사",
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
-      "stage": "S5",
-      "eventDate": "2026-10-23",
-      "title": "HD현대중공업 노사, 2차 잠정합의...기본급 12만 인상·일시급 50만 추가",
-      "factSummary": "한국금융신문 제목 기준 잠정합의 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "stage": "S7",
+      "eventDate": "2026-10-28",
+      "title": "HD현대중공업 노사, 2026년 임단협 조인식 개최",
+      "factSummary": "KBS 뉴스 제목 기준 최종 체결·발효 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "전국금속노동조합 현대중공업지부",
       "directEmployerId": "hd-hyundai-heavy-industries",
       "coveredWorkerRelation": "DIRECT",
       "directEmploymentEvidence": "금속노조 공식 선거 공고는 현대중공업지부 소속 인사가 '2011년 현대중공업 입사, 현중지부 가입'했다고 명시한다. 사건 원문은 HD현대중공업 사장과 현대중공업지부장을 교섭위원으로 구분하고, 사내하청지회는 별도 하청노조라고 구분한다.",
       "scopeEvidenceUrl": "https://kmwu.kr/bbs/download.php?bo_table=ce_B11&no=0&wr_id=217877",
-      "sourceUrl": "https://fntimes.com/html/view.php?ud=20261023164716750fa6b69a559_18",
-      "sourceName": "한국금융신문",
+      "sourceUrl": "https://news.kbs.co.kr/news/view.do?ncd=8698059",
+      "sourceName": "KBS 뉴스",
       "sourceTier": "B",
-      "confidence": 0.91,
+      "confidence": 0.86,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-10-24 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-11-10 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-05-20",
@@ -1259,17 +1266,24 @@
           "label": "잠정합의",
           "summary": "한국금융신문 보도 제목 기준 확인: HD현대중공업 노사, 2차 잠정합의...기본급 12만 인상·일시급 50만 추가",
           "sourceUrl": "https://fntimes.com/html/view.php?ud=20261023164716750fa6b69a559_18"
+        },
+        {
+          "date": "2026-10-28",
+          "stage": "S7",
+          "label": "최종 체결·발효",
+          "summary": "KBS 뉴스 보도 제목 기준 확인: HD현대중공업 노사, 2026년 임단협 조인식 개최",
+          "sourceUrl": "https://news.kbs.co.kr/news/view.do?ncd=8698059"
         }
       ],
       "id": "hd-hyundai-heavy-industries:2026:INTEGRATED:2026-06-09",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://fntimes.com/html/view.php?ud=20261023164716750fa6b69a559_18",
+      "originalUrl": "https://news.kbs.co.kr/news/view.do?ncd=8698059",
       "agreementTypeEvidence": "HD현대중공업 2026년 임금·단체협약 1차 본교섭 HD현대중공업 노사가 6월 2일 상견례 뒤 6월 9일 1차 교섭으로 2026년 임금·단체협약 본교섭에 들어갔다고 보도됐다. 요구안에는 기본급 인상, 상여금, 영업이익 연동 성과공유, AI 도입 시 고용안정 등이 포함됐다.",
-      "autoUpdatedAt": "2026-10-23T21:36:27.461Z",
+      "autoUpdatedAt": "2026-11-09T21:36:49.631Z",
       "stageEvidence": {
         "companyId": "hd-hyundai-heavy-industries",
-        "text": "HD현대중공업 노사, 2차 잠정합의...기본급 12만 인상·일시급 50만 추가",
+        "text": "HD현대중공업 노사, 2026년 임단협 조인식 개최",
         "topic": null,
         "basis": "title_signals"
       }
