@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-11-10",
+  "asOf": "2026-11-11",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -979,12 +979,12 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S4",
-      "eventDate": "2026-11-05",
-      "title": "서울교통공사 노조, 쟁의행위 가결...\"교섭결렬 시 파업 돌입\" - 머니투데이",
+      "eventDate": "2026-11-10",
+      "title": "서울 지하철 멈추나...서울교통공사 노조 \"협상 결렬시 25일부터 파업\" - 머니투데이",
       "factSummary": "머니투데이 제목 기준 교착·조정 경로 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
-      "sourceUrl": "https://mt.co.kr/policy/2026/11/05/2026110518520575693",
+      "sourceUrl": "https://mt.co.kr/amp/policy/2026/11/10/2026111012564445308",
       "confidence": 0.8,
-      "annotation": "2026-11-06 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-11-11 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-07-15",
@@ -1013,17 +1013,24 @@
           "label": "교착·조정 경로",
           "summary": "머니투데이 보도 제목 기준 확인: 서울교통공사 노조, 쟁의행위 가결...\"교섭결렬 시 파업 돌입\" - 머니투데이",
           "sourceUrl": "https://mt.co.kr/policy/2026/11/05/2026110518520575693"
+        },
+        {
+          "date": "2026-11-10",
+          "stage": "S4",
+          "label": "교착·조정 경로",
+          "summary": "머니투데이 보도 제목 기준 확인: 서울 지하철 멈추나...서울교통공사 노조 \"협상 결렬시 25일부터 파업\" - 머니투데이",
+          "sourceUrl": "https://mt.co.kr/amp/policy/2026/11/10/2026111012564445308"
         }
       ],
       "id": "seoul-metro:2026:INTEGRATED:2026-07-15",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://mt.co.kr/policy/2026/11/05/2026110518520575693",
+      "originalUrl": "https://mt.co.kr/amp/policy/2026/11/10/2026111012564445308",
       "agreementTypeEvidence": "서울교통공사 2026년 임금 및 단체협약 요구안 확정 노동조합 소식지에 2026년 임금 및 단체협약 요구안과 중앙노사협의회 의결이 게시됐다.",
-      "autoUpdatedAt": "2026-11-05T21:36:38.867Z",
+      "autoUpdatedAt": "2026-11-10T21:37:41.773Z",
       "stageEvidence": {
         "companyId": "seoul-metro",
-        "text": "서울교통공사 노조, 쟁의행위 가결...\"교섭결렬 시 파업 돌입\" - 머니투데이",
+        "text": "서울 지하철 멈추나...서울교통공사 노조 \"협상 결렬시 25일부터 파업\" - 머니투데이",
         "topic": null,
         "basis": "title_signals"
       }
