@@ -115,13 +115,10 @@ export function stageRankOf(stage: string) {
   return Number.isFinite(rank) ? rank : -1;
 }
 
-/**
- * 같은 날 두 사건이 있으면 날짜만으로는 순서가 정해지지 않는다. 잠정합의 가결과 조인식이
- * 같은 날 이뤄지는 일이 흔하고(삼성전자 2025-03-05), 그때는 뒤 단계가 나중 일이다.
- * 날짜가 같으면 단계 순위로 가른다.
- */
+/** 같은 날짜에는 저장된 사건 순서를 유지한다. 단계 숫자로 재정렬하면
+ * 같은 날 S5 → S3으로 복귀한 사건이 뒤집혀 잠정합의가 현재처럼 보인다. */
 export function compareEventsAscending(left: FlowEvent, right: FlowEvent) {
-  return left.date.localeCompare(right.date) || stageRankOf(left.stage) - stageRankOf(right.stage);
+  return left.date.localeCompare(right.date);
 }
 
 export function deriveCaseHistory(record: HistoryInput): CaseHistory {

@@ -217,6 +217,11 @@ function buildFlowEvent(article, eventDate) {
       ? `${article.media} 본문의 해당 회사 문맥 기준 ${article.classification.statusLabel} 확인: ${article.classification.stageEvidence.text}`
       : `${article.media} 보도 제목 기준 확인: ${article.title}`,
     sourceUrl: article.originalUrl,
+    transitionEvidence: {
+      statusBasis: article.classification.statusBasis,
+      eventType: article.classification.eventType,
+      sourceVerified: !article.classification.requiresSourceVerification && Boolean(article.originalUrl),
+    },
   };
 }
 

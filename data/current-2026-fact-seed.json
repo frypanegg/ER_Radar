@@ -850,7 +850,12 @@
           "stage": "S3",
           "label": "잠정합의안 부결 · 교섭 국면 복귀",
           "summary": "SBS Biz 보도 제목 기준 확인: 포스코 노조, 임금교섭 잠정합의안 찬반투표 부결...51.7% 반대",
-          "sourceUrl": "https://biz.sbs.co.kr/article/20000344923"
+          "sourceUrl": "https://biz.sbs.co.kr/article/20000344923",
+          "transitionEvidence": {
+            "statusBasis": "exception_transition",
+            "eventType": "tentative_rejected",
+            "sourceVerified": true
+          }
         },
         {
           "date": "2026-11-08",
