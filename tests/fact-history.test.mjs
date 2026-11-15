@@ -38,9 +38,8 @@ test('same-day rollback and repeated S5 episodes retain recorded order', () => {
   assert.deepEqual(timeline.segments.map(s=>s.stage),['S5','S3','S5']);
 });
 
-test('production POSCO history retains its actual S5 interval after the old DB row loads', async () => {
-  const data=JSON.parse(await readFile(new URL('../data/current-2026-fact-seed.json',import.meta.url),'utf8'));
-  const posco=data.records.find(r=>r.companyId==='posco');
+test('frozen November 12 POSCO history retains its S5 interval after the old DB row loads', async () => {
+  const posco=JSON.parse(await readFile(new URL('./fixtures/posco-history-2026-11-12.json',import.meta.url),'utf8'));
   const fact={stage:'S4',eventDate:'2026-08-19',flowEvents:[{date:'2026-08-19',stage:'S4',label:'교착'}]};
   assert.equal(decideFactSource({seed:posco,fact}).use,'seed');
   const timeline=buildStageTimeline(mergeFactHistory({seed:posco,fact}),{asOf:'2026-11-12'});
@@ -48,4 +47,33 @@ test('production POSCO history retains its actual S5 interval after the old DB r
   assert.equal(tentative.endDate,'2026-11-07');
   assert.ok(tentative.events.length>=4);
   assert.equal(timeline.segments.at(-1).stage,'S3');
+});
+
+
+test('later bargaining stages can advance without losing the rejection history', async () => {
+  const snapshot = JSON.parse(await readFile(new URL('./fixtures/posco-history-2026-11-12.json',import.meta.url),'utf8'));
+  const fact = {stage:'S4',eventDate:'2026-08-19',flowEvents:[{date:'2026-08-19',stage:'S4',label:'교착'}]};
+  for (const stage of ['S4','S5','S6','S7']) {
+    const updated = {...snapshot, stage, eventDate:'2026-11-13', flowEvents:[...snapshot.flowEvents,{date:'2026-11-13',stage,label:'후속 확인',sourceUrl:`https://example.com/next-${stage}`}]};
+    const merged=mergeFactHistory({seed:updated,fact});
+    const timeline=buildStageTimeline(merged,{asOf:'2026-11-15'});
+    assert.equal(decideFactSource({seed:updated,fact}).use,'seed');
+    assert.equal(timeline.segments.at(-1).stage,stage);
+    assert.ok(timeline.segments.some(s=>s.stage==='S5'&&s.startDate==='2026-10-30'&&s.endDate==='2026-11-07'));
+    assert.ok(timeline.segments.some(s=>s.stage==='S3'&&s.startDate==='2026-11-07'));
+    for (const event of snapshot.flowEvents) {
+      assert.ok(merged.some(item => JSON.stringify(item) === JSON.stringify(event)), `${stage}: lost ${event.date} ${event.label}`);
+    }
+  }
+});
+
+test('live records retain accepted current stage and every historical event in their timeline', async () => {
+  const data=JSON.parse(await readFile(new URL('../data/current-2026-fact-seed.json',import.meta.url),'utf8'));
+  for (const record of data.records) {
+    const events=record.flowEvents ?? [];
+    if (!events.length) continue;
+    const timeline=buildStageTimeline(events,{asOf:record.eventDate});
+    assert.equal(timeline.segments.flatMap(s=>s.events).length,events.length,record.companyId);
+    assert.equal(timeline.segments.at(-1).stage,record.stage,record.companyId);
+  }
 });

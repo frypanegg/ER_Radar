@@ -35,6 +35,7 @@ async function classifyTitle(
   companyId = "hyundai-motor",
   bargainingYear = 2026,
   articleBody = "",
+  publishedAt = "2026-08-11T00:00:00.000Z",
 ) {
   const config = JSON.parse(
     await readFile(new URL("../data/source-config.json", import.meta.url), "utf8"),
@@ -45,7 +46,7 @@ async function classifyTitle(
       title,
       articleBody,
       media: "검증 매체",
-      publishedAt: "2026-08-11T00:00:00.000Z",
+      publishedAt,
       url: "https://news.google.com/rss/articles/CBMiTEST",
       originalUrl: "https://example.com/original",
       collectionSources: ["naver"],
@@ -1922,4 +1923,18 @@ test('confirmed rejection invalidates S5 even when the headline omits reopening'
   }
   const rival = await classifyTitle('현대차 잠정합의안 부결, 포스코 임금협상 잠정합의', 'posco');
   assert.equal(rival.statusCode, 'S5');
+});
+
+test('a future reopening date is a plan even when the headline omits 예정', async () => {
+  const publishedAt = '2026-11-13T05:00:00.000Z';
+  const planned = await classifyTitle('삼성바이오 노사, 17일 교섭 재개…노조 "파업은 계속"', 'samsung-biologics', 2026, '', publishedAt);
+  assert.equal(planned.eventState, 'planned');
+  assert.equal(planned.statusBasis, 'scheduled_bargaining_resumption');
+  assert.equal(planned.retainMainState, true);
+  assert.equal(selectCandidate(verifiedArticle({classification:planned})).ok, false);
+  for (const title of ['포스코 노사, 13일 교섭 재개', '포스코 노사, 12일 교섭 재개했다']) {
+    const actual = await classifyTitle(title, 'posco', 2026, '', publishedAt);
+    assert.equal(actual.eventState, 'occurred', title);
+    assert.equal(actual.retainMainState, false, title);
+  }
 });

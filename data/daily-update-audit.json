@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-11-15T06:08:11.135Z",
+      "kstDate": "2026-11-15",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-11-15",
+      "primarySource": "google",
+      "consideredArticles": 762,
+      "appliedCount": 1,
+      "skippedCount": 761,
+      "applied": [
+        {
+          "companyId": "posco",
+          "companyLegalName": "주식회사 포스코",
+          "previousStage": "S3",
+          "previousEventDate": "2026-11-08",
+          "nextStage": "S4",
+          "nextEventDate": "2026-11-13",
+          "sourceUrl": "https://labortoday.co.kr/news/articleView.html?idxno=237702",
+          "sourceName": "매일노동뉴스",
+          "confidence": 0.8,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "not_eligible_for_status_aggregation": 285,
+        "scope_excluded": 233,
+        "retain_main_state": 12,
+        "stage_unknown": 2,
+        "not_newer_than_recorded_event": 226,
+        "stage_downgrade_without_explicit_evidence": 2,
+        "settled_record_needs_equal_grade_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-11-14T01:57:18.261Z",
       "kstDate": "2026-11-14",
       "ruleVersion": "1.2.0",
@@ -1650,26 +1683,6 @@
         "stage_unknown": 17,
         "retain_main_state": 8,
         "not_newer_than_recorded_event": 181,
-        "stage_downgrade_without_explicit_evidence": 1,
-        "settled_record_needs_equal_grade_evidence": 1
-      }
-    },
-    {
-      "runAt": "2026-09-17T13:30:20.477Z",
-      "kstDate": "2026-09-17",
-      "ruleVersion": "1.1.0",
-      "batchKstDate": "2026-09-17",
-      "primarySource": "google",
-      "consideredArticles": 623,
-      "appliedCount": 0,
-      "skippedCount": 623,
-      "applied": [],
-      "skippedReasonCounts": {
-        "scope_excluded": 195,
-        "not_eligible_for_status_aggregation": 218,
-        "stage_unknown": 17,
-        "retain_main_state": 7,
-        "not_newer_than_recorded_event": 184,
         "stage_downgrade_without_explicit_evidence": 1,
         "settled_record_needs_equal_grade_evidence": 1
       }

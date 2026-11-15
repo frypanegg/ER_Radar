@@ -1,0 +1,160 @@
+{
+  "companyId": "posco",
+  "stage": "S3",
+  "eventDate": "2026-11-08",
+  "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
+  "flowEvents": [
+    {
+      "date": "2026-06-16",
+      "stage": "S3",
+      "label": "임금협상 교섭 개시",
+      "summary": "포스코와 대표교섭노조 포스코노동조합이 2026년 임금협상 교섭을 시작한 것으로 보도됐다.",
+      "sourceUrl": "https://news.tf.co.kr/read/economy/2346272.htm"
+    },
+    {
+      "date": "2026-07-23",
+      "stage": "S4",
+      "label": "본교섭 결렬 선언",
+      "summary": "포스코 노사는 합의안을 도출하지 못했고, 노조는 교섭 결렬을 선언했다.",
+      "sourceUrl": "https://news.tf.co.kr/read/economy/2346272.htm"
+    },
+    {
+      "date": "2026-07-27",
+      "stage": "S4",
+      "label": "중노위 조정 신청",
+      "summary": "노조가 중앙노동위원회에 노동쟁의 조정을 신청했다.",
+      "sourceUrl": "https://www.etoday.co.kr/news/view/2607990?trc=main_list_news"
+    },
+    {
+      "date": "2026-08-18",
+      "stage": "S4",
+      "label": "교착·조정 경로",
+      "summary": "khan.co.kr 보도 제목 기준 확인: 포스코 노사 임금협상 조정 중지···1968년 창사 이후 첫 파업 하나?",
+      "sourceUrl": "https://khan.co.kr/article/202608181825001"
+    },
+    {
+      "date": "2026-08-19",
+      "stage": "S4",
+      "label": "교착·조정 경로",
+      "summary": "donga.com 보도 제목 기준 확인: 포스코, 임금협상 결렬... 창사후 첫 파업 갈림길",
+      "sourceUrl": "https://donga.com/news/Economy/article/all/20260818/134498964/2"
+    },
+    {
+      "date": "2026-09-14",
+      "stage": "S4",
+      "label": "교착·조정 경로",
+      "summary": "etoday.co.kr 보도 제목 기준 확인: 포스코 노사 15일 교섭 재개...결렬시 16일부터 120시간 부분파업",
+      "sourceUrl": "https://etoday.co.kr/news/view/2625390"
+    },
+    {
+      "date": "2026-09-15",
+      "stage": "S3",
+      "label": "본교섭 진행",
+      "summary": "뉴시안 보도 제목 기준 확인: '2차 파업' 기로 선 포스코 노사...12일 만의 교섭 재개",
+      "sourceUrl": "https://newsian.co.kr/news/articleView.html?idxno=95417"
+    },
+    {
+      "date": "2026-09-16",
+      "stage": "S3",
+      "label": "본교섭 진행",
+      "summary": "뉴스토마토 보도 제목 기준 확인: 포스코 노조 2차 부분 파업 돌입...노사, 교섭 여지는 남겨",
+      "sourceUrl": "https://newstomato.com/ReadNews.aspx?no=1313854"
+    },
+    {
+      "date": "2026-09-18",
+      "stage": "S4",
+      "label": "교착·조정 경로",
+      "summary": "donga.com 보도 제목 기준 확인: “진전된 제시안 내라” vs “무리한 요구”...포스코 노사 교섭 또 결렬",
+      "sourceUrl": "https://donga.com/news/Society/article/all/20260918/134694484/1"
+    },
+    {
+      "date": "2026-10-02",
+      "stage": "S3",
+      "label": "본교섭 진행",
+      "summary": "매일일보 보도 제목 기준 확인: 포스코 노조, 김성호 현 위원장 3연임...다음주 노사 교섭 재개",
+      "sourceUrl": "https://m-i.kr/news/articleView.html?idxno=2002483"
+    },
+    {
+      "date": "2026-10-08",
+      "stage": "S3",
+      "label": "본교섭 진행",
+      "summary": "Tbc.co.kr 보도 제목 기준 확인: 포스코 임금교섭 재개...임금 협상 입장차 여전",
+      "sourceUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=211876&pno=20261008091455AE06569"
+    },
+    {
+      "date": "2026-10-13",
+      "stage": "S3",
+      "label": "본교섭 진행",
+      "summary": "Tbc.co.kr 보도 제목 기준 확인: 포스코 노사, 13일·14일 임금 교섭 재개",
+      "sourceUrl": "https://tbc.co.kr/news/view?c1=&c2=&id=212047&pno=20261013085244AE06736"
+    },
+    {
+      "date": "2026-10-14",
+      "stage": "S3",
+      "label": "본교섭 진행",
+      "summary": "재경일보 보도 제목 기준 확인: 김영훈 장관 “포스코 노사교섭 적극 지도”...노동부, 임금교섭 직접 조정 나선다 : 정치",
+      "sourceUrl": "https://news.jkn.co.kr/post/1022372"
+    },
+    {
+      "date": "2026-10-21",
+      "stage": "S3",
+      "label": "본교섭 진행",
+      "summary": "주간한국 보도 제목 기준 확인: ‘제철보국’ 잊었나...포스코 임금협상 장기화에 한국경제 ‘긴장’",
+      "sourceUrl": "https://weekly.hankooki.com/news/articleViewAmp.html?idxno=7189944"
+    },
+    {
+      "date": "2026-10-24",
+      "stage": "S4",
+      "label": "교착·조정 경로",
+      "summary": "뉴스토마토 보도 제목 기준 확인: 포스코 임금협상 끝내 결렬...“11월2일부터 무기한 파업”",
+      "sourceUrl": "https://newstomato.com/readnews.aspx?no=1317871"
+    },
+    {
+      "date": "2026-10-30",
+      "stage": "S5",
+      "label": "잠정합의",
+      "summary": "연합뉴스 보도 제목 기준 확인: 포스코노사 임금교섭 잠정 합의...기본급 2.6% 인상",
+      "sourceUrl": "https://yna.co.kr/view/AKR20261030171100053"
+    },
+    {
+      "date": "2026-10-31",
+      "stage": "S5",
+      "label": "잠정합의",
+      "summary": "광양뉴스 보도 제목 기준 확인: 포스코 노사, 140일 만에 임금교섭 ‘잠정 합의’",
+      "sourceUrl": "https://gynet.co.kr/news/articleView.html?idxno=57247"
+    },
+    {
+      "date": "2026-11-01",
+      "stage": "S5",
+      "label": "잠정합의",
+      "summary": "서울경제TV 보도 제목 기준 확인: 포스코 노조, 임금협상 잠정합의...7일 찬반투표",
+      "sourceUrl": "https://sentv.co.kr/article/view/sentv202611010006?d=pc"
+    },
+    {
+      "date": "2026-11-03",
+      "stage": "S5",
+      "label": "잠정합의",
+      "summary": "녹색경제신문 보도 제목 기준 확인: “조합원 기대에는 못 미치지만”...포스코 노사 잠정합의 투표 나선다",
+      "sourceUrl": "https://greened.kr/news/articleView.html?idxno=353760"
+    },
+    {
+      "date": "2026-11-07",
+      "stage": "S3",
+      "label": "잠정합의안 부결 · 교섭 국면 복귀",
+      "summary": "SBS Biz 보도 제목 기준 확인: 포스코 노조, 임금교섭 잠정합의안 찬반투표 부결...51.7% 반대",
+      "sourceUrl": "https://biz.sbs.co.kr/article/20000344923",
+      "transitionEvidence": {
+        "statusBasis": "exception_transition",
+        "eventType": "tentative_rejected",
+        "sourceVerified": true
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "stage": "S3",
+      "label": "본교섭 진행",
+      "summary": "경북일보 보도 제목 기준 확인: [사설] 포스코 노사 임금협상 원점, 이럴 때 아니다",
+      "sourceUrl": "https://kyongbuk.co.kr/news/articleView.html?idxno=4090001"
+    }
+  ]
+}

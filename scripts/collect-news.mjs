@@ -17,7 +17,7 @@ import {
   resolveGoogleNewsUrl,
 } from "./resolve-google-news.mjs";
 
-import { confirmedAgreementRejection, ratificationEvent, delayedTopic, employerBodyEvidence, needsBodyEvidence, employerAliases, employerHeadline } from "./bargaining-evidence.mjs";
+import { confirmedAgreementRejection, ratificationEvent, plannedBargainingResumption, delayedTopic, employerBodyEvidence, needsBodyEvidence, employerAliases, employerHeadline } from "./bargaining-evidence.mjs";
 import { verifyPublisherPage } from "./resolve-google-news.mjs";
 
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
@@ -1913,6 +1913,13 @@ function classifyArticle(
         code: "NONE", label: "없음", eventState: "occurred", eventStateCode: "OCCURRED",
       };
     }
+  }
+  if (stageClassification.eventType === "bargaining_resumed" &&
+      plannedBargainingResumption(resolvedEvidenceTitle, record.publishedAt)) {
+    Object.assign(derivedFrameworkClassification, {
+      eventState: "planned", eventStateCode: "PLANNED", retainMainState: true,
+      statusBasis: "scheduled_bargaining_resumption",
+    });
   }
   const primaryCompanyMatches = companies.filter(
     (company) => company.includeInPrimaryDashboard,

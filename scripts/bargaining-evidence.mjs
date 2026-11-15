@@ -178,6 +178,24 @@ export function ratificationEvent(text) {
   return { planned: true, ratified: false };
 }
 
+// Compare the reopening clause with publication time, never collection time:
+// an old announcement must not become a completed event merely as days pass.
+export function plannedBargainingResumption(text, publishedAt) {
+  const clause = text.split(/[…;,]|\.{2,}/u).find(part => /(?:교섭|협상)\s*재개/u.test(part));
+  if (!clause) return false;
+  if (/(?:교섭|협상)\s*재개.{0,12}(?:예정|계획|하기로|키로)/u.test(clause)) return true;
+  if (/(?:교섭|협상)\s*재개(?:했다|했|한\s*뒤|에\s*돌입)/u.test(clause)) return false;
+  const prefix = clause.split(/(?:교섭|협상)\s*재개/u)[0];
+  if (/내일|모레|오는\s*\d|다음\s*달|내달/u.test(prefix)) return true;
+  const date = /(?:(\d{1,2})월\s*)?(\d{1,2})일\s*$/u.exec(prefix);
+  if (!date || !Number.isFinite(Date.parse(publishedAt))) return false;
+  const published = new Date(Date.parse(publishedAt) + 9 * 60 * 60 * 1000);
+  const month = date[1] ? Number(date[1]) : published.getUTCMonth() + 1;
+  const day = Number(date[2]);
+  if (month < 1 || month > 12 || day < 1 || day > 31) return false;
+  return month * 100 + day > (published.getUTCMonth() + 1) * 100 + published.getUTCDate();
+}
+
 // Rejection invalidates the tentative agreement immediately. Returning to the
 // bargaining phase does not assert that a new bargaining meeting has occurred.
 export function confirmedAgreementRejection(text) {
