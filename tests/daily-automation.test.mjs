@@ -1938,3 +1938,26 @@ test('a future reopening date is a plan even when the headline omits 예정', as
     assert.equal(actual.retainMainState, false, title);
   }
 });
+
+test('launcher failure reports successful fallback collection and token recovery separately', async () => {
+  const {evaluateFreshness} = await import('../scripts/check-collection-freshness.mjs');
+  const {buildReport} = await import('../scripts/build-daily-report.mjs');
+  const heartbeat = {lastRunKstDate:'2026-11-17',lastRunOutcome:'success',lastLauncher:'schedule',lastCloudflareLaunchKstDate:'2026-11-11'};
+  const health = evaluateFreshness({heartbeat,todayKstDate:'2026-11-17'});
+  assert.deepEqual(health.issueKinds,['launcher']);
+  assert.equal(health.fresh,false); // Do not suppress the broken primary scheduler.
+  const report = buildReport({mode:'staleness',heartbeat,todayKstDate:'2026-11-17',freshnessProblems:health.problems});
+  assert.match(report.subject,/주 예약 호출 중단/);
+  assert.doesNotMatch(report.subject,/수집 지연/);
+  assert.match(report.text,/오늘 수집은 완료/);
+  assert.match(report.text,/rotate-dispatch-token.py/);
+  assert.doesNotMatch(report.text,/force=true/);
+  const delayed = evaluateFreshness({heartbeat,todayKstDate:'2026-11-18'});
+  assert.deepEqual(delayed.issueKinds,['collection','launcher']);
+  const both = buildReport({mode:'staleness',heartbeat,todayKstDate:'2026-11-18',freshnessProblems:delayed.problems});
+  assert.match(both.subject,/수집 지연/);
+  assert.match(both.text,/force=true/);
+  assert.match(both.text,/rotate-dispatch-token.py/);
+  const deployment = buildReport({mode:'staleness',heartbeat,todayKstDate:'2026-11-17',freshnessProblems:[...health.problems,'공개 페이지 배포 지연']});
+  assert.match(deployment.subject,/배포·자동화 점검/);
+});

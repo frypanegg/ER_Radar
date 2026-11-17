@@ -10,6 +10,7 @@
 
 import { readFile, writeFile } from "node:fs/promises";
 import { createHmac } from "node:crypto";
+import { evaluateFreshness } from "./check-collection-freshness.mjs";
 
 const root = new URL("../", import.meta.url);
 
@@ -60,8 +61,15 @@ export function buildReport({
   const stats = batch?.stats ?? null;
 
   if (mode === "staleness") {
-    const subject = `[노사교섭 레이더] 수집 지연 감지 · ${todayKstDate}`;
-    lines.push("일일 수집이 예정대로 돌지 않았습니다.");
+    const health = evaluateFreshness({ heartbeat, todayKstDate });
+    const launcherOnly = health.issueKinds.length === 1 && health.issueKinds[0] === "launcher" &&
+      freshnessProblems.every(problem => health.problems.includes(problem));
+    const collectionCurrent = heartbeat?.lastRunKstDate === todayKstDate && heartbeat?.lastRunOutcome === "success";
+    const category = launcherOnly ? "주 예약 호출 중단" : collectionCurrent ? "배포·자동화 점검 필요" : "수집 지연 감지";
+    const subject = `[노사교섭 레이더] ${category} · ${todayKstDate}`;
+    lines.push(launcherOnly
+      ? "오늘 수집은 완료됐지만 Cloudflare 주 예약 호출이 중단됐습니다. GitHub 예비 스케줄로 수집 중입니다."
+      : collectionCurrent ? "오늘 수집은 완료됐습니다. 아래 배포·자동화 문제를 확인하세요." : "일일 수집이 예정대로 완료되지 않았습니다.");
     lines.push("");
     for (const problem of freshnessProblems) lines.push(`- ${problem}`);
     lines.push("");
@@ -69,7 +77,12 @@ export function buildReport({
     lines.push(`마지막 실행 결과: ${heartbeat?.lastRunOutcome ?? "기록 없음"}`);
     lines.push("");
     lines.push("복구 방법");
-    lines.push('  gh workflow run "일일 교섭현황 수집·반영" -f force=true');
+    if (!collectionCurrent) lines.push('  gh workflow run "일일 교섭현황 수집·반영" -f force=true');
+    if (health.issueKinds.includes("launcher")) {
+      lines.push("  GitHub 토큰 재발급 후 python3 scripts/rotate-dispatch-token.py 실행");
+      lines.push("  다음 Cloudflare 예약 호출 성공 확인. 수집 재실행만으로 인증 문제는 해결되지 않습니다.");
+    }
+    if (collectionCurrent && !launcherOnly) lines.push("  최신 수집 자료의 운영 배포 및 감시 로그 확인");
     if (runUrl) lines.push(`\n감시 실행 로그: ${runUrl}`);
     return { subject, text: lines.join("\n") };
   }

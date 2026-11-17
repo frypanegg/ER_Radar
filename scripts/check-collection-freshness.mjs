@@ -32,23 +32,25 @@ function dayDifference(fromKstDate, toKstDate) {
  */
 export function evaluateFreshness({ heartbeat, todayKstDate, liveHtml = null }) {
   const problems = [];
+  const issueKinds = new Set();
+  const addProblem = (kind, message) => { issueKinds.add(kind); problems.push(message); };
   const lastRunKstDate = heartbeat?.lastRunKstDate ?? null;
 
   if (!lastRunKstDate) {
-    problems.push("실행 흔적에 lastRunKstDate가 없습니다. 자동화가 한 번도 기록을 남기지 않았습니다.");
+    addProblem("collection", "실행 흔적에 lastRunKstDate가 없습니다. 자동화가 한 번도 기록을 남기지 않았습니다.");
   } else {
     const lag = dayDifference(lastRunKstDate, todayKstDate);
     if (lag === null) {
-      problems.push(`실행 흔적의 날짜를 해석할 수 없습니다: ${lastRunKstDate}`);
+      addProblem("collection", `실행 흔적의 날짜를 해석할 수 없습니다: ${lastRunKstDate}`);
     } else if (lag > 0) {
-      problems.push(
+      addProblem("collection",
         `마지막 수집이 ${lastRunKstDate}입니다. 오늘(${todayKstDate}) 기준 ${lag}일 지연됐습니다.`,
       );
     }
   }
 
   if (heartbeat?.lastRunOutcome && heartbeat.lastRunOutcome !== "success") {
-    problems.push(`마지막 실행 결과가 ${heartbeat.lastRunOutcome}입니다.`);
+    addProblem("collection", `마지막 실행 결과가 ${heartbeat.lastRunOutcome}입니다.`);
   }
 
   // 발사대가 죽어도 그날 GitHub cron이 살아 있으면 수집은 정상으로 보인다. 그러면
@@ -65,7 +67,7 @@ export function evaluateFreshness({ heartbeat, todayKstDate, liveHtml = null }) 
   if (lastLaunch) {
     const launchLag = dayDifference(lastLaunch, todayKstDate);
     if (launchLag !== null && launchLag >= LAUNCHER_STALE_DAYS) {
-      problems.push(
+      addProblem("launcher",
         `Cloudflare 발사대가 ${lastLaunch} 이후 워크플로를 깨우지 못했습니다(${launchLag}일). ` +
           "토큰이 만료됐거나 권한이 바뀌었을 수 있습니다: npx wrangler tail er-radar",
       );
@@ -76,13 +78,13 @@ export function evaluateFreshness({ heartbeat, todayKstDate, liveHtml = null }) 
   // 낡았다면 수집이 아니라 배포가 끊긴 것이므로 구분해서 알린다.
   if (liveHtml !== null && lastRunKstDate) {
     if (!liveHtml.includes(lastRunKstDate)) {
-      problems.push(
+      addProblem("deployment",
         `공개 페이지에 마지막 수집일(${lastRunKstDate})이 없습니다. 수집은 됐지만 배포가 반영되지 않았을 수 있습니다.`,
       );
     }
   }
 
-  return { fresh: problems.length === 0, problems, lastRunKstDate, todayKstDate };
+  return { fresh: problems.length === 0, problems, issueKinds: [...issueKinds], lastRunKstDate, todayKstDate };
 }
 
 async function fetchLiveHtml(url) {
@@ -126,10 +128,15 @@ async function main() {
   for (const problem of result.problems) {
     console.log(`::error::${problem}`);
   }
-  console.log(
-    "복구: gh workflow run \"일일 교섭현황 수집·반영\" -f force=true 로 즉시 수집하고, " +
-      "schedule 이벤트가 계속 유실되면 저장소 밖 트리거(Cloudflare Cron)로 옮긴다.",
-  );
+  if (result.issueKinds.includes("collection")) {
+    console.log('수집 복구: gh workflow run "일일 교섭현황 수집·반영" -f force=true');
+  }
+  if (result.issueKinds.includes("launcher")) {
+    console.log("주 예약 호출 복구: GitHub 토큰 재발급 후 python3 scripts/rotate-dispatch-token.py 실행. 수집 재실행만으로는 호출 인증 문제가 해결되지 않습니다.");
+  }
+  if (result.issueKinds.includes("deployment")) {
+    console.log("배포 복구: 최신 수집 자료로 빌드·검증 후 운영 Worker 재배포.");
+  }
   process.exitCode = 1;
 }
 
