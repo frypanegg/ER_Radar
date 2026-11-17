@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "note": "스케줄 워크플로 자동 비활성화를 막기 위한 실행 흔적",
-  "lastRunAt": "2026-11-16T01:39:03.800Z",
-  "lastRunKstDate": "2026-11-16",
-  "lastRunId": "43785729864",
+  "lastRunAt": "2026-11-17T04:22:39.791Z",
+  "lastRunKstDate": "2026-11-17",
+  "lastRunId": "44015101377",
   "lastRunTrigger": "schedule",
   "lastLauncher": "schedule",
   "lastCloudflareLaunchKstDate": "2026-11-11",
