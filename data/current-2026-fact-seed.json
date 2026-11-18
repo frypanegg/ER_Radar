@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "추적 법인 2026년 교섭현황",
   "locale": "ko-KR",
-  "asOf": "2026-11-16",
+  "asOf": "2026-11-18",
   "coverageYear": 2026,
   "publicationPolicy": {
     "primaryUnionScope": "원청 법인 직접고용 노조 교섭만 공개 데이터에 포함한다.",
@@ -1413,19 +1413,19 @@
       "bargainingYear": 2026,
       "agreementType": "INTEGRATED",
       "stage": "S3",
-      "eventDate": "2026-11-05",
-      "title": "삼성바이오로직스 노사 교섭 불발...사측 vs 노조 '강대강' 대립 이어질까",
-      "factSummary": "파이낸셜포스트 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
+      "eventDate": "2026-11-17",
+      "title": "삼성바이오로직스 노사 교섭 재개...사측, 임금 6.2% 선적용 카드 꺼내",
+      "factSummary": "팜이데일리 제목 기준 본교섭 진행 확인 · 원문 URL 검증 완료 · 본문 인용 없음",
       "unionName": "삼성바이오로직스 노동조합",
       "agreementTypeEvidence": "삼성바이오로직스 2026년 임금 및 단체협약 교섭에서 노조는 기본급 인상률과 성과급 재원 배분을 요구했고, 임단협 쟁점이 풀리지 않아 파업과 준법투쟁으로 이어졌다고 보도됐다.",
       "directEmploymentEvidence": "원문은 삼성바이오로직스 소속 조합원 약 2천800명이 참여한 파업과 그 노동조합을 회사의 교섭 상대로 적시한다.",
-      "sourceUrl": "https://financialpost.co.kr/news/articleView.html?idxno=284807",
-      "sourceName": "파이낸셜포스트",
+      "sourceUrl": "https://pharm.edaily.co.kr/news/read?newsId=04851126645646704",
+      "sourceName": "팜이데일리",
       "sourceTier": "B",
-      "confidence": 0.8,
+      "confidence": 0.91,
       "scopeClassification": "PRIMARY_DIRECT_UNION",
       "includeInPrimaryDashboard": true,
-      "annotation": "2026-11-16 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
+      "annotation": "2026-11-18 자동 수집 반영 · 제목 기반 분류 · 사람 검증 전 단계",
       "flowEvents": [
         {
           "date": "2026-04-28",
@@ -1522,16 +1522,28 @@
             "eventType": "stage_update",
             "sourceVerified": true
           }
+        },
+        {
+          "date": "2026-11-17",
+          "stage": "S3",
+          "label": "본교섭 진행",
+          "summary": "팜이데일리 보도 제목 기준 확인: 삼성바이오로직스 노사 교섭 재개...사측, 임금 6.2% 선적용 카드 꺼내",
+          "sourceUrl": "https://pharm.edaily.co.kr/news/read?newsId=04851126645646704",
+          "transitionEvidence": {
+            "statusBasis": "exception_transition",
+            "eventType": "bargaining_resumed",
+            "sourceVerified": true
+          }
         }
       ],
       "id": "samsung-biologics:2026:INTEGRATED:2026-05-06",
       "factualStatus": "AUTO_COLLECTED_TITLE_BASIS",
       "scopeRuleVersion": "1.1.0",
-      "originalUrl": "https://financialpost.co.kr/news/articleView.html?idxno=284807",
-      "autoUpdatedAt": "2026-11-16T01:38:52.117Z",
+      "originalUrl": "https://pharm.edaily.co.kr/news/read?newsId=04851126645646704",
+      "autoUpdatedAt": "2026-11-18T03:21:52.599Z",
       "stageEvidence": {
         "companyId": "samsung-biologics",
-        "text": "삼성바이오로직스 노사 교섭 불발...사측 vs 노조 '강대강' 대립 이어질까",
+        "text": "삼성바이오로직스 노사 교섭 재개...사측, 임금 6.2% 선적용 카드 꺼내",
         "topic": null,
         "basis": "title_signals"
       }

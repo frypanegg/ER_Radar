@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "runs": [
     {
+      "runAt": "2026-11-18T03:21:52.600Z",
+      "kstDate": "2026-11-18",
+      "ruleVersion": "1.2.0",
+      "batchKstDate": "2026-11-18",
+      "primarySource": "google",
+      "consideredArticles": 759,
+      "appliedCount": 1,
+      "skippedCount": 758,
+      "applied": [
+        {
+          "companyId": "samsung-biologics",
+          "companyLegalName": "삼성바이오로직스 주식회사",
+          "previousStage": "S3",
+          "previousEventDate": "2026-11-05",
+          "nextStage": "S3",
+          "nextEventDate": "2026-11-17",
+          "sourceUrl": "https://pharm.edaily.co.kr/news/read?newsId=04851126645646704",
+          "sourceName": "팜이데일리",
+          "confidence": 0.91,
+          "eventsApplied": 1
+        }
+      ],
+      "skippedReasonCounts": {
+        "retain_main_state": 15,
+        "scope_excluded": 219,
+        "not_eligible_for_status_aggregation": 301,
+        "stage_unknown": 1,
+        "not_newer_than_recorded_event": 218,
+        "settled_record_needs_equal_grade_evidence": 3,
+        "stage_downgrade_without_explicit_evidence": 1
+      }
+    },
+    {
       "runAt": "2026-11-17T04:22:23.725Z",
       "kstDate": "2026-11-17",
       "ruleVersion": "1.2.0",
@@ -1649,39 +1682,6 @@
         "stage_unknown": 20,
         "retain_main_state": 7,
         "not_newer_than_recorded_event": 162,
-        "stage_downgrade_without_explicit_evidence": 1,
-        "settled_record_needs_equal_grade_evidence": 1
-      }
-    },
-    {
-      "runAt": "2026-09-18T21:34:56.177Z",
-      "kstDate": "2026-09-19",
-      "ruleVersion": "1.1.0",
-      "batchKstDate": "2026-09-19",
-      "primarySource": "google",
-      "consideredArticles": 627,
-      "appliedCount": 1,
-      "skippedCount": 626,
-      "applied": [
-        {
-          "companyId": "posco",
-          "companyLegalName": "주식회사 포스코",
-          "previousStage": "S3",
-          "previousEventDate": "2026-09-16",
-          "nextStage": "S4",
-          "nextEventDate": "2026-09-18",
-          "sourceUrl": "https://donga.com/news/Society/article/all/20260918/134694484/1",
-          "sourceName": "donga.com",
-          "confidence": 0.8,
-          "eventsApplied": 1
-        }
-      ],
-      "skippedReasonCounts": {
-        "scope_excluded": 203,
-        "not_eligible_for_status_aggregation": 213,
-        "stage_unknown": 21,
-        "retain_main_state": 8,
-        "not_newer_than_recorded_event": 179,
         "stage_downgrade_without_explicit_evidence": 1,
         "settled_record_needs_equal_grade_evidence": 1
       }
